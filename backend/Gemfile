@@ -16,10 +16,14 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 4.1.0'
-  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'rubocop'
+  gem 'rubocop-performance'
   gem 'spring'
+  gem 'web-console', '>= 4.1.0'
 end
 
 group :test do
