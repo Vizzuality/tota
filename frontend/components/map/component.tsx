@@ -6,8 +6,8 @@ import { PluginMapboxGl } from 'layer-manager';
 import layers from './layers';
 
 export interface MapProps {
-  width: string | number;
-  height: string | number;
+  width?: string | number;
+  height?: string | number;
   mapboxApiAccessToken: string;
 }
 
@@ -18,7 +18,7 @@ const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessTok
     zoom: 4,
   });
   const [loaded, setLoaded] = useState(false);
-  const mapRef = useRef();
+  const mapRef = useRef(null);
 
   return (
     <div className="w-full h-screen">
