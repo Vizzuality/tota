@@ -1,11 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FC } from 'react';
 import ReactMapGL from 'react-map-gl';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
 import layers from './layers';
 
-const Map = () => {
+export interface MapProps {
+  width: string | number;
+  height: string | number;
+  mapboxApiAccessToken: string;
+}
+
+const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessToken }: MapProps) => {
   const [viewport, setViewport] = useState({
     latitude: 37.7577,
     longitude: -122.4376,
@@ -20,9 +26,9 @@ const Map = () => {
         ref={mapRef}
         {...viewport}
         mapStyle="mapbox://styles/mapbox/streets-v11"
-        width="100%"
-        height="100%"
-        mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+        width={width}
+        height={height}
+        mapboxApiAccessToken={mapboxApiAccessToken}
         onLoad={() => setLoaded(true)}
         onViewportChange={setViewport}
       >
