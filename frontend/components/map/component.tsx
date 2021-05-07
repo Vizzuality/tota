@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC } from 'react';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
@@ -19,6 +19,10 @@ const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessTok
   });
   const [loaded, setLoaded] = useState(false);
   const mapRef = useRef(null);
+  const controlStyle = {
+    right: 10,
+    top: 10,
+  };
 
   return (
     <div className="w-full h-screen">
@@ -32,6 +36,7 @@ const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessTok
         onLoad={() => setLoaded(true)}
         onViewportChange={setViewport}
       >
+        <NavigationControl style={controlStyle} />
         {loaded && mapRef.current && (
           <LayerManager map={mapRef.current.getMap()} plugin={PluginMapboxGl}>
             {layers.map((l) => (
