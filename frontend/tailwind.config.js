@@ -5,7 +5,11 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'screen-minus-header': "calc(100vh - theme('spacing.20'))",
+      },
+    },
   },
   variants: {
     extend: {},

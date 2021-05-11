@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Layout from 'layout';
 
-const Home: React.FC<void> = (): JSX.Element => {
+const Contact: React.FC<void> = (): JSX.Element => {
   return (
     <Layout>
       <Head>
-        <title>Welcome to Tota</title>
+        <title>Contact page</title>
       </Head>
+      Contact page
     </Layout>
   );
 };
 
-export default Home;
+export default Contact;

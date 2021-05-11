@@ -25,27 +25,25 @@ const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessTok
   };
 
   return (
-    <div className="w-full h-screen">
-      <ReactMapGL
-        ref={mapRef}
-        {...viewport}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-        width={width}
-        height={height}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onLoad={() => setLoaded(true)}
-        onViewportChange={setViewport}
-      >
-        <NavigationControl style={controlStyle} />
-        {loaded && mapRef.current && (
-          <LayerManager map={mapRef.current.getMap()} plugin={PluginMapboxGl}>
-            {layers.map((l) => (
-              <Layer key={l.id} {...l} />
-            ))}
-          </LayerManager>
-        )}
-      </ReactMapGL>
-    </div>
+    <ReactMapGL
+      ref={mapRef}
+      {...viewport}
+      mapStyle="mapbox://styles/mapbox/streets-v11"
+      width={width}
+      height={height}
+      mapboxApiAccessToken={mapboxApiAccessToken}
+      onLoad={() => setLoaded(true)}
+      onViewportChange={setViewport}
+    >
+      <NavigationControl style={controlStyle} />
+      {loaded && mapRef.current && (
+        <LayerManager map={mapRef.current.getMap()} plugin={PluginMapboxGl}>
+          {layers.map((l) => (
+            <Layer key={l.id} {...l} />
+          ))}
+        </LayerManager>
+      )}
+    </ReactMapGL>
   );
 };
 
