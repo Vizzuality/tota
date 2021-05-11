@@ -8,7 +8,9 @@ const Map: React.FC<void> = (): JSX.Element => {
       <Head>
         <title>Map</title>
       </Head>
-      <MapComponent mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN} />;
+      <div className="w-full h-screen-minus-header">
+        <MapComponent mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN} />;
+      </div>
     </Layout>
   );
 };
