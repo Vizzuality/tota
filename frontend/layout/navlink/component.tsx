@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/dist/client/router';
 import cx from 'classnames';
