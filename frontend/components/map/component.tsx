@@ -25,7 +25,7 @@ const Map: FC<MapProps> = ({ width = '100%', height = '100%', mapboxApiAccessTok
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen-minus-header">
       <ReactMapGL
         ref={mapRef}
         {...viewport}
