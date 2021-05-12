@@ -5,9 +5,11 @@ namespace :import do
   task organizations: :environment do
     next if Rails.env.production?
 
-    Organization.delete_all
-    Region.delete_all
-    BusinessType.delete_all
+    if ENV['REIMPORT'].present?
+      Organization.delete_all
+      Region.delete_all
+      BusinessType.delete_all
+    end
 
     file = File.open(Rails.root.join('db', 'csvs', 'organizations.csv'), 'r')
 
