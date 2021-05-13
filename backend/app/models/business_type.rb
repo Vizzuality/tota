@@ -3,4 +3,8 @@ class BusinessType < ApplicationRecord
   belongs_to :parent, class_name: 'BusinessType', optional: true
 
   validates_presence_of :name
+
+  def subtype?
+    parent_id.present?
+  end
 end
