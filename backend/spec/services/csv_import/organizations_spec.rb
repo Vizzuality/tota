@@ -14,5 +14,7 @@ describe CSVImport::Organizations do
     expect(Organization.count).to eq(2)
     expect(Region.count).to eq(3)
     expect(BusinessType.count).to eq(4)
+    expect(Region.find_by(name: 'North Okanagan').parent).to eq(Region.find_by(name: 'Thompson Okanagan'))
+    expect(BusinessType.find_by(name: 'Bed & Breakfast').parent).to eq(BusinessType.find_by(name: 'Accommodation'))
   end
 end

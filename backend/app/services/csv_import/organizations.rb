@@ -15,7 +15,6 @@ module CSVImport
         organization.longitude = row[:longitude]
 
         organization.validate!
-        # organization.save!
         organizations << organization
       end
 
@@ -38,10 +37,10 @@ module CSVImport
       type = @business_types[type_name.downcase] ||= BusinessType.create!(name: type_name)
 
       if sub_type_name.present?
-        sub_type = @business_types[sub_type_name.downcase] ||= BusinessType.create!(name: sub_type_name)
+        sub_type = @business_types[sub_type_name.downcase] ||= BusinessType.create!(name: sub_type_name, parent: type)
       end
 
-      type || sub_type
+      sub_type || type
     end
 
     def find_or_create_region(row)
@@ -53,10 +52,10 @@ module CSVImport
       region = @regions[region_name.downcase] ||= Region.create!(name: region_name)
 
       if sub_region_name.present?
-        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(name: sub_region_name)
+        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(name: sub_region_name, parent: region)
       end
 
-      region || sub_region
+      sub_region || region
     end
 
     def prepare_organization(row)
