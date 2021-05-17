@@ -7,7 +7,7 @@ class CreateOrganizations < ActiveRecord::Migration[6.1]
       t.integer :external_company_id
       t.boolean :indigenous_tourism
       t.boolean :biosphere_program_member
-      t.string :biosphere_type
+      t.text :website_url
       t.decimal :latitude, precision: 10, scale: 6
       t.decimal :longitude, precision: 10, scale: 6
 
