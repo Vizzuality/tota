@@ -8,11 +8,14 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         organization = prepare_organization(row)
 
-        organization.name = row[:name]
+        organization.name = row[:name_of_businessorganization]
+        organization.website_url = row[:website]
         organization.region = find_or_create_region(row)
         organization.business_type = find_or_create_business_type(row)
         organization.latitude = row[:latitude]
         organization.longitude = row[:longitude]
+        organization.biosphere_program_member = row[:biosphere_program_member]
+        organization.indigenous_tourism = row[:indigenous_tourism]
 
         organization.validate!
         organizations << organization
@@ -22,6 +25,22 @@ module CSVImport
     end
 
     private
+
+    def required_headers
+      [
+        :name_of_businessorganization,
+        :company_id,
+        :website,
+        :business_type,
+        :business_subtype,
+        :indigenous_tourism,
+        :biosphere_program_member,
+        :tourism_region,
+        :tourism_subregion,
+        :latitude,
+        :longitude
+      ]
+    end
 
     def prepare_cache
       @regions = Region.all.map { |r| [r.name.downcase, r] }.to_h

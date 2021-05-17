@@ -6,6 +6,8 @@ module CSVImport
 
     attr_reader :file
 
+    validate :check_required_headers
+
     # @param file [File]
     def initialize(file)
       @file = file
@@ -100,6 +102,16 @@ module CSVImport
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
+    end
+
+    def check_required_headers
+      (required_headers - csv.headers).each do |header|
+        errors.add(:base, "CSV missing header: #{header.to_s.humanize(keep_id_suffix: true)}")
+      end
+    end
+
+    def required_headers
+      []
     end
   end
 end
