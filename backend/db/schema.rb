@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_173444) do
+ActiveRecord::Schema.define(version: 2021_05_13_182355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,29 @@ ActiveRecord::Schema.define(version: 2021_05_12_173444) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_id"], name: "index_business_types_on_parent_id"
+  end
+
+  create_table "indicator_values", force: :cascade do |t|
+    t.bigint "indicator_id", null: false
+    t.string "region"
+    t.string "category_1"
+    t.string "category_2"
+    t.string "value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["indicator_id"], name: "index_indicator_values_on_indicator_id"
+  end
+
+  create_table "indicators", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.text "description"
+    t.bigint "theme_id", null: false
+    t.string "unit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_indicators_on_code"
+    t.index ["theme_id"], name: "index_indicators_on_theme_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -47,7 +70,16 @@ ActiveRecord::Schema.define(version: 2021_05_12_173444) do
     t.index ["parent_id"], name: "index_regions_on_parent_id"
   end
 
+  create_table "themes", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "business_types", "business_types", column: "parent_id"
+  add_foreign_key "indicator_values", "indicators"
+  add_foreign_key "indicators", "themes"
   add_foreign_key "organizations", "business_types"
   add_foreign_key "organizations", "regions"
   add_foreign_key "regions", "regions", column: "parent_id"
