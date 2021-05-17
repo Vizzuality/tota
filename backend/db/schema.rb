@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_182355) do
 
   create_table "indicator_values", force: :cascade do |t|
     t.bigint "indicator_id", null: false
+    t.string "date"
     t.string "region"
     t.string "category_1"
     t.string "category_2"
