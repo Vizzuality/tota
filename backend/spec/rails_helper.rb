@@ -5,6 +5,9 @@ require File.expand_path('../config/environment', __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 
+require 'test_prof/recipes/rspec/before_all'
+require 'test_prof/recipes/rspec/let_it_be'
+
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 begin
@@ -15,9 +18,12 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
   config.include FactoryBot::Syntax::Methods
   config.include FixtureFileHelper
+  config.include RequestHelpers, type: :request
+
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
