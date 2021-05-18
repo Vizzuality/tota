@@ -66,6 +66,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     bindex (0.8.1)
+    blueprinter (0.25.3)
     bootsnap (1.7.4)
       msgpack (~> 1.0)
     brakeman (5.0.1)
@@ -249,6 +250,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
+  blueprinter
   bootsnap (>= 1.4.4)
   brakeman
   bundler-audit
