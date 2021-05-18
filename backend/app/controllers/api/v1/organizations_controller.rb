@@ -3,7 +3,7 @@ module API
     class OrganizationsController < BaseController
       def index
         render json: OrganizationBlueprint.render(
-          Organization.all.includes(:region, :business_type),
+          Organization.where(filters).includes(:region, :business_type),
           root: :data
         )
       end
