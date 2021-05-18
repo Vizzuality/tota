@@ -1,20 +1,20 @@
-class OrganizationSerializer
-  include JSONAPI::Serializer
+class OrganizationBlueprint < Blueprinter::Base
+  identifier :id
 
-  attributes :name, :latitude, :longitude
+  fields :name, :latitude, :longitude
 
-  attribute :region do |org|
+  field :region do |org|
     if org.region.subregion?
       org.region.parent.name
     else
       org.region.name
     end
   end
-  attribute :subregion do |org|
+  field :subregion do |org|
     org.region.name if org.region.subregion?
   end
 
-  attribute :business_type do |org|
+  field :business_type do |org|
     next if org.business_type.nil?
 
     if org.business_type.subtype?
@@ -23,7 +23,7 @@ class OrganizationSerializer
       org.business_type.name
     end
   end
-  attribute :business_subtype do |org|
+  field :business_subtype do |org|
     next if org.business_type.nil?
 
     org.business_type.name if org.business_type.subtype?

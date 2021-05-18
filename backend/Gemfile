@@ -14,6 +14,7 @@ gem 'activerecord-import'
 
 # API
 gem 'jsonapi-serializer'
+gem 'blueprinter'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
