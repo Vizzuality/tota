@@ -1,0 +1,72 @@
+{
+  "data": [
+    {
+      "code": "visits_by_origin",
+      "name": "Visits by origin",
+      "values": [
+        {
+          "category_1": "Canada",
+          "category_2": null,
+          "date": "2020-01",
+          "region": "TO",
+          "value": "33434"
+        },
+        {
+          "category_1": "Germany",
+          "category_2": null,
+          "date": "2020-01",
+          "region": "TO",
+          "value": "33333"
+        },
+        {
+          "category_1": "Canada",
+          "category_2": null,
+          "date": "2020-02",
+          "region": "TO",
+          "value": "2222"
+        },
+        {
+          "category_1": "Germany",
+          "category_2": null,
+          "date": "2020-02",
+          "region": "TO",
+          "value": "2222"
+        }
+      ]
+    },
+    {
+      "code": "stays_by_origin",
+      "name": "Stays by origin",
+      "values": [
+        {
+          "category_1": "Canada",
+          "category_2": null,
+          "date": "2020-01",
+          "region": "TO",
+          "value": "11111"
+        },
+        {
+          "category_1": "Germany",
+          "category_2": null,
+          "date": "2020-01",
+          "region": "TO",
+          "value": "33333"
+        },
+        {
+          "category_1": "Canada",
+          "category_2": null,
+          "date": "2020-02",
+          "region": "TO",
+          "value": "2222"
+        },
+        {
+          "category_1": "Germany",
+          "category_2": null,
+          "date": "2020-02",
+          "region": "TO",
+          "value": "2222"
+        }
+      ]
+    }
+  ]
+}

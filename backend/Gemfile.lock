@@ -162,6 +162,10 @@ GEM
       ffi (~> 1.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
     rspec-collection_matchers (1.2.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.10.1)
@@ -180,6 +184,8 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-request_snapshot (0.7.3)
+      rspec (~> 3.0)
     rspec-support (3.10.2)
     rubocop (1.13.0)
       parallel (~> 1.10)
@@ -219,6 +225,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    test-prof (1.0.5)
     thor (1.1.0)
     tilt (2.0.10)
     tzinfo (2.0.4)
@@ -264,11 +271,13 @@ DEPENDENCIES
   rails (~> 6.1.3, >= 6.1.3.1)
   rspec-collection_matchers
   rspec-rails (~> 5.0.0)
+  rspec-request_snapshot
   rubocop
   rubocop-performance
   sass-rails (>= 6)
   selenium-webdriver
   spring
+  test-prof
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
