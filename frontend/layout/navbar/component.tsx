@@ -23,7 +23,7 @@ const Navbar: FC = () => {
       <Link href="/">
         <a className="relative z-20">TOTA</a>
       </Link>
-      <Hamburger isOpen={isOpen} className="lg:hidden relative z-20" onClick={() => setOpen(!isOpen)} />
+      <Hamburger className="lg:hidden relative z-20" color="white" isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
       <div
         className={`fixed lg:static z-10 top-0 left-0 bg-gray-500 lg:bg-transparent flex flex-col lg:flex-row w-screen lg:w-auto h-screen lg:h-auto justify-center items-center gap-5 ${slideClassNames}`}
       >
