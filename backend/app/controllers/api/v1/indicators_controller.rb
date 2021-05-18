@@ -3,7 +3,7 @@ module API
     class IndicatorsController < BaseController
       def index
         render json: IndicatorBlueprint.render(
-          Indicator.all.includes(:indicator_values),
+          Indicator.where(filters).includes(:indicator_values),
           root: :data
         )
       end
