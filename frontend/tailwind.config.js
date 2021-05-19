@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
+        sidebar: "calc(100vh - theme('spacing.20') - theme('spacing.40'))",
       },
     },
   },

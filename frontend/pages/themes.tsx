@@ -1,15 +1,15 @@
-import Head from 'next/head';
-import Layout from 'layout';
+import { useRouter } from 'next/router';
+
+import themes from 'constants/themes';
 
 const News: React.FC<void> = (): JSX.Element => {
-  return (
-    <Layout>
-      <Head>
-        <title>Themes page</title>
-      </Head>
-      Themes
-    </Layout>
-  );
+  const router = useRouter();
+
+  if (typeof window !== 'undefined') {
+    router.push(`/themes/${themes[0].slug}`);
+  }
+
+  return null;
 };
 
 export default News;
