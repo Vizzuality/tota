@@ -8,6 +8,7 @@ import SidebarLayout from 'layout/sidebar';
 
 import ThemeSection from 'components/themes/section';
 import ThemeHeader from 'components/themes/header';
+import ThemeMobileFooter from 'components/themes/mobile-footer';
 
 import themes from 'constants/themes';
 
@@ -47,6 +48,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
               </>
             }
           />
+          <ThemeMobileFooter />
         </>
       )}
     </Layout>

@@ -18,12 +18,6 @@ const Layout: FC<LayoutProps> = ({ className = 'container', children }: LayoutPr
     <Navbar />
 
     <main className={`${className} mx-auto mt-20 flex-1`}>{children}</main>
-
-    <footer className="text-center p-4">
-      <a href="https://vizzuality.com" target="_blank" rel="noopener noreferrer">
-        Powered by Vizzuality
-      </a>
-    </footer>
   </div>
 );
 
