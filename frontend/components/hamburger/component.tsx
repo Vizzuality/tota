@@ -19,7 +19,11 @@ const Hamburger: FC<HamburgerProps> = ({ color = 'white', className, isOpen, onC
 
   return (
     <button
-      className={cx('w-10 h-10 relative focus:outline-none', className, { [COLOR[color]]: true })}
+      className={cx('w-10 h-10 relative focus:outline-dashed', className, {
+        [COLOR[color]]: true,
+        'focus:outline-white': color === 'white',
+        'focus:outline-black': color === 'black',
+      })}
       onClick={onClick}
     >
       <div className="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
