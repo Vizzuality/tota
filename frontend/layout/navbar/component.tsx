@@ -13,13 +13,16 @@ import NavLink from 'layout/navlink';
 const Navbar: FC = () => {
   const [isOpen, setOpen] = useState(false);
 
-  const slideClassNames = cx('transform lg:transform-none ${isOpenClass} duration-300 ease-in-out', {
+  const slideClassNames = cx('transform lg:transform-none duration-300 ease-in-out', {
     '-translate-x-0': isOpen,
     'translate-x-full': !isOpen,
   });
 
   return (
-    <nav className="fixed w-full h-20 z-10 bg-gray-400 p-4 top-0 flex justify-between items-center text-white">
+    <nav
+      aria-label="Main Navigation"
+      className="fixed w-full h-20 z-10 bg-gray-400 p-4 top-0 flex justify-between items-center text-white"
+    >
       <Link href="/">
         <a className="relative z-20">TOTA</a>
       </Link>

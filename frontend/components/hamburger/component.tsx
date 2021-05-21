@@ -19,6 +19,8 @@ const Hamburger: FC<HamburgerProps> = ({ color = 'white', className, isOpen, onC
 
   return (
     <button
+      aria-expanded={isOpen}
+      aria-label={isOpen ? 'Close the menu' : 'Open the menu'}
       className={cx('w-10 h-10 relative focus:outline-dashed', className, {
         [COLOR[color]]: true,
         'focus:outline-white': color === 'white',
