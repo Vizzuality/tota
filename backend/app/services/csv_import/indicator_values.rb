@@ -6,7 +6,7 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         value = IndicatorValue.new
 
-        value.indicator = Indicator.find_by(code: row[:indicator_code])
+        value.indicator = Indicator.find_or_create_by(slug: row[:indicator_code])
         value.region = row[:region]
         value.date = row[:date]
         value.category_1 = row[:category_1]

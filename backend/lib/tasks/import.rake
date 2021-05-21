@@ -1,11 +1,16 @@
 require "#{Rails.root}/lib/timed_logger"
 
 namespace :import do
+  desc 'Reimport All'
+  task all: [:organizations, :indicators] do
+    puts 'All data reimported!'
+  end
+
   desc 'Reimport Organizations'
   task organizations: :environment do
     next if Rails.env.production?
 
-    if ENV['REIMPORT'].present?
+    unless ENV['KEEP_OLD'].present?
       Organization.delete_all
       Region.delete_all
       BusinessType.delete_all
@@ -19,17 +24,10 @@ namespace :import do
   task indicators: :environment do
     next if Rails.env.production?
 
-    if ENV['REIMPORT'].present?
+    unless ENV['KEEP_OLD'].present?
       IndicatorValue.delete_all
       Indicator.delete_all
-      Theme.delete_all
     end
-
-    theme = Theme.create!(name: 'Theme1')
-
-    Indicator.create!(name: 'Visits by Origin', code: 'visits_by_origin', theme: theme)
-    Indicator.create!(name: 'Stays by Origin', code: 'stays_by_origin', theme: theme)
-    Indicator.create!(name: 'Trips by Origin', code: 'trips_by_origin', theme: theme)
 
     TimedLogger.log('Import Indicator Values') do
       ActiveRecord::Base.connection.cache do

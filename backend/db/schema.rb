@@ -36,15 +36,9 @@ ActiveRecord::Schema.define(version: 2021_05_13_182355) do
   end
 
   create_table "indicators", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "code", null: false
-    t.text "description"
-    t.bigint "theme_id", null: false
-    t.string "unit"
+    t.string "slug", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["code"], name: "index_indicators_on_code"
-    t.index ["theme_id"], name: "index_indicators_on_theme_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -71,16 +65,8 @@ ActiveRecord::Schema.define(version: 2021_05_13_182355) do
     t.index ["parent_id"], name: "index_regions_on_parent_id"
   end
 
-  create_table "themes", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   add_foreign_key "business_types", "business_types", column: "parent_id"
   add_foreign_key "indicator_values", "indicators"
-  add_foreign_key "indicators", "themes"
   add_foreign_key "organizations", "business_types"
   add_foreign_key "organizations", "regions"
   add_foreign_key "regions", "regions", column: "parent_id"
