@@ -19,5 +19,14 @@ RSpec.describe 'API V1 Organizations', type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to match_snapshot('api/v1/organizations')
     end
+
+    context 'sparse fieldset' do
+      it 'should work' do
+        get '/api/v1/organizations?fields=id,region'
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to match_snapshot('api/v1/organizations-sparse-fieldset')
+      end
+    end
   end
 end

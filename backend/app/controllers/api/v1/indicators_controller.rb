@@ -4,7 +4,8 @@ module API
       def index
         render json: IndicatorBlueprint.render(
           Indicator.where(filters).includes(:indicator_values),
-          root: :data
+          root: :data,
+          fields: fields
         )
       end
     end

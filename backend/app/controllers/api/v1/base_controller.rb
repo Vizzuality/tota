@@ -10,6 +10,10 @@ module API
           [k, v.map(&:underscore)]
         end.to_h
       end
+
+      def fields
+        params[:fields]&.split(',')&.map(&:to_sym)
+      end
     end
   end
 end
