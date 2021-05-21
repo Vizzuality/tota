@@ -1,16 +1,6 @@
 {
   "data": [
     {
-      "id": 139,
-      "business_subtype": null,
-      "business_type": "Accommodation",
-      "latitude": "50.2323",
-      "longitude": "34.2333",
-      "name": "Summit River Lodge And Campsites",
-      "region": "Thompson Okanagan",
-      "subregion": "North Okanagan"
-    },
-    {
       "id": 140,
       "business_subtype": "Motel",
       "business_type": "Accommodation",

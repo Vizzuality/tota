@@ -8,6 +8,8 @@ require 'rspec/rails'
 require 'test_prof/recipes/rspec/before_all'
 require 'test_prof/recipes/rspec/let_it_be'
 
+require 'super_diff/rspec-rails'
+
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 begin

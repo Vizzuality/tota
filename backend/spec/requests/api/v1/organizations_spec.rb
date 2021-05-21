@@ -20,6 +20,16 @@ RSpec.describe 'API V1 Organizations', type: :request do
       expect(response.body).to match_snapshot('api/v1/organizations')
     end
 
+    context 'filters' do
+      it 'should filter by name' do
+        params = URI.encode_www_form('filter[name]' => 'Double E Sportsman Camp')
+        get "/api/v1/organizations?#{params}"
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to match_snapshot('api/v1/organizations-filter-by-name')
+      end
+    end
+
     context 'sparse fieldset' do
       it 'should work' do
         get '/api/v1/organizations?fields=id,region'

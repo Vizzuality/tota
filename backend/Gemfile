@@ -38,6 +38,7 @@ group :test do
   gem 'rspec-request_snapshot'
   gem 'factory_bot_rails'
   gem 'selenium-webdriver'
+  gem 'super_diff'
   gem 'test-prof'
   gem 'webdrivers'
 end

@@ -34,6 +34,15 @@ RSpec.describe 'API V1 Indicators', type: :request do
       expect(response.body).to match_snapshot('api/v1/indicators')
     end
 
+    context 'filters' do
+      it 'should filter by slug' do
+        get '/api/v1/indicators?filter[slug]=visits_by_origin'
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to match_snapshot('api/v1/indicators-filter-by-slug')
+      end
+    end
+
     context 'sparse fieldset' do
       it 'should work' do
         get '/api/v1/indicators?fields=slug'
