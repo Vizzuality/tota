@@ -21,6 +21,7 @@ const Hamburger: FC<HamburgerProps> = ({ color = 'white', className, isOpen, onC
     <button
       aria-expanded={isOpen}
       aria-label={isOpen ? 'Close the menu' : 'Open the menu'}
+      aria-controls="manu-list"
       className={cx('w-10 h-10 relative focus:outline-dashed', className, {
         [COLOR[color]]: true,
         'focus:outline-white': color === 'white',

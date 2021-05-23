@@ -13,7 +13,7 @@ import NavLink from 'layout/navlink';
 const Navbar: FC = () => {
   const [isOpen, setOpen] = useState(false);
 
-  const slideClassNames = cx('transform lg:transform-none duration-300 ease-in-out', {
+  const offScreenSlide = cx('transform lg:transform-none duration-300 ease-in-out', {
     '-translate-x-0': isOpen,
     'translate-x-full': !isOpen,
   });
@@ -28,21 +28,26 @@ const Navbar: FC = () => {
       </Link>
       <Hamburger className="lg:hidden relative z-20" color="white" isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
       <div
-        className={`fixed lg:static z-10 top-0 left-0 bg-gray-500 lg:bg-transparent flex flex-col lg:flex-row w-screen lg:w-auto h-screen lg:h-auto justify-center items-center gap-5 ${slideClassNames}`}
+        className={cx(
+          'fixed lg:static z-10 top-0 left-0',
+          'bg-gray-500 lg:bg-transparent w-screen h-screen lg:h-auto flex flex-col lg:flex-row',
+          offScreenSlide,
+        )}
+        id="menu-list"
       >
-        <NavLink href="/about">About</NavLink>
-        <NavLink href="/themes">Themes + Indicators</NavLink>
-        <NavLink href="/map">Map</NavLink>
-        <NavLink href="/news">News</NavLink>
-        <NavLink href="/contact">Contact</NavLink>
-      </div>
-      <div
-        className={`fixed lg:static z-10 bottom-10 left-0 w-screen lg:w-auto h-30 lg:h-auto flex flex-row justify-center gap-5 ${slideClassNames}`}
-      >
-        <Icon icon={FacebookIcon} />
-        <Icon icon={TwitterIcon} />
-        <Icon icon={YouTubeIcon} />
-        <Icon icon={LinkedInIcon} />
+        <div className="flex flex-1 flex-col lg:flex-row justify-center items-center gap-5">
+          <NavLink href="/about">About</NavLink>
+          <NavLink href="/themes">Themes + Indicators</NavLink>
+          <NavLink href="/map">Map</NavLink>
+          <NavLink href="/news">News</NavLink>
+          <NavLink href="/contact">Contact</NavLink>
+        </div>
+        <div className="flex justify-center items-center gap-5 h-20">
+          <Icon icon={FacebookIcon} />
+          <Icon icon={TwitterIcon} />
+          <Icon icon={YouTubeIcon} />
+          <Icon icon={LinkedInIcon} />
+        </div>
       </div>
     </nav>
   );
