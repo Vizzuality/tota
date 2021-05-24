@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 
 import themes from 'constants/themes';
 
-const ThemeHeader: React.FC<void> = (): JSX.Element => {
+export interface ThemeHeaderProps {}
+
+const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   const router = useRouter();
   const { slug } = router.query;
 

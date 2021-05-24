@@ -11,7 +11,9 @@ import Link from 'next/link';
 
 import ChevronIcon from '../../../svgs/chevron-down.svg';
 
-const ThemeMobileFooter: React.FC<void> = (): JSX.Element => {
+export interface ThemeMobileFooterProps {}
+
+const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
