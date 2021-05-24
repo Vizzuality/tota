@@ -19,7 +19,7 @@ const Drawer: FC<DrawerProps> = ({ children, placement, isOpen }: DrawerProps) =
   return (
     <div
       aria-hidden={!isOpen}
-      className={cx('fixed z-10 transform lg:transform-none duration-300 ease-in-out', {
+      className={cx('fixed z-10 transform transition lg:transform-none duration-300 ease-in-out', {
         [PLACEMENT[placement]['base']]: !!placement,
         [PLACEMENT[placement][isOpen ? 'open' : 'close']]: !!placement,
       })}

@@ -5,8 +5,8 @@ type IconComponentType = React.ComponentType<React.SVGProps<SVGElement>>;
 
 interface IconProps {
   icon: IconComponentType;
-  size?: 'md';
   className?: string;
+  size?: 'md';
 }
 
 const SIZE = {
@@ -14,7 +14,7 @@ const SIZE = {
 };
 
 const Icon: FC<IconProps> = ({ icon: Component, size = 'md', className }: IconProps) => (
-  <Component className={cx({ [SIZE[size]]: size }, 'fill-current', className)} />
+  <Component className={cx(className, { [SIZE[size]]: size }, 'fill-current')} />
 );
 
 export default Icon;
