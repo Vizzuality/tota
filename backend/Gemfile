@@ -11,6 +11,9 @@ gem 'webpacker', '~> 5.0'
 
 gem 'activerecord-import'
 
+# API
+gem 'blueprinter'
+
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
@@ -32,8 +35,11 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rspec-request_snapshot'
   gem 'factory_bot_rails'
   gem 'selenium-webdriver'
+  gem 'super_diff'
+  gem 'test-prof'
   gem 'webdrivers'
 end
 
