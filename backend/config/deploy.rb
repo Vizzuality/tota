@@ -3,7 +3,7 @@ set :application, 'tota'
 set :repo_url, 'git@github.com:Vizzuality/tota.git'
 set :repo_tree, 'backend'
 set :deploy_to, '~/tota-api'
-append :linked_files, 'config/master.key'
+append :linked_files, '.env'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/downloads', 'vendor/bundle'
 set :keep_releases, 3
 set :rbenv_type, :user
