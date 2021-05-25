@@ -22,7 +22,7 @@ const Navbar: FC = () => {
   return (
     <nav
       aria-label="Main Navigation"
-      className="fixed w-full h-20 z-10 bg-gray-400 p-4 top-0 flex justify-between items-center text-white"
+      className="fixed w-full h-20 z-30 bg-gray-400 p-4 top-0 flex justify-between items-center text-white"
     >
       <Link href="/">
         <a className="relative z-20">TOTA</a>
