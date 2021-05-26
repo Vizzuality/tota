@@ -13,6 +13,4 @@ test:
 
 production:
   <<: *default
-  database: tota_production
-  username: tota
-  password: <%= ENV['TOTA_DATABASE_PASSWORD'] %>
+  url: <%= Rails.application.credentials.dig(:database, :url) %>
