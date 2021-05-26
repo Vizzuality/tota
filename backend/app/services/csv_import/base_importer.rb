@@ -34,6 +34,10 @@ module CSVImport
       @csv ||= parse_csv
     end
 
+    def full_error_messages
+      errors.full_messages.join(', ')
+    end
+
     protected
 
     def header_converters

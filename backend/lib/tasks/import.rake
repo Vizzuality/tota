@@ -17,7 +17,7 @@ namespace :import do
     end
 
     TimedLogger.log('Import Organizations with Regions and Business Types') do
-      CSVImport::Organizations.new(csv_file('organizations.csv')).call
+      run_importer CSVImport::Organizations, csv_file('organizations.csv')
     end
   end
 
@@ -29,11 +29,23 @@ namespace :import do
       Indicator.delete_all
     end
 
-    TimedLogger.log('Import Indicator Values') do
-      ActiveRecord::Base.connection.cache do
-        CSVImport::IndicatorValues.new(csv_file('indicator_values.csv')).call
+    ActiveRecord::Base.connection.cache do
+      TimedLogger.log('Import Indicator Values for Block 1') do
+        run_importer CSVImport::IndicatorValues, csv_file('Block1_Tourism_Industry_and_Arrivals - EXPORT_CSV.csv')
+      end
+
+      TimedLogger.log('Import Indicator Values for Block 2') do
+        run_importer CSVImport::IndicatorValues, csv_file('Block2_Accommodation_Hotel_Information - EXPORT_CSV.csv')
       end
     end
+  end
+
+  def run_importer(importer, file)
+    service = importer.new(file)
+    return if service.call
+
+    puts 'Errors when calling importer'
+    puts service.full_error_messages
   end
 
   def csv_file(file_name)
