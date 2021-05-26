@@ -13,4 +13,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres@localhost/tota_production") %>
+  url: <%= Rails.application.credentials.dig(:database, :url) %>
