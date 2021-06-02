@@ -62,3 +62,15 @@ jobs:
           PGUSER: ${{ env.POSTGRES_USER }}
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
         run: bundle exec rspec spec
+  deploy:
+    name: Deploy
+    needs: tests
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy
+        uses: miloserdow/capistrano-deploy@master
+        with:
+          target: production
+          deploy_key: ${{ secrets.PRODUCTION_DEPLOY_ENC_KEY }}
+          enc_rsa_key_pth: ./config/deploy/encrypted_keys/production_deploy_enc
