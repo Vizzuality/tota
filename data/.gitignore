@@ -1,0 +1,16 @@
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+**/raw
+**/processed
+.DS_Store
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+src/
+__pycache__/
