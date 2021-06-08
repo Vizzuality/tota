@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import MapComponent from 'components/map';
+import MapComponent from 'components/main-map';
 import Layout from 'layout';
 
 const Map: React.FC<void> = (): JSX.Element => {
