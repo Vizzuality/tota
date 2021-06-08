@@ -14,7 +14,7 @@ const layers: Layer = [
           'source-layer': 'ski_resorts',
           type: 'line',
           paint: {
-            'line-color': 'transparent',
+            'line-color': 'black',
           },
         },
         {
