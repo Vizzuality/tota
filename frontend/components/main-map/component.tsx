@@ -6,6 +6,7 @@ import Map from 'components/map';
 import Controls from 'components/map/controls';
 import ZoomControl from 'components/map/controls/zoom';
 import FitBoundsControl from 'components/map/controls/fit-bounds';
+import layers from './layers';
 
 export interface MapProps {
   width?: string | number;
@@ -68,11 +69,16 @@ export const MainMap: FC<MapProps> = ({
         height={height}
         mapboxApiAccessToken={mapboxApiAccessToken}
         onMapViewportChange={handleViewportChange}
+        onClick={(e) => {
+          if (e && e.features) {
+            console.log('e', e.features);
+          }
+        }}
       >
         {(map) => (
           <>
             <LayerManager map={map} plugin={PluginMapboxGl}>
-              {[].map((l) => (
+              {layers.map((l) => (
                 <Layer key={l.id} {...l} />
               ))}
             </LayerManager>
