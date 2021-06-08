@@ -2,7 +2,9 @@
 */.ipynb_checkpoints/*
 **/raw
 **/processed
-.DS_Store
+**/.DS_Store
+../.DS_Store
+data/**
 
 # Environments
 .env
