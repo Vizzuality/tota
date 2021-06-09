@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {
+   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
     "lib": [
@@ -17,7 +17,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",
@@ -25,6 +25,7 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".storybook"
   ]
 }

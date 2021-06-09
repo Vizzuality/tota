@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 
-import 'styles/tailwind.css';
+import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MyApp: React.ReactNode = ({ Component, pageProps }: AppProps) => {
