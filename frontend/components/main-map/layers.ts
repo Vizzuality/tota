@@ -6,15 +6,18 @@ const layers: Layer = [
     version: '0.0.1',
     type: 'vector',
     source: {
-      url: 'mapbox://totadata.be78g4xu',
+      url: 'mapbox://totadata.arvkb438',
     },
     render: {
       layers: [
         {
           'source-layer': 'ski_resorts',
-          type: 'line',
+          type: 'circle',
           paint: {
-            'line-color': 'black',
+            'circle-color': '#34444c',
+            'circle-radius': 4,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 3,
           },
         },
         {
@@ -32,7 +35,7 @@ const layers: Layer = [
     version: '0.0.1',
     type: 'vector',
     source: {
-      url: 'mapbox://totadata.cb1lvmde',
+      url: 'mapbox://totadata.8tgd889y',
     },
     render: {
       layers: [
@@ -47,7 +50,7 @@ const layers: Layer = [
           'source-layer': 'tourism_regions',
           type: 'fill',
           paint: {
-            'fill-color': 'blue',
+            'fill-color': 'transparent',
           },
         },
       ],
