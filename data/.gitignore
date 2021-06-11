@@ -4,8 +4,9 @@
 **/processed
 **/.DS_Store
 ../.DS_Store
-data/**
-/data/
+.DS_Store
+data/*
+
 
 # Environments
 .env
