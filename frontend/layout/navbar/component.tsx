@@ -4,10 +4,11 @@ import cx from 'classnames';
 import Link from 'next/link';
 import Icon from 'components/icon';
 import Hamburger from 'components/hamburger';
-import FacebookIcon from '../../svgs/social/facebook.svg'; // better to use something else, inline react does not work well with typescript, webpack5
-import TwitterIcon from '../../svgs/social/twitter.svg';
-import LinkedInIcon from '../../svgs/social/linkedin.svg';
-import YouTubeIcon from '../../svgs/social/youtube.svg';
+import FacebookIcon from 'svgs/social/facebook.svg?sprite';
+import TwitterIcon from 'svgs/social/twitter.svg?sprite';
+import LinkedInIcon from 'svgs/social/linkedin.svg?sprite';
+import YouTubeIcon from 'svgs/social/youtube.svg?sprite';
+
 import NavLink from 'layout/navlink';
 
 const Navbar: FC = () => {
