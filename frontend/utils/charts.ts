@@ -1,4 +1,11 @@
-export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }) {
+interface MergeRawData {
+  rawData: any[];
+  mergeBy: string;
+  labelKey: string;
+  valueKey: string;
+}
+
+export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawData): any[] {
   const dataObj = {};
   rawData.forEach((rd) => {
     dataObj[rd[mergeBy]] = {
