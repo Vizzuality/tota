@@ -12,6 +12,7 @@ import {
   XAxisProps,
   YAxisProps,
 } from 'recharts';
+import { colors } from 'constants/charts';
 
 export interface ConfigProps {
   lines: LineProps;
@@ -37,7 +38,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
-        {lines && Object.keys(lines).map((line) => <Line key={line} {...lines[line]} />)}
+        {lines && Object.keys(lines).map((line, index) => <Line key={line} {...lines[line]} stroke={colors[index]} />)}
         {tooltip && <Tooltip />}
       </LineChart>
     </ResponsiveContainer>
