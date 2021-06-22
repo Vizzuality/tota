@@ -29,6 +29,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-map-gl": "5",
+    "recharts": "^2.0.9",
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
