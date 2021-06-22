@@ -24,7 +24,7 @@ interface ConfigProps {
   tooltip: any;
 }
 
-interface ChartProps {
+export interface ChartProps {
   data: any[];
   config: ConfigProps;
 }
@@ -32,8 +32,8 @@ interface ChartProps {
 const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
   const { cartesianGrid, cartesianAxis, xAxis, yAxis, bars, tooltip } = config;
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <BarChart width={400} height={500} data={data}>
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart width={400} height={200} data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
