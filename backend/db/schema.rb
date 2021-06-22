@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_182355) do
+ActiveRecord::Schema.define(version: 2021_06_22_134529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_182355) do
     t.string "region"
     t.string "category_1"
     t.string "category_2"
-    t.string "value", null: false
+    t.float "value", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["indicator_id"], name: "index_indicator_values_on_indicator_id"
