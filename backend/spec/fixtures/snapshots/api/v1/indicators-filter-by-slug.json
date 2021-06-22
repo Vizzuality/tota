@@ -2,7 +2,7 @@
   "data": [
     {
       "slug": "visits_by_origin",
-      "values": [
+      "indicator_values": [
         {
           "category_1": "Canada",
           "category_2": null,
