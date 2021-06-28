@@ -5,6 +5,9 @@
     },
     {
       "slug": "stays_by_origin"
+    },
+    {
+      "slug": "establishments_by_type"
     }
   ]
 }

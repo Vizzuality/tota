@@ -65,6 +65,25 @@
           "value": 2222.0
         }
       ]
+    },
+    {
+      "slug": "establishments_by_type",
+      "indicator_values": [
+        {
+          "category_1": "Accommodation",
+          "category_2": null,
+          "date": null,
+          "region": "region 1",
+          "value": 3.0
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": null,
+          "date": null,
+          "region": "region 1",
+          "value": 2.0
+        }
+      ]
     }
   ]
 }
