@@ -8,9 +8,39 @@ module Indicators
 
     def generate
       Indicator.create(slug: 'establishments_by_type')
+      Indicator.create(slug: 'total_establishments')
 
       generate_establishments_by_type('all')
       generate_establishments_by_type('biosphere')
+      generate_total_establishments_by_region
+    end
+
+    def generate_total_establishments_by_region
+      sql = <<~SQL
+        select
+          (select id from indicators where slug = 'total_establishments' limit 1) as indicator_id,
+          null as date,
+          null as category_1,
+          null as category_2,
+          region,
+          count(*) as value,
+          NOW() as created_at,
+          NOW() as updated_at
+        from
+          (select
+            coalesce(rp.name, r.name) as region
+          from
+            organizations o
+            inner join regions r on r.id = o.region_id
+            left join regions rp on rp.id = r.parent_id
+           ) as organizations
+        group by region
+      SQL
+
+      result = ActiveRecord::Base.connection.execute(sql)
+      return if result.count.zero?
+
+      IndicatorValue.insert_all! result
     end
 
     def generate_establishments_by_type(category)

@@ -61,5 +61,16 @@ RSpec.describe Indicators::EstablishmentsByType do
         expect(r2_values.where(category_1: 'Transportation').first).to be_nil
       end
     end
+
+    describe 'total establishments' do
+      it 'returns correct values grouped by region' do
+        indicator = Indicator.find_by(slug: 'total_establishments')
+        values = indicator.indicator_values
+
+        expect(values.count).to eq(2)
+        expect(values.find_by(region: 'region 1').value).to eq(5.0)
+        expect(values.find_by(region: 'region 2').value).to eq(4.0)
+      end
+    end
   end
 end
