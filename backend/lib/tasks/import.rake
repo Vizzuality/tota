@@ -45,6 +45,10 @@ class ImportTasks
           TimedLogger.log('Import Indicator Values for Block 4') do
             run_importer CSVImport::IndicatorValues, csv_file('Block4_Airport - EXPORT_CSV.csv')
           end
+
+          TimedLogger.log('Create dynamic indicators') do
+            Indicator.create(slug: 'establishments_by_type')
+          end
         end
       end
     end
