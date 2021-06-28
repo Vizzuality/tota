@@ -1,5 +1,5 @@
 class Indicator < ApplicationRecord
-  has_many :indicator_values, -> { with_dynamic_indicators }
+  has_many :indicator_values
 
   validates_presence_of :slug
 end

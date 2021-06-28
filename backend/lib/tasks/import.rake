@@ -47,7 +47,7 @@ class ImportTasks
           end
 
           TimedLogger.log('Create dynamic indicators') do
-            Indicator.create(slug: 'establishments_by_type')
+            Indicators::EstablishmentsByType.generate
           end
         end
       end

@@ -1,13 +1,13 @@
 {
   "data": [
     {
+      "slug": "establishments_by_type"
+    },
+    {
       "slug": "visits_by_origin"
     },
     {
       "slug": "stays_by_origin"
-    },
-    {
-      "slug": "establishments_by_type"
     }
   ]
 }
