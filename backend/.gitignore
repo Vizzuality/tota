@@ -38,3 +38,5 @@ yarn-debug.log*
 /db/csvs
 
 /config/credentials/production.key
+
+/coverage
