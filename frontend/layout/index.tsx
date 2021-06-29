@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ className = 'container', children }: LayoutProps) => (
-  <div className="min-h-screen flex flex-col">
+  <div className="min-h-screen flex flex-col bg-gray-100">
     <Head>
       <title>Tota</title>
       <link rel="icon" href="/favicon.ico" />

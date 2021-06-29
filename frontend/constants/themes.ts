@@ -2,37 +2,38 @@ export default [
   {
     name: 'Tourism Industry & Arrivals',
     slug: 'tourism-industry-arrivals',
-    summary: 'Theme summary',
+    summary:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
     sections: [
       {
         name: 'Types of tourism establishments',
         description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
       {
         name: 'Total of tourism establishments',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
       {
         name: 'Monthly domestic (canadian) arrivals to TO (&BC as comparison)',
         description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
       {
         name: 'Quarterly visits by origin city',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
       {
         name: 'Monthly Top 10 PRIZM Clusters per month (number of BC visitors to TO)',
         description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
       {
         name: '% of annual domestic overnight visitors occuring in peak month & quarter',
         description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies, purus magna consectetur sapien, et pulvinar lorem metus vel dolor. Integer in lorem ut dolor tincidunt dictum. Sed metus eros, fermentum ut imperdiet eu, tempor ac nisl. Aenean semper, lacus et dictum laoreet, ipsum eros molestie enim, sed ultrices massa velit id leo. Vivamus dapibus enim eu dolor malesuada, vel consequat felis tempus`,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       },
     ],
   },

@@ -12,8 +12,9 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   const theme = themes.find((t) => t.slug === slug);
 
   return (
-    <div className="h-60 flex items-center justify-center">
-      <h1 className="text-5xl">{theme.name}</h1>
+    <div className="mb-10">
+      <h1 className="text-3xl my-10">{theme.name}</h1>
+      <p>{theme.summary}</p>
     </div>
   );
 };
