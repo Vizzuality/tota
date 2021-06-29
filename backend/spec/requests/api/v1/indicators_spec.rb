@@ -1,6 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe 'API V1 Indicators', type: :request do
+  before_all do
+    bt1 = create(:business_type, name: 'Accommodation')
+    bt2 = create(:business_type, name: 'Bed & Breakfast', parent: bt1)
+    bt3 = create(:business_type, name: 'Activity / Attraction')
+    bt4 = create(:business_type, name: 'Transportation')
+    r1 = create(:region, name: 'region 1')
+    r2 = create(:region, name: 'region 2')
+
+    create(:organization, business_type: bt1, region: r1, biosphere_program_member: true)
+    create(:organization, business_type: bt1, region: r1)
+    create(:organization, business_type: bt2, region: r1, biosphere_program_member: true)
+    create(:organization, business_type: bt3, region: r1)
+    create(:organization, business_type: bt3, region: r1, biosphere_program_member: true)
+
+    create(:organization, business_type: bt2, region: r2)
+    create(:organization, business_type: bt2, region: r2, biosphere_program_member: true)
+    create(:organization, business_type: bt3, region: r2, biosphere_program_member: true)
+    create(:organization, business_type: bt4, region: r2)
+
+    Indicators::EstablishmentsByType.generate
+  end
+
   let_it_be(:visits_by_origin) do
     create(
       :indicator,

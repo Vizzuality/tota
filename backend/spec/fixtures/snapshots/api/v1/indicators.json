@@ -1,6 +1,93 @@
 {
   "data": [
     {
+      "slug": "establishments_by_type",
+      "indicator_values": [
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "date": null,
+          "region": "region 1",
+          "value": 2.0
+        },
+        {
+          "category_1": "Transportation",
+          "category_2": "all",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "all",
+          "date": null,
+          "region": "region 2",
+          "value": 2.0
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "all",
+          "date": null,
+          "region": "region 1",
+          "value": 3.0
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 1",
+          "value": 1.0
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 1",
+          "value": 2.0
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "slug": "total_establishments",
+      "indicator_values": [
+        {
+          "category_1": null,
+          "category_2": null,
+          "date": null,
+          "region": "region 2",
+          "value": 4.0
+        },
+        {
+          "category_1": null,
+          "category_2": null,
+          "date": null,
+          "region": "region 1",
+          "value": 5.0
+        }
+      ]
+    },
+    {
       "slug": "visits_by_origin",
       "indicator_values": [
         {
