@@ -9,7 +9,7 @@ import Icon from 'components/icon';
 import themes from 'constants/themes';
 import Link from 'next/link';
 
-import ChevronIcon from '../../../svgs/chevron-down.svg';
+import ChevronIcon from 'svgs/chevron-down.svg?sprite';
 
 export interface ThemeMobileFooterProps {}
 
