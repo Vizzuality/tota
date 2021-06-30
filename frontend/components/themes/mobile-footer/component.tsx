@@ -30,7 +30,7 @@ const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
           className="w-full h-full flex items-center"
           onClick={() => setOpen(!isOpen)}
         >
-          <span className="flex-1">{theme.name}</span>
+          <span className="flex-1">{theme.title}</span>
           <Icon
             className={cx('mr-10 transform duration-300 ease-in-out', {
               'rotate-180 ': !isOpen,
@@ -44,7 +44,7 @@ const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
           {themes.map((theme) => (
             <Link key={theme.slug} href={`/themes/${theme.slug}`}>
               <a className="mx-5 py-5 border-b-2 border-white last:border-b-0" onClick={() => setOpen(false)}>
-                {theme.name}
+                {theme.title}
               </a>
             </Link>
           ))}

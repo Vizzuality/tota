@@ -27,7 +27,10 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
         <>
           <ThemeHeader />
 
-          {theme.sections && theme.sections.map((section) => <ThemeSection key={section.name} section={section} />)}
+          {theme.sections &&
+            theme.sections.map((section, index) => (
+              <ThemeSection key={section.title} index={index + 1} section={section} />
+            ))}
           <ThemeMobileFooter />
         </>
       )}

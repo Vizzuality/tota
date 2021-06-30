@@ -13,7 +13,7 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
 
   return (
     <div className="mb-10">
-      <h1 className="text-3xl my-10">{theme.name}</h1>
+      <h1 className="text-3xl my-10">{theme.title}</h1>
       <p>{theme.summary}</p>
     </div>
   );
