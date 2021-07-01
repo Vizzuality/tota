@@ -5,6 +5,12 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    container: {
+      padding: {
+        DEFAULT: '2rem',
+        sm: '0',
+      },
+    },
     extend: {
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
@@ -12,7 +18,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['last'],
+    },
   },
   plugins: [],
 };

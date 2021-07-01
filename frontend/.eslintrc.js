@@ -23,6 +23,7 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     // 'react/prop-types': 0,
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
     'react/react-in-jsx-scope': 'off',
   },
 };
