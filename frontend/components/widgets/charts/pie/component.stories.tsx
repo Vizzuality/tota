@@ -3,7 +3,7 @@ import { Story } from '@storybook/react/types-6-0';
 import Chart, { ChartProps } from './component';
 
 export default {
-  title: 'Components/Charts/Pie',
+  title: 'Components/Widgets/Charts/Pie',
   component: Chart,
   argTypes: {},
 };

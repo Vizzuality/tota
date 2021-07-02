@@ -4,7 +4,7 @@ import Chart, { ChartProps } from './component';
 import { mergeRawData } from 'utils/charts';
 
 export default {
-  title: 'Components/Charts/Bar',
+  title: 'Components/Widgets/Charts/Bar',
   component: Chart,
   argTypes: {},
 };
