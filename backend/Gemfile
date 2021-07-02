@@ -13,6 +13,7 @@ gem 'activerecord-import'
 
 # API
 gem 'blueprinter'
+gem 'rack-cors'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
