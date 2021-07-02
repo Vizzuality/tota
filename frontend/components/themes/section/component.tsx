@@ -20,10 +20,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     loading: Loading,
   });
 
-  const { data } = useQuery('fetch-indicator', section.fetchData);
+  const { data } = useQuery(section.fetchDataKey || `Fetch indicator ${section.title}`, section.fetchData);
   let widgetData = data;
+
   if (typeof section.widget?.transformData === 'function') {
     widgetData = section.widget.transformData(data);
+  }
+  let widgetConfig = section.widget?.config;
+  if (typeof section.widget?.config === 'function') {
+    widgetConfig = section.widget.config(data);
   }
 
   return (
@@ -45,8 +50,8 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
 
-      <div className="w-3/5">{widgetData && <Widget data={widgetData} config={section.widget.config} />}</div>
-    </div>
+      <div className="w-3/5">{widgetData && widgetConfig && <Widget data={widgetData} config={widgetConfig} />}</div>
+    </div >
   );
 };
 
