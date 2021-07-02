@@ -1,18 +1,5 @@
 import React, { FC } from 'react';
-import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  CartesianGrid,
-  CartesianAxis,
-  XAxis,
-  YAxis,
-  Tooltip,
-  PieProps,
-  Cell,
-  XAxisProps,
-  YAxisProps,
-} from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Tooltip, PieProps, Cell } from 'recharts';
 
 import { colors } from 'constants/charts';
 

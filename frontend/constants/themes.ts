@@ -1,4 +1,5 @@
 import { typesOfTourismEstablishments } from './mocks';
+import TotaAPI from 'services/api';
 
 const commonChartConfig = {
   margin: {
@@ -9,7 +10,23 @@ const commonChartConfig = {
   },
 };
 
-export default [
+export interface ThemeSectionType {
+  title: string;
+  subTitle?: string;
+  description: string;
+  fetchData?: any;
+  data?: any;
+  widget: any;
+}
+
+export interface ThemeType {
+  title: string;
+  slug: string;
+  summary?: string;
+  sections: ThemeSectionType[];
+}
+
+const themes: ThemeType[] = [
   {
     title: 'Tourism Industry & Arrivals',
     slug: 'tourism-industry-arrivals',
@@ -22,8 +39,11 @@ export default [
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         data: typesOfTourismEstablishments.data,
+        fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
         widget: {
-          data(rawData: any) {
+          transformData(rawData: any[]): any[] {
+            if (!rawData) return [];
+
             const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
             if (!indicatorData) return [];
 
@@ -48,8 +68,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         data: typesOfTourismEstablishments.data,
+        fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
         widget: {
-          data(rawData: any) {
+          transformData(rawData: any[]): any[] {
+            if (!rawData) return [];
+
             const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
             if (!indicatorData) return [];
 
@@ -117,17 +140,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
   {
     title: 'Tourism Arrivals & Seasonality',
     slug: 'tourism-arrivals-seasonality',
+    sections: [],
   },
   {
     title: 'Tourism Revenues & Expenditures',
     slug: 'tourism-revenues-expenditures',
+    sections: [],
   },
   {
     title: 'Indigenous & Accessibility',
     slug: 'indigenous-accessibility',
+    sections: [],
   },
   {
     title: 'Climate Change & Mobility',
     slug: 'climate-change-mobility',
+    sections: [],
   },
 ];
+
+export default themes;

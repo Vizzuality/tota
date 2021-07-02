@@ -1,13 +1,7 @@
 import { FC } from 'react';
+import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
-
-interface Section {
-  title: string;
-  subTitle?: string;
-  description: string;
-  data: any;
-  widget: any;
-}
+import { ThemeSectionType } from 'constants/themes';
 
 interface WidgetProps {
   data: any;
@@ -15,7 +9,7 @@ interface WidgetProps {
 }
 
 export interface ThemeSectionProps {
-  section: Section;
+  section: ThemeSectionType;
   index: number;
 }
 
@@ -26,7 +20,11 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     loading: Loading,
   });
 
-  const widgetData = typeof section.widget?.data === 'function' ? section.widget.data(section.data) : section.data;
+  const { data } = useQuery('fetch-indicator', section.fetchData);
+  let widgetData = data;
+  if (typeof section.widget?.transformData === 'function') {
+    widgetData = section.widget.transformData(data);
+  }
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -46,6 +44,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
+
       <div className="w-3/5">{widgetData && <Widget data={widgetData} config={section.widget.config} />}</div>
     </div>
   );
