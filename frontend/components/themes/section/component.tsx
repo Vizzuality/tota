@@ -9,7 +9,7 @@ interface Section {
   widget: any;
 }
 
-interface ChartProps {
+interface WidgetProps {
   data: any;
   config: any;
 }
@@ -21,10 +21,12 @@ export interface ThemeSectionProps {
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
   const Loading = () => <div>Loading...</div>;
-  const chartType = section.widget?.type || 'pie';
-  const DynamicChart = dynamic<ChartProps>(() => import(`components/charts/${chartType}`), { loading: Loading });
+  const widgetType = section.widget?.type || 'charts/pie';
+  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
+    loading: Loading,
+  });
 
-  const chartData = typeof section.widget?.data === 'function' && section.widget.data(section.data);
+  const widgetData = typeof section.widget?.data === 'function' ? section.widget.data(section.data) : section.data;
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -44,7 +46,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
-      <div className="w-3/5">{chartData && <DynamicChart data={chartData} config={section.widget.config} />}</div>
+      <div className="w-3/5">{widgetData && <Widget data={widgetData} config={section.widget.config} />}</div>
     </div>
   );
 };
