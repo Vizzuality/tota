@@ -1,4 +1,3 @@
-import { typesOfTourismEstablishments } from './mocks';
 import TotaAPI from 'services/api';
 import { mergeRawData } from 'utils/charts';
 
@@ -55,7 +54,6 @@ const themes: ThemeType[] = [
         subTitle: '(by type)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: typesOfTourismEstablishments.data,
         fetchDataKey: 'indicator-establishments-by-type',
         fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
         widget: {
@@ -85,7 +83,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Distinguished tourism establishments',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: typesOfTourismEstablishments.data,
         fetchDataKey: 'indicator-establishments-by-type',
         fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
         widget: {
@@ -155,6 +152,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             yAxis: {},
             tooltip: {},
           },
+        },
+      },
+      {
+        title: '% of annual domestic overnight visitors occurring in peak month & quarter',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () =>
+          Promise.resolve([
+            {
+              position: 1,
+              value: '30% ipsum lalala',
+            },
+            {
+              position: 2,
+              value: '40% ipsum lalala',
+            },
+            {
+              position: 3,
+              value: '30% ipsum lalala',
+            },
+          ]),
+        widget: {
+          // transformData(rawData: any[]): any[] {
+          //   if (!rawData) return [];
+
+          //   const indicatorData = rawData.filter((x: any) => x.slug === 'trips_by_origin_monthly')[0];
+          //   if (!indicatorData) return [];
+          //   const indicatorValues = indicatorData['indicator_values'];
+
+          //   return mergeRawData({ rawData: indicatorValues, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+          // },
+          type: 'rank',
+          config: {},
         },
       },
       {
