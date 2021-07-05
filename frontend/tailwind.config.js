@@ -12,6 +12,9 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        color1: '#314057',
+      },
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
       },

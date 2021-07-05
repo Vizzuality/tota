@@ -29,7 +29,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
             return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'all');
           },
-          type: 'pie',
+          type: 'charts/pie',
           config: {
             ...commonChartConfig,
             pies: [
@@ -55,7 +55,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
             return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'biosphere');
           },
-          type: 'pie',
+          type: 'charts/pie',
           config: {
             ...commonChartConfig,
             pies: [
@@ -73,29 +73,44 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Monthly domestic (canadian) arrivals',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: [],
+        data: null,
         widget: {},
       },
       {
         title: 'Quarterly visits by origin city',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: [],
+        data: null,
         widget: {},
       },
       {
         title: 'Monthly Top 10 PRIZM Clusters per month (number of BC visitors to TO)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: [],
+        data: null,
         widget: {},
       },
       {
         title: '% of annual domestic overnight visitors occuring in peak month & quarter',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: [],
-        widget: {},
+        data: [
+          {
+            position: 1,
+            value: '50 % lorem ipsum dolor',
+          },
+          {
+            position: 2,
+            value: '30 % lorem ipsum dolor',
+          },
+          {
+            position: 3,
+            value: '30 % lorem ipsum dolor',
+          },
+        ],
+        widget: {
+          type: 'rank',
+        },
       },
     ],
   },
