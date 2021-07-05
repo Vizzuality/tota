@@ -1,7 +1,9 @@
-import { FC } from 'react';
+import React, { useState, FC } from 'react';
 import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
 import { ThemeSectionType } from 'constants/themes';
+import Select from 'components/select';
+import Switch from 'components/switch';
 
 interface WidgetProps {
   data: any;
@@ -19,17 +21,24 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: Loading,
   });
+  const [state, setState] = useState(section.initialState);
+  const { switchSelectedValue, selectSelectedValue } = state || {};
+  const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
+  const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
 
-  const { data } = useQuery(section.fetchDataKey || `Fetch indicator ${section.title}`, section.fetchData);
+  const { data } = useQuery([section.fetchDataKey || `Fetch indicator ${section.title}`, { ...state }], () =>
+    section.fetchData(state),
+  );
   let widgetData = data;
 
   if (typeof section.widget?.transformData === 'function') {
-    widgetData = section.widget.transformData(data);
+    widgetData = section.widget.transformData(data, state);
   }
-  let widgetConfig = section.widget?.config;
+  let config = section.widget?.config;
   if (typeof section.widget?.config === 'function') {
-    widgetConfig = section.widget.config(data);
+    config = section.widget.config(data);
   }
+  const { selectors, ...widgetConfig } = config;
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -50,8 +59,28 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
 
-      <div className="w-3/5">{widgetData && widgetConfig && <Widget data={widgetData} config={widgetConfig} />}</div>
-    </div >
+      <div className="w-3/5">
+        {selectors && (
+          <div className="flex justify-between mb-5">
+            {selectors.switch && (
+              <Switch
+                options={selectors.switch.options}
+                selectedValue={switchSelectedValue}
+                onChange={handleSwitchChange}
+              />
+            )}
+            {selectors.select && (
+              <Select
+                options={selectors.select.options}
+                selectedValue={selectSelectedValue}
+                onChange={handleSelectChange}
+              />
+            )}
+          </div>
+        )}
+        {widgetData && widgetConfig && <Widget data={widgetData} config={widgetConfig} />}
+      </div>
+    </div>
   );
 };
 

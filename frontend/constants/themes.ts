@@ -14,6 +14,7 @@ export interface ThemeSectionType {
   title: string;
   subTitle?: string;
   description: string;
+  initialState?: any;
   fetchDataKey?: string;
   fetchData?: any;
   data?: any;
@@ -56,18 +57,35 @@ const themes: ThemeType[] = [
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type',
         fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
+        initialState: {
+          switchSelectedValue: 'all',
+        },
         widget: {
-          transformData(rawData: any[]): any[] {
+          transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
 
             const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
             if (!indicatorData) return [];
 
-            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'all');
+            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === state.switchSelectedValue);
           },
           type: 'charts/pie',
           config: {
             ...commonChartConfig,
+            selectors: {
+              switch: {
+                options: [
+                  {
+                    name: 'Biosphere',
+                    value: 'biosphere',
+                  },
+                  {
+                    name: 'All',
+                    value: 'all',
+                  },
+                ],
+              },
+            },
             pies: [
               {
                 nameKey: 'category_1',
@@ -112,45 +130,89 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Monthly domestic (canadian) arrivals',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        fetchData: () =>
-          TotaAPI.get(
-            `indicators?filter[slug]=trips_by_origin_monthly&filter[indicator_values.region]=${encodeURIComponent(
+        initialState: {
+          switchSelectedValue: 'visits',
+        },
+        fetchData: (state: any) => {
+          const indicatorSlug = {
+            visits: 'visits_by_origin_country_monthly',
+            stays: 'stays_by_origin_country_monthly',
+            trips: 'trips_by_origin_country_monthly',
+          }[state.switchSelectedValue];
+
+          return TotaAPI.get(
+            `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
-          ),
+          ).then((data) => {
+            const indicatorData = data.filter((x: any) => x.slug === indicatorSlug)[0];
+            if (!indicatorData) return [];
+            return indicatorData['indicator_values'];
+          });
+        },
         widget: {
           transformData(rawData: any[]): any[] {
             if (!rawData) return [];
 
-            const indicatorData = rawData.filter((x: any) => x.slug === 'trips_by_origin_monthly')[0];
-            if (!indicatorData) return [];
-            const indicatorValues = indicatorData['indicator_values'];
-
-            return mergeRawData({ rawData: indicatorValues, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            return mergeRawData({ rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
           type: 'charts/line',
-          config: {
-            ...commonChartConfig,
-            cartesianGrid: {
-              vertical: false,
-              height: '1px',
-              strokeDasharray: '10 5',
-            },
-            lines: [
+          config(data: any[]): any {
+            const yearsOptions = [
               {
-                type: 'monotone',
-                dataKey: 'Thompson Okanagan',
+                name: 'All years',
+                value: 'all_years',
               },
-              {
-                type: 'monotone',
-                dataKey: 'British Columbia',
+            ];
+            const availableYears = Array.from(
+              new Set((data || []).map((d) => new Date(d['date']).getFullYear())),
+            ).reverse();
+            availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
+
+            return {
+              ...commonChartConfig,
+              selectors: {
+                switch: {
+                  options: [
+                    {
+                      name: 'Visits',
+                      value: 'visits',
+                    },
+                    {
+                      name: 'Trips',
+                      value: 'trips',
+                    },
+                    {
+                      name: 'Stays',
+                      value: 'stays',
+                    },
+                  ],
+                },
+                select: {
+                  options: yearsOptions,
+                },
               },
-            ],
-            xAxis: {
-              dataKey: 'date',
-            },
-            yAxis: {},
-            tooltip: {},
+              cartesianGrid: {
+                vertical: false,
+                height: '1px',
+                strokeDasharray: '10 5',
+              },
+              lines: [
+                {
+                  type: 'monotone',
+                  dataKey: 'Thompson Okanagan',
+                },
+                {
+                  type: 'monotone',
+                  dataKey: 'British Columbia',
+                },
+              ],
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {},
+              tooltip: {},
+            };
           },
         },
       },
@@ -193,11 +255,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchData: () =>
           TotaAPI.get(
-            `indicators?filter[slug]=visits_by_origin_quarterly&filter[indicator_values.region]=${encodeURIComponent(
+            `indicators?filter[slug]=visits_by_origin_province_quarterly&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
           ).then((data) => {
-            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_quarterly')[0];
+            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_province_quarterly')[0];
             if (!indicatorData) return [];
             return indicatorData['indicator_values'].filter((x: any) => PROVINCES.includes(x['category_1']));
           }),
@@ -244,11 +306,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchData: () =>
           TotaAPI.get(
-            `indicators?filter[slug]=visits_by_origin_quarterly&filter[indicator_values.region]=${encodeURIComponent(
+            `indicators?filter[slug]=visits_by_origin_city_quarterly&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
           ).then((data) => {
-            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_quarterly')[0];
+            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_city_quarterly')[0];
             if (!indicatorData) return [];
             return indicatorData['indicator_values'].filter((x: any) => !PROVINCES.includes(x['category_1']));
           }),
