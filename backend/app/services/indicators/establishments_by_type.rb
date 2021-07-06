@@ -12,6 +12,7 @@ module Indicators
 
       generate_establishments_by_type('all')
       generate_establishments_by_type('biosphere')
+      generate_establishments_by_type('accessibility')
       generate_total_establishments_by_region
     end
 
@@ -46,6 +47,7 @@ module Indicators
     def generate_establishments_by_type(category)
       organization_where = '1 = 1'
       organization_where = 'o.biosphere_program_member = true' if category == 'biosphere'
+      organization_where = 'o.accessibility = true' if category == 'accessibility'
 
       sql = <<~SQL
         select
