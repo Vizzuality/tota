@@ -27,21 +27,6 @@ export interface ThemeType {
   sections: ThemeSectionType[];
 }
 
-const PROVINCES = [
-  'British Columbia',
-  'Manitoba',
-  'New Brunswick',
-  'Newfoundland and Labrador',
-  'Nova Scotia',
-  'Nunavut',
-  'Northwest Territories',
-  'Ontario',
-  'Prince Edward Island',
-  'Québec',
-  'Saskatchewan',
-  'Yukon',
-];
-
 const themes: ThemeType[] = [
   {
     title: 'Tourism Industry & Arrivals',
@@ -71,6 +56,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             pies: [
               {
                 nameKey: 'category_1',
+                dataKey: 'value',
                 innerRadius: '50%',
                 outerRadius: '70%',
               },
@@ -115,6 +101,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             pies: [
               {
                 nameKey: 'category_1',
+                dataKey: 'value',
                 innerRadius: '50%',
                 outerRadius: '70%',
               },
@@ -129,6 +116,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           switchSelectedValue: 'visits',
+          selectSelectedValue: 'all_years',
         },
         fetchData: (state: any) => {
           const indicatorSlug = {
@@ -144,8 +132,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
         },
         widget: {
-          transformData(rawData: any[]): any[] {
-            return mergeRawData({ rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+          transformData(rawData: any[], state: any): any[] {
+            let data = rawData;
+            if (state.selectSelectedValue !== 'all_years') {
+              data = (rawData || []).filter(
+                (x: any) => new Date(x['date']).getFullYear().toString() === state.selectSelectedValue,
+              );
+            }
+            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
           type: 'charts/line',
           config(data: any[]): any {
@@ -240,11 +234,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             `indicators?filter[slug]=visits_by_origin_province_quarterly&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
-          ).then((data) => {
-            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_province_quarterly')[0];
-            if (!indicatorData) return [];
-            return indicatorData['indicator_values'].filter((x: any) => PROVINCES.includes(x['category_1']));
-          }),
+          ).then(
+            (data) =>
+              data.filter((x: any) => x.slug === 'visits_by_origin_province_quarterly')[0]?.['indicator_values'] || [],
+          ),
         widget: {
           transformData(rawData: any[]): any[] {
             if (!rawData) return [];
@@ -291,11 +284,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             `indicators?filter[slug]=visits_by_origin_city_quarterly&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
-          ).then((data) => {
-            const indicatorData = data.filter((x: any) => x.slug === 'visits_by_origin_city_quarterly')[0];
-            if (!indicatorData) return [];
-            return indicatorData['indicator_values'].filter((x: any) => !PROVINCES.includes(x['category_1']));
-          }),
+          ).then(
+            (data) =>
+              data.filter((x: any) => x.slug === 'visits_by_origin_city_quarterly')[0]?.['indicator_values'] || [],
+          ),
         widget: {
           transformData(rawData: any[]): any[] {
             if (!rawData) return [];

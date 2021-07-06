@@ -1,3 +1,5 @@
+import sortBy from 'lodash/sortBy';
+
 interface MergeRawData {
   rawData: any[];
   mergeBy: string;
@@ -15,7 +17,7 @@ export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawD
       [rd[labelKey]]: rd[valueKey],
     };
   });
-  return Object.values(dataObj);
+  return sortBy(Object.values(dataObj), mergeBy);
 }
 
 export function getAvailableYearsOptions(data: any[]): any[] {
@@ -25,7 +27,9 @@ export function getAvailableYearsOptions(data: any[]): any[] {
       value: 'all_years',
     },
   ];
-  const availableYears = Array.from(new Set((data || []).map((d) => new Date(d['date']).getFullYear()))).reverse();
+  const availableYears = Array.from(new Set((data || []).map((d) => new Date(d['date']).getFullYear())))
+    .sort()
+    .reverse();
   availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
   return yearsOptions;
 }
