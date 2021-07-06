@@ -34,7 +34,7 @@ describe CSVImport::Organizations do
   describe 'proper import' do
     it 'should import data' do
       csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessiblity,Latitude,Longitude
+        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude
         324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629
         121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925
       CSV
