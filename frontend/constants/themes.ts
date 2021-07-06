@@ -1,5 +1,5 @@
 import TotaAPI from 'services/api';
-import { mergeRawData } from 'utils/charts';
+import { mergeRawData, getAvailableYearsOptions } from 'utils/charts';
 
 const commonChartConfig = {
   margin: {
@@ -17,7 +17,6 @@ export interface ThemeSectionType {
   initialState?: any;
   fetchDataKey?: string;
   fetchData?: any;
-  data?: any;
   widget: any;
 }
 
@@ -72,7 +71,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           type: 'charts/pie',
           config: {
             ...commonChartConfig,
-            selectors: {
+            controls: {
               switch: {
                 options: [
                   {
@@ -144,34 +143,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
               'British Columbia,Thompson Okanagan',
             )}`,
-          ).then((data) => {
-            const indicatorData = data.filter((x: any) => x.slug === indicatorSlug)[0];
-            if (!indicatorData) return [];
-            return indicatorData['indicator_values'];
-          });
+          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
         },
         widget: {
           transformData(rawData: any[]): any[] {
-            if (!rawData) return [];
-
             return mergeRawData({ rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
           type: 'charts/line',
           config(data: any[]): any {
-            const yearsOptions = [
-              {
-                name: 'All years',
-                value: 'all_years',
-              },
-            ];
-            const availableYears = Array.from(
-              new Set((data || []).map((d) => new Date(d['date']).getFullYear())),
-            ).reverse();
-            availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
+            const yearsOptions = getAvailableYearsOptions(data);
 
             return {
               ...commonChartConfig,
-              selectors: {
+              controls: {
                 switch: {
                   options: [
                     {

@@ -38,7 +38,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   if (typeof section.widget?.config === 'function') {
     config = section.widget.config(data);
   }
-  const { selectors, ...widgetConfig } = config;
+  const { controls, ...widgetConfig } = config;
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -60,18 +60,18 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="w-3/5">
-        {selectors && (
+        {controls && (
           <div className="flex justify-between mb-5">
-            {selectors.switch && (
+            {controls.switch && (
               <Switch
-                options={selectors.switch.options}
+                options={controls.switch.options}
                 selectedValue={switchSelectedValue}
                 onChange={handleSwitchChange}
               />
             )}
-            {selectors.select && (
+            {controls.select && (
               <Select
-                options={selectors.select.options}
+                options={controls.select.options}
                 selectedValue={selectSelectedValue}
                 onChange={handleSelectChange}
               />
