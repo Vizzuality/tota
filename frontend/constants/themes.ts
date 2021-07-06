@@ -55,36 +55,19 @@ const themes: ThemeType[] = [
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type',
-        fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
-        initialState: {
-          switchSelectedValue: 'all',
-        },
+        fetchData: () =>
+          TotaAPI.get('indicators?filter[slug]=establishments_by_type').then(
+            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
+          ),
         widget: {
-          transformData(rawData: any[], state: any): any[] {
+          transformData(rawData: any[]): any[] {
             if (!rawData) return [];
 
-            const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
-            if (!indicatorData) return [];
-
-            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === state.switchSelectedValue);
+            return rawData?.filter((x: any) => x['category_2'] === 'all');
           },
           type: 'charts/pie',
           config: {
             ...commonChartConfig,
-            controls: {
-              switch: {
-                options: [
-                  {
-                    name: 'Biosphere',
-                    value: 'biosphere',
-                  },
-                  {
-                    name: 'All',
-                    value: 'all',
-                  },
-                ],
-              },
-            },
             pies: [
               {
                 nameKey: 'category_1',
@@ -101,19 +84,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type',
-        fetchData: () => TotaAPI.get('indicators?filter[slug]=establishments_by_type'),
+        fetchData: () =>
+          TotaAPI.get('indicators?filter[slug]=establishments_by_type').then(
+            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
+          ),
+        initialState: {
+          switchSelectedValue: 'biosphere',
+        },
         widget: {
-          transformData(rawData: any[]): any[] {
-            if (!rawData) return [];
-
-            const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
-            if (!indicatorData) return [];
-
-            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'biosphere');
+          transformData(rawData: any[], state: any): any[] {
+            return rawData?.filter((x: any) => x['category_2'] === state.switchSelectedValue);
           },
           type: 'charts/pie',
           config: {
             ...commonChartConfig,
+            controls: {
+              switch: {
+                options: [
+                  {
+                    name: 'Biosphere',
+                    value: 'biosphere',
+                  },
+                  {
+                    name: 'Accessibility',
+                    value: 'accessibility',
+                  },
+                ],
+              },
+            },
             pies: [
               {
                 nameKey: 'category_1',
