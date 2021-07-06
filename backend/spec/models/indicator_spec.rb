@@ -18,4 +18,10 @@ RSpec.describe Indicator, type: :model do
     subject.slug = nil
     expect(subject).to have(1).errors_on(:slug)
   end
+
+  it 'should not be valid if slug taken' do
+    create(:indicator, slug: 'taken')
+    subject.slug = 'taken'
+    expect(subject).to have(1).errors_on(:slug)
+  end
 end
