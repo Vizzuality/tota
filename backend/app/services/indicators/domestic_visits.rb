@@ -27,12 +27,12 @@ module Indicators
         visits.each do |visit|
           domestic_visits_percentage_monthly.indicator_values << IndicatorValue.new(
             **visit.slice(:region, :date),
-            value: visit.value / all.to_f
+            value: (visit.value / all.to_f).round(6)
           )
         end
         domestic_visits_peak_lowest_month_ratio.indicator_values << IndicatorValue.new(
           region: visits[0].region,
-          value: peak.value / lowest.value.to_f,
+          value: (peak.value / lowest.value.to_f).round(6),
           date: visits[0].year.to_s,
           category_1: peak.date,
           category_2: lowest.date
@@ -44,7 +44,7 @@ module Indicators
         visits.each do |visit|
           domestic_visits_percentage_quarterly.indicator_values << IndicatorValue.new(
             **visit.slice(:region, :date),
-            value: visit.value / all.to_f
+            value: (visit.value / all.to_f).round(6)
           )
         end
       end
