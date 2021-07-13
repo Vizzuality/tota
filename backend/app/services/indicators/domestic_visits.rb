@@ -11,8 +11,14 @@ module Indicators
       domestic_visits_percentage_quarterly = Indicator.create(slug: 'domestic_visits_percentage_quarterly')
       domestic_visits_peak_lowest_month_ratio = Indicator.create(slug: 'domestic_visits_peak_lowest_month_ratio')
 
-      visits_monthly = Indicator.find_by(slug: 'visits_by_origin_country_monthly').indicator_values.where(category_1: 'Canada')
-      visits_quarterly = Indicator.find_by(slug: 'visits_by_origin_country_quarterly').indicator_values.where(category_1: 'Canada')
+      visits_monthly = Indicator
+        .find_by(slug: 'visits_by_origin_country_monthly')
+        .indicator_values
+        .where(category_1: 'Canada')
+      visits_quarterly = Indicator
+        .find_by(slug: 'visits_by_origin_country_quarterly')
+        .indicator_values
+        .where(category_1: 'Canada')
 
       visits_monthly.group_by { |v| [v.region, v.year] }.each do |_region_year, visits|
         all = visits.sum(&:value)
