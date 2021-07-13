@@ -16,4 +16,8 @@ class IndicatorValue < ApplicationRecord
   belongs_to :indicator
 
   validates_presence_of :value
+
+  def year
+    DateParser.safe_parse(date, ['%Y-%m', '%Y'])&.year
+  end
 end
