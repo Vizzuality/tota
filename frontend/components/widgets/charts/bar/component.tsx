@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import {
   ResponsiveContainer,
-  BarChart,
   Bar,
+  BarChart,
   CartesianGrid,
   CartesianAxis,
   XAxis,
@@ -16,6 +16,7 @@ import {
 import { colors } from 'constants/charts';
 
 interface ConfigProps {
+  chartProps: any;
   bars: BarProps;
   cartesianAxis?: any;
   cartesianGrid?: any;
@@ -30,10 +31,10 @@ export interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { cartesianGrid, cartesianAxis, xAxis, yAxis, bars, tooltip } = config;
+  const { chartProps, cartesianGrid, cartesianAxis, xAxis, yAxis, bars, tooltip } = config;
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart width={400} height={200} data={data}>
+      <BarChart width={400} height={200} data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}

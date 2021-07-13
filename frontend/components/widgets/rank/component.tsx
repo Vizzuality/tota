@@ -11,7 +11,7 @@ export interface RankProps {
 
 const Rank: FC<RankProps> = ({ data }: RankProps) => {
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-5">
+    <div className="flex flex-col pl-20 pt-5 justify-center gap-5">
       {data.map(({ position, value }) => (
         <div key={position} className="flex items-center">
           <div

@@ -9,12 +9,13 @@ export interface SwitchOptionType {
 export interface SwitchProps {
   options: SwitchOptionType[];
   selectedValue: string;
+  className?: string;
   onChange?: (selectedValue: string) => void;
 }
 
-const Switch: FC<SwitchProps> = ({ options, selectedValue, onChange }: SwitchProps) => {
+const Switch: FC<SwitchProps> = ({ className, options, selectedValue, onChange }: SwitchProps) => {
   return (
-    <div role="group" className="flex gap-5">
+    <div role="group" className={cx(className, 'flex gap-5')}>
       {options.map((option) => (
         <button
           key={option.value}

@@ -61,7 +61,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
       <div className="w-3/5">
         {controls && (
-          <div className="flex justify-between mb-5">
+          <div className="flex mb-5">
             {controls.switch && (
               <Switch
                 options={controls.switch.options}
@@ -71,6 +71,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
             {controls.select && (
               <Select
+                className="ml-auto"
                 options={controls.select.options}
                 selectedValue={selectSelectedValue}
                 onChange={handleSelectChange}
