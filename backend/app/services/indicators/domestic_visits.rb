@@ -1,5 +1,5 @@
 module Indicators
-  class DomesticOvernightVisits
+  class DomesticVisits
     include Singleton
 
     class << self
