@@ -32,7 +32,7 @@ const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
         >
           <span className="flex-1">{theme.title}</span>
           <Icon
-            className={cx('mr-10 transform duration-300 ease-in-out', {
+            className={cx('w-5 h-5 mr-10 transform duration-300 ease-in-out', {
               'rotate-180 ': !isOpen,
             })}
             icon={ChevronIcon}

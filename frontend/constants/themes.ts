@@ -1,4 +1,5 @@
-import { typesOfTourismEstablishments } from './mocks';
+import TotaAPI from 'services/api';
+import { mergeRawData, getAvailableYearsOptions } from 'utils/charts';
 
 const commonChartConfig = {
   margin: {
@@ -9,7 +10,24 @@ const commonChartConfig = {
   },
 };
 
-export default [
+export interface ThemeSectionType {
+  title: string;
+  subTitle?: string;
+  description: string;
+  initialState?: any;
+  fetchDataKey?: string;
+  fetchData?: any;
+  widget: any;
+}
+
+export interface ThemeType {
+  title: string;
+  slug: string;
+  summary?: string;
+  sections: ThemeSectionType[];
+}
+
+const themes: ThemeType[] = [
   {
     title: 'Tourism Industry & Arrivals',
     slug: 'tourism-industry-arrivals',
@@ -21,13 +39,16 @@ export default [
         subTitle: '(by type)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: typesOfTourismEstablishments.data,
+        fetchDataKey: 'indicator-establishments-by-type',
+        fetchData: () =>
+          TotaAPI.get('indicators?filter[slug]=establishments_by_type').then(
+            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
+          ),
         widget: {
-          data(rawData: any) {
-            const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
-            if (!indicatorData) return [];
+          transformData(rawData: any[]): any[] {
+            if (!rawData) return [];
 
-            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'all');
+            return rawData?.filter((x: any) => x['category_2'] === 'all');
           },
           type: 'charts/pie',
           config: {
@@ -35,6 +56,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             pies: [
               {
                 nameKey: 'category_1',
+                dataKey: 'value',
                 innerRadius: '50%',
                 outerRadius: '70%',
               },
@@ -47,20 +69,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Distinguished tourism establishments',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: typesOfTourismEstablishments.data,
+        fetchDataKey: 'indicator-establishments-by-type',
+        fetchData: () =>
+          TotaAPI.get('indicators?filter[slug]=establishments_by_type').then(
+            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
+          ),
+        initialState: {
+          switchSelectedValue: 'biosphere',
+        },
         widget: {
-          data(rawData: any) {
-            const indicatorData = rawData.filter((x: any) => x.slug === 'establishments_by_type')[0];
-            if (!indicatorData) return [];
-
-            return indicatorData['indicator_values'].filter((x: any) => x['category_2'] === 'biosphere');
+          transformData(rawData: any[], state: any): any[] {
+            return rawData?.filter((x: any) => x['category_2'] === state.switchSelectedValue);
           },
           type: 'charts/pie',
           config: {
             ...commonChartConfig,
+            controls: {
+              switch: {
+                options: [
+                  {
+                    name: 'Biosphere',
+                    value: 'biosphere',
+                  },
+                  {
+                    name: 'Accessibility',
+                    value: 'accessibility',
+                  },
+                ],
+              },
+            },
             pies: [
               {
                 nameKey: 'category_1',
+                dataKey: 'value',
                 innerRadius: '50%',
                 outerRadius: '70%',
               },
@@ -73,43 +114,215 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Monthly domestic (canadian) arrivals',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: null,
-        widget: {},
+        initialState: {
+          switchSelectedValue: 'visits',
+          selectSelectedValue: 'all_years',
+        },
+        fetchData: (state: any) => {
+          const indicatorSlug = {
+            visits: 'visits_by_origin_country_monthly',
+            stays: 'stays_by_origin_country_monthly',
+            trips: 'trips_by_origin_country_monthly',
+          }[state.switchSelectedValue];
+
+          return TotaAPI.get(
+            `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
+              'British Columbia,Thompson Okanagan',
+            )}`,
+          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
+        },
+        widget: {
+          transformData(rawData: any[], state: any): any[] {
+            let data = rawData;
+            if (state.selectSelectedValue !== 'all_years') {
+              data = (rawData || []).filter(
+                (x: any) => new Date(x['date']).getFullYear().toString() === state.selectSelectedValue,
+              );
+            }
+            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+          },
+          type: 'charts/line',
+          config(data: any[]): any {
+            const yearsOptions = getAvailableYearsOptions(data);
+
+            return {
+              ...commonChartConfig,
+              controls: {
+                switch: {
+                  options: [
+                    {
+                      name: 'Visits',
+                      value: 'visits',
+                    },
+                    {
+                      name: 'Trips',
+                      value: 'trips',
+                    },
+                    {
+                      name: 'Stays',
+                      value: 'stays',
+                    },
+                  ],
+                },
+                select: {
+                  options: yearsOptions,
+                },
+              },
+              cartesianGrid: {
+                vertical: false,
+                height: '1px',
+                strokeDasharray: '10 5',
+              },
+              lines: [
+                {
+                  type: 'monotone',
+                  dataKey: 'Thompson Okanagan',
+                },
+                {
+                  type: 'monotone',
+                  dataKey: 'British Columbia',
+                },
+              ],
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {},
+              tooltip: {},
+            };
+          },
+        },
+      },
+      {
+        title: '% of annual domestic overnight visitors occurring in peak month & quarter',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () =>
+          Promise.resolve([
+            {
+              position: 1,
+              value: '30% ipsum lalala',
+            },
+            {
+              position: 2,
+              value: '40% ipsum lalala',
+            },
+            {
+              position: 3,
+              value: '30% ipsum lalala',
+            },
+          ]),
+        widget: {
+          // transformData(rawData: any[]): any[] {
+          //   if (!rawData) return [];
+
+          //   const indicatorData = rawData.filter((x: any) => x.slug === 'trips_by_origin_monthly')[0];
+          //   if (!indicatorData) return [];
+          //   const indicatorValues = indicatorData['indicator_values'];
+
+          //   return mergeRawData({ rawData: indicatorValues, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+          // },
+          type: 'rank',
+          config: {},
+        },
+      },
+      {
+        title: 'Domestic (canadian) visitors by origin province',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () =>
+          TotaAPI.get(
+            `indicators?filter[slug]=visits_by_origin_province_quarterly&filter[indicator_values.region]=${encodeURIComponent(
+              'British Columbia,Thompson Okanagan',
+            )}`,
+          ).then(
+            (data) =>
+              data.filter((x: any) => x.slug === 'visits_by_origin_province_quarterly')[0]?.['indicator_values'] || [],
+          ),
+        widget: {
+          transformData(rawData: any[]): any[] {
+            if (!rawData) return [];
+
+            return mergeRawData({
+              rawData,
+              mergeBy: 'date',
+              labelKey: 'category_1',
+              valueKey: 'value',
+            });
+          },
+          type: 'charts/bar',
+          config(data: any[]): any {
+            const bars =
+              data &&
+              data.length &&
+              Array.from(new Set(data.map((rd) => rd.category_1))).map((barName) => ({
+                dataKey: barName,
+                stackId: 1,
+              }));
+
+            return {
+              ...commonChartConfig,
+              cartesianGrid: {
+                vertical: false,
+                height: '1px',
+                strokeDasharray: '10 5',
+              },
+              bars,
+              xAxis: {
+                dataKey: 'date',
+              },
+              tooltip: {},
+            };
+          },
+        },
       },
       {
         title: 'Quarterly visits by origin city',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: null,
-        widget: {},
-      },
-      {
-        title: 'Monthly Top 10 PRIZM Clusters per month (number of BC visitors to TO)',
-        description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: null,
-        widget: {},
-      },
-      {
-        title: '% of annual domestic overnight visitors occuring in peak month & quarter',
-        description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        data: [
-          {
-            position: 1,
-            value: '50 % lorem ipsum dolor',
-          },
-          {
-            position: 2,
-            value: '30 % lorem ipsum dolor',
-          },
-          {
-            position: 3,
-            value: '30 % lorem ipsum dolor',
-          },
-        ],
+        fetchData: () =>
+          TotaAPI.get(
+            `indicators?filter[slug]=visits_by_origin_city_quarterly&filter[indicator_values.region]=${encodeURIComponent(
+              'British Columbia,Thompson Okanagan',
+            )}`,
+          ).then(
+            (data) =>
+              data.filter((x: any) => x.slug === 'visits_by_origin_city_quarterly')[0]?.['indicator_values'] || [],
+          ),
         widget: {
-          type: 'rank',
+          transformData(rawData: any[]): any[] {
+            if (!rawData) return [];
+
+            return mergeRawData({
+              rawData,
+              mergeBy: 'date',
+              labelKey: 'category_1',
+              valueKey: 'value',
+            });
+          },
+          type: 'charts/bar',
+          config(data: any[]): any {
+            const bars =
+              data &&
+              data.length &&
+              Array.from(new Set(data.map((rd) => rd.category_1))).map((barName) => ({
+                dataKey: barName,
+                stackId: 1,
+              }));
+
+            return {
+              ...commonChartConfig,
+              cartesianGrid: {
+                vertical: false,
+                height: '1px',
+                strokeDasharray: '10 5',
+              },
+              bars,
+              xAxis: {
+                dataKey: 'date',
+              },
+              tooltip: {},
+            };
+          },
         },
       },
     ],
@@ -117,17 +330,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
   {
     title: 'Tourism Arrivals & Seasonality',
     slug: 'tourism-arrivals-seasonality',
+    sections: [],
   },
   {
     title: 'Tourism Revenues & Expenditures',
     slug: 'tourism-revenues-expenditures',
+    sections: [],
   },
   {
     title: 'Indigenous & Accessibility',
     slug: 'indigenous-accessibility',
+    sections: [],
   },
   {
     title: 'Climate Change & Mobility',
     slug: 'climate-change-mobility',
+    sections: [],
   },
 ];
+
+export default themes;
