@@ -69,11 +69,11 @@ export function getTop10AndOthers(data: any[], key: string) {
   ].filter((x) => x);
 }
 
-export function getYear(str: string) {
-  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear();
+export function getYear(str: string): string {
+  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear().toString();
 }
 
-export function getYears(data: any[]) {
+export function getYears(data: any[]): string[] {
   return Array.from(new Set((data || []).map((d) => getYear(d['date']))))
     .sort()
     .reverse();

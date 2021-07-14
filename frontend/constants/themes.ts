@@ -274,13 +274,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           transformData(rawData: any[], state: any): string {
             const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
-            const formatDate = (date) => monthNameFormatter.format(new Date(date));
-
             if (!ratio) return '';
 
+            const month = (date: string) => monthNameFormatter.format(new Date(date));
             const ratioNumber = Number(ratio.value).toFixed(2);
 
-            return `peak/lowest month (${formatDate(ratio.category_1)}/${formatDate(
+            return `peak/lowest month (${month(ratio.category_1)}/${month(
               ratio.category_2,
             )}): ${ratioNumber} x visitors`;
           },
@@ -482,13 +481,51 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           selectSelectedValue: previousYear,
         },
         fetchData: () =>
-          TotaAPI.getSingleIndicator({ slug: 'domestic_visits_peak_lowest_month_ratio', region: 'Thompson Okanagan' }),
+          TotaAPI.getSingleIndicator({
+            slug: 'nights_per_visitor_by_country_monthly',
+            region: ['Thompson Okanagan', 'British Columbia'],
+          }),
         widget: {
-          transformData() {
-            return 'Work in progress';
+          transformData(rawData: any[], state: any): any[] {
+            let data = rawData;
+            if (state.selectSelectedValue !== 'all_years') {
+              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+            }
+            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
-          type: 'text',
-          config: {},
+          type: 'charts/line',
+          config(data: any[]): any {
+            const yearsOptions = getAvailableYearsOptions(data);
+
+            return {
+              ...commonChartConfig,
+              controls: {
+                select: {
+                  options: yearsOptions,
+                },
+              },
+              cartesianGrid: {
+                vertical: false,
+                height: '1px',
+                strokeDasharray: '10 5',
+              },
+              lines: [
+                {
+                  type: 'monotone',
+                  dataKey: 'Thompson Okanagan',
+                },
+                {
+                  type: 'monotone',
+                  dataKey: 'British Columbia',
+                },
+              ],
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {},
+              tooltip: {},
+            };
+          },
         },
       },
       {

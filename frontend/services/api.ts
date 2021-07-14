@@ -23,15 +23,16 @@ class API {
 
   async getIndicators({ slug, region, category_1, category_2 }: getIndicatorsArgs): Promise<any> {
     const params = new URLSearchParams();
-    const slugArray = [slug].flat();
-    const regionArray = [region].flat();
-    const category_1Array = [category_1].flat();
-    const category_2Array = [category_2].flat();
+    const wrap = (x: string | string[]) => [x].flat().filter((x) => x);
+    const slugArray = wrap(slug);
+    const regionArray = wrap(region);
+    const category_1Array = wrap(category_1);
+    const category_2Array = wrap(category_2);
     if (slugArray.length > 0) params.append('filter[slug]', slugArray.join(','));
     if (regionArray.length > 0) params.append('filter[indicator_values.region]', regionArray.join(','));
     if (category_1Array.length > 0) params.append('filter[indicator_values.category_1]', category_1Array.join(','));
     if (category_2Array.length > 0) params.append('filter[indicator_values.category_2]', category_2Array.join(','));
-    const queryString = params.entries.length > 0 ? `?${params.toString()}` : '';
+    const queryString = Array.from(params).length > 0 ? `?${params.toString()}` : '';
 
     const indicatorsData = await this.get(`indicators${queryString}`);
     const byIndicatorSlug = {};
