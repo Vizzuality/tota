@@ -9,6 +9,16 @@ const commonChartConfig = {
     bottom: 0,
   },
 };
+const commonPieChartConfig = {
+  ...commonChartConfig,
+  legend: {
+    width: 250,
+    layout: 'vertical',
+    verticalAlign: 'middle',
+    align: 'right',
+  },
+  tooltip: {},
+};
 
 export interface ThemeSectionType {
   title: string;
@@ -55,23 +65,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           },
           type: 'charts/pie',
           config: {
-            ...commonChartConfig,
+            ...commonPieChartConfig,
             pies: [
               {
                 nameKey: 'category_1',
                 dataKey: 'value',
-                innerRadius: '50%',
-                outerRadius: '70%',
-                label: true,
               },
             ],
-            legend: {
-              width: 250,
-              layout: 'vertical',
-              verticalAlign: 'middle',
-              align: 'right',
-            },
-            tooltip: {},
           },
         },
       },
@@ -95,7 +95,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           },
           type: 'charts/pie',
           config: {
-            ...commonChartConfig,
+            ...commonPieChartConfig,
             controls: {
               switch: {
                 options: [
@@ -114,17 +114,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               {
                 nameKey: 'category_1',
                 dataKey: 'value',
-                innerRadius: '50%',
-                outerRadius: '70%',
               },
             ],
-            legend: {
-              width: 250,
-              layout: 'vertical',
-              verticalAlign: 'middle',
-              align: 'right',
-            },
-            tooltip: {},
           },
         },
       },

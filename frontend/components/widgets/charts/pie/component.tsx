@@ -24,7 +24,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (
-            <Pie key={pie} {...pies[pie]} data={data} fill={colors[index]}>
+            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={colors[index]}>
               {data.map((d, i) => (
                 <Cell key={`cell-${d}`} fill={colors[i % colors.length]} />
               ))}
