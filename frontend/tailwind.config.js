@@ -18,6 +18,12 @@ module.exports = {
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
       },
+      width: {
+        'map-sidebar': '400px',
+      },
+      translate: {
+        'map-sidebar': '-400px',
+      },
     },
   },
   variants: {
