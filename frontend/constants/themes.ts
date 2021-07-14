@@ -45,6 +45,7 @@ export interface ThemeType {
 }
 
 const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
+const shortMonthName = (date: string) => monthNameFormatter.format(new Date(date));
 const formatPercentage = (value: number) =>
   value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
 const previousYear = (new Date().getFullYear() - 1).toString();
@@ -85,14 +86,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type',
-        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'establishments_by_type' }),
+        fetchData: (state: any) =>
+          TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: state.switchSelectedValue }),
         initialState: {
           switchSelectedValue: 'biosphere',
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            const data = rawData?.filter((x: any) => x['category_2'] === state.switchSelectedValue);
-            return getTop10AndOthers(data, 'category_1');
+          transformData(rawData: any[]): any[] {
+            return getTop10AndOthers(rawData, 'category_1');
           },
           type: 'charts/pie',
           config: {
@@ -147,7 +148,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             if (state.selectSelectedValue !== 'all_years') {
               data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            if (state.selectSelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            }
+            return merged;
           },
           type: 'charts/line',
           config(data: any[]): any {
@@ -217,7 +222,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           transformData(rawData: any[], state: any): any[] {
             let take = 5;
-            let formatDate = (date: string) => monthNameFormatter.format(new Date(date));
+            let formatDate = shortMonthName;
 
             if (state.switchSelectedValue === 'quarterly') {
               take = 4;
@@ -229,7 +234,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               .sort((a, b) => b['value'] - a['value'])
               .slice(0, take)
               .filter((x) => x)
-              .map((x) => `${formatDate(x['date'])}:  ${formatPercentage(x['value'])} of visitors`);
+              .map((x) => `${formatDate(x['date'])}: ${formatPercentage(x['value'])} of visitors`);
           },
           type: 'rank',
           config(data: any[]): any {
@@ -271,10 +276,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
             if (!ratio) return '';
 
-            const month = (date: string) => monthNameFormatter.format(new Date(date));
             const ratioNumber = Number(ratio.value).toFixed(2);
 
-            return `peak/lowest month (${month(ratio.category_1)}/${month(
+            return `peak/lowest month (${shortMonthName(ratio.category_1)}/${shortMonthName(
               ratio.category_2,
             )}): ${ratioNumber} x visitors`;
           },
@@ -313,13 +317,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             if (!rawData) return [];
 
             const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-
-            return mergeRawData({
+            const merged = mergeRawData({
               rawData: filteredByYear,
               mergeBy: 'date',
               labelKey: 'category_1',
               valueKey: 'value',
             });
+            merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            return merged;
           },
           type: 'charts/bar',
           config(data: any[], transformedData: any[]): any {
@@ -354,7 +359,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               xAxis: {
                 dataKey: 'date',
               },
-              tooltip: {},
+              tooltip: { cursor: false },
             };
           },
         },
@@ -407,7 +412,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               xAxis: {
                 dataKey: 'date',
               },
-              tooltip: {},
+              tooltip: { cursor: false },
             };
           },
         },
@@ -426,13 +431,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             if (!rawData) return [];
 
             const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-
-            return mergeRawData({
+            const merged = mergeRawData({
               rawData: filteredByYear,
               mergeBy: 'date',
               labelKey: 'category_2',
               valueKey: 'value',
             });
+            merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            return merged;
           },
           type: 'charts/bar',
           config(data: any[], transformedData: any[]): any {
@@ -463,7 +469,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                 dataKey: 'date',
                 type: 'category',
               },
-              tooltip: {},
+              tooltip: { cursor: false },
             };
           },
         },
@@ -486,7 +492,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             if (state.selectSelectedValue !== 'all_years') {
               data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            if (state.selectSelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            }
+            return merged;
           },
           type: 'charts/line',
           config(data: any[]): any {

@@ -12,7 +12,8 @@ interface MergeRawData {
 export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawData): any[] {
   if (!rawData || !rawData.length) return [];
   const dataObj = {};
-  rawData.forEach((rd) => {
+  const sorted = orderBy(rawData, ['date', 'value'], ['asc', 'desc']);
+  sorted.forEach((rd: any) => {
     dataObj[rd[mergeBy]] = {
       [mergeBy]: rd[mergeBy],
       ...dataObj[rd[mergeBy]],
