@@ -1,5 +1,6 @@
 import sortBy from 'lodash/sortBy';
 import orderBy from 'lodash/orderBy';
+import groupBy from 'lodash/groupBy';
 
 interface MergeRawData {
   rawData: any[];
@@ -21,6 +22,35 @@ export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawD
   return sortBy(Object.values(dataObj), mergeBy);
 }
 
+export function getTop10AndOthersByDate(data: any[], key: string) {
+  if (!data) return data;
+
+  const newData = [];
+
+  const groupedByDate = groupBy(data, 'date');
+  Object.keys(groupedByDate).forEach((date) => {
+    const dataByDate = groupedByDate[date];
+    const first10Data = orderBy(dataByDate, ['value'], ['desc'])
+      .slice(0, 10)
+      .filter((x: any) => x);
+    const first10Keys = first10Data.map((x) => x[key]);
+
+    newData.push(...first10Data);
+
+    const othersData = dataByDate.filter((x) => !first10Keys.includes(x[key]));
+    if (othersData.length > 0) {
+      newData.push({
+        [key]: 'Others',
+        date,
+        region: othersData[0].region,
+        value: othersData.reduce((acc, d) => acc + d.value, 0),
+      });
+    }
+  });
+
+  return newData;
+}
+
 export function getTop10AndOthers(data: any[], key: string) {
   if (!data) return data;
 
@@ -39,6 +69,16 @@ export function getTop10AndOthers(data: any[], key: string) {
   ].filter((x) => x);
 }
 
+function getYear(str) {
+  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear();
+}
+
+function getYears(data: any[]) {
+  return Array.from(new Set((data || []).map((d) => getYear(d['date']))))
+    .sort()
+    .reverse();
+}
+
 export function getAvailableYearsOptions(data: any[], withAllOptions = true): any[] {
   const yearsOptions = [];
   if (withAllOptions) {
@@ -47,11 +87,7 @@ export function getAvailableYearsOptions(data: any[], withAllOptions = true): an
       value: 'all_years',
     });
   }
-  const availableYears = Array.from(
-    new Set((data || []).map((d) => new Date(d['date'].replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear())),
-  )
-    .sort()
-    .reverse();
+  const availableYears = getYears(data);
   availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
   return yearsOptions;
 }

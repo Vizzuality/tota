@@ -1,5 +1,5 @@
 import TotaAPI from 'services/api';
-import { mergeRawData, getTop10AndOthers, getAvailableYearsOptions } from 'utils/charts';
+import { mergeRawData, getTop10AndOthers, getTop10AndOthersByDate, getAvailableYearsOptions } from 'utils/charts';
 
 const commonChartConfig = {
   margin: {
@@ -147,7 +147,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             `indicators?
                filter[slug]=${indicatorSlug}&
                filter[indicator_values.region]=${encodeURIComponent('British Columbia,Thompson Okanagan')}&
-               filter[inidcator_values.category_1]=Canada`,
+               filter[indicator_values.category_1]=Canada`,
           ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
         },
         widget: {
@@ -363,12 +363,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             });
           },
           type: 'charts/bar',
-          config(data: any[]): any {
+          config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
+            const provinces = transformedData
+              .map((x) => Object.keys(x))
+              .flat()
+              .filter((x) => x !== 'date');
+
             const bars =
               data &&
               data.length &&
-              Array.from(new Set(data.map((rd) => rd.category_1))).map((barName) => ({
+              Array.from(new Set(provinces)).map((barName) => ({
                 dataKey: barName,
                 stackId: 1,
               }));
@@ -430,22 +435,27 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const filteredByYear = (rawData || []).filter(
               (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
             );
-
-            return mergeRawData({
-              rawData: filteredByYear,
+            const top10 = getTop10AndOthersByDate(filteredByYear, 'category_1');
+            const merged = mergeRawData({
+              rawData: top10,
               mergeBy: 'date',
               labelKey: 'category_1',
               valueKey: 'value',
             });
+            return merged;
           },
           type: 'charts/bar',
-          config(data: any[]): any {
+          config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
+            const cities = transformedData
+              .map((x) => Object.keys(x))
+              .flat()
+              .filter((x) => x !== 'date');
 
             const bars =
               data &&
               data.length &&
-              Array.from(new Set(data.map((rd) => rd.category_1))).map((barName) => ({
+              Array.from(new Set(cities)).map((barName) => ({
                 dataKey: barName,
                 stackId: 1,
               }));
@@ -503,13 +513,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             });
           },
           type: 'charts/bar',
-          config(data: any[]): any {
+          config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
+            const prizm = transformedData
+              .map((x) => Object.keys(x))
+              .flat()
+              .filter((x) => x !== 'date');
 
             const bars =
               data &&
               data.length &&
-              Array.from(new Set(data.map((rd) => rd.category_2))).map((barName) => ({
+              Array.from(new Set(prizm)).map((barName) => ({
                 dataKey: barName,
                 stackId: 1,
               }));

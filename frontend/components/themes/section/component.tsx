@@ -36,7 +36,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   }
   let config = section.widget?.config;
   if (typeof section.widget?.config === 'function') {
-    config = section.widget.config(data);
+    config = section.widget.config(data, widgetData);
   }
   const { controls, ...widgetConfig } = config;
 
