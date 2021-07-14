@@ -1,3 +1,17 @@
+export interface getIndicatorsArgs {
+  slug?: string | string[];
+  region?: string | string[];
+  category_1?: string | string[];
+  category_2?: string | string[];
+}
+
+export interface getSingleIndicatorArgs {
+  slug: string;
+  region?: string | string[];
+  category_1?: string | string[];
+  category_2?: string | string[];
+}
+
 class API {
   baseURL = process.env.NEXT_PUBLIC_TOTA_API;
   baseConfig = {
@@ -7,7 +21,31 @@ class API {
     },
   };
 
-  get(endpoint) {
+  async getIndicators({ slug, region, category_1, category_2 }: getIndicatorsArgs): Promise<any> {
+    const params = new URLSearchParams();
+    const slugArray = [slug].flat();
+    const regionArray = [region].flat();
+    const category_1Array = [category_1].flat();
+    const category_2Array = [category_2].flat();
+    if (slugArray.length > 0) params.append('filter[slug]', slugArray.join(','));
+    if (regionArray.length > 0) params.append('filter[indicator_values.region]', regionArray.join(','));
+    if (category_1Array.length > 0) params.append('filter[indicator_values.category_1]', category_1Array.join(','));
+    if (category_2Array.length > 0) params.append('filter[indicator_values.category_2]', category_2Array.join(','));
+    const queryString = params.entries.length > 0 ? `?${params.toString()}` : '';
+
+    const indicatorsData = await this.get(`indicators${queryString}`);
+    const byIndicatorSlug = {};
+    indicatorsData.forEach((x: any) => {
+      byIndicatorSlug[x.slug] = x.indicator_values;
+    });
+    return byIndicatorSlug;
+  }
+
+  getSingleIndicator({ slug, region, category_1, category_2 }: getSingleIndicatorArgs): Promise<any> {
+    return this.getIndicators({ slug, region, category_1, category_2 }).then((data: any) => data[slug] || []);
+  }
+
+  get(endpoint: string) {
     return fetch(`${this.baseURL}/${endpoint}`)
       .then(this._handleResponse)
       .then((d) => d.data);

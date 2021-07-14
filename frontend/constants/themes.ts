@@ -55,10 +55,7 @@ const themes: ThemeType[] = [
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type-all',
-        fetchData: () =>
-          TotaAPI.get('indicators?filter[slug]=establishments_by_type&filter[indicator_values.category_2]=all').then(
-            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
-          ),
+        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: 'all' }),
         widget: {
           transformData(rawData: any[], _state: any): any[] {
             return getTop10AndOthers(rawData, 'category_1');
@@ -81,10 +78,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchDataKey: 'indicator-establishments-by-type',
-        fetchData: () =>
-          TotaAPI.get('indicators?filter[slug]=establishments_by_type').then(
-            (data) => data.filter((x: any) => x.slug === 'establishments_by_type')[0]?.['indicator_values'] || [],
-          ),
+        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'establishments_by_type' }),
         initialState: {
           switchSelectedValue: 'biosphere',
         },
@@ -134,12 +128,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             trips: 'trips_by_origin_country_monthly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.get(
-            `indicators?
-               filter[slug]=${indicatorSlug}&
-               filter[indicator_values.region]=${encodeURIComponent('British Columbia,Thompson Okanagan')}&
-               filter[indicator_values.category_1]=Canada`,
-          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
+          return TotaAPI.getSingleIndicator({
+            slug: indicatorSlug,
+            region: ['British Columbia', 'Thompson Okanagan'],
+            category_1: 'Canada',
+          });
         },
         widget: {
           transformData(rawData: any[], state: any): any[] {
@@ -216,11 +209,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'domestic_visits_percentage_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.get(
-            `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
-              'Thompson Okanagan',
-            )}`,
-          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: 'Thompson Okanagan' });
         },
         widget: {
           transformData(rawData: any[], state: any): any[] {
@@ -278,17 +267,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: (_state: any) => {
-          return TotaAPI.get(
-            `indicators?filter[slug]=domestic_visits_peak_lowest_month_ratio&filter[indicator_values.region]=${encodeURIComponent(
-              'Thompson Okanagan',
-            )}`,
-          ).then(
-            (data) =>
-              data.filter((x: any) => x.slug === 'domestic_visits_peak_lowest_month_ratio')[0]?.['indicator_values'] ||
-              [],
-          );
-        },
+        fetchData: () =>
+          TotaAPI.getSingleIndicator({ slug: 'domestic_visits_peak_lowest_month_ratio', region: 'Thompson Okanagan' }),
         widget: {
           transformData(rawData: any[], state: any): string {
             const ratio = (rawData || []).filter(
@@ -332,11 +312,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             quarterly: 'visits_by_origin_province_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.get(
-            `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
-              'Thompson Okanagan',
-            )}`,
-          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: 'Thompson Okanagan' });
         },
         widget: {
           transformData(rawData: any[], state: any): any[] {
@@ -411,14 +387,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           selectSelectedValue: previousYear,
         },
         fetchData: () =>
-          TotaAPI.get(
-            `indicators?filter[slug]=visits_by_origin_city_quarterly&filter[indicator_values.region]=${encodeURIComponent(
-              'British Columbia,Thompson Okanagan',
-            )}`,
-          ).then(
-            (data) =>
-              data.filter((x: any) => x.slug === 'visits_by_origin_city_quarterly')[0]?.['indicator_values'] || [],
-          ),
+          TotaAPI.getSingleIndicator({
+            slug: 'visits_by_origin_city_quarterly',
+            region: ['British Columbia', 'Thompson Okanagan'],
+          }),
         widget: {
           transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
@@ -480,14 +452,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: () =>
-          TotaAPI.get(
-            `indicators?filter[slug]=visits_by_prizm_monthly&filter[indicator_values.region]=${encodeURIComponent(
-              'Thompson Okanagan',
-            )}`,
-          ).then(
-            (data) => data.filter((x: any) => x.slug === 'visits_by_prizm_monthly')[0]?.['indicator_values'] || [],
-          ),
+        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: 'Thompson Okanagan' }),
         widget: {
           transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
@@ -555,17 +520,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: (_state: any) => {
-          return TotaAPI.get(
-            `indicators?filter[slug]=domestic_visits_peak_lowest_month_ratio&filter[indicator_values.region]=${encodeURIComponent(
-              'Thompson Okanagan',
-            )}`,
-          ).then(
-            (data) =>
-              data.filter((x: any) => x.slug === 'domestic_visits_peak_lowest_month_ratio')[0]?.['indicator_values'] ||
-              [],
-          );
-        },
+        fetchData: () =>
+          TotaAPI.getSingleIndicator({ slug: 'domestic_visits_peak_lowest_month_ratio', region: 'Thompson Okanagan' }),
         widget: {
           transformData() {
             return 'Work in progress';
@@ -581,15 +537,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         initialState: {
           selectSelectedValue: 'all_years',
         },
-        fetchData: (state: any) => {
-          const indicatorSlug = 'visits_change_weekly';
-
-          return TotaAPI.get(
-            `indicators?filter[slug]=${indicatorSlug}&filter[indicator_values.region]=${encodeURIComponent(
-              'British Columbia,Thompson Okanagan',
-            )}`,
-          ).then((data) => data.filter((x: any) => x.slug === indicatorSlug)[0]?.['indicator_values'] || []);
-        },
+        fetchData: () =>
+          TotaAPI.getSingleIndicator({
+            slug: 'visits_change_weekly',
+            region: ['British Columbia', 'Thompson Okanagan'],
+          }),
         widget: {
           transformData(rawData: any[], state: any): any[] {
             let data = rawData;
