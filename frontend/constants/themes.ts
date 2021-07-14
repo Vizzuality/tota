@@ -299,26 +299,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           );
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
+          transformData(rawData: any[], state: any): string {
             const ratio = (rawData || []).filter(
               (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
             )[0];
             const formatDate = (date) => monthNameFormatter.format(new Date(date));
 
-            if (!ratio) return [];
+            if (!ratio) return '';
 
             const ratioNumber = Number(ratio.value).toFixed(2);
 
-            return [
-              {
-                position: 1,
-                value: `peak/lowest month (${formatDate(ratio.category_1)}/${formatDate(
-                  ratio.category_2,
-                )}): ${ratioNumber} x visitors`,
-              },
-            ];
+            return `peak/lowest month (${formatDate(ratio.category_1)}/${formatDate(
+              ratio.category_2,
+            )}): ${ratioNumber} x visitors`;
           },
-          type: 'rank',
+          type: 'text',
           config(data: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
 
@@ -567,37 +562,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           );
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            const ratio = (rawData || []).filter(
-              (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-            )[0];
-            const formatDate = (date) => monthNameFormatter.format(new Date(date));
-
-            if (!ratio) return [];
-
-            const ratioNumber = Number(ratio.value).toFixed(2);
-
-            return [
-              {
-                position: 1,
-                value: `peak/lowest month (${formatDate(ratio.category_1)}/${formatDate(
-                  ratio.category_2,
-                )}): ${ratioNumber} x visitors`,
-              },
-            ];
+          transformData() {
+            return 'Work in progress';
           },
-          type: 'rank',
-          config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
-
-            return {
-              controls: {
-                select: {
-                  options: yearsOptions,
-                },
-              },
-            };
-          },
+          type: 'text',
+          config: {},
         },
       },
       {

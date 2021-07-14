@@ -59,7 +59,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
 
-      <div className="w-3/5">
+      <div className="w-3/5 flex flex-col">
         {controls && (
           <div className="flex mb-5">
             {controls.switch && (
