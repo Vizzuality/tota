@@ -58,7 +58,7 @@ export const MainMap: FC<MapProps> = ({
   }, []);
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-full">
       <Map
         bounds={bounds}
         minZoom={minZoom}

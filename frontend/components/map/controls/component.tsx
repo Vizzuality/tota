@@ -6,7 +6,7 @@ export interface ControlsProps {
   children: React.ReactNode;
 }
 
-export const Controls: FC<ControlsProps> = ({ className = 'absolute bottom-10 left-2', children }: ControlsProps) => (
+export const Controls: FC<ControlsProps> = ({ className = 'absolute bottom-10 right-2', children }: ControlsProps) => (
   <div
     className={cx({
       'w-10': true,
