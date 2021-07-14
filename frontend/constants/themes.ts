@@ -183,11 +183,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               },
               lines: [
                 {
-                  type: 'monotone',
                   dataKey: 'Thompson Okanagan',
                 },
                 {
-                  type: 'monotone',
                   dataKey: 'British Columbia',
                 },
               ],
@@ -231,10 +229,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               .sort((a, b) => b['value'] - a['value'])
               .slice(0, take)
               .filter((x) => x)
-              .map((x, index) => ({
-                position: index + 1,
-                value: `${formatDate(x['date'])}:  ${formatPercentage(x['value'])} of visitors`,
-              }));
+              .map((x) => `${formatDate(x['date'])}:  ${formatPercentage(x['value'])} of visitors`);
           },
           type: 'rank',
           config(data: any[]): any {
@@ -511,11 +506,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               },
               lines: [
                 {
-                  type: 'monotone',
                   dataKey: 'Thompson Okanagan',
                 },
                 {
-                  type: 'monotone',
                   dataKey: 'British Columbia',
                 },
               ],
@@ -566,11 +559,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               },
               lines: [
                 {
-                  type: 'monotone',
                   dataKey: 'Thompson Okanagan',
                 },
                 {
-                  type: 'monotone',
                   dataKey: 'British Columbia',
                 },
               ],
