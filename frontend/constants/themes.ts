@@ -1,5 +1,12 @@
 import TotaAPI from 'services/api';
-import { mergeRawData, getTop10AndOthers, getTop10AndOthersByDate, getAvailableYearsOptions } from 'utils/charts';
+import {
+  mergeRawData,
+  getTop10AndOthers,
+  getTop10AndOthersByDate,
+  getAvailableYearsOptions,
+  getYear,
+  getStackedBarsData,
+} from 'utils/charts';
 
 const commonChartConfig = {
   margin: {
@@ -138,9 +145,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           transformData(rawData: any[], state: any): any[] {
             let data = rawData;
             if (state.selectSelectedValue !== 'all_years') {
-              data = (rawData || []).filter(
-                (x: any) => new Date(x['date']).getFullYear().toString() === state.selectSelectedValue,
-              );
+              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
             return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
@@ -214,7 +219,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           transformData(rawData: any[], state: any): any[] {
             let take = 5;
-            let formatDate = (date) => monthNameFormatter.format(new Date(date));
+            let formatDate = (date: string) => monthNameFormatter.format(new Date(date));
 
             if (state.switchSelectedValue === 'quarterly') {
               take = 4;
@@ -222,10 +227,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             }
 
             return (rawData || [])
-              .filter(
-                (x: any) =>
-                  new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-              )
+              .filter((x: any) => getYear(x.date) === state.selectSelectedValue)
               .sort((a, b) => b['value'] - a['value'])
               .slice(0, take)
               .filter((x) => x)
@@ -271,9 +273,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({ slug: 'domestic_visits_peak_lowest_month_ratio', region: 'Thompson Okanagan' }),
         widget: {
           transformData(rawData: any[], state: any): string {
-            const ratio = (rawData || []).filter(
-              (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-            )[0];
+            const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
             const formatDate = (date) => monthNameFormatter.format(new Date(date));
 
             if (!ratio) return '';
@@ -318,9 +318,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
 
-            const filteredByYear = (rawData || []).filter(
-              (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-            );
+            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
 
             return mergeRawData({
               rawData: filteredByYear,
@@ -332,18 +330,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           type: 'charts/bar',
           config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
-            const provinces = transformedData
-              .map((x) => Object.keys(x))
-              .flat()
-              .filter((x) => x !== 'date');
-
-            const bars =
-              data &&
-              data.length &&
-              Array.from(new Set(provinces)).map((barName) => ({
-                dataKey: barName,
-                stackId: 1,
-              }));
+            const bars = getStackedBarsData(transformedData, 'date');
 
             return {
               ...commonChartConfig,
@@ -395,9 +382,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
 
-            const filteredByYear = (rawData || []).filter(
-              (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-            );
+            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             const top10 = getTop10AndOthersByDate(filteredByYear, 'category_1');
             const merged = mergeRawData({
               rawData: top10,
@@ -410,18 +395,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           type: 'charts/bar',
           config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
-            const cities = transformedData
-              .map((x) => Object.keys(x))
-              .flat()
-              .filter((x) => x !== 'date');
-
-            const bars =
-              data &&
-              data.length &&
-              Array.from(new Set(cities)).map((barName) => ({
-                dataKey: barName,
-                stackId: 1,
-              }));
+            const bars = getStackedBarsData(transformedData, 'date');
 
             return {
               ...commonChartConfig,
@@ -457,9 +431,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           transformData(rawData: any[], state: any): any[] {
             if (!rawData) return [];
 
-            const filteredByYear = (rawData || []).filter(
-              (x: any) => new Date(x['date'].replace(/Q\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-            );
+            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
 
             return mergeRawData({
               rawData: filteredByYear,
@@ -471,18 +443,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
           type: 'charts/bar',
           config(data: any[], transformedData: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data, false);
-            const prizm = transformedData
-              .map((x) => Object.keys(x))
-              .flat()
-              .filter((x) => x !== 'date');
-
-            const bars =
-              data &&
-              data.length &&
-              Array.from(new Set(prizm)).map((barName) => ({
-                dataKey: barName,
-                stackId: 1,
-              }));
+            const bars = getStackedBarsData(transformedData, 'date');
 
             return {
               ...commonChartConfig,
@@ -546,10 +507,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           transformData(rawData: any[], state: any): any[] {
             let data = rawData;
             if (state.selectSelectedValue !== 'all_years') {
-              data = (rawData || []).filter(
-                (x: any) =>
-                  new Date(x['date'].replace(/W\d\d/, '')).getFullYear().toString() === state.selectSelectedValue,
-              );
+              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
             return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },

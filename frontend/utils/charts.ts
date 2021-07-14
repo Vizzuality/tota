@@ -69,14 +69,30 @@ export function getTop10AndOthers(data: any[], key: string) {
   ].filter((x) => x);
 }
 
-function getYear(str) {
+export function getYear(str: string) {
   return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear();
 }
 
-function getYears(data: any[]) {
+export function getYears(data: any[]) {
   return Array.from(new Set((data || []).map((d) => getYear(d['date']))))
     .sort()
     .reverse();
+}
+
+export function getStackedBarsData(data: any[], groupedBy: string) {
+  const bars = data
+    .map((x) => Object.keys(x))
+    .flat()
+    .filter((x) => x !== groupedBy);
+
+  return (
+    data &&
+    data.length &&
+    Array.from(new Set(bars)).map((barName: string) => ({
+      dataKey: barName,
+      stackId: 1,
+    }))
+  );
 }
 
 export function getAvailableYearsOptions(data: any[], withAllOptions = true): any[] {
