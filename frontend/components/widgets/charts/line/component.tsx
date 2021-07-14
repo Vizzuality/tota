@@ -39,7 +39,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
         {lines && Object.keys(lines).map((line, index) => <Line key={line} {...lines[line]} stroke={colors[index]} />)}
-        {tooltip && <Tooltip />}
+        {tooltip && <Tooltip {...tooltip} />}
       </LineChart>
     </ResponsiveContainer>
   );

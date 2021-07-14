@@ -40,7 +40,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
         {bars && Object.keys(bars).map((bar, index) => <Bar key={bar} {...bars[bar]} fill={colors[index]} />)}
-        {tooltip && <Tooltip />}
+        {tooltip && <Tooltip {...tooltip} />}
       </BarChart>
     </ResponsiveContainer>
   );

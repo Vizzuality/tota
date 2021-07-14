@@ -30,7 +30,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
               ))}
             </Pie>
           ))}
-        {tooltip && <Tooltip />}
+        {tooltip && <Tooltip {...tooltip} />}
       </PieChart>
     </ResponsiveContainer>
   );
