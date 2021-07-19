@@ -1,4 +1,5 @@
 import sortBy from 'lodash/sortBy';
+import uniq from 'lodash/uniq';
 
 interface MergeRawData {
   rawData: any[];
@@ -32,4 +33,40 @@ export function getAvailableYearsOptions(data: any[]): any[] {
     .reverse();
   availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
   return yearsOptions;
+}
+
+interface PrepareForSankeyArgs {
+  rawData: any[];
+  sourceKey: string;
+  targetKey: string;
+  valueKey: string;
+}
+
+interface PrepareForSankeyResult {
+  nodes: any[];
+  links: any[];
+}
+
+export function prepareForSankey({
+  rawData,
+  sourceKey,
+  targetKey,
+  valueKey,
+}: PrepareForSankeyArgs): PrepareForSankeyResult {
+  const sources = uniq(rawData.map((x) => x[sourceKey]));
+  const targets = uniq(rawData.map((x) => x[targetKey]));
+
+  const nodesRaw = sources.concat(targets);
+  const nodes = nodesRaw.map((x: string) => ({ name: x }));
+
+  const links = rawData.map((d: any) => ({
+    source: nodesRaw.indexOf(d[sourceKey]),
+    target: nodesRaw.indexOf(d[targetKey]),
+    value: d[valueKey],
+  }));
+
+  return {
+    nodes,
+    links,
+  };
 }
