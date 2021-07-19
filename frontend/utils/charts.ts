@@ -1,5 +1,8 @@
 import sortBy from 'lodash/sortBy';
-import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
+import { colors } from 'constants/charts';
+
+const COLORS = colors;
 
 interface MergeRawData {
   rawData: any[];
@@ -40,6 +43,9 @@ interface PrepareForSankeyArgs {
   sourceKey: string;
   targetKey: string;
   valueKey: string;
+  sourceColors?: string[];
+  targetColors?: string[];
+  colorLinksBy?: 'source' | 'target';
 }
 
 interface PrepareForSankeyResult {
@@ -52,18 +58,32 @@ export function prepareForSankey({
   sourceKey,
   targetKey,
   valueKey,
+  sourceColors = COLORS,
+  targetColors = COLORS,
+  colorLinksBy = 'source',
 }: PrepareForSankeyArgs): PrepareForSankeyResult {
-  const sources = uniq(rawData.map((x) => x[sourceKey]));
-  const targets = uniq(rawData.map((x) => x[targetKey]));
+  const sources = uniqBy(
+    rawData.map((x, i) => ({ name: x[sourceKey], color: sourceColors[i % sourceColors.length] })),
+    'name',
+  );
+  const targets = uniqBy(
+    rawData.map((x, i) => ({ name: x[targetKey], color: targetColors[i % targetColors.length] })),
+    'name',
+  );
 
-  const nodesRaw = sources.concat(targets);
-  const nodes = nodesRaw.map((x: string) => ({ name: x }));
+  const nodes = sources.concat(targets);
+  const nodeNames = nodes.map((x: any) => x.name);
 
-  const links = rawData.map((d: any) => ({
-    source: nodesRaw.indexOf(d[sourceKey]),
-    target: nodesRaw.indexOf(d[targetKey]),
-    value: d[valueKey],
-  }));
+  const links = rawData
+    .map((d: any) => ({
+      source: nodeNames.indexOf(d[sourceKey]),
+      target: nodeNames.indexOf(d[targetKey]),
+      value: d[valueKey],
+    }))
+    .map((d: any) => ({
+      ...d,
+      color: nodes[d[colorLinksBy]].color,
+    }));
 
   return {
     nodes,

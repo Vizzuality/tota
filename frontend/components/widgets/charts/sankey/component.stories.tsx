@@ -57,7 +57,18 @@ const rawData = [
   },
 ];
 
-const data = prepareForSankey({ rawData, sourceKey: 'category_1', targetKey: 'category_2', valueKey: 'value' });
+const sourceColors = ['#314057'];
+const targetColors = ['#D98834', '#A3C85A', '#BE328D'];
+
+const data = prepareForSankey({
+  rawData,
+  sourceKey: 'category_1',
+  targetKey: 'category_2',
+  valueKey: 'value',
+  sourceColors,
+  targetColors,
+  colorLinksBy: 'target',
+});
 
 const config = {
   margin: {
