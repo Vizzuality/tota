@@ -12,12 +12,12 @@ const commonChartConfig = {
   margin: {
     top: 20,
     right: 0,
-    left: 0,
+    left: 20,
     bottom: 0,
   },
 };
 const commonPieChartConfig = {
-  ...commonChartConfig,
+  chartProps: commonChartConfig,
   legend: {
     width: 250,
     layout: 'vertical',
@@ -159,7 +159,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = getAvailableYearsOptions(data);
 
             return {
-              ...commonChartConfig,
+              chartProps: {
+                ...commonChartConfig,
+              },
               controls: {
                 switch: {
                   options: [
@@ -332,7 +334,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const bars = getStackedBarsData(transformedData, 'date');
 
             return {
-              ...commonChartConfig,
+              chartProps: {
+                ...commonChartConfig,
+              },
               controls: {
                 switch: {
                   options: [
@@ -398,7 +402,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const bars = getStackedBarsData(transformedData, 'date');
 
             return {
-              ...commonChartConfig,
+              chartProps: {
+                ...commonChartConfig,
+              },
               controls: {
                 select: {
                   options: yearsOptions,
@@ -447,13 +453,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const bars = getStackedBarsData(transformedData, 'date');
 
             return {
-              ...commonChartConfig,
               controls: {
                 select: {
                   options: yearsOptions,
                 },
               },
               chartProps: {
+                ...commonChartConfig,
                 layout: 'vertical',
               },
               cartesianGrid: {
@@ -504,7 +510,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = getAvailableYearsOptions(data);
 
             return {
-              ...commonChartConfig,
+              chartProps: {
+                ...commonChartConfig,
+              },
               controls: {
                 select: {
                   options: yearsOptions,
@@ -557,7 +565,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = getAvailableYearsOptions(data);
 
             return {
-              ...commonChartConfig,
+              chartProps: {
+                ...commonChartConfig,
+              },
               controls: {
                 select: {
                   options: yearsOptions,

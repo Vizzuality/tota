@@ -5,6 +5,7 @@ import { colors } from 'constants/charts';
 import { LegendProps } from 'components/map/legend/component';
 
 interface ConfigProps {
+  chartProps: any;
   pies: PieProps;
   legend: LegendProps;
   tooltip: any;
@@ -16,11 +17,11 @@ export interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { pies, legend, tooltip } = config;
+  const { chartProps, pies, legend, tooltip } = config;
 
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <PieChart width={400} height={200}>
+      <PieChart width={400} height={200} {...chartProps}>
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (

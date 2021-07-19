@@ -1,22 +1,27 @@
 import React, { FC } from 'react';
 import {
-  ResponsiveContainer,
-  CartesianGrid,
+  Area,
+  AreaProps,
+  Bar,
+  BarProps,
   CartesianAxis,
-  XAxis,
-  YAxis,
+  CartesianGrid,
+  ComposedChart,
   Line,
-  Tooltip,
   LineProps,
-  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
   XAxisProps,
+  YAxis,
   YAxisProps,
 } from 'recharts';
 import { colors } from 'constants/charts';
 
 export interface ConfigProps {
-  chartProps: any;
+  areas: AreaProps;
   lines: LineProps;
+  bars: BarProps;
   cartesianAxis?: any;
   cartesianGrid?: any;
   xAxis?: XAxisProps;
@@ -30,18 +35,20 @@ export interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { cartesianGrid, cartesianAxis, chartProps, xAxis, yAxis, lines, tooltip } = config;
+  const { cartesianGrid, cartesianAxis, bars, areas, xAxis, yAxis, lines, tooltip } = config;
 
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <LineChart width={400} height={200} data={data} {...chartProps}>
+      <ComposedChart width={400} height={200} data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
         {lines && Object.keys(lines).map((line, index) => <Line key={line} {...lines[line]} stroke={colors[index]} />)}
+        {bars && Object.keys(bars).map((bar, index) => <Bar key={bar} {...bars[bar]} fill={colors[index]} />)}
+        {areas && Object.keys(areas).map((area, index) => <Area key={area} fill={colors[index]} {...areas[area]} />)}
         {tooltip && <Tooltip {...tooltip} />}
-      </LineChart>
+      </ComposedChart>
     </ResponsiveContainer>
   );
 };
