@@ -1,7 +1,6 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
 import Chart, { ChartProps } from './component';
-import { prepareForSankey } from 'utils/charts';
 
 export default {
   title: 'Components/Widgets/Charts/Sankey',
@@ -9,7 +8,7 @@ export default {
   argTypes: {},
 };
 
-const rawData = [
+const data = [
   {
     category_1: 'Vancouver, CA',
     category_2: 'Airport 1',
@@ -60,16 +59,6 @@ const rawData = [
 const sourceColors = ['#314057'];
 const targetColors = ['#D98834', '#A3C85A', '#BE328D'];
 
-const data = prepareForSankey({
-  rawData,
-  sourceKey: 'category_1',
-  targetKey: 'category_2',
-  valueKey: 'value',
-  sourceColors,
-  targetColors,
-  colorLinksBy: 'target',
-});
-
 const config = {
   margin: {
     top: 20,
@@ -77,6 +66,12 @@ const config = {
     left: 0,
     bottom: 0,
   },
+  sourceKey: 'category_1',
+  targetKey: 'category_2',
+  valueKey: 'value',
+  sourceColors,
+  targetColors,
+  colorLinksBy: 'target',
   tooltip: {},
 };
 
