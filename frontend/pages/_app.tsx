@@ -5,7 +5,14 @@ import 'styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MyApp: React.ReactNode = ({ Component, pageProps }: AppProps) => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: Infinity,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

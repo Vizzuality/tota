@@ -1,6 +1,7 @@
-import sortBy from 'lodash/sortBy';
-import orderBy from 'lodash/orderBy';
 import groupBy from 'lodash/groupBy';
+import orderBy from 'lodash/orderBy';
+import sortBy from 'lodash/sortBy';
+import sumBy from 'lodash/sumBy';
 
 interface MergeRawData {
   rawData: any[];
@@ -12,7 +13,8 @@ interface MergeRawData {
 export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawData): any[] {
   if (!rawData || !rawData.length) return [];
   const dataObj = {};
-  const sorted = orderBy(rawData, ['date', 'value'], ['asc', 'desc']);
+  const keepOthersLast = (d) => (d[labelKey] === 'Others' ? -Infinity : d.value);
+  const sorted = orderBy(rawData, ['date', keepOthersLast], ['asc', 'desc']);
   sorted.forEach((rd: any) => {
     dataObj[rd[mergeBy]] = {
       [mergeBy]: rd[mergeBy],
@@ -23,22 +25,37 @@ export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawD
   return sortBy(Object.values(dataObj), mergeBy);
 }
 
-export function getTop10AndOthersByDate(data: any[], key: string) {
+export function getTop10AndOthersByYear(data: any[], key: string) {
   if (!data) return data;
 
   const newData = [];
 
+  const groupedByYear = groupBy(data, (d: any) => getYear(d.date));
+  const first10PerYear = {};
+  Object.keys(groupedByYear).forEach((year) => {
+    const dataByYear = groupedByYear[year];
+    const groupedByKey = groupBy(dataByYear, key);
+    const summed = Object.keys(groupedByKey).map((k) => ({
+      [key]: k,
+      value: sumBy(groupedByKey[k], 'value'),
+    }));
+
+    const first10Keys = orderBy(summed, ['value'], ['desc'])
+      .slice(0, 10)
+      .filter((x: any) => x)
+      .map((x: any) => x[key]);
+    first10PerYear[year] = first10Keys;
+  });
+
   const groupedByDate = groupBy(data, 'date');
   Object.keys(groupedByDate).forEach((date) => {
     const dataByDate = groupedByDate[date];
-    const first10Data = orderBy(dataByDate, ['value'], ['desc'])
-      .slice(0, 10)
-      .filter((x: any) => x);
-    const first10Keys = first10Data.map((x) => x[key]);
+    const first10 = first10PerYear[getYear(date)] || [];
+    const first10Data = dataByDate.filter((x: any) => first10.includes(x[key]));
 
     newData.push(...first10Data);
 
-    const othersData = dataByDate.filter((x) => !first10Keys.includes(x[key]));
+    const othersData = dataByDate.filter((x: any) => !first10.includes(x[key]));
     if (othersData.length > 0) {
       newData.push({
         [key]: 'Others',

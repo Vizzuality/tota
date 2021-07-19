@@ -2,7 +2,7 @@ import TotaAPI from 'services/api';
 import {
   mergeRawData,
   getTop10AndOthers,
-  getTop10AndOthersByDate,
+  getTop10AndOthersByYear,
   getAvailableYearsOptions,
   getYear,
   getStackedBarsData,
@@ -382,7 +382,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             if (!rawData) return [];
 
             const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            const top10 = getTop10AndOthersByDate(filteredByYear, 'category_1');
+            const top10 = getTop10AndOthersByYear(filteredByYear, 'category_1');
+
             const merged = mergeRawData({
               rawData: top10,
               mergeBy: 'date',
