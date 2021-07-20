@@ -325,7 +325,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               labelKey: 'category_1',
               valueKey: 'value',
             });
-            merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            if (state.switchSelectedValue === 'monthly') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            }
             return merged;
           },
           type: 'charts/bar',
