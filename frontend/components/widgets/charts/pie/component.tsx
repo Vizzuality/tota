@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
-import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, PieProps, Cell } from 'recharts';
+import { ResponsiveContainer, Legend, LegendProps, PieChart, Pie, Tooltip, PieProps, Cell } from 'recharts';
 
 import { colors } from 'constants/charts';
-import { LegendProps } from 'components/map/legend/component';
 
 interface ConfigProps {
   chartProps: any;

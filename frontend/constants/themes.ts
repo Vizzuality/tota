@@ -29,6 +29,13 @@ const commonPieChartConfig = {
   tooltip: {},
 };
 
+const bottomLegend = {
+  iconType: 'square',
+  layout: 'horizontal',
+  verticalAlign: 'bottom',
+  align: 'left',
+};
+
 export interface ThemeSectionType {
   title: string;
   subTitle?: string;
@@ -144,6 +151,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             if (state.selectSelectedValue !== 'all_years') {
               merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged.forEach((d: any) => {
+                const valuesForMonth = rawData
+                  .filter((rd: any) => rd.region === 'Thompson Okanagan' && shortMonthName(rd.date) === d.date)
+                  .map((rd: any) => rd.value);
+                console.log('values for' + d.date, valuesForMonth);
+                d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              });
             }
             return merged;
           },
@@ -163,6 +177,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
@@ -174,6 +189,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
                 {
                   dataKey: 'British Columbia',
+                },
+              ],
+              areas: [
+                {
+                  dataKey: 'minMax',
+                  fill: '#E0E0E0',
+                  stroke: '#E0E0E0',
                 },
               ],
               xAxis: {
@@ -318,6 +340,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                   options: yearsOptions,
                 },
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
@@ -374,6 +397,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                   options: yearsOptions,
                 },
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
@@ -426,6 +450,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                 ...commonChartConfig,
                 layout: 'vertical',
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
@@ -466,10 +491,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             if (state.selectSelectedValue !== 'all_years') {
               merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged.forEach((d: any) => {
+                const valuesForMonth = rawData
+                  .filter((rd: any) => rd.region === 'Thompson Okanagan' && shortMonthName(rd.date) === d.date)
+                  .map((rd: any) => rd.value);
+                console.log('values for' + d.date, valuesForMonth);
+                d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              });
             }
             return merged;
           },
-          type: 'charts/line',
+          type: 'charts/composed',
           config(data: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data);
 
@@ -482,11 +514,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
                 strokeDasharray: '10 5',
               },
+              areas: [
+                {
+                  dataKey: 'minMax',
+                  fill: '#E0E0E0',
+                  stroke: '#E0E0E0',
+                },
+              ],
               lines: [
                 {
                   dataKey: 'Thompson Okanagan',
@@ -538,6 +578,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
+              legend: bottomLegend,
               cartesianGrid: {
                 vertical: false,
                 height: '1px',
