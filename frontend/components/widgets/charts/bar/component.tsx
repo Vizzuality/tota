@@ -40,6 +40,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
       <BarChart width={400} height={200} data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
+        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}

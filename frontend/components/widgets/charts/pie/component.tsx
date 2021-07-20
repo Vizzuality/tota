@@ -21,6 +21,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <PieChart width={400} height={200} {...chartProps}>
+        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (

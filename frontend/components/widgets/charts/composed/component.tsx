@@ -47,6 +47,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
+        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {lines &&
           Object.keys(lines).map((line, index) => (

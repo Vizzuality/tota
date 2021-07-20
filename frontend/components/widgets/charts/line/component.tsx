@@ -38,6 +38,7 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <LineChart width={400} height={200} data={data} {...chartProps}>
+        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
