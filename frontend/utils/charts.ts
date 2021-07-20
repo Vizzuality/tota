@@ -3,6 +3,8 @@ import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 
+import { OptionType } from '@types';
+
 interface MergeRawData {
   rawData: any[];
   mergeBy: string;
@@ -124,4 +126,8 @@ export function getAvailableYearsOptions(data: any[], withAllOptions = true): an
   const availableYears = getYears(data);
   availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
   return yearsOptions;
+}
+
+export function getOptions(options: string[]): OptionType[] {
+  return options.map((opt) => ({ name: opt, value: opt.toLowerCase() }));
 }

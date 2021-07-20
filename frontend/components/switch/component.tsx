@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
 
-export interface SwitchOptionType {
-  name: string;
-  value: string;
-}
+import { OptionType } from '@types';
 
 export interface SwitchProps {
-  options: SwitchOptionType[];
+  options: OptionType[];
   selectedValue: string;
   className?: string;
   onChange?: (selectedValue: string) => void;

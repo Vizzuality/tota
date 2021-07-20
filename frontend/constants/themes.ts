@@ -1,12 +1,13 @@
 import uniq from 'lodash/uniq';
 import TotaAPI from 'services/api';
 import {
-  mergeRawData,
+  getAvailableYearsOptions,
+  getOptions,
+  getStackedBarsData,
   getTop10AndOthers,
   getTop10AndOthersByYear,
-  getAvailableYearsOptions,
   getYear,
-  getStackedBarsData,
+  mergeRawData,
 } from 'utils/charts';
 
 const commonChartConfig = {
@@ -101,16 +102,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             ...commonPieChartConfig,
             controls: {
               switch: {
-                options: [
-                  {
-                    name: 'Biosphere',
-                    value: 'biosphere',
-                  },
-                  {
-                    name: 'Accessibility',
-                    value: 'accessibility',
-                  },
-                ],
+                options: getOptions(['Biosphere', 'Accessibility']),
               },
             },
             pies: [
@@ -155,7 +147,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             }
             return merged;
           },
-          type: 'charts/line',
+          type: 'charts/composed',
           config(data: any[]): any {
             const yearsOptions = getAvailableYearsOptions(data);
 
@@ -165,20 +157,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               },
               controls: {
                 switch: {
-                  options: [
-                    {
-                      name: 'Visits',
-                      value: 'visits',
-                    },
-                    {
-                      name: 'Trips',
-                      value: 'trips',
-                    },
-                    {
-                      name: 'Stays',
-                      value: 'stays',
-                    },
-                  ],
+                  options: getOptions(['Visits', 'Trips', 'Stays']),
                 },
                 select: {
                   options: yearsOptions,
@@ -246,16 +225,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             return {
               controls: {
                 switch: {
-                  options: [
-                    {
-                      name: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
-                      name: 'Quarterly',
-                      value: 'quarterly',
-                    },
-                  ],
+                  options: getOptions(['Monthly', 'Quarterly']),
                 },
                 select: {
                   options: yearsOptions,
@@ -342,16 +312,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               },
               controls: {
                 switch: {
-                  options: [
-                    {
-                      name: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
-                      name: 'Quarterly',
-                      value: 'quarterly',
-                    },
-                  ],
+                  options: getOptions(['Monthly', 'Quarterly']),
                 },
                 select: {
                   options: yearsOptions,

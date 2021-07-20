@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
 
-export interface SelectOptionType {
-  name: string;
-  value: string;
-}
+import { OptionType } from '@types';
 
 export interface SelectProps {
-  options: SelectOptionType[];
+  options: OptionType[];
   className?: string;
   selectedValue: string;
   label?: string;
