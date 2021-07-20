@@ -1,3 +1,4 @@
+import uniq from 'lodash/uniq';
 import TotaAPI from 'services/api';
 import {
   mergeRawData,
@@ -547,7 +548,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
-          selectSelectedValue: 'all_years',
+          selectSelectedValue: `compared_to_${previousYear}`,
         },
         fetchData: () =>
           TotaAPI.getSingleIndicator({
@@ -556,15 +557,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           }),
         widget: {
           transformData(rawData: any[], state: any): any[] {
-            let data = rawData;
-            if (state.selectSelectedValue !== 'all_years') {
-              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            }
+            const data = (rawData || []).filter((x: any) => x.category_1 === state.selectSelectedValue);
             return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
           },
           type: 'charts/line',
           config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data);
+            const yearsOptions = uniq((data || []).map((x: any) => x.category_1))
+              .sort()
+              .reverse()
+              .map((cat1: string) => ({ name: cat1.replace('compared_to_', ''), value: cat1 }));
 
             return {
               chartProps: {
@@ -572,6 +573,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               },
               controls: {
                 select: {
+                  label: 'Compared to: ',
                   options: yearsOptions,
                 },
               },

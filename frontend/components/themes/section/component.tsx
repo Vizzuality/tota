@@ -63,18 +63,14 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         {controls && (
           <div className="flex mb-5">
             {controls.switch && (
-              <Switch
-                options={controls.switch.options}
-                selectedValue={switchSelectedValue}
-                onChange={handleSwitchChange}
-              />
+              <Switch selectedValue={switchSelectedValue} onChange={handleSwitchChange} {...controls.switch} />
             )}
             {controls.select && (
               <Select
                 className="ml-auto"
-                options={controls.select.options}
                 selectedValue={selectSelectedValue}
                 onChange={handleSelectChange}
+                {...controls.select}
               />
             )}
           </div>
