@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Text, { TextProps } from './component';
+import Text from './component';
+import { TextProps } from './types';
 
 export default {
   title: 'Components/Widgets/Text',

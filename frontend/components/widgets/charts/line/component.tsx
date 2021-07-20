@@ -7,34 +7,23 @@ import {
   YAxis,
   Line,
   Tooltip,
-  LineProps,
   LineChart,
   Legend,
-  LegendProps,
-  XAxisProps,
-  YAxisProps,
 } from 'recharts';
 import { colors } from 'constants/charts';
+import { LineChartProps } from './types';
 
-export interface ConfigProps {
-  chartProps: any;
-  legend: LegendProps;
-  lines: LineProps;
-  cartesianAxis?: any;
-  cartesianGrid?: any;
-  xAxis?: XAxisProps;
-  yAxis?: YAxisProps;
-  tooltip: any;
-}
-
-export interface ChartProps {
-  data: any[];
-  config: ConfigProps;
-}
-
-const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { cartesianGrid, cartesianAxis, legend, chartProps, xAxis, yAxis, lines, tooltip } = config;
-
+const Chart: FC<LineChartProps> = ({
+  data,
+  cartesianGrid,
+  cartesianAxis,
+  legend,
+  chartProps,
+  xAxis,
+  yAxis,
+  lines,
+  tooltip,
+}: LineChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <LineChart width={400} height={200} data={data} {...chartProps}>

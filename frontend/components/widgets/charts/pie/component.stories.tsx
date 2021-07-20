@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Chart, { ChartProps } from './component';
+import Chart from './component';
+import { PieChartProps } from './types';
 
 export default {
   title: 'Components/Widgets/Charts/Pie',
@@ -89,10 +90,10 @@ const config = {
   tooltip: {},
 };
 
-const Template: Story<ChartProps> = ({ ...restProps }: ChartProps) => <Chart {...restProps} />;
+const Template: Story<PieChartProps> = ({ ...restProps }: PieChartProps) => <Chart {...restProps} />;
 
 export const Default = Template.bind({});
 Default.args = {
   data,
-  config,
+  ...config,
 };

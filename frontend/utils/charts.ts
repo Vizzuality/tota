@@ -72,7 +72,7 @@ export function getTop10AndOthersByYear(data: any[], key: string) {
 }
 
 export function getTop10AndOthers(data: any[], key: string) {
-  if (!data) return data;
+  if (!data) return [];
 
   const first10 = orderBy(data, ['value'], ['desc'])
     .slice(0, 10)

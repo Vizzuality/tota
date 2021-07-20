@@ -1,23 +1,10 @@
 import React, { FC } from 'react';
-import { ResponsiveContainer, Legend, LegendProps, PieChart, Pie, Tooltip, PieProps, Cell } from 'recharts';
+import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
+import { PieChartProps } from './types';
 
 import { colors } from 'constants/charts';
 
-interface ConfigProps {
-  chartProps: any;
-  pies: PieProps;
-  legend: LegendProps;
-  tooltip: any;
-}
-
-export interface ChartProps {
-  data: any[];
-  config: ConfigProps;
-}
-
-const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { chartProps, pies, legend, tooltip } = config;
-
+const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip }: PieChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <PieChart width={400} height={200} {...chartProps}>

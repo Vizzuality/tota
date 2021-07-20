@@ -4,11 +4,7 @@ import dynamic from 'next/dynamic';
 import { ThemeSectionType } from 'constants/themes';
 import Select from 'components/select';
 import Switch from 'components/switch';
-
-interface WidgetProps {
-  data: any;
-  config: any;
-}
+import { WidgetProps } from 'components/widgets/types';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;
@@ -75,7 +71,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        {widgetData && widgetConfig && <Widget data={widgetData} config={widgetConfig} />}
+        {widgetData && widgetConfig && <Widget data={widgetData} {...widgetConfig} />}
       </div>
     </div>
   );

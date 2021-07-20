@@ -6,41 +6,30 @@ import {
   CartesianGrid,
   CartesianAxis,
   Legend,
-  LegendProps,
   XAxis,
   YAxis,
   Tooltip,
-  BarProps,
-  XAxisProps,
-  YAxisProps,
 } from 'recharts';
+import { BarChartProps } from './types';
 
 import { colors } from 'constants/charts';
 
-interface ConfigProps {
-  chartProps: any;
-  legend: LegendProps;
-  bars: BarProps;
-  cartesianAxis?: any;
-  cartesianGrid?: any;
-  xAxis?: XAxisProps;
-  yAxis?: YAxisProps;
-  tooltip: any;
-}
-
-export interface ChartProps {
-  data: any[];
-  config: ConfigProps;
-}
-
-const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { chartProps, cartesianGrid, cartesianAxis, legend, xAxis, yAxis, bars, tooltip } = config;
+const Chart: FC<BarChartProps> = ({
+  data,
+  chartProps,
+  cartesianGrid,
+  cartesianAxis,
+  legend,
+  xAxis,
+  yAxis,
+  bars,
+  tooltip,
+}: BarChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
       <BarChart width={400} height={200} data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
-        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
