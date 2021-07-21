@@ -3,7 +3,7 @@ import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 
-import { OptionType } from '@types';
+import { OptionType } from 'types';
 
 interface MergeRawData {
   rawData: any[];

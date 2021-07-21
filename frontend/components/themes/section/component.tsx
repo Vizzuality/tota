@@ -1,10 +1,10 @@
 import React, { useState, FC } from 'react';
 import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
-import { ThemeSectionType } from 'constants/themes';
+import type { ThemeSectionType } from 'types';
 import Select from 'components/select';
 import Switch from 'components/switch';
-import { WidgetProps } from 'components/widgets/types';
+import type { WidgetProps } from 'components/widgets/types';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;

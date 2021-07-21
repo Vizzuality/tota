@@ -9,6 +9,7 @@ import {
   getYear,
   mergeRawData,
 } from 'utils/charts';
+import { IndicatorValue, ThemeType } from 'types';
 
 const commonChartConfig = {
   margin: {
@@ -35,23 +36,6 @@ const bottomLegend = {
   verticalAlign: 'bottom',
   align: 'left',
 };
-
-export interface ThemeSectionType {
-  title: string;
-  subTitle?: string;
-  description: string;
-  initialState?: any;
-  fetchDataKey?: string;
-  fetchData?: any;
-  widget: any;
-}
-
-export interface ThemeType {
-  title: string;
-  slug: string;
-  summary?: string;
-  sections: ThemeSectionType[];
-}
 
 const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
 const shortMonthName = (date: string) => monthNameFormatter.format(new Date(date));
