@@ -14,7 +14,7 @@ const Chart: FC<SankeyChartProps> = ({
   sourceColors,
   targetColors,
   colorLinksBy,
-  tooltip,
+  tooltip = { cursor: false },
 }: SankeyChartProps) => {
   const chartData = prepareForSankey({
     rawData: data,

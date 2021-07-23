@@ -22,9 +22,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
   const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
 
-  const { data } = useQuery([section.fetchDataKey || `Fetch indicator ${section.title}`, { ...state }], () =>
-    section.fetchData(state),
-  );
+  const { data } = useQuery([`Fetch indicator ${section.title}`, { ...state }], () => section.fetchData(state));
   let widgetData = data;
 
   if (typeof section.widget?.transformData === 'function') {

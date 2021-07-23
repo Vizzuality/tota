@@ -17,7 +17,11 @@ import { ComposedChartProps } from './types';
 
 const Chart: FC<ComposedChartProps> = ({
   data,
-  cartesianGrid,
+  cartesianGrid = {
+    vertical: false,
+    height: '1px',
+    strokeDasharray: '10 5',
+  },
   cartesianAxis,
   bars,
   areas,
@@ -25,7 +29,7 @@ const Chart: FC<ComposedChartProps> = ({
   yAxis,
   legend,
   lines,
-  tooltip,
+  tooltip = { cursor: false },
 }: ComposedChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>

@@ -15,14 +15,18 @@ import { LineChartProps } from './types';
 
 const Chart: FC<LineChartProps> = ({
   data,
-  cartesianGrid,
+  cartesianGrid = {
+    vertical: false,
+    height: '1px',
+    strokeDasharray: '10 5',
+  },
   cartesianAxis,
   legend,
   chartProps,
   xAxis,
   yAxis,
   lines,
-  tooltip,
+  tooltip = { cursor: false },
 }: LineChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>

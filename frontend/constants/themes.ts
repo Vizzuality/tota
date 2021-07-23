@@ -11,25 +11,6 @@ import {
 } from 'utils/charts';
 import { IndicatorValue, ThemeType } from 'types';
 
-const commonChartConfig = {
-  margin: {
-    top: 20,
-    right: 0,
-    left: 20,
-    bottom: 0,
-  },
-};
-const commonPieChartConfig = {
-  chartProps: commonChartConfig,
-  legend: {
-    width: 250,
-    layout: 'vertical',
-    verticalAlign: 'middle',
-    align: 'right',
-  },
-  tooltip: {},
-};
-
 const bottomLegend = {
   iconType: 'square',
   layout: 'horizontal',
@@ -55,7 +36,6 @@ const themes: ThemeType[] = [
         subTitle: '(by type)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        fetchDataKey: 'indicator-establishments-by-type-all',
         fetchData: () => TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: 'all' }),
         widget: {
           transformData(rawData: any[], _state: any): any[] {
@@ -63,7 +43,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           },
           type: 'charts/pie',
           config: {
-            ...commonPieChartConfig,
             pies: [
               {
                 nameKey: 'category_1',
@@ -78,7 +57,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         subTitle: '(by type)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        fetchDataKey: 'indicator-establishments-by-type',
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: state.switchSelectedValue }),
         initialState: {
@@ -90,7 +68,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           },
           type: 'charts/pie',
           config: {
-            ...commonPieChartConfig,
             controls: {
               switch: {
                 options: getOptions(['Biosphere', 'Accessibility']),
@@ -150,9 +127,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = getAvailableYearsOptions(data);
 
             return {
-              chartProps: {
-                ...commonChartConfig,
-              },
               controls: {
                 switch: {
                   options: getOptions(['Visits', 'Trips', 'Stays']),
@@ -162,11 +136,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               lines: [
                 {
                   dataKey: 'Thompson Okanagan',
@@ -313,9 +282,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const bars = getStackedBarsData(transformedData, 'date');
 
             return {
-              chartProps: {
-                ...commonChartConfig,
-              },
               controls: {
                 switch: {
                   options: getOptions(['Monthly', 'Quarterly']),
@@ -325,11 +291,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                 },
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               bars,
               xAxis: {
                 dataKey: 'date',
@@ -373,20 +334,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             const bars = getStackedBarsData(transformedData, 'date');
 
             return {
-              chartProps: {
-                ...commonChartConfig,
-              },
               controls: {
                 select: {
                   options: yearsOptions,
                 },
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               bars,
               xAxis: {
                 dataKey: 'date',
@@ -431,15 +384,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                 },
               },
               chartProps: {
-                ...commonChartConfig,
                 layout: 'vertical',
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               bars,
               xAxis: {
                 hide: true,
@@ -490,20 +437,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = getAvailableYearsOptions(data);
 
             return {
-              chartProps: {
-                ...commonChartConfig,
-              },
               controls: {
                 select: {
                   options: yearsOptions,
                 },
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               areas: [
                 {
                   dataKey: 'minMax',
@@ -523,7 +462,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
               },
               yAxis: {},
-              tooltip: {},
             };
           },
         },
@@ -553,9 +491,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               .map((cat1: string) => ({ name: cat1.replace('compared_to_', ''), value: cat1 }));
 
             return {
-              chartProps: {
-                ...commonChartConfig,
-              },
               controls: {
                 select: {
                   label: 'Compared to: ',
@@ -563,11 +498,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
               },
               legend: bottomLegend,
-              cartesianGrid: {
-                vertical: false,
-                height: '1px',
-                strokeDasharray: '10 5',
-              },
               lines: [
                 {
                   dataKey: 'Thompson Okanagan',
@@ -580,7 +510,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
               },
               yAxis: {},
-              tooltip: {},
             };
           },
         },

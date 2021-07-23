@@ -17,13 +17,17 @@ import { COLORS } from 'constants/charts';
 const Chart: FC<BarChartProps> = ({
   data,
   chartProps,
-  cartesianGrid,
+  cartesianGrid = {
+    vertical: false,
+    height: '1px',
+    strokeDasharray: '10 5',
+  },
   cartesianAxis,
   legend,
   xAxis,
   yAxis,
   bars,
-  tooltip,
+  tooltip = { cursor: false },
 }: BarChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
