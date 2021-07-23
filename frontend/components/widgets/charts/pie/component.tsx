@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
 import { PieChartProps } from './types';
 
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
 
 const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip }: PieChartProps) => {
   return (
@@ -12,9 +12,9 @@ const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip }: P
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (
-            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={colors[index]}>
+            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={COLORS[index]}>
               {data.map((d, i) => (
-                <Cell key={`cell-${d}`} fill={colors[i % colors.length]} />
+                <Cell key={`cell-${d}`} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
           ))}

@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
 const Chart: FC<ComposedChartProps> = ({
@@ -43,14 +43,14 @@ const Chart: FC<ComposedChartProps> = ({
               strokeWidth={3}
               dot={false}
               activeDot={false}
-              stroke={colors[index]}
+              stroke={COLORS[index]}
               {...lines[line]}
             />
           ))}
         {bars &&
-          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} {...bars[bar]} fill={colors[index]} />)}
+          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
         {areas &&
-          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={colors[index]} {...areas[area]} />)}
+          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />)}
         {tooltip && <Tooltip {...tooltip} />}
       </ComposedChart>
     </ResponsiveContainer>

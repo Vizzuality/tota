@@ -10,7 +10,7 @@ import {
   LineChart,
   Legend,
 } from 'recharts';
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
 import { LineChartProps } from './types';
 
 const Chart: FC<LineChartProps> = ({
@@ -40,7 +40,7 @@ const Chart: FC<LineChartProps> = ({
               strokeWidth={3}
               dot={false}
               activeDot={false}
-              stroke={colors[index]}
+              stroke={COLORS[index]}
               {...lines[line]}
             />
           ))}

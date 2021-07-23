@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { BarChartProps } from './types';
 
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
 
 const Chart: FC<BarChartProps> = ({
   data,
@@ -33,7 +33,7 @@ const Chart: FC<BarChartProps> = ({
         {legend && <Legend {...legend} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
-        {bars && Object.keys(bars).map((bar, index) => <Bar key={bar} {...bars[bar]} fill={colors[index]} />)}
+        {bars && Object.keys(bars).map((bar, index) => <Bar key={bar} fill={COLORS[index]} {...bars[bar]} />)}
         {tooltip && <Tooltip {...tooltip} />}
       </BarChart>
     </ResponsiveContainer>
