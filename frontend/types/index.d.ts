@@ -20,7 +20,7 @@ export interface ThemeSectionType {
   subTitle?: string;
   description: string;
   initialState?: any;
-  fetchData?: any;
+  fetchData: any;
   widget: any;
 }
 

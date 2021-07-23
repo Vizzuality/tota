@@ -6,6 +6,7 @@ import {
   getStackedBarsData,
   getTop10AndOthers,
   getTop10AndOthersByYear,
+  getTopN,
   getYear,
   mergeRawData,
 } from 'utils/charts';
@@ -36,19 +37,24 @@ const themes: ThemeType[] = [
         subTitle: '(by type)',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: 'all' }),
+        fetchData: (state: any) =>
+          TotaAPI.getSingleIndicator({
+            slug: 'establishments_by_type',
+            category_2: 'all',
+            region: state.selectedRegion.slug,
+          }),
         widget: {
-          transformData(rawData: any[], _state: any): any[] {
-            return getTop10AndOthers(rawData, 'category_1');
-          },
           type: 'charts/pie',
-          config: {
-            pies: [
-              {
-                nameKey: 'category_1',
-                dataKey: 'value',
-              },
-            ],
+          fetchProps(rawData: IndicatorValue[]): any {
+            return {
+              data: getTop10AndOthers(rawData, 'category_1'),
+              pies: [
+                {
+                  nameKey: 'category_1',
+                  dataKey: 'value',
+                },
+              ],
+            };
           },
         },
       },
@@ -58,39 +64,43 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         fetchData: (state: any) =>
-          TotaAPI.getSingleIndicator({ slug: 'establishments_by_type', category_2: state.switchSelectedValue }),
+          TotaAPI.getSingleIndicator({
+            slug: 'establishments_by_type',
+            category_2: state.switchSelectedValue,
+            region: state.selectedRegion.slug,
+          }),
         initialState: {
           switchSelectedValue: 'biosphere',
         },
         widget: {
-          transformData(rawData: any[]): any[] {
-            return getTop10AndOthers(rawData, 'category_1');
-          },
           type: 'charts/pie',
-          config: {
-            controls: {
-              switch: {
-                options: getOptions(['Biosphere', 'Accessibility']),
+          fetchProps(rawData: IndicatorValue[]): any {
+            return {
+              data: getTop10AndOthers(rawData, 'category_1'),
+              controls: {
+                switch: {
+                  options: getOptions(['Biosphere', 'Accessibility']),
+                },
               },
-            },
-            pies: [
-              {
-                nameKey: 'category_1',
-                dataKey: 'value',
-              },
-            ],
+              pies: [
+                {
+                  nameKey: 'category_1',
+                  dataKey: 'value',
+                },
+              ],
+            };
           },
         },
       },
       {
         title: 'Monthly domestic (Canadian) arrivals',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           switchSelectedValue: 'visits',
           selectSelectedValue: 'all_years',
         },
-        fetchData: (state: any) => {
+        fetchData(state: any): any {
           const indicatorSlug = {
             visits: 'visits_by_origin_country_monthly',
             stays: 'stays_by_origin_country_monthly',
@@ -99,34 +109,42 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
           return TotaAPI.getSingleIndicator({
             slug: indicatorSlug,
-            region: ['British Columbia', 'Thompson Okanagan'],
+            region: [state.selectedRegion.slug, state.selectedRegion.parent],
             category_1: 'Canada',
           });
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
+          type: 'charts/composed',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData);
             let data = rawData;
             if (state.selectSelectedValue !== 'all_years') {
               data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let areas = {};
             if (state.selectSelectedValue !== 'all_years') {
-              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
-              merged.forEach((d: any) => {
+              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              data.forEach((d: any) => {
                 const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === 'Thompson Okanagan' && shortMonthName(rd.date) === d.date)
+                  .filter((rd: any) => rd.region === state.selectedRegion.slug && shortMonthName(rd.date) === d.date)
                   .map((rd: any) => rd.value);
-                console.log('values for' + d.date, valuesForMonth);
                 d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
               });
+              areas = {
+                areas: [
+                  {
+                    dataKey: 'minMax',
+                    fill: '#E0E0E0',
+                    stroke: '#E0E0E0',
+                  },
+                ],
+              };
             }
-            return merged;
-          },
-          type: 'charts/composed',
-          config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data);
+            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
 
             return {
+              data,
               controls: {
                 switch: {
                   options: getOptions(['Visits', 'Trips', 'Stays']),
@@ -136,26 +154,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
               },
               legend: bottomLegend,
-              lines: [
-                {
-                  dataKey: 'Thompson Okanagan',
-                },
-                {
-                  dataKey: 'British Columbia',
-                },
-              ],
-              areas: [
-                {
-                  dataKey: 'minMax',
-                  fill: '#E0E0E0',
-                  stroke: '#E0E0E0',
-                },
-              ],
+              lines: regions,
+              ...areas,
               xAxis: {
                 dataKey: 'date',
               },
               yAxis: {},
-              tooltip: {},
             };
           },
         },
@@ -163,7 +167,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       {
         title: '% of annual domestic overnight visitors occurring in peak month & quarter',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           switchSelectedValue: 'monthly',
           selectSelectedValue: previousYear,
@@ -174,10 +178,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'domestic_visits_percentage_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: 'Thompson Okanagan' });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
+          type: 'rank',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData, false);
             let take = 5;
             let formatDate = shortMonthName;
 
@@ -186,18 +192,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               formatDate = (date) => date;
             }
 
-            return (rawData || [])
-              .filter((x: any) => getYear(x.date) === state.selectSelectedValue)
-              .sort((a, b) => b['value'] - a['value'])
-              .slice(0, take)
-              .filter((x) => x)
-              .map((x) => `${formatDate(x['date'])}: ${formatPercentage(x['value'])} of visitors`);
-          },
-          type: 'rank',
-          config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
+            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+            const data = getTopN(filteredByYear, take, 'value').map(
+              (x) => `${formatDate(x['date'])}: ${formatPercentage(x['value'])} of visitors`,
+            );
 
             return {
+              data,
               controls: {
                 switch: {
                   options: getOptions(['Monthly', 'Quarterly']),
@@ -213,28 +214,31 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       {
         title: 'Ratio of number of domestic tourists in peak month to lowest month',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: () =>
-          TotaAPI.getSingleIndicator({ slug: 'domestic_visits_peak_lowest_month_ratio', region: 'Thompson Okanagan' }),
+        fetchData: (state: any) =>
+          TotaAPI.getSingleIndicator({
+            slug: 'domestic_visits_peak_lowest_month_ratio',
+            region: state.selectedRegion.slug,
+          }),
         widget: {
-          transformData(rawData: any[], state: any): string {
-            const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
-            if (!ratio) return '';
-
-            const ratioNumber = Number(ratio.value).toFixed(2);
-
-            return `peak/lowest month (${shortMonthName(ratio.category_1)}/${shortMonthName(
-              ratio.category_2,
-            )}): ${ratioNumber} x visitors`;
-          },
           type: 'text',
-          config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData, false);
+            const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
+
+            let ratioText = '';
+            if (ratio) {
+              const ratioNumber = Number(ratio.value).toFixed(2);
+              ratioText = `peak/lowest month (${shortMonthName(ratio.category_1)}/${shortMonthName(
+                ratio.category_2,
+              )}): ${ratioNumber} x visitors`;
+            }
 
             return {
+              data: ratioText,
               controls: {
                 select: {
                   options: yearsOptions,
@@ -247,7 +251,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       {
         title: 'Domestic (canadian) visitors by origin province',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           switchSelectedValue: 'monthly',
           selectSelectedValue: previousYear,
@@ -258,30 +262,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             quarterly: 'visits_by_origin_province_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: 'Thompson Okanagan' });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
         },
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            if (!rawData) return [];
-
-            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            const merged = mergeRawData({
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData, false);
+            const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+            const data = mergeRawData({
               rawData: filteredByYear,
               mergeBy: 'date',
               labelKey: 'category_1',
               valueKey: 'value',
             });
             if (state.switchSelectedValue === 'monthly') {
-              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
             }
-            return merged;
-          },
-          type: 'charts/bar',
-          config(data: any[], transformedData: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
-            const bars = getStackedBarsData(transformedData, 'date');
+            const bars = getStackedBarsData(data, 'date');
 
             return {
+              data,
               controls: {
                 switch: {
                   options: getOptions(['Monthly', 'Quarterly']),
@@ -295,7 +295,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               xAxis: {
                 dataKey: 'date',
               },
-              tooltip: { cursor: false },
             };
           },
         },
@@ -304,7 +303,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
         title: 'Quarterly visits by origin city',
         subTitle: '(top 10)',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           selectSelectedValue: previousYear,
         },
@@ -314,26 +313,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
             region: ['British Columbia', 'Thompson Okanagan'],
           }),
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            if (!rawData) return [];
-
-            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData, false);
+            const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             const top10 = getTop10AndOthersByYear(filteredByYear, 'category_1');
-
-            const merged = mergeRawData({
+            const data = mergeRawData({
               rawData: top10,
               mergeBy: 'date',
               labelKey: 'category_1',
               valueKey: 'value',
             });
-            return merged;
-          },
-          type: 'charts/bar',
-          config(data: any[], transformedData: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
-            const bars = getStackedBarsData(transformedData, 'date');
+            const bars = getStackedBarsData(data, 'date');
 
             return {
+              data,
               controls: {
                 select: {
                   options: yearsOptions,
@@ -344,7 +338,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
               xAxis: {
                 dataKey: 'date',
               },
-              tooltip: { cursor: false },
             };
           },
         },
@@ -353,31 +346,28 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
         title: 'Monthly visits by PRIZM cluster',
         subTitle: '(top 10)',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: () => TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: 'Thompson Okanagan' }),
+        fetchData: (state: any) =>
+          TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.slug }),
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            if (!rawData) return [];
-
-            const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            const merged = mergeRawData({
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData, false);
+            const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+            const data = mergeRawData({
               rawData: filteredByYear,
               mergeBy: 'date',
               labelKey: 'category_2',
               valueKey: 'value',
             });
-            merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
-            return merged;
-          },
-          type: 'charts/bar',
-          config(data: any[], transformedData: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data, false);
-            const bars = getStackedBarsData(transformedData, 'date');
+            data.forEach((d: any) => (d.date = shortMonthName(d.date)));
+            const bars = getStackedBarsData(data, 'date');
 
             return {
+              data,
               controls: {
                 select: {
                   options: yearsOptions,
@@ -396,7 +386,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
                 dataKey: 'date',
                 type: 'category',
               },
-              tooltip: { cursor: false },
             };
           },
         },
@@ -404,39 +393,36 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus soll
       {
         title: 'Average length of stay of domestic (Canadian) overnight visitors',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           selectSelectedValue: previousYear,
         },
-        fetchData: () =>
+        fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'nights_per_visitor_by_country_monthly',
-            region: ['Thompson Okanagan', 'British Columbia'],
+            region: [state.selectedRegion.slug, state.selectedRegion.parent],
           }),
         widget: {
-          transformData(rawData: any[], state: any): any[] {
+          type: 'charts/composed',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData);
             let data = rawData;
             if (state.selectSelectedValue !== 'all_years') {
-              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
+              data = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             if (state.selectSelectedValue !== 'all_years') {
-              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
-              merged.forEach((d: any) => {
+              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              data.forEach((d: any) => {
                 const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === 'Thompson Okanagan' && shortMonthName(rd.date) === d.date)
+                  .filter((rd: any) => rd.region === state.selectedRegion.slug && shortMonthName(rd.date) === d.date)
                   .map((rd: any) => rd.value);
-                console.log('values for' + d.date, valuesForMonth);
                 d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
               });
             }
-            return merged;
-          },
-          type: 'charts/composed',
-          config(data: any[]): any {
-            const yearsOptions = getAvailableYearsOptions(data);
-
+            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
             return {
+              data,
               controls: {
                 select: {
                   options: yearsOptions,
@@ -450,14 +436,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   stroke: '#E0E0E0',
                 },
               ],
-              lines: [
-                {
-                  dataKey: 'Thompson Okanagan',
-                },
-                {
-                  dataKey: 'British Columbia',
-                },
-              ],
+              lines: regions,
               xAxis: {
                 dataKey: 'date',
               },
@@ -469,28 +448,27 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       {
         title: 'Weekly Canadian travel patterns',
         description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
         initialState: {
           selectSelectedValue: `compared_to_${previousYear}`,
         },
-        fetchData: () =>
+        fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'visits_change_weekly',
-            region: ['British Columbia', 'Thompson Okanagan'],
+            region: [state.selectedRegion.slug, state.selectedRegion.parent],
           }),
         widget: {
-          transformData(rawData: any[], state: any): any[] {
-            const data = (rawData || []).filter((x: any) => x.category_1 === state.selectSelectedValue);
-            return mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-          },
           type: 'charts/line',
-          config(data: any[]): any {
-            const yearsOptions = uniq((data || []).map((x: any) => x.category_1))
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = uniq(rawData.map((x: any) => x.category_1))
               .sort()
               .reverse()
               .map((cat1: string) => ({ name: cat1.replace('compared_to_', ''), value: cat1 }));
-
+            let data = rawData.filter((x: any) => x.category_1 === state.selectSelectedValue);
+            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
             return {
+              data,
               controls: {
                 select: {
                   label: 'Compared to: ',
@@ -498,14 +476,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
               },
               legend: bottomLegend,
-              lines: [
-                {
-                  dataKey: 'Thompson Okanagan',
-                },
-                {
-                  dataKey: 'British Columbia',
-                },
-              ],
+              lines: regions,
               xAxis: {
                 dataKey: 'date',
               },

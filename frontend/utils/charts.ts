@@ -71,6 +71,13 @@ export function getTop10AndOthersByYear(data: any[], key: string) {
   return newData;
 }
 
+export function getTopN(data: any[], take: number, valueKey: string) {
+  return (data || [])
+    .sort((a, b) => b[valueKey] - a[valueKey])
+    .slice(0, take)
+    .filter((x) => x);
+}
+
 export function getTop10AndOthers(data: any[], key: string) {
   if (!data) return [];
 

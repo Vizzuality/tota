@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, useMemo, FC } from 'react';
 import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
 import type { ThemeSectionType } from 'types';
@@ -11,6 +11,14 @@ export interface ThemeSectionProps {
   index: number;
 }
 
+const mockedGlobalState = {
+  selectedRegion: {
+    slug: 'Thompson Okanagan',
+    name: 'Thompson Okanagan',
+    parent: 'British Columbia',
+  },
+};
+
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
   const Loading = () => <div>Loading...</div>;
   const widgetType = section.widget?.type || 'charts/pie';
@@ -21,18 +29,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const { switchSelectedValue, selectSelectedValue } = state || {};
   const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
   const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
+  const totalState = { ...state, ...mockedGlobalState };
 
-  const { data } = useQuery([`Fetch indicator ${section.title}`, { ...state }], () => section.fetchData(state));
-  let widgetData = data;
-
-  if (typeof section.widget?.transformData === 'function') {
-    widgetData = section.widget.transformData(data, state);
-  }
-  let config = section.widget?.config;
-  if (typeof section.widget?.config === 'function') {
-    config = section.widget.config(data, widgetData);
-  }
-  const { controls, ...widgetConfig } = config;
+  const { data: rawData } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
+    section.fetchData(totalState),
+  );
+  const { data, controls, ...widgetConfig } = useMemo(
+    () => section.widget.fetchProps(rawData, totalState),
+    [rawData, totalState],
+  );
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -69,7 +74,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        {widgetData && widgetConfig && <Widget data={widgetData} {...widgetConfig} />}
+        {data && widgetConfig && <Widget data={data} {...widgetConfig} />}
       </div>
     </div>
   );
