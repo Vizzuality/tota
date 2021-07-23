@@ -1,25 +1,30 @@
 import React, { FC } from 'react';
 import {
-  ResponsiveContainer,
-  CartesianGrid,
+  Area,
+  AreaProps,
+  Bar,
+  BarProps,
   CartesianAxis,
-  XAxis,
-  YAxis,
-  Line,
-  Tooltip,
-  LineProps,
-  LineChart,
+  CartesianGrid,
+  ComposedChart,
   Legend,
   LegendProps,
+  Line,
+  LineProps,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
   XAxisProps,
+  YAxis,
   YAxisProps,
 } from 'recharts';
 import { colors } from 'constants/charts';
 
 export interface ConfigProps {
-  chartProps: any;
-  legend: LegendProps;
+  areas: AreaProps;
   lines: LineProps;
+  bars: BarProps;
+  legend: LegendProps;
   cartesianAxis?: any;
   cartesianGrid?: any;
   xAxis?: XAxisProps;
@@ -33,17 +38,17 @@ export interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { cartesianGrid, cartesianAxis, legend, chartProps, xAxis, yAxis, lines, tooltip } = config;
+  const { cartesianGrid, cartesianAxis, bars, areas, xAxis, yAxis, legend, lines, tooltip } = config;
 
   return (
     <ResponsiveContainer width="100%" height={500}>
-      <LineChart width={400} height={200} data={data} {...chartProps}>
-        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
-        {legend && <Legend {...legend} />}
+      <ComposedChart width={400} height={200} data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
+        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
+        {legend && <Legend {...legend} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line
@@ -55,8 +60,12 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
               {...lines[line]}
             />
           ))}
+        {bars &&
+          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} {...bars[bar]} fill={colors[index]} />)}
+        {areas &&
+          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={colors[index]} {...areas[area]} />)}
         {tooltip && <Tooltip {...tooltip} />}
-      </LineChart>
+      </ComposedChart>
     </ResponsiveContainer>
   );
 };
