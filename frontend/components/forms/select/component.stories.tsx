@@ -51,7 +51,7 @@ Default.args = {
     { label: 'Kootenay Rockies', value: 'v-2' },
     { label: 'Northern BC', value: 'v-3', disabled: true },
   ],
-  initialSelected: ['v-1'],
+  initialSelected: 'v-1',
   disabled: false,
   multiple: false,
   searchable: false,

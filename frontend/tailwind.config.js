@@ -19,10 +19,10 @@ module.exports = {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
       },
       width: {
-        'map-sidebar': '400px',
+        'map-sidebar': '300px',
       },
       translate: {
-        'map-sidebar': '-400px',
+        'map-sidebar': '-300px',
       },
     },
   },

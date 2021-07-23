@@ -1,8 +1,8 @@
 export default {
   dark: {
-    container: 'text-white bg-transparent ring-1 ring-gray-400 rounded-3xl',
-    open: 'ring-2 ring-blue-400 bg-gray-700 text-white rounded-2xl',
-    closed: 'border-gray-400 text-gray-400',
+    container: 'text-white bg-transparent ring-1 ring-gray-400 bg-gray-700',
+    open: 'ring-2 ring-blue-400 bg-gray-700 text-white',
+    closed: 'border-gray-400 text-white',
     prefix: {
       base: 'text-white',
     },
@@ -18,8 +18,8 @@ export default {
     },
   },
   light: {
-    container: 'text-gray-600 bg-transparent ring-1 ring-gray-400 rounded-3xl',
-    open: 'ring-2 ring-blue-400 bg-white text-gray-600 rounded-2xl',
+    container: 'text-gray-600 bg-transparent ring-1 ring-gray-400',
+    open: 'ring-2 ring-blue-400 bg-white text-gray-600',
     closed: 'text-gray-400',
     prefix: {
       base: 'text-gray-800',
@@ -41,7 +41,7 @@ export default {
     valid: 'ring-green-500',
   },
   sizes: {
-    base: 'pl-4 pr-10 py-3 text-sm',
+    base: 'pl-4 pr-10 py-4 text-lg',
     s: 'pl-4 pr-10 py-1.5 text-sm',
   },
 };
