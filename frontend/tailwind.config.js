@@ -1,7 +1,7 @@
 module.exports = {
   purge: {
     enabled: process.env.NODE_ENV !== 'development',
-    content: ['./**/*.tsx'],
+    content: ['./**/*.{tsx,ts,jsx}'],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
