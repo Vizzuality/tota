@@ -11,6 +11,7 @@ import {
   mergeRawData,
 } from 'utils/charts';
 import { IndicatorValue, ThemeType } from 'types';
+import { format, parseISO } from 'date-fns';
 
 const bottomLegend = {
   iconType: 'square',
@@ -466,6 +467,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               .reverse()
               .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
             let data = rawData.filter((x: any) => x.category_1 === state.selectSelectedValue);
+            const allDates = data.map((x) => parseISO(x.date).getTime());
+            const months = uniq(allDates.map((x) => format(new Date(x), 'y-MM'))).sort();
+            const minDate = Math.min(...allDates);
+            data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
             data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
             return {
@@ -480,8 +485,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               lines: regions,
               xAxis: {
                 dataKey: 'date',
+                ticks: [minDate, ...months.slice(1).map((x) => parseISO(x).getTime())],
+                tickFormatter: (date) => {
+                  const parsedDate = new Date(parseInt(date));
+                  if (isNaN(parsedDate.getTime())) return date;
+                  return format(parsedDate, 'MMM');
+                },
+                type: 'number',
+                scale: 'time',
+                domain: ['auto', 'auto'],
               },
               yAxis: {},
+              tooltip: {
+                labelFormatter: (value) => {
+                  const parsedDate = new Date(parseInt(value));
+                  return format(parsedDate, 'MMM d');
+                },
+              },
             };
           },
         },

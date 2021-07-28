@@ -17,7 +17,7 @@ const Button: FC<SelectProps> = ({ className, label, options, onChange, selected
       {' '}
       {options.map((option) => (
         <option key={option.value} value={option.value}>
-          {option.name}
+          {option.label}
         </option>
       ))}
     </select>
