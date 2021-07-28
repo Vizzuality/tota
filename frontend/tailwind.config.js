@@ -1,7 +1,7 @@
 module.exports = {
   purge: {
     enabled: process.env.NODE_ENV !== 'development',
-    content: ['./**/*.tsx'],
+    content: ['./**/*.{tsx,ts,jsx}'],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -17,6 +17,12 @@ module.exports = {
       },
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
+      },
+      width: {
+        'map-sidebar': '300px',
+      },
+      translate: {
+        'map-sidebar': '-300px',
       },
     },
   },
