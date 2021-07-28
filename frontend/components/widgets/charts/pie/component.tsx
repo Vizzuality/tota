@@ -1,23 +1,21 @@
 import React, { FC } from 'react';
-import { ResponsiveContainer, Legend, LegendProps, PieChart, Pie, Tooltip, PieProps, Cell } from 'recharts';
+import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
+import { PieChartProps } from './types';
 
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
 
-interface ConfigProps {
-  chartProps: any;
-  pies: PieProps;
-  legend: LegendProps;
-  tooltip: any;
-}
-
-export interface ChartProps {
-  data: any[];
-  config: ConfigProps;
-}
-
-const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { chartProps, pies, legend, tooltip } = config;
-
+const Chart: FC<PieChartProps> = ({
+  data,
+  chartProps,
+  pies,
+  legend = {
+    width: 250,
+    layout: 'vertical',
+    verticalAlign: 'middle',
+    align: 'right',
+  },
+  tooltip = { cursor: false },
+}: PieChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <PieChart width={400} height={200} {...chartProps}>
@@ -25,9 +23,9 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (
-            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={colors[index]}>
+            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={COLORS[index]}>
               {data.map((d, i) => (
-                <Cell key={`cell-${d}`} fill={colors[i % colors.length]} />
+                <Cell key={`cell-${d}`} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
           ))}

@@ -3,7 +3,7 @@ import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 
-import { OptionType } from '@types';
+import { OptionType } from 'types';
 
 interface MergeRawData {
   rawData: any[];
@@ -71,8 +71,15 @@ export function getTop10AndOthersByYear(data: any[], key: string) {
   return newData;
 }
 
+export function getTopN(data: any[], take: number, valueKey: string) {
+  return (data || [])
+    .sort((a, b) => b[valueKey] - a[valueKey])
+    .slice(0, take)
+    .filter((x) => x);
+}
+
 export function getTop10AndOthers(data: any[], key: string) {
-  if (!data) return data;
+  if (!data) return [];
 
   const first10 = orderBy(data, ['value'], ['desc'])
     .slice(0, 10)

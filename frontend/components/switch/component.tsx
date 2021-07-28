@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
 
-import { OptionType } from '@types';
+import { OptionType } from 'types';
 
 export interface SwitchProps {
   options: OptionType[];

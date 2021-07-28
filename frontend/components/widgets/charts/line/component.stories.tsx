@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Chart, { ChartProps } from './component';
+import Chart from './component';
+import { LineChartProps } from './types';
 import { mergeRawData } from 'utils/charts';
 
 export default {
@@ -83,10 +84,10 @@ const config = {
   tooltip: {},
 };
 
-const Template: Story<ChartProps> = ({ ...restProps }: ChartProps) => <Chart {...restProps} />;
+const Template: Story<LineChartProps> = ({ ...restProps }: LineChartProps) => <Chart {...restProps} />;
 
 export const Default = Template.bind({});
 Default.args = {
   data,
-  config,
+  ...config,
 };

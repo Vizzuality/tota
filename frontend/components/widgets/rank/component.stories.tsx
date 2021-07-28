@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Rank, { RankProps } from './component';
+import Rank from './component';
+import { RankProps } from './types';
 
 export default {
   title: 'Components/Widgets/Rank',

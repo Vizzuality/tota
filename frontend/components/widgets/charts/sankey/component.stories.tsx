@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Chart, { ChartProps } from './component';
+import Chart from './component';
+import type { SankeyChartProps } from './types';
 
 export default {
   title: 'Components/Widgets/Charts/Sankey',
@@ -75,7 +76,7 @@ const config = {
   tooltip: {},
 };
 
-const Template: Story<ChartProps> = ({ ...restProps }: ChartProps) => <Chart {...restProps} />;
+const Template: Story<SankeyChartProps> = ({ ...restProps }: SankeyChartProps) => <Chart {...restProps} />;
 
 export const Default = Template.bind({});
 Default.args = {

@@ -1,45 +1,36 @@
 import React, { FC } from 'react';
 import {
   Area,
-  AreaProps,
   Bar,
-  BarProps,
   CartesianAxis,
   CartesianGrid,
   ComposedChart,
   Legend,
-  LegendProps,
   Line,
-  LineProps,
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  XAxisProps,
   YAxis,
-  YAxisProps,
 } from 'recharts';
-import { colors } from 'constants/charts';
+import { COLORS } from 'constants/charts';
+import { ComposedChartProps } from './types';
 
-export interface ConfigProps {
-  areas: AreaProps;
-  lines: LineProps;
-  bars: BarProps;
-  legend: LegendProps;
-  cartesianAxis?: any;
-  cartesianGrid?: any;
-  xAxis?: XAxisProps;
-  yAxis?: YAxisProps;
-  tooltip: any;
-}
-
-export interface ChartProps {
-  data: any[];
-  config: ConfigProps;
-}
-
-const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
-  const { cartesianGrid, cartesianAxis, bars, areas, xAxis, yAxis, legend, lines, tooltip } = config;
-
+const Chart: FC<ComposedChartProps> = ({
+  data,
+  cartesianGrid = {
+    vertical: false,
+    height: '1px',
+    strokeDasharray: '10 5',
+  },
+  cartesianAxis,
+  bars,
+  areas,
+  xAxis,
+  yAxis,
+  legend,
+  lines,
+  tooltip = { cursor: false },
+}: ComposedChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={500}>
       <ComposedChart width={400} height={200} data={data}>
@@ -56,14 +47,14 @@ const Chart: FC<ChartProps> = ({ data, config }: ChartProps) => {
               strokeWidth={3}
               dot={false}
               activeDot={false}
-              stroke={colors[index]}
+              stroke={COLORS[index]}
               {...lines[line]}
             />
           ))}
         {bars &&
-          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} {...bars[bar]} fill={colors[index]} />)}
+          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
         {areas &&
-          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={colors[index]} {...areas[area]} />)}
+          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />)}
         {tooltip && <Tooltip {...tooltip} />}
       </ComposedChart>
     </ResponsiveContainer>

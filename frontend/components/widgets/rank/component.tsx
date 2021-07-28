@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
-
-export interface RankProps {
-  data: string[];
-}
+import { RankProps } from './types';
 
 const Rank: FC<RankProps> = ({ data }: RankProps) => {
   return (

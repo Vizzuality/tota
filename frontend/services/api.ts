@@ -1,15 +1,18 @@
-export interface getIndicatorsArgs {
+import type { IndicatorValue } from 'types';
+
+interface GetIndicatorsArgs {
   slug?: string | string[];
   region?: string | string[];
   category_1?: string | string[];
   category_2?: string | string[];
 }
 
-export interface getSingleIndicatorArgs {
+interface GetIndicatorsResult {
+  [propName: string]: IndicatorValue[];
+}
+
+interface GetSingleIndicatorArgs extends GetIndicatorsArgs {
   slug: string;
-  region?: string | string[];
-  category_1?: string | string[];
-  category_2?: string | string[];
 }
 
 class API {
@@ -21,7 +24,7 @@ class API {
     },
   };
 
-  async getIndicators({ slug, region, category_1, category_2 }: getIndicatorsArgs): Promise<any> {
+  async getIndicators({ slug, region, category_1, category_2 }: GetIndicatorsArgs): Promise<GetIndicatorsResult> {
     const params = new URLSearchParams();
     const wrap = (x: string | string[]) => [x].flat().filter((x) => x);
     const slugArray = wrap(slug);
@@ -42,11 +45,11 @@ class API {
     return byIndicatorSlug;
   }
 
-  getSingleIndicator({ slug, region, category_1, category_2 }: getSingleIndicatorArgs): Promise<any> {
-    return this.getIndicators({ slug, region, category_1, category_2 }).then((data: any) => data[slug] || []);
+  getSingleIndicator({ slug, ...restArgs }: GetSingleIndicatorArgs): Promise<IndicatorValue[]> {
+    return this.getIndicators({ slug, ...restArgs }).then((data: any) => data[slug] || []);
   }
 
-  get(endpoint: string) {
+  get(endpoint: string): Promise<any> {
     return fetch(`${this.baseURL}/${endpoint}`)
       .then(this._handleResponse)
       .then((d) => d.data);

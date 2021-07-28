@@ -1,19 +1,23 @@
-import React, { useState, FC } from 'react';
+import React, { useState, useMemo, FC } from 'react';
 import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
-import { ThemeSectionType } from 'constants/themes';
+import type { ThemeSectionType } from 'types';
 import Select from 'components/select';
 import Switch from 'components/switch';
-
-interface WidgetProps {
-  data: any;
-  config: any;
-}
+import type { WidgetProps } from 'components/widgets/types';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;
   index: number;
 }
+
+const mockedGlobalState = {
+  selectedRegion: {
+    slug: 'Thompson Okanagan',
+    name: 'Thompson Okanagan',
+    parent: 'British Columbia',
+  },
+};
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
   const Loading = () => <div>Loading...</div>;
@@ -25,20 +29,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const { switchSelectedValue, selectSelectedValue } = state || {};
   const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
   const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
+  const totalState = { ...state, ...mockedGlobalState };
 
-  const { data } = useQuery([section.fetchDataKey || `Fetch indicator ${section.title}`, { ...state }], () =>
-    section.fetchData(state),
+  const { data: rawData } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
+    section.fetchData(totalState),
   );
-  let widgetData = data;
-
-  if (typeof section.widget?.transformData === 'function') {
-    widgetData = section.widget.transformData(data, state);
-  }
-  let config = section.widget?.config;
-  if (typeof section.widget?.config === 'function') {
-    config = section.widget.config(data, widgetData);
-  }
-  const { controls, ...widgetConfig } = config;
+  const { data, controls, ...widgetConfig } = useMemo(
+    () => section.widget.fetchProps(rawData, totalState),
+    [rawData, totalState],
+  );
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -75,7 +74,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        {widgetData && widgetConfig && <Widget data={widgetData} config={widgetConfig} />}
+        {data && widgetConfig && <Widget data={data} {...widgetConfig} />}
       </div>
     </div>
   );

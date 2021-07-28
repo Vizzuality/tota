@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { OptionType } from '@types';
+import { OptionType } from 'types';
 
 export interface SelectProps {
   options: OptionType[];
