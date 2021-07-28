@@ -126,15 +126,15 @@ export function getAvailableYearsOptions(data: any[], withAllOptions = true): an
   const yearsOptions = [];
   if (withAllOptions) {
     yearsOptions.push({
-      name: 'All years',
+      label: 'All years',
       value: 'all_years',
     });
   }
   const availableYears = getYears(data);
-  availableYears.forEach((year) => yearsOptions.push({ name: year.toString(), value: year.toString() }));
+  availableYears.forEach((year) => yearsOptions.push({ label: year.toString(), value: year.toString() }));
   return yearsOptions;
 }
 
 export function getOptions(options: string[]): OptionType[] {
-  return options.map((opt) => ({ name: opt, value: opt.toLowerCase() }));
+  return options.map((opt) => ({ label: opt, value: opt.toLowerCase() }));
 }

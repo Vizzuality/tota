@@ -24,6 +24,7 @@ const shortMonthName = (date: string) => monthNameFormatter.format(new Date(date
 const formatPercentage = (value: number) =>
   value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
 const previousYear = (new Date().getFullYear() - 1).toString();
+const thisYear = new Date().getFullYear().toString();
 
 const themes: ThemeType[] = [
   {
@@ -463,7 +464,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = uniq(rawData.map((x: any) => x.category_1))
               .sort()
               .reverse()
-              .map((cat1: string) => ({ name: cat1.replace('compared_to_', ''), value: cat1 }));
+              .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
             let data = rawData.filter((x: any) => x.category_1 === state.selectSelectedValue);
             data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
@@ -471,7 +472,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data,
               controls: {
                 select: {
-                  label: 'Compared to: ',
+                  prefix: `${thisYear} Compared to: `,
                   options: yearsOptions,
                 },
               },
