@@ -41,7 +41,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: 'all',
-            region: state.selectedRegion.slug,
+            region: state.selectedRegion.name,
           }),
         widget: {
           type: 'charts/pie',
@@ -67,7 +67,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: state.switchSelectedValue,
-            region: state.selectedRegion.slug,
+            region: state.selectedRegion.name,
           }),
         initialState: {
           switchSelectedValue: 'biosphere',
@@ -109,7 +109,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
           return TotaAPI.getSingleIndicator({
             slug: indicatorSlug,
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
             category_1: 'Canada',
           });
         },
@@ -127,7 +127,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data.forEach((d: any) => (d.date = shortMonthName(d.date)));
               data.forEach((d: any) => {
                 const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === state.selectedRegion.slug && shortMonthName(rd.date) === d.date)
+                  .filter((rd: any) => rd.region === state.selectedRegion.name && shortMonthName(rd.date) === d.date)
                   .map((rd: any) => rd.value);
                 d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
               });
@@ -178,7 +178,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'domestic_visits_percentage_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.name });
         },
         widget: {
           type: 'rank',
@@ -221,7 +221,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'domestic_visits_peak_lowest_month_ratio',
-            region: state.selectedRegion.slug,
+            region: state.selectedRegion.name,
           }),
         widget: {
           type: 'text',
@@ -262,7 +262,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'visits_by_origin_province_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.name });
         },
         widget: {
           type: 'charts/bar',
@@ -351,7 +351,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           selectSelectedValue: previousYear,
         },
         fetchData: (state: any) =>
-          TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.slug }),
+          TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
         widget: {
           type: 'charts/bar',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
@@ -400,7 +400,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'nights_per_visitor_by_country_monthly',
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
           }),
         widget: {
           type: 'charts/composed',
@@ -415,7 +415,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data.forEach((d: any) => (d.date = shortMonthName(d.date)));
               data.forEach((d: any) => {
                 const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === state.selectedRegion.slug && shortMonthName(rd.date) === d.date)
+                  .filter((rd: any) => rd.region === state.selectedRegion.name && shortMonthName(rd.date) === d.date)
                   .map((rd: any) => rd.value);
                 d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
               });
@@ -455,7 +455,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'visits_change_weekly',
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
           }),
         widget: {
           type: 'charts/line',

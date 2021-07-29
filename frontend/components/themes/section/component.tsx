@@ -1,23 +1,18 @@
 import React, { useState, useMemo, FC } from 'react';
 import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
 import Select from 'components/select';
 import Switch from 'components/switch';
 import type { WidgetProps } from 'components/widgets/types';
 
+import { useRegions } from 'hooks/regions';
+
 export interface ThemeSectionProps {
   section: ThemeSectionType;
   index: number;
 }
-
-const mockedGlobalState = {
-  selectedRegion: {
-    slug: 'Thompson Okanagan',
-    name: 'Thompson Okanagan',
-    parent: 'British Columbia',
-  },
-};
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
   const Loading = () => <div>Loading...</div>;
@@ -25,11 +20,20 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: Loading,
   });
+  const { regions } = useRegions();
+  const router = useRouter();
+  const { region } = router.query;
   const [state, setState] = useState(section.initialState);
   const { switchSelectedValue, selectSelectedValue } = state || {};
   const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
   const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
-  const totalState = { ...state, ...mockedGlobalState };
+  const totalState = useMemo(
+    () => ({
+      ...state,
+      selectedRegion: regions.find((r) => r.slug === region),
+    }),
+    [state, region, regions],
+  );
 
   const { data: rawData } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
     section.fetchData(totalState),
