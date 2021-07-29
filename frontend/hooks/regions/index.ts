@@ -3,10 +3,12 @@ import { useMemo, useState } from 'react';
 import { UseRegionsResponse, UseSelectedRegionResponse, RegionProps, SelectRegionProps } from './types';
 
 const fakeRegions: RegionProps[] = [
-  { id: 0, title: 'All regions (British colombia)' },
-  { id: 1, title: 'Cariboo Chilcotin Coast' },
-  { id: 2, title: 'Kootenay Rockies' },
-  { id: 3, title: 'Northern BC' },
+  { id: 0, title: 'All regions (British colombia)', slug: 'british-columbia' },
+  { id: 1, title: 'Cariboo Chilcotin Coast', slug: 'cariboo-chilcotin-coast' },
+  { id: 2, title: 'Kootenay Rockies', slug: 'kootenay-rockies' },
+  { id: 3, title: 'Northern BC', slug: 'northern-bc' },
+  { id: 4, title: 'Vancouver Island', slug: 'vancouver-island' },
+  { id: 5, title: 'Thomposon Okanagan', slug: 'thompson-okanagan' },
 ];
 
 export function useRegions(): UseRegionsResponse {

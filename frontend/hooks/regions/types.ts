@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export interface RegionProps {
   id: number;
   title: string;
+  slug: string;
 }
 
 export interface SelectRegionProps {

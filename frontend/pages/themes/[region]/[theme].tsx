@@ -12,15 +12,15 @@ import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
 import Select from 'components/forms/select';
 
-import { useSelectedRegion } from 'hooks/regions';
+import { useRegions } from 'hooks/regions';
 import themes from 'constants/themes';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const router = useRouter();
-  const { regions, selectRegion, selectedRegion } = useSelectedRegion();
-  const { slug } = router.query;
+  const { regions } = useRegions();
+  const { theme: themeSlug, region } = router.query;
 
-  const theme = themes.find((t) => t.slug === slug);
+  const theme = themes.find((t) => t.slug === themeSlug);
 
   return (
     <Layout>
@@ -37,25 +37,23 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
                   id="map-select-region"
                   theme="darkBorderless"
                   size="base"
-                  options={regions.map((r): SelectOptionProps => ({ label: r.title, value: r.id }))}
-                  initialSelected={selectedRegion ? (selectedRegion as unknown as string) : ''}
-                  onChange={(value: string) => selectRegion({ id: parseInt(value, 10) })}
+                  options={regions.map((r): SelectOptionProps => ({ label: r.title, value: r.slug }))}
+                  selected={region}
+                  onChange={(value: string) => router.push(`/themes/${value}/${themeSlug}`)}
                 />
               </div>
-              {themes.map((theme) => (
-                <Link key={theme.slug} href={`/themes/${theme.slug}`}>
-                  <a className="mx-5 py-2 h-16 text-center font-bold">{theme.title}</a>
+              {themes.map((t) => (
+                <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
+                  <a className="mx-5 py-2 h-16 text-center font-bold">{t.title}</a>
                 </Link>
               ))}
             </div>
           </div>
           <div className="mt-28">
             <ThemeHeader />
-
-            {theme.sections &&
-              theme.sections.map((section, index) => (
-                <ThemeSection key={section.title} index={index + 1} section={section} />
-              ))}
+            {theme?.sections?.map((section, index) => (
+              <ThemeSection key={section.title} index={index + 1} section={section} />
+            ))}
             <ThemeMobileFooter />
           </div>
         </>
