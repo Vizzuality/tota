@@ -14,6 +14,16 @@ module.exports = {
     extend: {
       colors: {
         color1: '#314057',
+        blue1: '#D4DBDD',
+        blue2: '#347888',
+        blue3: '#68869A',
+        blue4: '#667C9E',
+        blue5: '#4F91CD',
+        blue6: '#006690',
+        blue7: '#063898',
+        blue8: '#003D76',
+        blue9: '#314057',
+        blue10: '#1E2734',
       },
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",

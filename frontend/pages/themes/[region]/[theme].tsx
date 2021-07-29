@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import cx from 'classnames';
 
 import Layout from 'layout';
 
@@ -30,12 +31,12 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
 
       {theme && (
         <>
-          <div className="fixed w-full h-16 z-30 left-0 top-20 bg-color1">
+          <div className="fixed w-full h-16 z-30 left-0 top-20 bg-blue9">
             <div className="container m-auto flex items-center text-white">
-              <div className="w-64">
+              <div className="w-80">
                 <Select
                   id="map-select-region"
-                  theme="darkBorderless"
+                  theme="dark"
                   size="base"
                   options={regions.map((r): SelectOptionProps => ({ label: r.title, value: r.slug }))}
                   selected={region}
@@ -46,7 +47,9 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
               </div>
               {themes.map((t) => (
                 <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
-                  <a className="mx-5 py-2 h-16 text-center font-bold">{t.title}</a>
+                  <a className={cx('px-4 py-2 h-16 text-center', { 'font-bold bg-blue10': t.slug === themeSlug })}>
+                    {t.title}
+                  </a>
                 </Link>
               ))}
             </div>
