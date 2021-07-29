@@ -39,7 +39,9 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
                   size="base"
                   options={regions.map((r): SelectOptionProps => ({ label: r.title, value: r.slug }))}
                   selected={region}
-                  onChange={(value: string) => router.push(`/themes/${value}/${themeSlug}`)}
+                  onChange={(value: string) =>
+                    router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false })
+                  }
                 />
               </div>
               {themes.map((t) => (
