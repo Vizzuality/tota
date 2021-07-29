@@ -17,6 +17,24 @@ export default {
       disabled: 'text-sm opacity-50 pointer-events-none',
     },
   },
+  darkBorderless: {
+    container: 'text-white bg-transparent bg-color1',
+    open: 'ring-2 ring-blue-400 bg-color1 text-white',
+    closed: 'border-gray-400 text-white',
+    prefix: {
+      base: 'text-white',
+    },
+    icon: {
+      closed: 'text-white',
+      open: 'text-blue-500 transform rotate-180',
+      disabled: 'text-gray-400',
+    },
+    item: {
+      base: 'text-sm text-gray-300',
+      highlighted: 'text-sm bg-gray-700 text-white',
+      disabled: 'text-sm opacity-50 pointer-events-none',
+    },
+  },
   light: {
     container: 'text-gray-600 bg-transparent ring-1 ring-gray-400',
     open: 'ring-2 ring-blue-400 bg-white text-gray-600',
