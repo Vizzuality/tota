@@ -477,13 +477,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
             let data = rawData.filter((x: any) => x.category_1 === state.selectSelectedValue);
             const allDates = data.map((x) => parseISO(x.date).getTime());
-            const months = uniq(allDates.map((x) => format(new Date(x), 'y-MM'))).sort();
+            const months = allMonths.map((x) => new Date(`${thisYear} ${x}`).getTime());
             const minDate = Math.min(...allDates);
             data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
-            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
             return {
-              data,
+              data: merged,
               controls: {
                 select: {
                   prefix: `${thisYear} Compared to: `,
@@ -494,7 +494,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               lines: regions,
               xAxis: {
                 dataKey: 'date',
-                ticks: [minDate, ...months.slice(1).map((x) => parseISO(x).getTime())],
+                ticks: [minDate, ...months.slice(1)],
                 tickFormatter: (date) => {
                   const parsedDate = new Date(parseInt(date));
                   if (isNaN(parsedDate.getTime())) return date;
