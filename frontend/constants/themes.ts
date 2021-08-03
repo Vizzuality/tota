@@ -421,33 +421,42 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             if (state.selectSelectedValue !== 'all_years') {
               data = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let areas = {};
+            const regions = uniq(rawData.map((x) => x.region));
             if (state.selectSelectedValue !== 'all_years') {
-              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-              data.forEach((d: any) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === state.selectedRegion.slug && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+              merged.forEach((d: any) => {
+                regions.forEach((region: string) => {
+                  const valuesForMonth = rawData
+                    .filter((rd: any) => rd.region === region && shortMonthName(rd.date) === d.date)
+                    .map((rd: any) => rd.value);
+                  d[`${region} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+                });
               });
+              areas = {
+                areas: regions.map((region: string) => ({
+                  dataKey: `${region} min-max`,
+                  fillOpacity: 0.07,
+                  stroke: 'none',
+                })),
+              };
             }
-            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
+
             return {
-              data,
+              data: merged,
               controls: {
                 select: {
                   options: yearsOptions,
                 },
               },
               legend: bottomLegend,
-              areas: [
-                {
-                  dataKey: 'minMax',
-                  fill: '#E0E0E0',
-                  stroke: '#E0E0E0',
-                },
-              ],
-              lines: regions,
+              ...areas,
+              lines: regions.map((x) => ({ dataKey: x })),
               xAxis: {
                 dataKey: 'date',
               },
