@@ -32,6 +32,6 @@ export interface ThemeType {
 }
 
 export interface OptionType {
-  name: string;
+  label: string;
   value: string;
 }
