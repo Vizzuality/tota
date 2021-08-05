@@ -31,7 +31,7 @@ const Chart: FC<BarChartProps> = ({
 }: BarChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart width={400} height={200} data={data} {...chartProps}>
+      <BarChart data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {legend && <Legend {...legend} />}

@@ -35,7 +35,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     [state, region, regions],
   );
 
-  const { data: rawData } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
+  const { data: rawData, isFetched } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
     section.fetchData(totalState),
   );
   const { data, controls, ...widgetConfig } = useMemo(
@@ -82,7 +82,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        {data && widgetConfig && <Widget data={data} {...widgetConfig} />}
+        {isFetched && data && widgetConfig && <Widget data={data} {...widgetConfig} />}
       </div>
     </div>
   );

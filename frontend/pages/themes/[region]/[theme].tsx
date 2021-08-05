@@ -13,7 +13,7 @@ import themes from 'constants/themes';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const router = useRouter();
-  const { theme: themeSlug, region } = router.query;
+  const { theme: themeSlug } = router.query;
 
   const theme = themes.find((t) => t.slug === themeSlug);
 

@@ -32,8 +32,8 @@ const Chart: FC<ComposedChartProps> = ({
   tooltip = { cursor: false },
 }: ComposedChartProps) => {
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <ComposedChart width={400} height={200} data={data}>
+    <ResponsiveContainer width="100%" height={400}>
+      <ComposedChart data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}

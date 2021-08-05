@@ -47,7 +47,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: 'all',
-            region: state.selectedRegion.name,
+            region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
           }),
         widget: {
           type: 'charts/pie',
@@ -73,7 +73,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: state.switchSelectedValue,
-            region: state.selectedRegion.name,
+            region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
           }),
         initialState: {
           switchSelectedValue: 'biosphere',
@@ -475,7 +475,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'visits_change_weekly',
-            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+            region: [
+              state.selectedRegion.name,
+              state.selectedRegion.parent?.name,
+              ...state.selectedRegion.children?.map((x) => x.name),
+            ].filter((x) => x),
           }),
         widget: {
           type: 'charts/line',

@@ -27,7 +27,7 @@ const Chart: FC<SankeyChartProps> = ({
   });
 
   return (
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height={400}>
       {/* @ts-expect-error: Disable type errors for SankeyLink and SankeyNode props missing */}
       <Sankey data={chartData} nodePading={50} link={<SankeyLink />} node={<SankeyNode />} {...chartConfig}>
         {tooltip && <Tooltip {...tooltip} />}

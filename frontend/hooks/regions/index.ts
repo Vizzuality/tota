@@ -11,15 +11,16 @@ const fakeRegions: RegionProps[] = [
   { id: 5, name: 'Thompson Okanagan', slug: 'thompson-okanagan', parent_id: 0 },
 ];
 
-function applyParents(regions: RegionProps[]): RegionProps[] {
+function applyParentsAndChildren(regions: RegionProps[]): RegionProps[] {
   return regions.map((r) => ({
     ...r,
     parent: regions.find((rp) => rp.id === r.parent_id),
+    children: regions.filter((rc) => rc.parent_id === r.id),
   }));
 }
 
 export function useRegions(): UseRegionsResponse {
-  const [regions, setRegions] = useState<RegionProps[]>(applyParents(fakeRegions)); // eslint-disable-line
+  const [regions, setRegions] = useState<RegionProps[]>(applyParentsAndChildren(fakeRegions)); // eslint-disable-line
 
   // Replace with react query
   const [query, useQuery] = useState('https://such-query'); // eslint-disable-line
