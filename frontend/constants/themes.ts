@@ -239,6 +239,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               yAxis: {
                 tickFormatter: compactNumberTickFormatter,
               },
+              tooltip: {
+                cursor: true,
+                valueFormatter: compactNumberTickFormatter,
+              },
             };
           },
         },

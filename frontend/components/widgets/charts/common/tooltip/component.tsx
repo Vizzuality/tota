@@ -6,6 +6,7 @@ export interface TooltipProps {
   label: any;
   payload: any;
   labelFormatter: any;
+  valueFormatter: any;
 }
 
 const Tooltip: FC<TooltipProps> = ({
@@ -13,10 +14,9 @@ const Tooltip: FC<TooltipProps> = ({
   label,
   payload,
   labelFormatter = (label: any) => label,
+  valueFormatter = (value: any) => value,
 }: TooltipProps) => {
   if (!active) return null;
-
-  console.log('paload', payload);
 
   return (
     <div className="bg-white shadow-md text-sm" style={{ minWidth: 350 }}>
@@ -32,7 +32,7 @@ const Tooltip: FC<TooltipProps> = ({
                 <div className="w-4 h-4 mr-2 inline-block" style={{ backgroundColor: y.stroke || y.color }}></div>
                 {y.dataKey}
               </div>
-              <div className="font-bold">{y.value}</div>
+              <div className="font-bold">{valueFormatter(y.value)}</div>
             </div>
           ))}
         {(!payload || payload.length === 0) && <div>No data available</div>}
