@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import { COLORS } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
@@ -54,7 +55,7 @@ const Chart: FC<ComposedChartProps> = ({
           Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
         {areas &&
           Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />)}
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip />} />}
       </ComposedChart>
     </ResponsiveContainer>
   );

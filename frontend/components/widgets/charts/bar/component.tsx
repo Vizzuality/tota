@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'recharts';
 import { BarChartProps } from './types';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 
 import { COLORS } from 'constants/charts';
 
@@ -37,7 +38,7 @@ const Chart: FC<BarChartProps> = ({
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis {...yAxis} />}
         {bars && Object.keys(bars).map((bar, index) => <Bar key={bar} fill={COLORS[index]} {...bars[bar]} />)}
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </BarChart>
     </ResponsiveContainer>
   );

@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { COLORS } from 'constants/charts';
 import { LineChartProps } from './types';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 
 const Chart: FC<LineChartProps> = ({
   data,
@@ -47,7 +48,7 @@ const Chart: FC<LineChartProps> = ({
               {...lines[line]}
             />
           ))}
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </LineChart>
     </ResponsiveContainer>
   );
