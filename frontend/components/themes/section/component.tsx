@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
 import Select from 'components/forms/select';
 import Switch from 'components/switch';
+import Loading from 'components/loading';
 import type { WidgetProps } from 'components/widgets/types';
 
 import { useRegions } from 'hooks/regions';
@@ -15,19 +16,14 @@ export interface ThemeSectionProps {
 }
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
-  const Loading = () => (
-    <div
-      style={{
-        height: 400,
-      }}
-    >
-      {' '}
-      Loading...
+  const widgetType = section.widget?.type || 'charts/pie';
+  const LoadingWidget = () => (
+    <div style={{ height: 400 }} className="flex items-center justify-center">
+      <Loading iconClassName="w-10 h-10" visible />
     </div>
   );
-  const widgetType = section.widget?.type || 'charts/pie';
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
-    loading: Loading,
+    loading: LoadingWidget,
   });
   const { regions } = useRegions();
   const router = useRouter();
@@ -44,9 +40,12 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     [state, region, regions],
   );
 
-  const { data: rawData, isFetched } = useQuery([`Fetch indicator ${section.title}`, totalState], () =>
-    section.fetchData(totalState),
-  );
+  const {
+    data: rawData,
+    isFetched,
+    isFetching,
+    isLoading,
+  } = useQuery([`Fetch indicator ${section.title}`, totalState], () => section.fetchData(totalState));
   const { data, controls, ...widgetConfig } = useMemo(
     () => section.widget.fetchProps(rawData, totalState),
     [rawData, totalState],
@@ -91,7 +90,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        {isFetched && data && widgetConfig && <Widget data={data} {...widgetConfig} />}
+        <div style={{ minHeight: 400 }}>
+          {(isLoading || isFetching) && LoadingWidget}
+          {isFetched && data && data.length && widgetConfig && <Widget data={data} {...widgetConfig} />}
+        </div>
       </div>
     </div>
   );
