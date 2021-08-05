@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
-import Select from 'components/select';
+import Select from 'components/forms/select';
 import Switch from 'components/switch';
 import type { WidgetProps } from 'components/widgets/types';
 
@@ -69,12 +69,16 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
               <Switch selectedValue={switchSelectedValue} onChange={handleSwitchChange} {...controls.switch} />
             )}
             {controls.select && (
-              <Select
-                className="ml-auto"
-                selectedValue={selectSelectedValue}
-                onChange={handleSelectChange}
-                {...controls.select}
-              />
+              <div className="ml-auto">
+                <Select
+                  id={`select-section-${index}`}
+                  theme="lightBorderless"
+                  size="base"
+                  selected={selectSelectedValue}
+                  onChange={handleSelectChange}
+                  {...controls.select}
+                />
+              </div>
             )}
           </div>
         )}

@@ -11,6 +11,7 @@ import {
   mergeRawData,
 } from 'utils/charts';
 import { IndicatorValue, ThemeType } from 'types';
+import { format, parseISO } from 'date-fns';
 
 const bottomLegend = {
   iconType: 'square',
@@ -19,11 +20,16 @@ const bottomLegend = {
   align: 'left',
 };
 
+const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
 const shortMonthName = (date: string) => monthNameFormatter.format(new Date(date));
 const formatPercentage = (value: number) =>
   value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
 const previousYear = (new Date().getFullYear() - 1).toString();
+const thisYear = new Date().getFullYear().toString();
+
+const compactNumberTickFormatter = (value) =>
+  new Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' }).format(value);
 
 const themes: ThemeType[] = [
   {
@@ -121,30 +127,33 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             if (state.selectSelectedValue !== 'all_years') {
               data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             let areas = {};
+            const regions = uniq(rawData.map((x) => x.region));
             if (state.selectSelectedValue !== 'all_years') {
-              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-              data.forEach((d: any) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === state.selectedRegion.name && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+              merged.forEach((d: any) => {
+                regions.forEach((region: string) => {
+                  const valuesForMonth = rawData
+                    .filter((rd: any) => rd.region === region && shortMonthName(rd.date) === d.date)
+                    .map((rd: any) => rd.value);
+                  d[`${region} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+                });
               });
               areas = {
-                areas: [
-                  {
-                    dataKey: 'minMax',
-                    fill: '#E0E0E0',
-                    stroke: '#E0E0E0',
-                  },
-                ],
+                areas: regions.map((region: string) => ({
+                  dataKey: `${region} min-max`,
+                  fillOpacity: 0.07,
+                  stroke: 'none',
+                })),
               };
             }
-            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
-
             return {
-              data,
+              data: merged,
               controls: {
                 switch: {
                   options: getOptions(['Visits', 'Trips', 'Stays']),
@@ -154,12 +163,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 },
               },
               legend: bottomLegend,
-              lines: regions,
+              lines: regions.map((x) => ({ dataKey: x })),
               ...areas,
               xAxis: {
                 dataKey: 'date',
               },
-              yAxis: {},
+              yAxis: {
+                tickFormatter: compactNumberTickFormatter,
+              },
             };
           },
         },
@@ -410,33 +421,42 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             if (state.selectSelectedValue !== 'all_years') {
               data = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             }
-            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            let areas = {};
+            const regions = uniq(rawData.map((x) => x.region));
             if (state.selectSelectedValue !== 'all_years') {
-              data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-              data.forEach((d: any) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === state.selectedRegion.name && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d.minMax = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+              merged.forEach((d: any) => {
+                regions.forEach((region: string) => {
+                  const valuesForMonth = rawData
+                    .filter((rd: any) => rd.region === region && shortMonthName(rd.date) === d.date)
+                    .map((rd: any) => rd.value);
+                  d[`${region} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+                });
               });
+              areas = {
+                areas: regions.map((region: string) => ({
+                  dataKey: `${region} min-max`,
+                  fillOpacity: 0.07,
+                  stroke: 'none',
+                })),
+              };
             }
-            const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
+
             return {
-              data,
+              data: merged,
               controls: {
                 select: {
                   options: yearsOptions,
                 },
               },
               legend: bottomLegend,
-              areas: [
-                {
-                  dataKey: 'minMax',
-                  fill: '#E0E0E0',
-                  stroke: '#E0E0E0',
-                },
-              ],
-              lines: regions,
+              ...areas,
+              lines: regions.map((x) => ({ dataKey: x })),
               xAxis: {
                 dataKey: 'date',
               },
@@ -463,15 +483,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const yearsOptions = uniq(rawData.map((x: any) => x.category_1))
               .sort()
               .reverse()
-              .map((cat1: string) => ({ name: cat1.replace('compared_to_', ''), value: cat1 }));
+              .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
             let data = rawData.filter((x: any) => x.category_1 === state.selectSelectedValue);
-            data = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+            const allDates = data.map((x) => parseISO(x.date).getTime());
+            const months = allMonths.map((x) => new Date(`${thisYear} ${x}`).getTime());
+            const minDate = Math.min(...allDates);
+            data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
+            const merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
             return {
-              data,
+              data: merged,
               controls: {
                 select: {
-                  label: 'Compared to: ',
+                  prefix: `${thisYear} Compared to: `,
                   options: yearsOptions,
                 },
               },
@@ -479,8 +503,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               lines: regions,
               xAxis: {
                 dataKey: 'date',
+                ticks: [minDate, ...months.slice(1)],
+                tickFormatter: (date) => {
+                  const parsedDate = new Date(parseInt(date));
+                  if (isNaN(parsedDate.getTime())) return date;
+                  return format(parsedDate, 'MMM');
+                },
+                type: 'number',
+                scale: 'time',
+                domain: ['auto', 'auto'],
               },
               yAxis: {},
+              tooltip: {
+                labelFormatter: (value) => {
+                  const parsedDate = new Date(parseInt(value));
+                  return format(parsedDate, 'MMM d');
+                },
+              },
             };
           },
         },
