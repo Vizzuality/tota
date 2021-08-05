@@ -29,7 +29,7 @@ const Chart: FC<ComposedChartProps> = ({
   yAxis,
   legend,
   lines,
-  tooltip = { cursor: false },
+  tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: ComposedChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -42,14 +42,7 @@ const Chart: FC<ComposedChartProps> = ({
         {legend && <Legend {...legend} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
-            <Line
-              key={`line_${index}`}
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-              stroke={COLORS[index]}
-              {...lines[line]}
-            />
+            <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
           ))}
         {bars &&
           Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}

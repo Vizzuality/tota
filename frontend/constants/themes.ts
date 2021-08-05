@@ -240,7 +240,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 tickFormatter: compactNumberTickFormatter,
               },
               tooltip: {
-                cursor: true,
+                cursor: { stroke: '#314057', strokeWidth: 1 },
                 valueFormatter: compactNumberTickFormatter,
               },
             };
