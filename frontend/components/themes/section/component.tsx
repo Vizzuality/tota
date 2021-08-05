@@ -72,7 +72,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
               <div className="ml-auto">
                 <Select
                   id={`select-section-${index}`}
-                  theme="lightBorderless"
+                  theme="light"
                   size="base"
                   selected={selectSelectedValue}
                   onChange={handleSelectChange}

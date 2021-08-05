@@ -201,7 +201,7 @@ export const SingleSelect: FC<SelectProps> = ({
               {getOptions.map((option, index) => (
                 <li
                   className={cx({
-                    'px-4 py-1 mt-0.5 cursor-pointer': true,
+                    'px-4 py-3 mt-0.5 cursor-pointer': true,
                     [THEME[theme].item.base]: highlightedIndex !== index,
                     [THEME[theme].item.disabled]: option.disabled,
                     [THEME[theme].item.highlighted]:
