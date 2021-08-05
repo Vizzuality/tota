@@ -15,7 +15,16 @@ export interface ThemeSectionProps {
 }
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
-  const Loading = () => <div>Loading...</div>;
+  const Loading = () => (
+    <div
+      style={{
+        height: 400,
+      }}
+    >
+      {' '}
+      Loading...
+    </div>
+  );
   const widgetType = section.widget?.type || 'charts/pie';
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: Loading,
