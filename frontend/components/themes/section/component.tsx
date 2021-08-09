@@ -53,16 +53,16 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
   return (
     <div className="mb-10 p-5 bg-white flex">
-      <div className="w-2/5 pr-5 border-r-2">
+      <div className="w-2/6 pr-5 border-r-2">
         <div className="relative">
           <div
-            className="absolute rounded-full bg-gray-300 text-gray-700 text-2xl h-50 w-50 flex items-center justify-center"
+            className="absolute rounded-full bg-color2 text-blue9 text-2xl h-50 w-50 flex items-center justify-center"
             style={{ width: 50, height: 50 }}
           >
             {index}
           </div>
-          <div className="" style={{ marginLeft: 70 }}>
-            <h2 className="text-3xl">{section.title}</h2>
+          <div className="flex flex-col justify-center" style={{ marginLeft: 70, minHeight: 50 }}>
+            <h2 className="text-lg font-bold">{section.title}</h2>
             <div>{section.subTitle}</div>
           </div>
         </div>
@@ -70,7 +70,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         <p className="mt-10 leading-8">{section.description}</p>
       </div>
 
-      <div className="w-3/5 pl-5 flex flex-col">
+      <div className="w-4/6 pl-5 flex flex-col">
         {controls && (
           <div className="flex mb-3">
             {controls.switch && (
