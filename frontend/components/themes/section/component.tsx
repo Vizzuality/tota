@@ -72,7 +72,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
       <div className="w-3/5 pl-5 flex flex-col">
         {controls && (
-          <div className="flex mb-5">
+          <div className="flex mb-3">
             {controls.switch && (
               <Switch selectedValue={switchSelectedValue} onChange={handleSwitchChange} {...controls.switch} />
             )}
@@ -90,9 +90,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             )}
           </div>
         )}
-        <div style={{ minHeight: 400 }}>
+        <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
           {(isLoading || isFetching) && LoadingWidget}
-          {isFetched && data && data.length && widgetConfig && <Widget data={data} {...widgetConfig} />}
+          {isFetched && data && data.length > 0 && <Widget data={data} {...widgetConfig} />}
+          {isFetched && data && data.length === 0 && <span>No data available</span>}
         </div>
       </div>
     </div>

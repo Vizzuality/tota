@@ -115,7 +115,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
           return TotaAPI.getSingleIndicator({
             slug: indicatorSlug,
-            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+            region: [
+              state.selectedRegion.name,
+              state.selectedRegion.parent?.name,
+              ...state.selectedRegion.children?.map((x) => x.name),
+            ].filter((x) => x),
             category_1: 'Canada',
           });
         },
