@@ -531,23 +531,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
     ],
   },
   {
-    title: 'Tourism Arrivals & Seasonality',
-    slug: 'tourism-arrivals-seasonality',
+    title: 'Airport Information',
+    slug: 'airport-information',
     sections: [],
   },
   {
-    title: 'Tourism Revenues & Expenditures',
-    slug: 'tourism-revenues-expenditures',
+    title: 'Accommodation Information',
+    slug: 'accommodation-information',
     sections: [],
   },
   {
-    title: 'Indigenous & Accessibility',
-    slug: 'indigenous-accessibility',
+    title: 'Tourism Development Funds',
+    slug: 'tourism-development-funds',
     sections: [],
   },
   {
-    title: 'Climate Change & Mobility',
-    slug: 'climate-change-mobility',
+    title: 'Tourism Employment',
+    slug: 'tourism-employment',
     sections: [],
   },
 ];

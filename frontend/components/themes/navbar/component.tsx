@@ -30,9 +30,14 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
             onChange={(value: string) => router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false })}
           />
         </div>
+        <div className="w-0 border-r-2 h-16"></div>
         {themes.map((t) => (
           <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
-            <a className={cx('px-4 py-2 h-16 text-center', { 'font-bold bg-blue10': t.slug === themeSlug })}>
+            <a
+              className={cx('px-4 py-2 h-16 flex-1 flex items-center justify-center text-center', {
+                'font-bold bg-blue10': t.slug === themeSlug,
+              })}
+            >
               {t.title}
             </a>
           </Link>
