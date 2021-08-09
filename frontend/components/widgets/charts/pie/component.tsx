@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
 import { PieChartProps } from './types';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 
 import { COLORS } from 'constants/charts';
 
@@ -29,7 +30,7 @@ const Chart: FC<PieChartProps> = ({
               ))}
             </Pie>
           ))}
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </PieChart>
     </ResponsiveContainer>
   );
