@@ -15,6 +15,17 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   const router = useRouter();
   const { theme: themeSlug, region } = router.query;
   const { regions } = useRegions();
+  // TODO: refactor this
+  const filteredThemes = themes.filter(
+    (t) => region === 'british-columbia' || (region !== 'british-columbia' && t.slug !== 'general-insights'),
+  );
+  const handleRegionChange = (value: string) => {
+    if (themeSlug === 'general-insights') {
+      router.push(`/themes/${value}/tourism-industry-arrivals`, undefined, { scroll: false });
+    } else {
+      router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false });
+    }
+  };
 
   return (
     <div className="fixed w-full h-16 z-30 left-0 top-20 bg-blue9">
@@ -27,11 +38,11 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
             maxHeight={400}
             options={regions.map((r): SelectOptionProps => ({ label: r.name, value: r.slug }))}
             selected={region}
-            onChange={(value: string) => router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false })}
+            onChange={handleRegionChange}
           />
         </div>
         <div className="w-0 border-r-2 h-16"></div>
-        {themes.map((t) => (
+        {filteredThemes.map((t) => (
           <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
             <a
               className={cx('px-4 py-2 h-16 flex-1 flex items-center justify-center text-center', {
