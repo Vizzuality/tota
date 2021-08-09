@@ -18,9 +18,8 @@ import { ComposedChartProps } from './types';
 const Chart: FC<ComposedChartProps> = ({
   data,
   cartesianGrid = {
-    vertical: false,
     height: '1px',
-    strokeDasharray: '10 5',
+    strokeDasharray: '0',
   },
   cartesianAxis,
   bars,

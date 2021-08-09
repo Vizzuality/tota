@@ -16,9 +16,8 @@ import { LineChartProps } from './types';
 const Chart: FC<LineChartProps> = ({
   data,
   cartesianGrid = {
-    vertical: false,
     height: '1px',
-    strokeDasharray: '10 5',
+    strokeDasharray: '0',
   },
   cartesianAxis,
   legend,
