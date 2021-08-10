@@ -17,8 +17,8 @@ const Chart: FC<PieChartProps> = ({
   tooltip = { cursor: false },
 }: PieChartProps) => {
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <PieChart width={400} height={200} {...chartProps}>
+    <ResponsiveContainer width="100%" height={400}>
+      <PieChart {...chartProps}>
         {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {pies &&

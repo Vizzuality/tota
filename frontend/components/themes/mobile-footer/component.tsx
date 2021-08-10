@@ -17,9 +17,9 @@ const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
-  const { slug } = router.query;
+  const { theme: themeSlug } = router.query;
 
-  const theme = themes.find((t) => t.slug === slug);
+  const theme = themes.find((t) => t.slug === themeSlug);
 
   return (
     <div className="lg:hidden">

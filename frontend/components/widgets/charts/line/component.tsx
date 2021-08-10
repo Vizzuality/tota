@@ -16,9 +16,8 @@ import { LineChartProps } from './types';
 const Chart: FC<LineChartProps> = ({
   data,
   cartesianGrid = {
-    vertical: false,
     height: '1px',
-    strokeDasharray: '10 5',
+    strokeDasharray: '0',
   },
   cartesianAxis,
   legend,
@@ -29,8 +28,8 @@ const Chart: FC<LineChartProps> = ({
   tooltip = { cursor: false },
 }: LineChartProps) => {
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <LineChart width={400} height={200} data={data} {...chartProps}>
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={data} {...chartProps}>
         {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend {...legend} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}

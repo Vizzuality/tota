@@ -18,9 +18,8 @@ import { ComposedChartProps } from './types';
 const Chart: FC<ComposedChartProps> = ({
   data,
   cartesianGrid = {
-    vertical: false,
     height: '1px',
-    strokeDasharray: '10 5',
+    strokeDasharray: '0',
   },
   cartesianAxis,
   bars,
@@ -32,8 +31,8 @@ const Chart: FC<ComposedChartProps> = ({
   tooltip = { cursor: false },
 }: ComposedChartProps) => {
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <ComposedChart width={400} height={200} data={data}>
+    <ResponsiveContainer width="100%" height={400}>
+      <ComposedChart data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}

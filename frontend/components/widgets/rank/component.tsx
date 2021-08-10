@@ -3,7 +3,7 @@ import { RankProps } from './types';
 
 const Rank: FC<RankProps> = ({ data }: RankProps) => {
   return (
-    <div className="flex flex-col pl-20 pt-5 justify-center gap-5">
+    <div className="flex flex-col justify-center gap-5">
       {data.map((value, index) => (
         <div key={index} className="flex items-center">
           <div

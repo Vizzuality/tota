@@ -33,6 +33,70 @@ const compactNumberTickFormatter = (value) =>
 
 const themes: ThemeType[] = [
   {
+    title: 'General Insights',
+    slug: 'general-insights',
+    summary:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
+    sections: [
+      {
+        title: 'Population',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () => Promise.resolve([]),
+        widget: {
+          type: 'text',
+          fetchProps(): any {
+            return {
+              data: 'Data placeholder',
+            };
+          },
+        },
+      },
+      {
+        title: 'Tourism contribution to (local) GDP',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () => Promise.resolve([]),
+        widget: {
+          type: 'text',
+          fetchProps(): any {
+            return {
+              data: 'Data placeholder',
+            };
+          },
+        },
+      },
+      {
+        title: 'Employment',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () => Promise.resolve([]),
+        widget: {
+          type: 'text',
+          fetchProps(): any {
+            return {
+              data: 'Data placeholder',
+            };
+          },
+        },
+      },
+      {
+        title: 'Tourism revenue',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () => Promise.resolve([]),
+        widget: {
+          type: 'text',
+          fetchProps(): any {
+            return {
+              data: 'Data placeholder',
+            };
+          },
+        },
+      },
+    ],
+  },
+  {
     title: 'Tourism Industry & Arrivals',
     slug: 'tourism-industry-arrivals',
     summary:
@@ -47,7 +111,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: 'all',
-            region: state.selectedRegion.slug,
+            region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
           }),
         widget: {
           type: 'charts/pie',
@@ -73,7 +137,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           TotaAPI.getSingleIndicator({
             slug: 'establishments_by_type',
             category_2: state.switchSelectedValue,
-            region: state.selectedRegion.slug,
+            region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
           }),
         initialState: {
           switchSelectedValue: 'biosphere',
@@ -115,7 +179,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
           return TotaAPI.getSingleIndicator({
             slug: indicatorSlug,
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [
+              state.selectedRegion.name,
+              state.selectedRegion.parent?.name,
+              ...state.selectedRegion.children?.map((x) => x.name),
+            ].filter((x) => x),
             category_1: 'Canada',
           });
         },
@@ -189,7 +257,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'domestic_visits_percentage_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.name });
         },
         widget: {
           type: 'rank',
@@ -232,7 +300,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'domestic_visits_peak_lowest_month_ratio',
-            region: state.selectedRegion.slug,
+            region: state.selectedRegion.name,
           }),
         widget: {
           type: 'text',
@@ -273,7 +341,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'visits_by_origin_province_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.slug });
+          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.name });
         },
         widget: {
           type: 'charts/bar',
@@ -362,7 +430,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           selectSelectedValue: previousYear,
         },
         fetchData: (state: any) =>
-          TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.slug }),
+          TotaAPI.getSingleIndicator({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
         widget: {
           type: 'charts/bar',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
@@ -411,7 +479,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'nights_per_visitor_by_country_monthly',
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
           }),
         widget: {
           type: 'charts/composed',
@@ -475,7 +543,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         fetchData: (state: any) =>
           TotaAPI.getSingleIndicator({
             slug: 'visits_change_weekly',
-            region: [state.selectedRegion.slug, state.selectedRegion.parent],
+            region: [
+              state.selectedRegion.name,
+              state.selectedRegion.parent?.name,
+              ...state.selectedRegion.children?.map((x) => x.name),
+            ].filter((x) => x),
           }),
         widget: {
           type: 'charts/line',
@@ -527,23 +599,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
     ],
   },
   {
-    title: 'Tourism Arrivals & Seasonality',
-    slug: 'tourism-arrivals-seasonality',
+    title: 'Airport Information',
+    slug: 'airport-information',
     sections: [],
   },
   {
-    title: 'Tourism Revenues & Expenditures',
-    slug: 'tourism-revenues-expenditures',
+    title: 'Accommodation Information',
+    slug: 'accommodation-information',
     sections: [],
   },
   {
-    title: 'Indigenous & Accessibility',
-    slug: 'indigenous-accessibility',
+    title: 'Tourism Development Funds',
+    slug: 'tourism-development-funds',
     sections: [],
   },
   {
-    title: 'Climate Change & Mobility',
-    slug: 'climate-change-mobility',
+    title: 'Tourism Employment',
+    slug: 'tourism-employment',
     sections: [],
   },
 ];

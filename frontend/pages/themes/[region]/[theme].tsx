@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Layout from 'layout';
@@ -8,14 +7,15 @@ import Layout from 'layout';
 import ThemeSection from 'components/themes/section';
 import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
+import ThemesNavbar from 'components/themes/navbar';
 
 import themes from 'constants/themes';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { theme: themeSlug } = router.query;
 
-  const theme = themes.find((t) => t.slug === slug);
+  const theme = themes.find((t) => t.slug === themeSlug);
 
   return (
     <Layout>
@@ -25,13 +25,14 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
 
       {theme && (
         <>
-          <ThemeHeader />
-
-          {theme.sections &&
-            theme.sections.map((section, index) => (
+          <ThemesNavbar />
+          <div className="mt-28">
+            <ThemeHeader />
+            {theme?.sections?.map((section, index) => (
               <ThemeSection key={section.title} index={index + 1} section={section} />
             ))}
-          <ThemeMobileFooter />
+            <ThemeMobileFooter />
+          </div>
         </>
       )}
     </Layout>
