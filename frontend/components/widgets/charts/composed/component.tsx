@@ -13,6 +13,7 @@ import {
   YAxis,
 } from 'recharts';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
+import CustomLegend from 'components/widgets/charts/common/legend';
 import { COLORS } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
@@ -31,15 +32,18 @@ const Chart: FC<ComposedChartProps> = ({
   lines,
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: ComposedChartProps) => {
+  const yAxisWidth = 60;
+  const legendStyle = !!yAxis ? { left: yAxisWidth + 2 } : {};
+
   return (
     <ResponsiveContainer width="100%" height={400}>
       <ComposedChart data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis {...yAxis} />}
+        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
         {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
-        {legend && <Legend {...legend} />}
+        {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
