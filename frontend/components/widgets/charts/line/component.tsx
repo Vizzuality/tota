@@ -30,7 +30,7 @@ const Chart: FC<LineChartProps> = ({
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: LineChartProps) => {
   const yAxisWidth = 60;
-  const legendStyle = !!yAxis ? { left: yAxisWidth + 2 } : {};
+  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
 
   return (
     <ResponsiveContainer width="100%" height={400}>

@@ -480,7 +480,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               chartProps: {
                 layout: 'vertical',
               },
-              legend: bottomLegend,
+              legend: {
+                ...bottomLegend,
+                removable: true,
+              },
               bars,
               xAxis: {
                 hide: true,

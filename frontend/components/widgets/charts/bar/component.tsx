@@ -31,7 +31,7 @@ const Chart: FC<BarChartProps> = ({
   tooltip = { cursor: false },
 }: BarChartProps) => {
   const yAxisWidth = 60;
-  const legendStyle = !!yAxis ? { left: yAxisWidth + 2 } : {};
+  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
 
   return (
     <ResponsiveContainer width="100%" height={400}>
