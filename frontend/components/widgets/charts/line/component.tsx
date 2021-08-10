@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { COLORS } from 'constants/charts';
 import { LineChartProps } from './types';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 
 const Chart: FC<LineChartProps> = ({
   data,
@@ -25,7 +26,7 @@ const Chart: FC<LineChartProps> = ({
   xAxis,
   yAxis,
   lines,
-  tooltip = { cursor: false },
+  tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: LineChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -38,16 +39,9 @@ const Chart: FC<LineChartProps> = ({
         {yAxis && <YAxis {...yAxis} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
-            <Line
-              key={`line_${index}`}
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-              stroke={COLORS[index]}
-              {...lines[line]}
-            />
+            <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
           ))}
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </LineChart>
     </ResponsiveContainer>
   );

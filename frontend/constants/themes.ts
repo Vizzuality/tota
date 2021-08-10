@@ -4,6 +4,7 @@ import {
   getAvailableYearsOptions,
   getOptions,
   getStackedBarsData,
+  getPercentageTotalByLabel,
   getTop10AndOthers,
   getTop10AndOthersByYear,
   getTopN,
@@ -239,6 +240,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               yAxis: {
                 tickFormatter: compactNumberTickFormatter,
               },
+              tooltip: {
+                cursor: { stroke: '#314057', strokeWidth: 1 },
+                valueFormatter: compactNumberTickFormatter,
+                payloadFilter: (y) => !y.name.includes('min-max'),
+              },
             };
           },
         },
@@ -358,6 +364,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data.forEach((d: any) => (d.date = shortMonthName(d.date)));
             }
             const bars = getStackedBarsData(data, 'date');
+            const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
             return {
               data,
@@ -373,6 +380,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               bars,
               xAxis: {
                 dataKey: 'date',
+              },
+              tooltip: {
+                cursor: false,
+                totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.selectSelectedValue} total`,
               },
             };
           },
@@ -404,6 +415,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               valueKey: 'value',
             });
             const bars = getStackedBarsData(data, 'date');
+            const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
             return {
               data,
@@ -416,6 +428,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               bars,
               xAxis: {
                 dataKey: 'date',
+              },
+              tooltip: {
+                cursor: false,
+                totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.selectSelectedValue} total`,
               },
             };
           },
@@ -529,6 +545,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
               },
               yAxis: {},
+              tooltip: {
+                payloadFilter: (y) => !y.name.includes('min-max'),
+              },
             };
           },
         },

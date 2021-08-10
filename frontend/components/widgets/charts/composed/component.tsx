@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import { COLORS } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
@@ -28,7 +29,7 @@ const Chart: FC<ComposedChartProps> = ({
   yAxis,
   legend,
   lines,
-  tooltip = { cursor: false },
+  tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: ComposedChartProps) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -41,20 +42,15 @@ const Chart: FC<ComposedChartProps> = ({
         {legend && <Legend {...legend} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
-            <Line
-              key={`line_${index}`}
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-              stroke={COLORS[index]}
-              {...lines[line]}
-            />
+            <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
           ))}
         {bars &&
           Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
         {areas &&
-          Object.keys(areas).map((area, index) => <Area key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />)}
-        {tooltip && <Tooltip {...tooltip} />}
+          Object.keys(areas).map((area, index) => (
+            <Area activeDot={false} key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />
+          ))}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </ComposedChart>
     </ResponsiveContainer>
   );

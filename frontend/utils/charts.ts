@@ -122,6 +122,30 @@ export function getStackedBarsData(data: any[], groupedBy: string) {
   );
 }
 
+export function getPercentageTotalByLabel(data: any[], label: string) {
+  const totalValueForYear = data.reduce(
+    (acc, byLabel) =>
+      acc +
+      Object.keys(byLabel)
+        .filter((key) => key !== label)
+        .reduce((acc2, key) => acc2 + byLabel[key], 0),
+    0,
+  );
+  return data.reduce(
+    (acc, a) => ({
+      ...acc,
+      [a[label]]: Math.round(
+        (Object.keys(a)
+          .filter((key) => key !== label)
+          .reduce((acc2, key) => acc2 + a[key], 0) /
+          totalValueForYear) *
+          100,
+      ),
+    }),
+    {},
+  );
+}
+
 export function getAvailableYearsOptions(data: any[], withAllOptions = true): any[] {
   const yearsOptions = [];
   if (withAllOptions) {
