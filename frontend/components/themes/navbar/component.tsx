@@ -30,7 +30,7 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   return (
     <div className="fixed w-full h-16 z-30 left-0 top-20 bg-blue9">
       <div className="container m-auto flex items-center text-white">
-        <div className="w-80 -ml-4">
+        <div className="w-72 -ml-4">
           <Select
             id="map-select-region"
             theme="dark"

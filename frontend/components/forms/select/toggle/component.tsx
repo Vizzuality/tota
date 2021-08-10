@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react';
 import cx from 'classnames';
 
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+import ARROW_DOWN_SVG from 'svgs/ui/arrow-down-filled.svg?sprite';
 import Icon from 'components/icon';
 
 import THEME from 'components/forms/select/constants/theme';
@@ -67,7 +67,7 @@ export const SelectToggle: FC<SelectToggleProps> = ({
 
       <Icon
         className={cx({
-          'absolute w-3 h-3 right-4': true,
+          'ml-3 w-3 h-3': true,
           [THEME[theme].icon.closed]: !opened,
           [THEME[theme].icon.open]: opened,
           [THEME[theme].icon.disabled]: disabled,
