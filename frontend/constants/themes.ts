@@ -493,6 +493,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
                 type: 'category',
               },
+              height: 850,
             };
           },
         },

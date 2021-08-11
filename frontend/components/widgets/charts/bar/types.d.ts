@@ -10,4 +10,6 @@ export interface BarChartProps {
   xAxis?: XAxisProps;
   yAxis?: YAxisProps;
   tooltip: any;
+  width?: string | number;
+  height?: string | number;
 }
