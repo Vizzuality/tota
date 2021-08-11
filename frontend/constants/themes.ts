@@ -469,6 +469,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             });
             data.forEach((d: any) => (d.date = shortMonthName(d.date)));
             const bars = getStackedBarsData(data, 'date');
+            console.log('data', data);
 
             return {
               data,
@@ -493,7 +494,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
                 type: 'category',
               },
-              height: 850,
+              height: 250 + 50 * data.length,
             };
           },
         },
