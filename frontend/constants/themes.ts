@@ -231,7 +231,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
-              legend: bottomLegend,
+              legend: {
+                ...bottomLegend,
+                payloadFilter: (y) => !y.value.includes('min-max'),
+              },
               lines: regions.map((x) => ({ dataKey: x })),
               ...areas,
               xAxis: {
@@ -381,6 +384,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               xAxis: {
                 dataKey: 'date',
               },
+              yAxis: {
+                tickFormatter: compactNumberTickFormatter,
+              },
               tooltip: {
                 cursor: false,
                 totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.selectSelectedValue} total`,
@@ -429,6 +435,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               xAxis: {
                 dataKey: 'date',
               },
+              yAxis: {
+                tickFormatter: compactNumberTickFormatter,
+              },
               tooltip: {
                 cursor: false,
                 totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.selectSelectedValue} total`,
@@ -460,6 +469,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             });
             data.forEach((d: any) => (d.date = shortMonthName(d.date)));
             const bars = getStackedBarsData(data, 'date');
+            console.log('data', data);
 
             return {
               data,
@@ -471,7 +481,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               chartProps: {
                 layout: 'vertical',
               },
-              legend: bottomLegend,
+              legend: {
+                ...bottomLegend,
+                removable: true,
+              },
               bars,
               xAxis: {
                 hide: true,
@@ -481,6 +494,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 dataKey: 'date',
                 type: 'category',
               },
+              height: 250 + 50 * data.length,
             };
           },
         },
@@ -538,7 +552,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
-              legend: bottomLegend,
+              legend: {
+                ...bottomLegend,
+                payloadFilter: (y) => !y.value.includes('min-max'),
+              },
               ...areas,
               lines: regions.map((x) => ({ dataKey: x })),
               xAxis: {

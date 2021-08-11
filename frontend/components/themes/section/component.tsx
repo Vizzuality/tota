@@ -29,9 +29,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const router = useRouter();
   const { region } = router.query;
   const [state, setState] = useState(section.initialState);
-  const { switchSelectedValue, selectSelectedValue } = state || {};
+  const { switchSelectedValue, selectSelectedValue, selectedData } = state || {};
   const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
   const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
+  const handleSelectedDataChange = (selectedData: string[]) => setState({ ...state, selectedData: selectedData });
   const totalState = useMemo(
     () => ({
       ...state,
@@ -92,7 +93,9 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         )}
         <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
           {(isLoading || isFetching) && LoadingWidget}
-          {isFetched && data && data.length > 0 && <Widget data={data} {...widgetConfig} />}
+          {isFetched && data && data.length > 0 && (
+            <Widget data={data} {...widgetConfig} onSelectedDataChange={handleSelectedDataChange} />
+          )}
           {isFetched && data && data.length === 0 && <span>No data available</span>}
         </div>
       </div>

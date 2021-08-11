@@ -13,6 +13,7 @@ import {
 import { COLORS } from 'constants/charts';
 import { LineChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
+import CustomLegend from 'components/widgets/charts/common/legend';
 
 const Chart: FC<LineChartProps> = ({
   data,
@@ -28,15 +29,18 @@ const Chart: FC<LineChartProps> = ({
   lines,
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: LineChartProps) => {
+  const yAxisWidth = 60;
+  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
+
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data} {...chartProps}>
         {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
-        {legend && <Legend {...legend} />}
+        {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis {...yAxis} />}
+        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
