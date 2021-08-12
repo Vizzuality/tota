@@ -809,7 +809,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         },
         fetchData: (state: any) =>
           TotaAPI.getIndicatorValues({
-            slug: 'airport_total_destinations',
+            slug: 'airport_arrivals_by_origin_weekly',
             region: state.selectedRegion.name,
           }),
         widget: {
@@ -833,12 +833,52 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         title: 'Daily arrivals by origin airport',
         description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
-        fetchData: () => Promise.resolve([]),
+        initialState: {
+          select2SelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getIndicatorValues({
+            slug: 'airport_arrivals_by_origin_daily',
+            region: state.selectedRegion.name,
+          }),
         widget: {
-          type: 'text',
-          fetchProps(): any {
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const destinationAirports = uniq(rawData.map((x) => x.category_2));
+            const data = filterBySelectedYear(rawData, state.select2SelectedValue);
+            const originAirports = uniq(data.map((x) => x.category_1));
+            let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
+
+            if (state.select2SelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+            }
+
             return {
-              data: 'Data placeholder',
+              data: merged,
+              controls: {
+                select: {
+                  options: getOptions(destinationAirports),
+                },
+                select2: {
+                  options: getAvailableYearsOptions(rawData, false),
+                },
+              },
+              chartProps: {
+                stackOffset: 'expand',
+              },
+              bars: originAirports.map((x) => ({ dataKey: x, stackId: 1 })),
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {},
+              tooltip: {
+                cursor: false,
+                valueFormatter: (value) => value.toFixed(2),
+              },
             };
           },
         },
