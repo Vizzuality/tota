@@ -186,7 +186,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           type: 'charts/composed',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-            const yearsOptions = getAvailableYearsOptions(rawData);
             const data = filterBySelectedYear(rawData, state.selectSelectedValue);
             let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             let areas = {};
@@ -220,7 +219,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: getOptions(['Visits', 'Trips', 'Stays']),
                 },
                 select: {
-                  options: yearsOptions,
+                  options: getAvailableYearsOptions(rawData),
                 },
               },
               legend: {
@@ -258,20 +257,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             quarterly: 'domestic_visits_percentage_quarterly',
           }[state.switchSelectedValue];
 
-          return TotaAPI.getSingleIndicator({ slug: indicatorSlug, region: state.selectedRegion.name });
+          return TotaAPI.getIndicatorValues({ slug: indicatorSlug, region: state.selectedRegion.name });
         },
         widget: {
           type: 'rank',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-            const yearsOptions = getAvailableYearsOptions(rawData, false);
-            let take = 5;
-            let formatDate = shortMonthName;
-
-            if (state.switchSelectedValue === 'quarterly') {
-              take = 4;
-              formatDate = (date) => date;
-            }
-
+            const take = state.switchSelectedValue === 'quarterly' ? 4 : 5;
+            const formatDate = state.switchSelectedValue === 'quarterly' ? (d) => d : shortMonthName;
             const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
             const data = getTopN(filteredByYear, take, 'value').map(
               (x) => `${formatDate(x['date'])}: ${formatPercentage(x['value'])} of visitors`,
@@ -284,7 +276,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: getOptions(['Monthly', 'Quarterly']),
                 },
                 select: {
-                  options: yearsOptions,
+                  options: getAvailableYearsOptions(rawData, false),
                 },
               },
             };
@@ -299,14 +291,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           selectSelectedValue: previousYear,
         },
         fetchData: (state: any) =>
-          TotaAPI.getSingleIndicator({
+          TotaAPI.getIndicatorValues({
             slug: 'domestic_visits_peak_lowest_month_ratio',
             region: state.selectedRegion.name,
           }),
         widget: {
           type: 'text',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-            const yearsOptions = getAvailableYearsOptions(rawData, false);
             const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue)[0];
 
             let ratioText = '';
@@ -321,7 +312,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data: ratioText,
               controls: {
                 select: {
-                  options: yearsOptions,
+                  options: getAvailableYearsOptions(rawData, false),
                 },
               },
             };
@@ -682,9 +673,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           type: 'charts/bar',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-            const yearsOptions = getAvailableYearsOptions(rawData);
             const airports = uniq(rawData.map((x) => x.category_2));
-            const airportOptions = getOptions(airports);
             const data = filterBySelectedYear(rawData, state.select2SelectedValue);
             const indicatorsMap = {
               airport_domestic_pax_monthly: 'Domestic Flights',
@@ -705,20 +694,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data: merged,
               controls: {
                 select: {
-                  options: airportOptions,
+                  options: getOptions(airports),
                 },
                 select2: {
-                  options: yearsOptions,
+                  options: getAvailableYearsOptions(rawData),
                 },
               },
-              bars: [
-                {
-                  dataKey: 'Domestic Flights',
-                },
-                {
-                  dataKey: 'International Flights',
-                },
-              ],
+              bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x })),
               xAxis: {
                 dataKey: 'date',
               },
@@ -744,9 +726,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         widget: {
           type: 'charts/bar',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-            const yearsOptions = getAvailableYearsOptions(rawData);
             const airports = uniq(rawData.map((x) => x.category_2));
-            const airportOptions = getOptions(airports);
             const data = filterBySelectedYear(rawData, state.select2SelectedValue);
             const indicatorsMap = {
               airport_dom_arrivals_monthly: 'Domestic Flights',
@@ -767,25 +747,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               data: merged,
               controls: {
                 select: {
-                  options: airportOptions,
+                  options: getOptions(airports),
                 },
                 select2: {
-                  options: yearsOptions,
+                  options: getAvailableYearsOptions(rawData),
                 },
               },
               chartProps: {
                 stackOffset: 'expand',
               },
-              bars: [
-                {
-                  dataKey: 'Domestic Flights',
-                  stackId: 1,
-                },
-                {
-                  dataKey: 'International Flights',
-                  stackId: 1,
-                },
-              ],
+              bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x, stackId: 1 })),
               xAxis: {
                 dataKey: 'date',
               },
@@ -796,6 +767,78 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 cursor: false,
                 valueFormatter: (value) => `${(value * 100).toFixed(2)}%`,
               },
+            };
+          },
+        },
+      },
+      {
+        title: 'Total number of destinations per year',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        initialState: {
+          selectSelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getIndicatorValues({
+            slug: 'airport_total_destinations',
+            region: state.selectedRegion.name,
+          }),
+        widget: {
+          type: 'rank',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const data = filterBySelectedYear(rawData, state.selectSelectedValue);
+            const top5 = getTopN(data, 5, 'value');
+
+            return {
+              data: top5.map((x) => `${x.category_1} - ${x.value} destinations`),
+              controls: {
+                select: {
+                  options: getAvailableYearsOptions(rawData, false),
+                },
+              },
+            };
+          },
+        },
+      },
+      {
+        title: 'Top average connections per week',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        initialState: {
+          selectSelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getIndicatorValues({
+            slug: 'airport_total_destinations',
+            region: state.selectedRegion.name,
+          }),
+        widget: {
+          type: 'rank',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const data = filterBySelectedYear(rawData, state.selectSelectedValue);
+            const top5 = getTopN(data, 5, 'value');
+
+            return {
+              data: top5.map((x) => `${x.category_1} - ${x.value} destinations`),
+              controls: {
+                select: {
+                  options: getAvailableYearsOptions(rawData, false),
+                },
+              },
+            };
+          },
+        },
+      },
+      {
+        title: 'Daily arrivals by origin airport',
+        description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        fetchData: () => Promise.resolve([]),
+        widget: {
+          type: 'text',
+          fetchProps(): any {
+            return {
+              data: 'Data placeholder',
             };
           },
         },
