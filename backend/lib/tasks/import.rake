@@ -49,6 +49,7 @@ class ImportTasks
           TimedLogger.log('Create dynamic indicators') do
             Indicators::EstablishmentsByType.generate
             Indicators::DomesticVisits.generate
+            Indicators::AirportTotalDestinations.generate
           end
         end
       end

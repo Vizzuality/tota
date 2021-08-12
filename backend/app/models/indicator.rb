@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Indicator < ApplicationRecord
-  has_many :indicator_values
+  has_many :indicator_values, dependent: :destroy
 
   validates_presence_of :slug
   validates_uniqueness_of :slug
