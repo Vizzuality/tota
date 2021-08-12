@@ -3,6 +3,7 @@ declare module '*.png';
 declare module '*.jpg';
 
 export interface IndicatorValue {
+  indicator?: string;
   category_1?: string;
   category_2?: string;
   date?: string;

@@ -1,3 +1,15 @@
+export const bottomLegend = {
+  iconType: 'square',
+  layout: 'horizontal',
+  verticalAlign: 'bottom',
+  align: 'left',
+};
+
+export const defaultGrid = {
+  height: '1px',
+  strokeDasharray: '0',
+};
+
 export const COLORS = [
   '#00B6A1',
   '#009AAC',

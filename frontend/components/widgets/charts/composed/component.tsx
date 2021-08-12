@@ -14,21 +14,18 @@ import {
 } from 'recharts';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
-import { COLORS } from 'constants/charts';
+import { COLORS, defaultGrid, bottomLegend } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
 const Chart: FC<ComposedChartProps> = ({
   data,
-  cartesianGrid = {
-    height: '1px',
-    strokeDasharray: '0',
-  },
+  cartesianGrid = defaultGrid,
   cartesianAxis,
   bars,
   areas,
   xAxis,
   yAxis,
-  legend,
+  legend = bottomLegend,
   lines,
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: ComposedChartProps) => {

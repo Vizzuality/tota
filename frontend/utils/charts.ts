@@ -3,7 +3,7 @@ import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 
-import { OptionType } from 'types';
+import { IndicatorValue, OptionType } from 'types';
 
 interface MergeRawData {
   rawData: any[];
@@ -157,6 +157,12 @@ export function getAvailableYearsOptions(data: any[], withAllOptions = true): an
   const availableYears = getYears(data);
   availableYears.forEach((year) => yearsOptions.push({ label: year.toString(), value: year.toString() }));
   return yearsOptions;
+}
+
+export function filterBySelectedYear(data: IndicatorValue[], selectedYear: string) {
+  if (selectedYear === 'all_years' || !selectedYear) return data;
+
+  return data.filter((x: any) => getYear(x.date) === selectedYear);
 }
 
 export function getOptions(options: string[]): OptionType[] {

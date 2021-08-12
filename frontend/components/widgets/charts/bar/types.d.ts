@@ -1,4 +1,4 @@
-import { BarProps, XAxisProps, YAxisProps } from 'recharts';
+import { BarProps, LegendProps, XAxisProps, YAxisProps } from 'recharts';
 
 export interface BarChartProps {
   data: any[];

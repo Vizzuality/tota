@@ -1,25 +1,20 @@
 import uniq from 'lodash/uniq';
 import TotaAPI from 'services/api';
 import {
+  filterBySelectedYear,
   getAvailableYearsOptions,
   getOptions,
-  getStackedBarsData,
   getPercentageTotalByLabel,
+  getStackedBarsData,
   getTop10AndOthers,
   getTop10AndOthersByYear,
   getTopN,
   getYear,
   mergeRawData,
 } from 'utils/charts';
+import { bottomLegend } from 'constants/charts';
 import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
-
-const bottomLegend = {
-  iconType: 'square',
-  layout: 'horizontal',
-  verticalAlign: 'bottom',
-  align: 'left',
-};
 
 const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
@@ -192,10 +187,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           type: 'charts/composed',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
             const yearsOptions = getAvailableYearsOptions(rawData);
-            let data = rawData;
-            if (state.selectSelectedValue !== 'all_years') {
-              data = (rawData || []).filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            }
+            const data = filterBySelectedYear(rawData, state.selectSelectedValue);
             let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             let areas = {};
             const regions = uniq(rawData.map((x) => x.region));
@@ -379,7 +371,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
-              legend: bottomLegend,
               bars,
               xAxis: {
                 dataKey: 'date',
@@ -430,7 +421,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
-              legend: bottomLegend,
               bars,
               xAxis: {
                 dataKey: 'date',
@@ -515,10 +505,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           type: 'charts/composed',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
             const yearsOptions = getAvailableYearsOptions(rawData);
-            let data = rawData;
-            if (state.selectSelectedValue !== 'all_years') {
-              data = rawData.filter((x: any) => getYear(x.date) === state.selectSelectedValue);
-            }
+            const data = filterBySelectedYear(rawData, state.selectSelectedValue);
             let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
             let areas = {};
             const regions = uniq(rawData.map((x) => x.region));
@@ -607,7 +594,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                   options: yearsOptions,
                 },
               },
-              legend: bottomLegend,
               lines: regions,
               xAxis: {
                 dataKey: 'date',
@@ -637,7 +623,184 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
   {
     title: 'Airport Information',
     slug: 'airport-information',
-    sections: [],
+    sections: [
+      {
+        title: 'Total number of arriving flights per month',
+        description: `
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        initialState: {
+          selectSelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getSingleIndicator({
+            slug: 'airport_arrivals_monthly',
+            region: state.selectedRegion.name,
+          }),
+        widget: {
+          type: 'charts/line',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData);
+            const data = filterBySelectedYear(rawData, state.selectSelectedValue);
+            let merged = mergeRawData({ rawData: data, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
+            const airports = uniq(rawData.map((x) => x.category_2));
+            if (state.selectSelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+            }
+
+            return {
+              data: merged,
+              controls: {
+                select: {
+                  options: yearsOptions,
+                },
+              },
+              lines: airports.map((x) => ({ dataKey: x })),
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {},
+            };
+          },
+        },
+      },
+      {
+        title: 'Total passenger volume',
+        description: `
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        initialState: {
+          select2SelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getIndicatorValues({
+            slug: ['airport_domestic_pax_monthly', 'airport_international_pax_monthly'],
+            region: state.selectedRegion.name,
+          }),
+        widget: {
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData);
+            const airports = uniq(rawData.map((x) => x.category_2));
+            const airportOptions = getOptions(airports);
+            const data = filterBySelectedYear(rawData, state.select2SelectedValue);
+            const indicatorsMap = {
+              airport_domestic_pax_monthly: 'Domestic Flights',
+              airport_international_pax_monthly: 'International Flights',
+            };
+            const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+            let merged = mergeRawData({ rawData: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
+
+            if (state.select2SelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+            }
+
+            return {
+              data: merged,
+              controls: {
+                select: {
+                  options: airportOptions,
+                },
+                select2: {
+                  options: yearsOptions,
+                },
+              },
+              bars: [
+                {
+                  dataKey: 'Domestic Flights',
+                },
+                {
+                  dataKey: 'International Flights',
+                },
+              ],
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {
+                tickFormatter: compactNumberTickFormatter,
+              },
+            };
+          },
+        },
+      },
+      {
+        title: 'Share of international & domestic arrivals',
+        description: `
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        initialState: {
+          select2SelectedValue: previousYear,
+        },
+        fetchData: (state: any) =>
+          TotaAPI.getIndicatorValues({
+            slug: ['airport_dom_arrivals_monthly', 'airport_int_arrivals_monthly'],
+            region: state.selectedRegion.name,
+          }),
+        widget: {
+          type: 'charts/bar',
+          fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+            const yearsOptions = getAvailableYearsOptions(rawData);
+            const airports = uniq(rawData.map((x) => x.category_2));
+            const airportOptions = getOptions(airports);
+            const data = filterBySelectedYear(rawData, state.select2SelectedValue);
+            const indicatorsMap = {
+              airport_dom_arrivals_monthly: 'Domestic Flights',
+              airport_int_arrivals_monthly: 'International Flights',
+            };
+            const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+            let merged = mergeRawData({ rawData: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
+
+            if (state.select2SelectedValue !== 'all_years') {
+              merged.forEach((d: any) => (d.date = shortMonthName(d.date)));
+              merged = allMonths.map((month) => ({
+                date: month,
+                ...(merged.find((d) => d.date === month) || {}),
+              }));
+            }
+
+            return {
+              data: merged,
+              controls: {
+                select: {
+                  options: airportOptions,
+                },
+                select2: {
+                  options: yearsOptions,
+                },
+              },
+              chartProps: {
+                stackOffset: 'expand',
+              },
+              bars: [
+                {
+                  dataKey: 'Domestic Flights',
+                  stackId: 1,
+                },
+                {
+                  dataKey: 'International Flights',
+                  stackId: 1,
+                },
+              ],
+              xAxis: {
+                dataKey: 'date',
+              },
+              yAxis: {
+                tickFormatter: (val) => `${val * 100}%`,
+              },
+              tooltip: {
+                cursor: false,
+                valueFormatter: (value) => `${(value * 100).toFixed(2)}%`,
+              },
+            };
+          },
+        },
+      },
+    ],
   },
   {
     title: 'Accommodation Information',

@@ -14,17 +14,14 @@ import { BarChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
 
-import { COLORS } from 'constants/charts';
+import { bottomLegend, COLORS, defaultGrid } from 'constants/charts';
 
 const Chart: FC<BarChartProps> = ({
   data,
   chartProps,
-  cartesianGrid = {
-    height: '1px',
-    strokeDasharray: '0',
-  },
+  cartesianGrid = defaultGrid,
   cartesianAxis,
-  legend,
+  legend = bottomLegend,
   xAxis,
   yAxis,
   bars,

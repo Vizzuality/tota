@@ -40,13 +40,18 @@ class API {
     const indicatorsData = await this.get(`indicators${queryString}`);
     const byIndicatorSlug = {};
     indicatorsData.forEach((x: any) => {
-      byIndicatorSlug[x.slug] = x.indicator_values;
+      byIndicatorSlug[x.slug] = x.indicator_values.map((iv) => ({ ...iv, indicator: x.slug }));
     });
     return byIndicatorSlug;
   }
 
   getSingleIndicator({ slug, ...restArgs }: GetSingleIndicatorArgs): Promise<IndicatorValue[]> {
     return this.getIndicators({ slug, ...restArgs }).then((data: any) => data[slug] || []);
+  }
+
+  async getIndicatorValues(params: GetIndicatorsArgs): Promise<IndicatorValue[]> {
+    const indicators = await this.getIndicators(params);
+    return Object.keys(indicators).reduce((acc, slug) => [...acc, ...indicators[slug]], []);
   }
 
   get(endpoint: string): Promise<any> {
