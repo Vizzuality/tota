@@ -22,7 +22,7 @@ module Indicators
         airport_total_destinations.indicator_values << IndicatorValue.new(
           region: arrivals.first.region,
           date: year.to_s,
-          category_1: airport,
+          category_2: airport,
           value: arrivals.map(&:category_1).uniq.count
         )
       end

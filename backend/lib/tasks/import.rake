@@ -50,6 +50,7 @@ class ImportTasks
             Indicators::EstablishmentsByType.generate
             Indicators::DomesticVisits.generate
             Indicators::AirportTotalDestinations.generate
+            Indicators::AirportTopAverageConnectionsPerWeek.generate
           end
         end
       end

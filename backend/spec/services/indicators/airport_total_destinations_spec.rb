@@ -43,27 +43,27 @@ RSpec.describe Indicators::AirportTotalDestinations do
       it 'returns correct values' do
         expect { subject }.to change { IndicatorValue.count }
         values = Indicator.find_by(slug: 'airport_total_destinations').indicator_values.where(region: 'Region 1')
-        values_json = values.map { |v| v.slice(:date, :category_1, :value).symbolize_keys }
+        values_json = values.map { |v| v.slice(:date, :category_2, :value).symbolize_keys }
 
         expect(values_json).to contain_exactly(
           {
             date: '2020',
-            category_1: 'JFK',
+            category_2: 'JFK',
             value: 4
           },
           {
             date: '2021',
-            category_1: 'JFK',
+            category_2: 'JFK',
             value: 3
           },
           {
             date: '2020',
-            category_1: 'LAX',
+            category_2: 'LAX',
             value: 4
           },
           {
             date: '2021',
-            category_1: 'KTW',
+            category_2: 'KTW',
             value: 2
           }
         )
