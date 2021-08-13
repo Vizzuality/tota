@@ -790,7 +790,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const top5 = getTopN(data, 5, 'value');
 
             return {
-              data: top5.map((x) => `${x.category_1} - ${x.value} destinations`),
+              data: top5.map((x) => `${x.category_2} - ${x.value} destinations`),
               controls: {
                 select: {
                   options: getAvailableYearsOptions(rawData, false),
@@ -809,21 +809,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         },
         fetchData: (state: any) =>
           TotaAPI.getIndicatorValues({
-            slug: 'airport_arrivals_by_origin_weekly',
+            slug: 'airport_top_average_connections_per_week',
             region: state.selectedRegion.name,
           }),
         widget: {
-          type: 'rank',
+          type: 'charts/sankey',
           fetchProps(rawData: IndicatorValue[] = [], state: any): any {
             const data = filterBySelectedYear(rawData, state.selectSelectedValue);
-            const top5 = getTopN(data, 5, 'value');
 
             return {
-              data: top5.map((x) => `${x.category_1} - ${x.value} destinations`),
+              data,
+              sourceKey: 'category_1',
+              targetKey: 'category_2',
               controls: {
                 select: {
                   options: getAvailableYearsOptions(rawData, false),
                 },
+              },
+              tooltip: {
+                cursor: false,
+                valueFormatter: (value: number) => value.toFixed(2),
               },
             };
           },

@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import { Tooltip, Sankey, ResponsiveContainer } from 'recharts';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
+import CustomTooltip from 'components/widgets/charts/common/tooltip';
+
 import { prepareForSankey } from './utils';
 import type { SankeyChartProps } from './types';
 
@@ -10,7 +12,7 @@ const Chart: FC<SankeyChartProps> = ({
   chartConfig,
   sourceKey,
   targetKey,
-  valueKey,
+  valueKey = 'value',
   sourceColors,
   targetColors,
   colorLinksBy,
@@ -30,7 +32,7 @@ const Chart: FC<SankeyChartProps> = ({
     <ResponsiveContainer width="100%" height={400}>
       {/* @ts-expect-error: Disable type errors for SankeyLink and SankeyNode props missing */}
       <Sankey data={chartData} nodePading={50} link={<SankeyLink />} node={<SankeyNode />} {...chartConfig}>
-        {tooltip && <Tooltip {...tooltip} />}
+        {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </Sankey>
     </ResponsiveContainer>
   );
