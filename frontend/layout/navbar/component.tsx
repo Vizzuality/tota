@@ -10,11 +10,11 @@ import NavLink from 'layout/navlink';
 const THEMES = {
   transparent: {
     container: 'bg-transparent absolute',
-    nav: 'container mx-auto p-4',
+    nav: 'container mx-auto py-6',
   },
   fixed: {
     container: 'bg-gray-400 fixed',
-    nav: 'pr-4',
+    nav: 'p-4',
   },
 };
 
