@@ -1,5 +1,5 @@
 import React, { useState, useMemo, FC } from 'react';
-import { useQuery } from 'react-query';
+import cx from 'classnames';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
@@ -71,7 +71,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             {controls
               .filter((c) => c.options && c.options.length > 0)
               .map(({ type, side, name, options, ...rest }) => (
-                <div className={`float-${side}`} key={`${index} - ${name}`}>
+                <div
+                  className={cx({ 'float-left': side === 'left', 'float-right': side === 'right' })}
+                  key={`${index} - ${name}`}
+                >
                   {type === 'switch' && (
                     <Switch
                       selectedValue={state[name]}
