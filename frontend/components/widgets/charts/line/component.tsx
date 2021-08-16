@@ -32,7 +32,6 @@ const Chart: FC<LineChartProps> = ({
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data} {...chartProps}>
-        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}

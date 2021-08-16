@@ -39,7 +39,6 @@ const Chart: FC<ComposedChartProps> = ({
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
-        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
