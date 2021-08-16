@@ -29,7 +29,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const { regions } = useRegions();
   const router = useRouter();
   const { region } = router.query;
-  const [state, setState] = useState(section.initialState);
+  const [state, setState] = useState(section.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
