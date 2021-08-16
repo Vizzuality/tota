@@ -9,6 +9,7 @@ import Loading from 'components/loading';
 import type { WidgetProps } from 'components/widgets/types';
 
 import { useRegions } from 'hooks/regions';
+import { useIndicatorValues } from 'hooks/indicators';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;
@@ -29,10 +30,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const router = useRouter();
   const { region } = router.query;
   const [state, setState] = useState(section.initialState);
-  const { switchSelectedValue, selectSelectedValue, select2SelectedValue } = state || {};
-  const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
-  const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
-  const handleSelect2Change = (selectedValue: string) => setState({ ...state, select2SelectedValue: selectedValue });
+  const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
       ...state,
@@ -41,13 +39,9 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     [state, region, regions],
   );
 
-  const {
-    data: rawData,
-    isFetched,
-    isFetching,
-    isLoading,
-  } = useQuery([`Fetch indicator ${section.title}`, wholeState], () => section.fetchData(wholeState));
-  const { data, controls, ...widgetConfig } = useMemo(
+  const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
+
+  const { data, controls, controls1, ...widgetConfig } = useMemo(
     () => section.widget.fetchProps(rawData, wholeState),
     [rawData, wholeState],
   );
@@ -72,38 +66,34 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="w-4/6 pl-5 flex flex-col">
-        {controls && (
+        {controls?.length > 0 && (
           <div className="mb-3">
-            {controls.switch && (
-              <div className="float-left">
-                <Switch selectedValue={switchSelectedValue} onChange={handleSwitchChange} {...controls.switch} />
-              </div>
-            )}
-            {controls.select2 && controls.select2.options.length > 0 && (
-              <div className="float-right">
-                <Select
-                  id={`select-section-${index}`}
-                  theme="light"
-                  size="base"
-                  selected={select2SelectedValue}
-                  onChange={handleSelect2Change}
-                  {...controls.select2}
-                />
-              </div>
-            )}
-            {controls.select && controls.select.options.length > 0 && (
-              <div className="float-right">
-                <Select
-                  id={`select-section-${index}`}
-                  theme="light"
-                  size="base"
-                  selected={selectSelectedValue}
-                  initialSelected={controls.select.options[0]?.value}
-                  onChange={handleSelectChange}
-                  {...controls.select}
-                />
-              </div>
-            )}
+            {controls
+              .filter((c) => c.options && c.options.length > 0)
+              .map(({ type, side, name, options, ...rest }) => (
+                <div className={`float-${side}`} key={`${index} - ${name}`}>
+                  {type === 'switch' && (
+                    <Switch
+                      selectedValue={state[name]}
+                      onChange={(selectedValue) => handleControlChange(name, selectedValue)}
+                      options={options}
+                      {...rest}
+                    />
+                  )}
+                  {type === 'select' && (
+                    <Select
+                      id={`select-section-${index}-${name}`}
+                      theme="light"
+                      size="base"
+                      selected={state[name]}
+                      initialSelected={state[name] || options[0].value}
+                      onChange={(selectedValue) => handleControlChange(name, selectedValue as string)}
+                      options={options}
+                      {...rest}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
         )}
         <div className="flex justify-center items-center" style={{ minHeight: 400 }}>

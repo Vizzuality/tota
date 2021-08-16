@@ -2,7 +2,7 @@ import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
 import Chart from './component';
 import { LineChartProps } from './types';
-import { mergeRawData } from 'utils/charts';
+import { mergeForChart } from 'utils/charts';
 
 export default {
   title: 'Components/Widgets/Charts/Line',
@@ -53,7 +53,7 @@ const rawData = [
   },
 ];
 
-const data = mergeRawData({ rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+const data = mergeForChart({ data: rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
 
 const config = {
   margin: {

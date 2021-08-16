@@ -21,7 +21,7 @@ export interface ThemeSectionType {
   subTitle?: string;
   description: string;
   initialState?: any;
-  fetchData: any;
+  fetchParams: (state: any) => any;
   widget: any;
 }
 

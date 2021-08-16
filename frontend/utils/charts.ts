@@ -5,18 +5,20 @@ import sumBy from 'lodash/sumBy';
 
 import { IndicatorValue, OptionType } from 'types';
 
-interface MergeRawData {
-  rawData: any[];
+export const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+interface MergeForChartArgs {
+  data: IndicatorValue[];
   mergeBy: string;
   labelKey: string;
   valueKey: string;
 }
 
-export function mergeRawData({ rawData, mergeBy, labelKey, valueKey }: MergeRawData): any[] {
-  if (!rawData || !rawData.length) return [];
+export function mergeForChart({ data, mergeBy, labelKey, valueKey }: MergeForChartArgs): any[] {
+  if (!data || !data.length) return [];
   const dataObj = {};
   const keepOthersLast = (d) => (d[labelKey] === 'Others' ? -Infinity : d.value);
-  const sorted = orderBy(rawData, ['date', keepOthersLast], ['asc', 'desc']);
+  const sorted = orderBy(data, ['date', keepOthersLast], ['asc', 'desc']);
   sorted.forEach((rd: any) => {
     dataObj[rd[mergeBy]] = {
       [mergeBy]: rd[mergeBy],
@@ -69,6 +71,13 @@ export function getTop10AndOthersByYear(data: any[], key: string) {
   });
 
   return newData;
+}
+
+export function expandToFullYear(data: any[]) {
+  return allMonths.map((month) => ({
+    date: month,
+    ...(data.find((d) => d.date === month) || {}),
+  }));
 }
 
 export function getTopN(data: any[], take: number, valueKey: string) {
@@ -165,6 +174,6 @@ export function filterBySelectedYear(data: IndicatorValue[], selectedYear: strin
   return data.filter((x: any) => getYear(x.date) === selectedYear);
 }
 
-export function getOptions(options: string[]): OptionType[] {
-  return options.map((opt) => ({ label: opt, value: opt.toLowerCase() }));
+export function getOptions(options: string[], lowerCaseValue = true): OptionType[] {
+  return options.map((opt) => ({ label: opt, value: lowerCaseValue ? opt.toLowerCase() : opt }));
 }

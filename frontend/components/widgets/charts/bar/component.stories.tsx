@@ -2,7 +2,7 @@ import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
 import Chart from './component';
 import { BarChartProps } from './types';
-import { mergeRawData } from 'utils/charts';
+import { mergeForChart } from 'utils/charts';
 
 export default {
   title: 'Components/Widgets/Charts/Bar',
@@ -181,7 +181,7 @@ const rawData = [
   },
 ];
 
-const data = mergeRawData({ rawData, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
+const data = mergeForChart({ data: rawData, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
 const bars = Array.from(new Set(rawData.map((rd) => rd.category_1))).map((barName) => ({
   dataKey: barName,
   stackId: 1,
