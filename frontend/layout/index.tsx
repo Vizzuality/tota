@@ -3,14 +3,21 @@ import cx from 'classnames';
 
 import Head from 'next/head';
 import Navbar from './navbar';
+import type { NavbarPosition, NavbarTheme } from './navbar/types';
 
 interface LayoutProps {
   className?: string;
   children: ReactNode;
-  navbar?: 'transparent' | 'fixed';
+  navbarTheme?: NavbarTheme;
+  navbarPosition?: NavbarPosition;
 }
 
-const Layout: FC<LayoutProps> = ({ className = 'container', navbar = 'transparent', children }: LayoutProps) => {
+const Layout: FC<LayoutProps> = ({
+  className = 'container',
+  navbarTheme = 'transparent',
+  navbarPosition = 'absolute',
+  children,
+}: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Head>
@@ -18,9 +25,9 @@ const Layout: FC<LayoutProps> = ({ className = 'container', navbar = 'transparen
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar theme={navbar} />
+      <Navbar theme={navbarTheme} position={navbarPosition} />
 
-      <main className={cx(className, 'mx-auto flex-1', { 'mt-20': navbar === 'fixed' })}>{children}</main>
+      <main className={cx(className, 'mx-auto flex-1', { 'mt-20': navbarPosition === 'fixed' })}>{children}</main>
     </div>
   );
 };
