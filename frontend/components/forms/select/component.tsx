@@ -21,8 +21,6 @@ export const Select: FC<SelectProps> = (props: SelectProps) => {
 
   const status = useStatus({ meta, disabled });
 
-  console.log('initialSelecte', { initialSelected, selected, options: props.options });
-
   const initialValues = useMemo(() => {
     if (multiple) {
       if (Array.isArray(initialSelected)) return initialSelected;

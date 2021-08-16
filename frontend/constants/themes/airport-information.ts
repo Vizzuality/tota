@@ -245,9 +245,6 @@ const theme: ThemeType = {
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
               { type: 'select', side: 'right', name: 'airport', options: getOptions(destinationAirports, false) },
             ],
-            chartProps: {
-              stackOffset: 'expand',
-            },
             bars: originAirports.map((x) => ({ dataKey: x, stackId: 1 })),
             xAxis: {
               dataKey: 'date',
