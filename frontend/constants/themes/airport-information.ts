@@ -24,7 +24,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_arrivals_monthly',
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'charts/line',
@@ -62,7 +62,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['airport_domestic_pax_monthly', 'airport_international_pax_monthly'],
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'charts/bar',
@@ -112,7 +112,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['airport_dom_arrivals_monthly', 'airport_int_arrivals_monthly'],
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'charts/bar',
@@ -165,7 +165,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_total_destinations',
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'rank',
@@ -191,7 +191,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_top_average_connections_per_week',
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'charts/sankey',
@@ -223,7 +223,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_arrivals_by_origin_daily',
-        region: state.selectedRegion.name,
+        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
         type: 'charts/bar',
