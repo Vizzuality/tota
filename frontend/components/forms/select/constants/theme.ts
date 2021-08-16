@@ -35,6 +35,24 @@ export default {
       disabled: 'text-sm opacity-50 pointer-events-none',
     },
   },
+  transparent: {
+    container: 'text-white bg-transparent',
+    open: 'bg-blue9 text-white',
+    closed: 'text-white bg=transparent',
+    prefix: {
+      base: 'text-white text-base font-bold',
+    },
+    icon: {
+      closed: 'text-white',
+      open: 'transform rotate-180',
+      disabled: 'text-gray-400',
+    },
+    item: {
+      base: 'text-base font-bold text-white',
+      highlighted: 'text-base font-bold text-white opacity-30',
+      disabled: 'text-base font-bold opacity-50 pointer-events-none',
+    },
+  },
   states: {
     none: '',
     error: 'ring-red-500',

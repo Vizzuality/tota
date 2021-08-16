@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import Layout from 'layout';
 
-import heroBackgroundImage from 'images/about/hero-background.png';
+import heroBackgroundImage from 'images/get-involved/hero-background.png';
 
-const About: React.FC<void> = (): JSX.Element => {
+const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>About page</title>
+        <title>Get involved</title>
       </Head>
 
       <div
@@ -15,7 +15,7 @@ const About: React.FC<void> = (): JSX.Element => {
         style={{ backgroundImage: `url(${heroBackgroundImage})`, height: 700 }}
       >
         <div className="text-center container">
-          <h1 className="text-5xl font-semibold mb-3">About the initiative</h1>
+          <h1 className="text-5xl font-semibold mb-3">Get involved</h1>
 
           <p className="text-xl mt-20 mx-auto" style={{ maxWidth: 700 }}>
             Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus
@@ -27,4 +27,4 @@ const About: React.FC<void> = (): JSX.Element => {
   );
 };
 
-export default About;
+export default GetInvolved;

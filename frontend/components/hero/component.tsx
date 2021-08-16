@@ -7,14 +7,14 @@ export interface HeroProps {
   height?: string;
 }
 
-const Hero: FC<HeroProps> = ({ title, subtitle, image, height }: HeroProps) => (
+const Hero: FC<HeroProps> = ({ title, subtitle, image, height = '700px' }: HeroProps) => (
   <div
-    className="w-full h-40 border flex justify-center items-center bg-cover"
-    style={{ backgroundImage: `url(/${image})`, ...(height ? { height } : {}) }}
+    className="w-full py-40 flex justify-center items-center bg-cover text-white"
+    style={{ backgroundImage: `url(${image})`, height }}
   >
     <div className="text-center">
       <h1 className="text-5xl font-semibold mb-3">{title}</h1>
-      {subtitle && <p className="text-xl">{subtitle}</p>}
+      {subtitle && <p className="text-xl mt-20">{subtitle}</p>}
     </div>
   </div>
 );
