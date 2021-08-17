@@ -9,6 +9,7 @@ import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
 import LogoColour from 'images/BCRTS-Logo-Horizontal-Colour.png';
 
 import type { NavbarProps } from './types';
+import type { HamburgerColor } from 'components/hamburger/types';
 
 const THEMES = {
   transparent: {
@@ -47,10 +48,9 @@ const Navbar: FC<NavbarProps> = ({ theme = 'transparent', position = 'absolute' 
             <img src={THEMES[theme].logo} />
           </a>
         </Link>
-        {/* @ts-expect-error: remember that hamburge in theme must take white or black values */}
         <Hamburger
           className="lg:hidden relative z-20"
-          color={THEMES[theme].hamburger}
+          color={THEMES[theme].hamburger as HamburgerColor}
           isOpen={isOpen}
           onClick={() => setOpen(!isOpen)}
         />
