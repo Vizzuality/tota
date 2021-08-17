@@ -2,18 +2,18 @@ import Head from 'next/head';
 import Layout from 'layout';
 import Hero from 'components/hero';
 
-import heroBackgroundImage from 'images/about/hero-background.png';
+import heroBackgroundImage from 'images/get-involved/hero-background.png';
 
-const About: React.FC<void> = (): JSX.Element => {
+const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>About page</title>
+        <title>Get involved</title>
       </Head>
 
       <Hero
         image={heroBackgroundImage}
-        title="About the initiative"
+        title="Get involved"
         subtitle="Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus
       auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
       />
@@ -21,4 +21,4 @@ const About: React.FC<void> = (): JSX.Element => {
   );
 };
 
-export default About;
+export default GetInvolved;

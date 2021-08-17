@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from 'layout';
 
 import ThemeSection from 'components/themes/section';
+import ThemeMainHeader from 'components/themes/main-header';
 import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
 import ThemesNavbar from 'components/themes/navbar';
@@ -18,15 +19,16 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
   const theme = themes.find((t) => t.slug === themeSlug);
 
   return (
-    <Layout>
+    <Layout className="w-full">
       <Head>
         <title>Theme page</title>
       </Head>
 
       {theme && (
         <>
+          <ThemeMainHeader />
           <ThemesNavbar />
-          <div className="mt-28">
+          <div className="container mx-auto">
             <ThemeHeader />
             {theme?.sections?.map((section, index) => (
               <ThemeSection key={`${theme.slug} - ${section.title}`} index={index + 1} section={section} />

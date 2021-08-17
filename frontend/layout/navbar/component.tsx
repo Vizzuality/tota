@@ -1,56 +1,87 @@
 import React, { FC, useState } from 'react';
 import cx from 'classnames';
-
 import Link from 'next/link';
-import Icon from 'components/icon';
-import Hamburger from 'components/hamburger';
-import FacebookIcon from 'svgs/social/facebook.svg?sprite';
-import TwitterIcon from 'svgs/social/twitter.svg?sprite';
-import LinkedInIcon from 'svgs/social/linkedin.svg?sprite';
-import YouTubeIcon from 'svgs/social/youtube.svg?sprite';
 
+import Hamburger from 'components/hamburger';
 import NavLink from 'layout/navlink';
 
-const Navbar: FC = () => {
+import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
+import LogoColour from 'images/BCRTS-Logo-Horizontal-Colour.png';
+
+import type { NavbarProps } from './types';
+import type { HamburgerColor } from 'components/hamburger/types';
+
+const THEMES = {
+  transparent: {
+    container: 'bg-transparent',
+    nav: 'container mx-auto py-6 text-white',
+    logo: LogoWhite,
+    hamburger: 'white',
+    mobile: 'bg-gray-500',
+  },
+  gray: {
+    container: 'bg-gray2',
+    nav: 'p-4 text-blue9',
+    logo: LogoColour,
+    hamburger: 'black',
+    mobile: 'bg-gray-200',
+  },
+};
+
+const Navbar: FC<NavbarProps> = ({ theme = 'transparent', position = 'absolute' }: NavbarProps) => {
   const [isOpen, setOpen] = useState(false);
 
   const offScreenSlide = cx('transform lg:transform-none duration-300 ease-in-out', {
     '-translate-x-0': isOpen,
     'translate-x-full': !isOpen,
   });
+  const navLinkTheme = theme === 'transparent' ? 'light' : 'dark';
 
   return (
-    <nav
-      aria-label="Main Navigation"
-      className="fixed w-full h-20 z-30 bg-gray-400 p-4 top-0 flex justify-between items-center text-white"
-    >
-      <Link href="/">
-        <a className="relative z-20">TOTA</a>
-      </Link>
-      <Hamburger className="lg:hidden relative z-20" color="white" isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
-      <div
-        className={cx(
-          'fixed lg:static z-10 top-0 left-0',
-          'bg-gray-500 lg:bg-transparent w-screen h-screen lg:h-auto flex flex-col lg:flex-row',
-          offScreenSlide,
-        )}
-        id="menu-list"
+    <div className={cx('w-full h-20 z-30 top-0', position, { [THEMES[theme].container]: theme })}>
+      <nav
+        aria-label="Main Navigation"
+        className={cx('flex justify-between items-center text-lg', { [THEMES[theme].nav]: theme })}
       >
-        <div className="flex flex-1 flex-col lg:flex-row justify-center items-center gap-5">
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/themes">Themes + Indicators</NavLink>
-          <NavLink href="/map">Map</NavLink>
-          <NavLink href="/news">News</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
+        <Link href="/">
+          <a className="relative z-20">
+            <img src={THEMES[theme].logo} />
+          </a>
+        </Link>
+        <Hamburger
+          className="lg:hidden relative z-20"
+          color={THEMES[theme].hamburger as HamburgerColor}
+          isOpen={isOpen}
+          onClick={() => setOpen(!isOpen)}
+        />
+        <div
+          className={cx(
+            'fixed lg:static z-10 top-0 left-0',
+            'bg-gray-200 lg:bg-transparent w-screen h-screen lg:h-auto flex flex-col lg:flex-row',
+            offScreenSlide,
+            {
+              [THEMES[theme].mobile]: true,
+            },
+          )}
+          id="menu-list"
+        >
+          <div className="flex flex-1 flex-col lg:flex-row justify-center lg:justify-end items-center gap-5">
+            <NavLink theme={navLinkTheme} href="/about">
+              About
+            </NavLink>
+            <NavLink theme={navLinkTheme} href="/themes">
+              Themes + Indicators
+            </NavLink>
+            <NavLink theme={navLinkTheme} href="/map">
+              Map
+            </NavLink>
+            <NavLink theme={navLinkTheme} href="/get-involved">
+              Get Involved
+            </NavLink>
+          </div>
         </div>
-        <div className="flex justify-center items-center gap-5 h-20">
-          <Icon icon={FacebookIcon} />
-          <Icon icon={TwitterIcon} />
-          <Icon icon={YouTubeIcon} />
-          <Icon icon={LinkedInIcon} />
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

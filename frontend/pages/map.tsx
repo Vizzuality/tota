@@ -6,7 +6,7 @@ import Layout from 'layout';
 
 const Map: React.FC<void> = (): JSX.Element => {
   return (
-    <Layout className="w-full">
+    <Layout navbarTheme="gray" navbarPosition="fixed" className="w-full">
       <Head>
         <title>Map</title>
       </Head>

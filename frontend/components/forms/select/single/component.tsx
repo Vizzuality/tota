@@ -183,23 +183,26 @@ export const SingleSelect: FC<SelectProps> = ({
           {...attributes.popper}
         >
           <Menu theme={theme} size={size} status={status} disabled={disabled} opened={isOpen} attributes={attributes}>
-            <Toggle
-              options={options}
-              theme={theme}
-              size={size}
-              status={status}
-              prefix={prefix}
-              disabled={disabled}
-              opened={isOpen}
-              selectedItems={selectedItems}
-              placeholder={placeholder}
-              getToggleButtonProps={getToggleButtonProps}
-            />
+            <div className={cx({ invisible: theme === 'transparent' })}>
+              <Toggle
+                options={options}
+                theme={theme}
+                size={size}
+                status={status}
+                prefix={prefix}
+                disabled={disabled}
+                opened={isOpen}
+                selectedItems={selectedItems}
+                placeholder={placeholder}
+                getToggleButtonProps={getToggleButtonProps}
+              />
+            </div>
 
             <ul
               {...getMenuProps({ onFocus, onBlur })}
               className={cx({
                 'py-1 overflow-y-auto overflow-x-hidden': true,
+                [THEME[theme].menu]: THEME[theme].menu,
               })}
               style={{
                 maxHeight,

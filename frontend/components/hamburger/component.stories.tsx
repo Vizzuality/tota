@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Hamburger, { HamburgerProps } from './component';
+import Hamburger from './component';
+import type { HamburgerProps } from './types';
 
 export default {
   title: 'Components/Hamburger',
