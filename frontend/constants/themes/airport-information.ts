@@ -9,6 +9,7 @@ import {
   getTopN,
   mergeForChart,
 } from 'utils/charts';
+import { bottomLegend } from 'constants/charts';
 import { shortMonthName, compactNumberTickFormatter, previousYear } from './utils';
 
 const theme: ThemeType = {
@@ -27,16 +28,27 @@ const theme: ThemeType = {
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       widget: {
-        type: 'charts/line',
+        type: 'charts/composed',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
           const data = filterBySelectedYear(rawData, state.year);
           let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
           const airports = uniq(rawData.map((x) => x.category_2));
+          let areas = [];
           if (state.year !== 'all_years') {
             chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
-            chartData = allMonths.map((month) => ({
-              date: month,
-              ...(chartData.find((d) => d.date === month) || {}),
+            chartData = expandToFullYear(chartData);
+            chartData.forEach((d: any) => {
+              airports.forEach((airport: string) => {
+                const valuesForMonth = rawData
+                  .filter((rd: any) => rd.category_2 === airport && shortMonthName(rd.date) === d.date)
+                  .map((rd: any) => rd.value);
+                d[`${airport} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
+              });
+            });
+            areas = airports.map((airport: string) => ({
+              dataKey: `${airport} min-max`,
+              fillOpacity: 0.07,
+              stroke: 'none',
             }));
           }
 
@@ -44,10 +56,20 @@ const theme: ThemeType = {
             data: chartData,
             controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
             lines: airports.map((x) => ({ dataKey: x })),
+            areas,
+            legend: {
+              ...bottomLegend,
+              payloadFilter: (y) => !y.value.includes('min-max'),
+            },
             xAxis: {
               dataKey: 'date',
             },
             yAxis: {},
+            tooltip: {
+              cursor: { stroke: '#314057', strokeWidth: 1 },
+              valueFormatter: compactNumberTickFormatter,
+              payloadFilter: (y) => !y.name.includes('min-max'),
+            },
           };
         },
       },
