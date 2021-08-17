@@ -10,19 +10,16 @@ import {
   LineChart,
   Legend,
 } from 'recharts';
-import { COLORS } from 'constants/charts';
+import { COLORS, defaultGrid, bottomLegend } from 'constants/charts';
 import { LineChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
 
 const Chart: FC<LineChartProps> = ({
   data,
-  cartesianGrid = {
-    height: '1px',
-    strokeDasharray: '0',
-  },
+  cartesianGrid = defaultGrid,
   cartesianAxis,
-  legend,
+  legend = bottomLegend,
   chartProps,
   xAxis,
   yAxis,
@@ -35,7 +32,6 @@ const Chart: FC<LineChartProps> = ({
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data} {...chartProps}>
-        {/* @ts-expect-error: dunno why props erroring as using LegendProps */}
         {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}

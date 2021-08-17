@@ -1,9 +1,9 @@
-import { LineProps, LegendProps, XAxisProps, YAxisProps } from 'recharts';
+import { LineProps, XAxisProps, YAxisProps } from 'recharts';
 
 export interface LineChartProps {
   data: any[];
   chartProps: any;
-  legend: LegendProps;
+  legend: any;
   lines: LineProps;
   cartesianAxis?: any;
   cartesianGrid?: any;

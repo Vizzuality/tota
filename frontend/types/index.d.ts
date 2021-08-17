@@ -3,6 +3,7 @@ declare module '*.png';
 declare module '*.jpg';
 
 export interface IndicatorValue {
+  indicator?: string;
   category_1?: string;
   category_2?: string;
   date?: string;
@@ -20,7 +21,7 @@ export interface ThemeSectionType {
   subTitle?: string;
   description: string;
   initialState?: any;
-  fetchData: any;
+  fetchParams: (state: any) => any;
   widget: any;
 }
 

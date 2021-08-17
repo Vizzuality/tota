@@ -1,5 +1,5 @@
 import React, { useState, useMemo, FC } from 'react';
-import { useQuery } from 'react-query';
+import cx from 'classnames';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
@@ -9,6 +9,7 @@ import Loading from 'components/loading';
 import type { WidgetProps } from 'components/widgets/types';
 
 import { useRegions } from 'hooks/regions';
+import { useIndicatorValues } from 'hooks/indicators';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;
@@ -28,12 +29,9 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const { regions } = useRegions();
   const router = useRouter();
   const { region } = router.query;
-  const [state, setState] = useState(section.initialState);
-  const { switchSelectedValue, selectSelectedValue, selectedData } = state || {};
-  const handleSwitchChange = (selectedValue: string) => setState({ ...state, switchSelectedValue: selectedValue });
-  const handleSelectChange = (selectedValue: string) => setState({ ...state, selectSelectedValue: selectedValue });
-  const handleSelectedDataChange = (selectedData: string[]) => setState({ ...state, selectedData: selectedData });
-  const totalState = useMemo(
+  const [state, setState] = useState(section.initialState || {});
+  const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
+  const wholeState = useMemo(
     () => ({
       ...state,
       selectedRegion: regions.find((r) => r.slug === region),
@@ -41,15 +39,11 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     [state, region, regions],
   );
 
-  const {
-    data: rawData,
-    isFetched,
-    isFetching,
-    isLoading,
-  } = useQuery([`Fetch indicator ${section.title}`, totalState], () => section.fetchData(totalState));
-  const { data, controls, ...widgetConfig } = useMemo(
-    () => section.widget.fetchProps(rawData, totalState),
-    [rawData, totalState],
+  const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
+
+  const { data, controls, controls1, ...widgetConfig } = useMemo(
+    () => section.widget.fetchProps(rawData, wholeState),
+    [rawData, wholeState],
   );
 
   return (
@@ -72,30 +66,42 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="w-4/6 pl-5 flex flex-col">
-        {controls && (
-          <div className="flex mb-3">
-            {controls.switch && (
-              <Switch selectedValue={switchSelectedValue} onChange={handleSwitchChange} {...controls.switch} />
-            )}
-            {controls.select && (
-              <div className="ml-auto">
-                <Select
-                  id={`select-section-${index}`}
-                  theme="light"
-                  size="base"
-                  selected={selectSelectedValue}
-                  onChange={handleSelectChange}
-                  {...controls.select}
-                />
-              </div>
-            )}
+        {controls?.length > 0 && (
+          <div className="mb-3">
+            {controls
+              .filter((c) => c.options && c.options.length > 0)
+              .map(({ type, side, name, options, ...rest }) => (
+                <div
+                  className={cx({ 'float-left': side === 'left', 'float-right': side === 'right' })}
+                  key={`${index} - ${name}`}
+                >
+                  {type === 'switch' && (
+                    <Switch
+                      selectedValue={state[name]}
+                      onChange={(selectedValue) => handleControlChange(name, selectedValue)}
+                      options={options}
+                      {...rest}
+                    />
+                  )}
+                  {type === 'select' && (
+                    <Select
+                      id={`select-section-${index}-${name}`}
+                      theme="light"
+                      size="base"
+                      selected={state[name]}
+                      initialSelected={state[name] || options[0].value}
+                      onChange={(selectedValue) => handleControlChange(name, selectedValue as string)}
+                      options={options}
+                      {...rest}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
         )}
         <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
-          {(isLoading || isFetching) && LoadingWidget}
-          {isFetched && data && data.length > 0 && (
-            <Widget data={data} {...widgetConfig} onSelectedDataChange={handleSelectedDataChange} />
-          )}
+          {(isLoading || isFetching) && <LoadingWidget />}
+          {isFetched && data && data.length > 0 && <Widget data={data} {...widgetConfig} />}
           {isFetched && data && data.length === 0 && <span>No data available</span>}
         </div>
       </div>

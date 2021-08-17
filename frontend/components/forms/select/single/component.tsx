@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, FC } from 'react';
+import { useEffect, useRef, useMemo, FC, useState } from 'react';
 import { createPortal } from 'react-dom';
 import cx from 'classnames';
 
@@ -137,6 +137,13 @@ export const SingleSelect: FC<SelectProps> = ({
   }, [isOpen, update]);
 
   const selectedItems = selectedItem ? [selectedItem] : [];
+
+  // workaround for popper to be placed in top 0 left 0 without transform
+  // TODO: find different solution
+  const [_forceUpdate, forceUpdate] = useState(null);
+  if (!update && !styles?.popper?.transform) {
+    setTimeout(forceUpdate, 0);
+  }
 
   return (
     <div

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import orderBy from 'lodash/orderBy';
 import type { TooltipProps } from './types';
 
 const Tooltip: FC<TooltipProps> = ({
@@ -13,6 +14,7 @@ const Tooltip: FC<TooltipProps> = ({
   if (!active) return null;
 
   const filteredPayload = (payload || []).filter(payloadFilter);
+  const sortedPayload = orderBy(filteredPayload, ['value'], ['desc']);
 
   return (
     <div className="bg-white shadow-md text-sm" style={{ minWidth: 300 }}>
@@ -23,9 +25,9 @@ const Tooltip: FC<TooltipProps> = ({
         </div>
       )}
       <div className="px-4 py-2">
-        {filteredPayload &&
-          filteredPayload.length > 0 &&
-          filteredPayload.map((y: any) => (
+        {sortedPayload &&
+          sortedPayload.length > 0 &&
+          sortedPayload.map((y: any) => (
             <div key={`${y.dataKey}`} className="py-1 flex flex-row justify-between text-blue9">
               <div className="mr-10 flex items-center">
                 <div
@@ -37,7 +39,7 @@ const Tooltip: FC<TooltipProps> = ({
               <div className="font-bold">{valueFormatter(y.value)}</div>
             </div>
           ))}
-        {filteredPayload.length === 0 && <div>No data available</div>}
+        {sortedPayload.length === 0 && <div>No data available</div>}
       </div>
     </div>
   );
