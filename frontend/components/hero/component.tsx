@@ -1,21 +1,42 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
+import cx from 'classnames';
 
 export interface HeroProps {
-  title: string;
-  subtitle?: string;
+  children?: ReactNode;
+  className?: string;
+  title?: ReactNode;
+  subtitle?: ReactNode;
   image: string;
-  height?: string;
+  height?: string | number;
+  maxTextWidth?: string | number;
 }
 
-const Hero: FC<HeroProps> = ({ title, subtitle, image, height = '700px' }: HeroProps) => (
+const Hero: FC<HeroProps> = ({
+  className = 'text-white',
+  children,
+  title,
+  subtitle,
+  image,
+  height = 700,
+  maxTextWidth = 700,
+}: HeroProps) => (
   <div
-    className="w-full py-40 flex justify-center items-center bg-cover text-white"
+    className={cx(className, 'w-full py-40 flex justify-center items-center bg-cover')}
     style={{ backgroundImage: `url(${image})`, height }}
   >
-    <div className="text-center">
-      <h1 className="text-5xl font-semibold mb-3">{title}</h1>
-      {subtitle && <p className="text-xl mt-20">{subtitle}</p>}
-    </div>
+    {children ? (
+      children
+    ) : (
+      <div className="text-center container">
+        {title && <h1 className="text-5xl font-semibold mb-3 leading-tight">{title}</h1>}
+
+        {subtitle && (
+          <p className="text-lg mt-20 mx-auto" style={{ maxWidth: maxTextWidth }}>
+            {subtitle}
+          </p>
+        )}
+      </div>
+    )}
   </div>
 );
 

@@ -2,25 +2,34 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import headerBackgroundImage from 'images/themes/header-background.png';
 
-import type { SelectOptionProps } from 'components/forms/select/types';
+import Hero from 'components/hero';
 import Select from 'components/forms/select';
+import StatisticBlock from './statistic-block';
 
 import { useRegions } from 'hooks/regions';
+
+import type { SelectOptionProps } from 'components/forms/select/types';
+
 export interface ThemeMainHeaderProps {}
 
-export interface MainStatProps {
-  title: string;
-  value: number;
-}
-
-const MainStat: React.FC<MainStatProps> = ({ title, value }: MainStatProps) => {
-  return (
-    <div className="text-white py-16">
-      <div className="font-bold text-2xl uppercase">{title}</div>
-      <div className="mt-5 font-bold text-3xl">{value}</div>
-    </div>
-  );
-};
+const statistics = [
+  {
+    title: 'Lorem Ipsum',
+    value: 123323,
+  },
+  {
+    title: 'Lorem Ipsum',
+    value: 123323,
+  },
+  {
+    title: 'Lorem Ipsum',
+    value: 123323,
+  },
+  {
+    title: 'Lorem Ipsum',
+    value: 123323,
+  },
+];
 
 const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const router = useRouter();
@@ -33,33 +42,9 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
       router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false });
     }
   };
-  const stats = [
-    {
-      title: 'Lorem Ipsum',
-      value: 123323,
-    },
-    {
-      title: 'Lorem Ipsum',
-      value: 123323,
-    },
-    {
-      title: 'Lorem Ipsum',
-      value: 123323,
-    },
-    {
-      title: 'Lorem Ipsum',
-      value: 123323,
-    },
-  ];
 
   return (
-    <div
-      className="w-full pt-40 bg-cover"
-      style={{
-        backgroundImage: `url(${headerBackgroundImage})`,
-        height: 700,
-      }}
-    >
+    <Hero image={headerBackgroundImage}>
       <div className="container m-auto flex flex-col items-center justify-center text-white">
         <div className="mt-10">
           <Select
@@ -73,12 +58,12 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
           />
         </div>
         <div className="w-full mt-20 flex justify-around items-center bg-white bg-opacity-20">
-          {stats.map((stat) => (
-            <MainStat key={stat.title} {...stat} />
+          {statistics.map((s) => (
+            <StatisticBlock key={s.title} {...s} />
           ))}
         </div>
       </div>
-    </div>
+    </Hero>
   );
 };
 
