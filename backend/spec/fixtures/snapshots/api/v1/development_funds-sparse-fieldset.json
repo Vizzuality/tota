@@ -2,38 +2,31 @@
   "data": [
     {
       "id": 1,
-      "project_title": "Project title",
-      "region": "Thompson Okanagan"
+      "project_title": "Project title"
     },
     {
       "id": 2,
-      "project_title": "Project title",
-      "region": "Thompson Okanagan"
+      "project_title": "Project title"
     },
     {
       "id": 3,
-      "project_title": "Project title",
-      "region": "Thompson Okanagan"
+      "project_title": "Project title"
     },
     {
       "id": 4,
-      "project_title": "Project title",
-      "region": "Thompson Okanagan"
+      "project_title": "Project title"
     },
     {
       "id": 5,
-      "project_title": "Project title",
-      "region": "British Columbia"
+      "project_title": "Project title"
     },
     {
       "id": 6,
-      "project_title": "Project title",
-      "region": "British Columbia"
+      "project_title": "Project title"
     },
     {
       "id": 7,
-      "project_title": "Super project",
-      "region": "Thompson Okanagan"
+      "project_title": "Super project"
     }
   ]
 }
