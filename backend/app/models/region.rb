@@ -12,6 +12,9 @@ class Region < ApplicationRecord
   has_many :subregions, class_name: 'Region', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Region', optional: true
 
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
+
   before_validation :slugify
 
   TYPES = %w[province tourism_region tourism_subregion].freeze
