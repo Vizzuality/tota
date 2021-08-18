@@ -6,7 +6,7 @@ class ImportTasks
   def initialize
     namespace :import do
       desc 'Reimport All'
-      task all: [:organizations, :indicators] do
+      task all: [:organizations, :development_funds, :indicators] do
         puts 'All data reimported!'
       end
 
@@ -22,6 +22,17 @@ class ImportTasks
 
         TimedLogger.log('Import Organizations with Regions and Business Types') do
           run_importer CSVImport::Organizations, csv_file('organizations.csv')
+        end
+      end
+
+      desc 'Reimport Organizations'
+      task development_funds: :environment do
+        next if Rails.env.production? && !ENV['FORCE'].present?
+
+        DevelopmentFund.delete_all unless ENV['KEEP_OLD'].present?
+
+        TimedLogger.log('Import Development Funds') do
+          run_importer CSVImport::DevelopmentFunds, csv_file('Block3_Development_Funds - EXPORT_CSV.csv')
         end
       end
 

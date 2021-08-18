@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_144400) do
+ActiveRecord::Schema.define(version: 2021_08_18_080148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,31 @@ ActiveRecord::Schema.define(version: 2021_07_06_144400) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_id"], name: "index_business_types_on_parent_id"
+  end
+
+  create_table "development_funds", force: :cascade do |t|
+    t.string "project_title", null: false
+    t.text "project_description"
+    t.string "recipient"
+    t.string "lead_organization"
+    t.bigint "region_id", null: false
+    t.string "location"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.string "categories", default: [], array: true
+    t.string "scope"
+    t.string "planning_area"
+    t.string "second_planning_area"
+    t.float "total_project_cost"
+    t.float "key_funding_amount"
+    t.string "key_funding_source"
+    t.string "funding_subtype"
+    t.integer "funding_call_year"
+    t.string "funding_call_month"
+    t.string "project_status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["region_id"], name: "index_development_funds_on_region_id"
   end
 
   create_table "indicator_values", force: :cascade do |t|
@@ -68,6 +93,7 @@ ActiveRecord::Schema.define(version: 2021_07_06_144400) do
   end
 
   add_foreign_key "business_types", "business_types", column: "parent_id"
+  add_foreign_key "development_funds", "regions", on_delete: :cascade
   add_foreign_key "indicator_values", "indicators"
   add_foreign_key "organizations", "business_types"
   add_foreign_key "organizations", "regions"
