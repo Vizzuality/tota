@@ -1,5 +1,5 @@
 class RegionBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :name, :parent_id
+  fields :slug, :name, :parent_id, :region_type
 end
