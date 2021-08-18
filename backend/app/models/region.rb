@@ -2,11 +2,14 @@
 #
 # Table name: regions
 #
-#  id         :bigint           not null, primary key
-#  name       :string           not null
-#  parent_id  :bigint
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  name        :string           not null
+#  parent_id   :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  region_type :string           default("tourism_region"), not null
+#  slug        :string           not null
+#  active      :boolean          default(TRUE)
 #
 class Region < ApplicationRecord
   has_many :subregions, class_name: 'Region', foreign_key: 'parent_id'
