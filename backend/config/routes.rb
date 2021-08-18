@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :development_funds, only: [:index]
       resources :organizations, only: [:index]
       resources :indicators, only: [:index]
+      resources :regions, only: [:index]
     end
   end
 end
