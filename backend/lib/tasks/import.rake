@@ -6,8 +6,25 @@ class ImportTasks
   def initialize
     namespace :import do
       desc 'Reimport All'
-      task all: [:organizations, :development_funds, :indicators] do
+      task all: [:regions, :organizations, :development_funds, :indicators] do
         puts 'All data reimported!'
+      end
+
+      desc 'Add regions'
+      task regions: :environment do
+        next if Rails.env.production? && !ENV['FORCE'].present?
+
+        Region.delete_all unless ENV['KEEP_OLD'].present?
+
+        TimedLogger.log('Add Default Regions') do
+          bc = Region.create!(name: 'British Columbia', region_type: 'province')
+          Region.create!(name: 'Thompson Okanagan', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Cariboo Chilcotin Coast', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Kootenay Rockies', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Northern BC', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Vancouver Island', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Vancouver Coast and Mountains', region_type: 'tourism_region', parent: bc)
+        end
       end
 
       desc 'Reimport Organizations'

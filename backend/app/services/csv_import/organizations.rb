@@ -70,10 +70,12 @@ module CSVImport
 
       return unless region_name.present?
 
-      region = @regions[region_name.downcase] ||= Region.create!(name: region_name)
+      region = @regions[region_name.downcase] ||= Region.create!(name: region_name, region_type: 'tourism_region')
 
       if sub_region_name.present?
-        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(name: sub_region_name, parent: region)
+        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(
+          name: sub_region_name, region_type: 'tourism_subregion', parent: region
+        )
       end
 
       sub_region || region
