@@ -3,10 +3,12 @@ import cx from 'classnames';
 
 import Head from 'next/head';
 import Navbar from './navbar';
+import Footer from './footer';
 import type { NavbarPosition, NavbarTheme } from './navbar/types';
 
 interface LayoutProps {
   className?: string;
+  hideFooter?: boolean;
   children: ReactNode;
   navbarTheme?: NavbarTheme;
   navbarPosition?: NavbarPosition;
@@ -16,6 +18,7 @@ const Layout: FC<LayoutProps> = ({
   className = 'container',
   navbarTheme = 'transparent',
   navbarPosition = 'absolute',
+  hideFooter = false,
   children,
 }: LayoutProps) => {
   return (
@@ -28,6 +31,8 @@ const Layout: FC<LayoutProps> = ({
       <Navbar theme={navbarTheme} position={navbarPosition} />
 
       <main className={cx(className, 'mx-auto flex-1', { 'mt-20': navbarPosition === 'fixed' })}>{children}</main>
+
+      {!hideFooter && <Footer />}
     </div>
   );
 };
