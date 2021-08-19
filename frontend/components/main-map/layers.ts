@@ -41,16 +41,24 @@ const layers: Layer = [
       layers: [
         {
           'source-layer': 'tourism_regions',
-          type: 'line',
-          paint: {
-            'line-color': 'red',
-          },
-        },
-        {
-          'source-layer': 'tourism_regions',
           type: 'fill',
           paint: {
-            'fill-color': 'transparent',
+            'fill-opacity': 0.8,
+            'fill-color': [
+              'match',
+              ['get', 'TOURISM_REGION_NAME'],
+              'cariboo_chilcotin_coast',
+              '#9B6014',
+              'thompson_okanagan',
+              '#76ACA9',
+              'vancouver_island',
+              '#4F91CD',
+              'kootenay_rockies',
+              '#405E62',
+              'northern_british_columbia',
+              '#A9B937',
+              /* other */ '#DDDDDD',
+            ],
           },
         },
       ],
