@@ -17,7 +17,9 @@ const Switch: FC<SwitchProps> = ({ className, options, selectedValue, onChange }
         <button
           key={option.value}
           type="button"
-          className={cx('py-2 border-b-4 border-transparent', { 'border-color1': option.value === selectedValue })}
+          className={cx('py-2 border-b-4 text-lg border-transparent', {
+            'border-color1': option.value === selectedValue,
+          })}
           onClick={() => onChange(option.value)}
         >
           {option.label}

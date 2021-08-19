@@ -9,9 +9,9 @@ import type { SelectOptionProps } from 'components/forms/select/types';
 import Select from 'components/forms/select';
 
 import { useRegions } from 'hooks/regions';
-export interface ThemeHeaderProps {}
+export interface ThemeNavbarProps {}
 
-const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
+const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
   const router = useRouter();
   const { theme: themeSlug, region } = router.query;
   const { regions } = useRegions();
@@ -28,7 +28,7 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   };
 
   return (
-    <div className="w-full h-16 z-30 bg-blue9">
+    <div className="w-full h-18 z-30 bg-blue9">
       <div className="container m-auto flex items-center text-white">
         <div className="w-72 -ml-4">
           <Select
@@ -45,7 +45,7 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
         {filteredThemes.map((t) => (
           <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
             <a
-              className={cx('px-4 py-2 h-16 flex-1 flex items-center justify-center text-center', {
+              className={cx('px-4 py-2 text-sm h-16 flex-1 flex items-center justify-center text-center', {
                 'font-bold bg-blue10': t.slug === themeSlug,
               })}
             >
@@ -58,4 +58,4 @@ const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
   );
 };
 
-export default ThemeHeader;
+export default ThemeNavbar;
