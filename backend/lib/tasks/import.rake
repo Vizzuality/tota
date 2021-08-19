@@ -6,8 +6,25 @@ class ImportTasks
   def initialize
     namespace :import do
       desc 'Reimport All'
-      task all: [:organizations, :indicators] do
+      task all: [:regions, :organizations, :development_funds, :indicators] do
         puts 'All data reimported!'
+      end
+
+      desc 'Add regions'
+      task regions: :environment do
+        next if Rails.env.production? && !ENV['FORCE'].present?
+
+        Region.delete_all unless ENV['KEEP_OLD'].present?
+
+        TimedLogger.log('Add Default Regions') do
+          bc = Region.create!(name: 'British Columbia', region_type: 'province')
+          Region.create!(name: 'Thompson Okanagan', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Cariboo Chilcotin Coast', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Kootenay Rockies', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Northern BC', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Vancouver Island', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Vancouver Coast and Mountains', region_type: 'tourism_region', active: false, parent: bc)
+        end
       end
 
       desc 'Reimport Organizations'
@@ -16,12 +33,22 @@ class ImportTasks
 
         unless ENV['KEEP_OLD'].present?
           Organization.delete_all
-          Region.delete_all
           BusinessType.delete_all
         end
 
         TimedLogger.log('Import Organizations with Regions and Business Types') do
           run_importer CSVImport::Organizations, csv_file('organizations.csv')
+        end
+      end
+
+      desc 'Reimport Organizations'
+      task development_funds: :environment do
+        next if Rails.env.production? && !ENV['FORCE'].present?
+
+        DevelopmentFund.delete_all unless ENV['KEEP_OLD'].present?
+
+        TimedLogger.log('Import Development Funds') do
+          run_importer CSVImport::DevelopmentFunds, csv_file('Block3_Development_Funds - EXPORT_CSV.csv')
         end
       end
 
