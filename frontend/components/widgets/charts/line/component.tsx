@@ -22,7 +22,7 @@ const Chart: FC<LineChartProps> = ({
   legend = bottomLegend,
   chartProps,
   xAxis,
-  yAxis,
+  yAxis = {},
   lines,
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
 }: LineChartProps) => {

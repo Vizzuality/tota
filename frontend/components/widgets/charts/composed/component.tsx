@@ -24,7 +24,7 @@ const Chart: FC<ComposedChartProps> = ({
   bars,
   areas,
   xAxis,
-  yAxis,
+  yAxis = {},
   legend = bottomLegend,
   lines,
   tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },

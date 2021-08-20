@@ -23,7 +23,7 @@ const Chart: FC<BarChartProps> = ({
   cartesianAxis,
   legend = bottomLegend,
   xAxis,
-  yAxis,
+  yAxis = {},
   bars,
   width = '100%',
   height = 500,

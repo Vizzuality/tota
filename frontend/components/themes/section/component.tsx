@@ -25,9 +25,6 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       <Loading iconClassName="w-10 h-10" visible />
     </div>
   );
-  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
-    loading: LoadingWidget,
-  });
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
@@ -38,12 +35,13 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   );
 
   const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
-  const {
-    data,
-    controls,
-    widgetWrapper: WidgetWrapper,
-    ...widgetConfig
-  } = useMemo(() => section.widget.fetchProps(rawData, wholeState), [rawData, wholeState]);
+  const { data, widgetTypeOverride, widgetWrapper: WidgetWrapper, controls, ...widgetConfig } = useMemo(
+    () => section.widget.fetchProps(rawData, wholeState),
+    [rawData, wholeState],
+  );
+  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetTypeOverride || widgetType}`), {
+    loading: LoadingWidget,
+  });
 
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">

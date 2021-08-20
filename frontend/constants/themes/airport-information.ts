@@ -55,7 +55,6 @@ const theme: ThemeType = {
               dataKey: 'date',
               tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
-            yAxis: {},
             tooltip: {
               cursor: { stroke: '#314057', strokeWidth: 1 },
               valueFormatter: compactNumberTickFormatter,
@@ -262,7 +261,6 @@ const theme: ThemeType = {
               dataKey: 'date',
               tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
-            yAxis: {},
             tooltip: {
               cursor: false,
               valueFormatter: (value) => value.toFixed(2),

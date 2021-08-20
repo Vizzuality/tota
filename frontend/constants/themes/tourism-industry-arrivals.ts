@@ -384,7 +384,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               dataKey: 'date',
               tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
-            yAxis: {},
             tooltip: {
               payloadFilter: (y) => !y.name.includes('min-max'),
             },
@@ -445,7 +444,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               scale: 'time',
               domain: ['auto', 'auto'],
             },
-            yAxis: {},
             tooltip: {
               labelFormatter: (value) => {
                 const parsedDate = new Date(parseInt(value));
