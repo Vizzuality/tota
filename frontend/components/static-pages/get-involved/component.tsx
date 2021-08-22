@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import LinkButton from 'components/button';
 import cx from 'classnames';
 
-export interface GetInvoledProps {
+export interface GetInvolvedProps {
   className?: string;
 }
 
-const GetInvoled: FC<GetInvoledProps> = ({ className }: GetInvoledProps) => (
+const GetInvolved: FC<GetInvolvedProps> = ({ className }: GetInvolvedProps) => (
   <div className={cx('text-blue9 py-24 text-center border-b border-gray3', { [className]: !!className })}>
     <div className="text-4xl">Get involved</div>
 
@@ -24,4 +24,4 @@ const GetInvoled: FC<GetInvoledProps> = ({ className }: GetInvoledProps) => (
   </div>
 );
 
-export default GetInvoled;
+export default GetInvolved;
