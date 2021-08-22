@@ -1,49 +1,16 @@
 import Head from 'next/head';
-import Link from 'next/link';
 
 import Layout from 'layout';
 import Button from 'components/button';
-import Input from 'components/forms/input';
 import Hero from 'components/hero';
 import IndicatorLink from 'components/indicator-link';
 
 import heroBackgroundImage from 'images/home/hero-background.png';
 
-import krtLogo from 'images/home/KRT-Logo.png';
-import nbctaLogo from 'images/home/NBCTA-Logo.png';
-import totaLogo from 'images/home/TOTA-Logo-Colour.png';
-import tviLogo from 'images/home/Tourism-Vancouver-Island-Logo.png';
-import ccctaLogo from 'images/home/CCCTA-Logo.png';
-
 import { themesIndex as themes } from 'constants/themes';
-
-const participatingRegions = [
-  {
-    title: 'Cariboo Chilcotin Coast',
-    logo: ccctaLogo,
-    link: '#',
-  },
-  {
-    title: 'Kooteney Rockies Tourism',
-    logo: krtLogo,
-    link: '#',
-  },
-  {
-    title: 'Northern British Columbia Tourism',
-    logo: nbctaLogo,
-    link: '#',
-  },
-  {
-    title: 'Thompson Okanagan Tourism Association',
-    logo: totaLogo,
-    link: '#',
-  },
-  {
-    title: 'Tourism Vancouver Island',
-    logo: tviLogo,
-    link: '#',
-  },
-];
+import ParticipatingRegions from 'components/static-pages/participating-regions';
+import GetInvoled from 'components/static-pages/get-involved';
+import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
 const Home: React.FC<void> = (): JSX.Element => {
   return (
@@ -114,46 +81,9 @@ const Home: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="text-blue9 py-24 text-center border-b border-gray3">
-          <h3 className="text-4xl font-bold">Participating Regions</h3>
-
-          <div className="mt-20 px-10 md:px-24 flex flex-row flex-wrap gap-24 justify-center">
-            {participatingRegions.map((region) => (
-              <Link key={region.title} href={region.link}>
-                <a className="relative z-20">
-                  <img src={region.logo} alt={region.title} />
-                </a>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-blue9 py-24 text-center border-b border-gray3">
-          <div className="text-4xl">Get involved</div>
-
-          <div className="mt-10 flex flex-row flex-wrap gap-8 justify-center">
-            <Button theme="primary" className="w-60" href="/suggest-story">
-              Suggest a story
-            </Button>
-            <Button theme="primary" className="w-60" href="/contribute-data">
-              Contribute Data
-            </Button>
-            <Button theme="primary" className="w-60" href="/feedback-questions">
-              Feedback & Questions
-            </Button>
-          </div>
-        </div>
-
-        <div className="text-blue9 py-24 text-center">
-          <div className="text-4xl">Want to receive updates on the platform?</div>
-
-          <div className="mt-10 flex flex-row flex-wrap gap-16 justify-center">
-            <Input className="text-center h-full" mode="underlined" placeholder="Enter your email" />
-            <Button theme="secondary" className="w-48">
-              Submit
-            </Button>
-          </div>
-        </div>
+        <ParticipatingRegions />
+        <GetInvoled />
+        <NewsletterSignUp />
       </div>
     </Layout>
   );
