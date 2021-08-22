@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 export interface HeroProps {
   children?: ReactNode;
+  cta: ReactNode;
   className?: string;
   title?: ReactNode;
   subtitle?: ReactNode;
@@ -14,6 +15,7 @@ export interface HeroProps {
 const Hero: FC<HeroProps> = ({
   className = 'text-white',
   children,
+  cta,
   title,
   subtitle,
   image,
@@ -28,13 +30,15 @@ const Hero: FC<HeroProps> = ({
       children
     ) : (
       <div className="text-center container">
-        {title && <h1 className="text-5xl font-semibold mb-3 leading-tight">{title}</h1>}
+        {title && <h1 className="text-4xl md:text-5xl font-semibold mt-20 mb-3 leading-tight">{title}</h1>}
 
         {subtitle && (
-          <p className="text-lg mt-20 mx-auto" style={{ maxWidth: maxTextWidth }}>
+          <p className="text-lg mt-14 md:mt-20 mx-auto" style={{ maxWidth: maxTextWidth }}>
             {subtitle}
           </p>
         )}
+
+        {cta && <div className="mt-10">{cta}</div>}
       </div>
     )}
   </div>

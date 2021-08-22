@@ -26,6 +26,7 @@ module.exports = {
         gray1: '#999999',
         gray2: '#f8f8f8',
         gray3: '#cccccc',
+        red1: '#953530',
       },
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",
