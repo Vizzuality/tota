@@ -25,9 +25,13 @@ export interface ThemeSectionType {
   widget: any;
 }
 
-export interface ThemeType {
+export interface ThemeBaseType {
   title: string;
   slug: string;
+  image?: string;
+}
+
+export interface ThemeType extends ThemeBaseType {
   summary?: string;
   sections: ThemeSectionType[];
 }

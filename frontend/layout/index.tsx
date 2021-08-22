@@ -30,7 +30,7 @@ const Layout: FC<LayoutProps> = ({
 
       <Navbar theme={navbarTheme} position={navbarPosition} />
 
-      <main className={cx(className, 'mx-auto flex-1', { 'mt-20': navbarPosition === 'fixed' })}>{children}</main>
+      <main className={cx(className, 'mx-auto flex-1 bg-gray0', { 'mt-20': navbarPosition === 'fixed' })}>{children}</main>
 
       {!hideFooter && <Footer />}
     </div>

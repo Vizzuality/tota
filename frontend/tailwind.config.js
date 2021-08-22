@@ -6,10 +6,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     container: {
-      padding: {
-        DEFAULT: '2rem',
-        sm: '0',
-      },
+      padding: '2rem',
     },
     extend: {
       colors: {
@@ -25,8 +22,10 @@ module.exports = {
         blue8: '#003D76',
         blue9: '#314057',
         blue10: '#1E2734',
+        gray0: '#e5e5e5',
         gray1: '#999999',
         gray2: '#f8f8f8',
+        gray3: '#cccccc',
       },
       height: {
         'screen-minus-header': "calc(100vh - theme('spacing.20'))",

@@ -1,20 +1,22 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
+import cx from 'classnames';
 
 export interface IndicatorLinkProps {
+  className?: string;
   url: string;
   name: string;
   image: string;
 }
 
-const IndicatorLink: FC<IndicatorLinkProps> = ({ url, name, image, ...args }: IndicatorLinkProps) => (
+const IndicatorLink: FC<IndicatorLinkProps> = ({ className = 'w-40 h-40', url, name, image, ...args }: IndicatorLinkProps) => (
   <Link href={url}>
     <a
-      className="w-40 h-40 flex border text-white justify-center items-center bg-cover"
-      style={{ backgroundImage: `url(/${image})` }}
+      className={cx(className, 'text-white text-2xl font-bold bg-cover relative')}
+      style={{ backgroundImage: `url(${image})`, paddingBottom: '100%' }}
       {...args}
     >
-      {name}
+      <span className="absolute left-0 bottom-0 p-5 text-left">{name}</span>
     </a>
   </Link>
 );
