@@ -31,7 +31,6 @@ const theme: ThemeType = {
         type: 'compare',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
           const regions = uniq(rawData.map((x) => x.region));
-
           if (state.type === 'weekly') {
             const indicatorsMap = {
               occupancy_weekday: 'Weekday',
@@ -48,11 +47,10 @@ const theme: ThemeType = {
               labelKey: 'region',
               valueKey: 'value',
             });
-
             return {
               data: chartData,
               controls: [
-                { type: 'switch', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
+                { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
                 { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
               ],
               chartType: 'bar',
@@ -64,15 +62,13 @@ const theme: ThemeType = {
               },
             };
           }
-
           const data = filterBySelectedYear(rawData, state.year);
           const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-
           return {
             data: chartData,
             widgetTypeOverride: 'charts/line',
             controls: [
-              { type: 'switch', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
+              { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
             ],
             lines: regions.map((x) => ({ dataKey: x })),

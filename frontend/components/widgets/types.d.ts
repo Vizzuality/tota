@@ -5,4 +5,5 @@ import { ComposedChartProps } from './charts/composed/types';
 import { TextProps } from './text/types';
 import { RankProps } from './rank/types';
 
-export type WidgetProps = BarChartProps | PieChartProps | LineChartProps | ComposedChartProps | TextProps | RankProps;
+export type ChartProps = BarChartProps | PieChartProps | LineChartProps | ComposedChartProps;
+export type WidgetProps = ChartProps | TextProps | RankProps;
