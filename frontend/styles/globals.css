@@ -8,6 +8,14 @@
     font-family: 'Nunito Sans';
   }
 
+  .mapbox-custom-popup .mapboxgl-popup-tip {
+    display: none;
+  }
+
+  .mapbox-custom-popup .mapboxgl-popup-content {
+    padding: 0 !important;
+  }
+
   @font-face {
     font-family: 'Nunito Sans';
     src: url('/fonts/nunito-sans-v6-latin-regular.woff2') format('woff2'),

@@ -20,6 +20,8 @@
     "@popperjs/core": "^2.9.2",
     "@react-aria/overlays": "^3.6.3",
     "@react-aria/utils": "^3.8.0",
+    "@turf/bbox": "^6.5.0",
+    "@turf/centroid": "^6.5.0",
     "@vizzuality/layer-manager-plugin-mapboxgl": "^1.0.0-alpha.3",
     "@vizzuality/layer-manager-react": "^1.0.0-alpha.3",
     "axios": "^0.21.1",
