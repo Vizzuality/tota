@@ -45,7 +45,7 @@ const Navbar: FC<NavbarProps> = ({ theme = 'transparent', position = 'absolute' 
       >
         <Link href="/">
           <a className="relative z-20">
-            <img src={THEMES[theme].logo} />
+            <img src={THEMES[theme].logo} className="max-h-10 lg:max-h-20" />
           </a>
         </Link>
         <Hamburger

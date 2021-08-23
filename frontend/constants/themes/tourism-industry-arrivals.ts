@@ -18,9 +18,12 @@ import { bottomLegend } from 'constants/charts';
 import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
 
+import mountainsImage from 'images/home/image-mountains.png';
+
 const theme: ThemeType = {
   title: 'Tourism Industry & Arrivals',
   slug: 'tourism-industry-arrivals',
+  image: mountainsImage,
   summary:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
   sections: [

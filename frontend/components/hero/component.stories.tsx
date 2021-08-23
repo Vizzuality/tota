@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Hero, { HeroProps } from './component';
+import Hero from './component';
+import type { HeroProps } from './types';
 
 export default {
   title: 'Components/Hero',

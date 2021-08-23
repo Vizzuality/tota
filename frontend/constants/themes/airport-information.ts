@@ -12,9 +12,12 @@ import {
 import { bottomLegend } from 'constants/charts';
 import { shortMonthName, compactNumberTickFormatter, previousYear } from './utils';
 
+import airportImage from 'images/home/image-airport.png';
+
 const theme: ThemeType = {
   title: 'Airport Information',
   slug: 'airport-information',
+  image: airportImage,
   sections: [
     {
       title: 'Total number of arriving flights per month',

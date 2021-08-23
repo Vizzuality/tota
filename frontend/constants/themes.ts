@@ -1,4 +1,4 @@
-import { ThemeType } from 'types';
+import { ThemeBaseType, ThemeType } from 'types';
 import generalInsights from './themes/general-insights';
 import tourismIndustryArrivals from './themes/tourism-industry-arrivals';
 import airportInformation from './themes/airport-information';
@@ -14,5 +14,13 @@ const themes: ThemeType[] = [
   tourismDevelopmentFounds,
   tourismEmployment,
 ];
+
+export const themesIndex: ThemeBaseType[] = [
+  tourismIndustryArrivals,
+  tourismEmployment,
+  tourismDevelopmentFounds,
+  accommodationInformation,
+  airportInformation,
+].map(({ title, slug, image }) => ({ title, slug, image }));
 
 export default themes;
