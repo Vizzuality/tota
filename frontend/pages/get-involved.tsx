@@ -51,7 +51,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
         <div className="text-blue9 mt-10 xl:mt-20 py-24 px-10 text-center bg-white">
           <h2 className="text-4xl">Feedback & Questions</h2>
 
-          <p className="mt-10">
+          <p className="mt-10 leading-7">
             Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus.
           </p>
 

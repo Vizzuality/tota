@@ -24,7 +24,7 @@ const About: React.FC<void> = (): JSX.Element => {
       <div className="container mx-auto lg:px-16 text-blue9 py-24 text-center">
         <h3 className="text-4xl font-bold">Background</h3>
 
-        <p className="mt-10">
+        <p className="mt-10 leading-7">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis nulla
           ultricies ex, in auctor nisi ligula a lacus. Aliquam non neque quis elit gravida pellentesque sit amet congue
           diam. Nulla orci purus, mattis non mi in, ullamcorper commodo libero. Curabitur ultrices felis sed est
@@ -34,7 +34,7 @@ const About: React.FC<void> = (): JSX.Element => {
           blandit dapibus. Donec tincidunt ante at metus molestie.
         </p>
 
-        <p className="mt-10">
+        <p className="mt-10 leading-7">
           Mauris malesuada orci vitae mi dapibus, at porta eros efficitur. Donec gravida suscipit ex, quis scelerisque
           massa euismod non. Pellentesque viverra egestas lectus, a dignissim arcu finibus non. Pellentesque finibus
           felis efficitur vulputate dictum. Cras odio urna, laoreet at orci et, blandit efficitur velit. Etiam lobortis
@@ -48,7 +48,7 @@ const About: React.FC<void> = (): JSX.Element => {
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">What&apos;s the impact portal?</h3>
 
-          <p className="mt-10">
+          <p className="mt-10 leading-7">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis
             nulla ultricies ex, in auctor nisi ligula a lacus. Aliquam non neque quis elit gravida pellentesque sit amet
             congue diam. Nulla orci purus, mattis non mi in, ullamcorper commodo libero. Curabitur ultrices felis sed
@@ -67,7 +67,7 @@ const About: React.FC<void> = (): JSX.Element => {
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">Our mission</h3>
 
-          <p className="mt-10">
+          <p className="mt-10 leading-7">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis
             nulla ultricies ex, in auctor nisi ligula a lacus. Aliquam non neque quis elit gravida pellentesque sit amet
             congue diam. Nulla orci purus, mattis non mi in, ullamcorper commodo libero. Curabitur ultrices felis sed
@@ -80,21 +80,21 @@ const About: React.FC<void> = (): JSX.Element => {
           <div className="grid lg:grid-cols-3 gap-10 text-center mt-10">
             <div className="p-10 bg-white text-2xl">
               <h4>Who is the portal for?</h4>
-              <p className="text-lg mt-10">
+              <p className="text-lg mt-10 leading-7">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis
                 nulla ultricies ex, in auctor nisi ligula a lacus.
               </p>
             </div>
             <div className="p-10 bg-white text-2xl">
               <h4>Data for a better future</h4>
-              <p className="text-lg mt-10">
+              <p className="text-lg mt-10 leading-7">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis
                 nulla ultricies ex, in auctor nisi ligula a lacus.
               </p>
             </div>
             <div className="p-10 bg-white text-2xl">
               <h4>Creating evidence</h4>
-              <p className="text-lg mt-10">
+              <p className="text-lg mt-10 leading-7">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum, ex ut congue egestas, turpis
                 nulla ultricies ex, in auctor nisi ligula a lacus.
               </p>
