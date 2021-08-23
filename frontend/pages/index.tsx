@@ -9,7 +9,7 @@ import heroBackgroundImage from 'images/home/hero-background.png';
 
 import { themesIndex as themes } from 'constants/themes';
 import ParticipatingRegions from 'components/static-pages/participating-regions';
-import GetInvoled from 'components/static-pages/get-involved';
+import GetInvolved from 'components/static-pages/get-involved';
 import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
 const Home: React.FC<void> = (): JSX.Element => {
@@ -81,8 +81,8 @@ const Home: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <ParticipatingRegions />
-        <GetInvoled />
+        <ParticipatingRegions className="border-b border-gray3" />
+        <GetInvolved className="border-b border-gray3" />
         <NewsletterSignUp />
       </div>
     </Layout>

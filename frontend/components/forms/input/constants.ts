@@ -1,6 +1,6 @@
 export const THEME = {
   dark: {
-    base: 'w-full leading-tight text-white',
+    base: 'w-full leading-tight text-white text-center h-16',
     status: {
       none: 'border-blue2',
       valid: 'border-green-500',
@@ -14,7 +14,7 @@ export const THEME = {
     },
   },
   light: {
-    base: 'w-full text-blue9 bg-transparent',
+    base: 'w-full text-blue9 bg-transparent text-center h-16',
     status: {
       none: 'border-blue2',
       valid: 'border-green-500',

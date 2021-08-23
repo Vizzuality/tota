@@ -1,5 +1,6 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import cx from 'classnames';
+
 import type { HeroProps } from './types';
 
 const Hero: FC<HeroProps> = ({

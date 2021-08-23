@@ -41,7 +41,7 @@ export interface ParticipatingRegionsProps {
 }
 
 const ParticipatingRegions: FC<ParticipatingRegionsProps> = ({ className }: ParticipatingRegionsProps) => (
-  <div className={cx('text-blue9 py-24 text-center border-b border-gray3', { [className]: !!className })}>
+  <div className={cx('text-blue9 py-24 text-center', { [className]: !!className })}>
     <h3 className="text-4xl font-bold">Participating Regions</h3>
 
     <div className="mt-20 px-10 md:px-24 flex flex-row flex-wrap gap-24 justify-center">

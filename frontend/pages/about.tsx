@@ -104,7 +104,7 @@ const About: React.FC<void> = (): JSX.Element => {
       </div>
 
       <div className="container mx-auto lg:px-16">
-        <GetInvolved />
+        <GetInvolved className="border-b border-gray3" />
         <NewsletterSignUp />
       </div>
     </Layout>
