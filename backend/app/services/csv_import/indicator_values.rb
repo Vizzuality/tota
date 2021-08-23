@@ -6,6 +6,10 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         value = IndicatorValue.new
 
+        # TODO: talk with Tamara what to do with empty values and not defined region
+        next if row[:value].blank?
+        next if row[:region] == 'not defined'
+
         value.indicator = Indicator.find_or_create_by(slug: row[:indicator_code])
         value.region = row[:region]
         value.date = row[:date]

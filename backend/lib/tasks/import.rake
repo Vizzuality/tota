@@ -61,16 +61,20 @@ class ImportTasks
         end
 
         ActiveRecord::Base.connection.cache do
-          TimedLogger.log('Import Indicator Values for Block 1') do
+          TimedLogger.log('Import Indicator Values for Block 1 Tourism Industry') do
             run_importer CSVImport::IndicatorValues, csv_file('Block1_Tourism_Industry_and_Arrivals - EXPORT_CSV.csv')
           end
 
-          TimedLogger.log('Import Indicator Values for Block 2') do
+          TimedLogger.log('Import Indicator Values for Block 2 Accommodation') do
             run_importer CSVImport::IndicatorValues, csv_file('Block2_Accommodation_Hotel_Information - EXPORT_CSV.csv')
           end
 
-          TimedLogger.log('Import Indicator Values for Block 4') do
+          TimedLogger.log('Import Indicator Values for Block 4 Airport') do
             run_importer CSVImport::IndicatorValues, csv_file('Block4_Airport - EXPORT_CSV.csv')
+          end
+
+          TimedLogger.log('Import Indicator Values for Block 5 Employment') do
+            run_importer CSVImport::IndicatorValues, csv_file('Block5_Employment - EXPORT_CSV.csv')
           end
 
           TimedLogger.log('Create dynamic indicators') do
