@@ -1,0 +1,173 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 33,
+        "region": {
+          "id": 89,
+          "name": "Thompson Okanagan",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.880Z",
+          "updated_at": "2021-08-24T10:07:05.880Z",
+          "region_type": "tourism_region",
+          "slug": "thompson-okanagan",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 34,
+        "region": {
+          "id": 89,
+          "name": "Thompson Okanagan",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.880Z",
+          "updated_at": "2021-08-24T10:07:05.880Z",
+          "region_type": "tourism_region",
+          "slug": "thompson-okanagan",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 35,
+        "region": {
+          "id": 89,
+          "name": "Thompson Okanagan",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.880Z",
+          "updated_at": "2021-08-24T10:07:05.880Z",
+          "region_type": "tourism_region",
+          "slug": "thompson-okanagan",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 36,
+        "region": {
+          "id": 89,
+          "name": "Thompson Okanagan",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.880Z",
+          "updated_at": "2021-08-24T10:07:05.880Z",
+          "region_type": "tourism_region",
+          "slug": "thompson-okanagan",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 37,
+        "region": {
+          "id": 90,
+          "name": "British Columbia",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.884Z",
+          "updated_at": "2021-08-24T10:07:05.884Z",
+          "region_type": "tourism_region",
+          "slug": "british-columbia",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 38,
+        "region": {
+          "id": 90,
+          "name": "British Columbia",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.884Z",
+          "updated_at": "2021-08-24T10:07:05.884Z",
+          "region_type": "tourism_region",
+          "slug": "british-columbia",
+          "active": true
+        },
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 39,
+        "region": {
+          "id": 89,
+          "name": "Thompson Okanagan",
+          "parent_id": null,
+          "created_at": "2021-08-24T10:07:05.880Z",
+          "updated_at": "2021-08-24T10:07:05.880Z",
+          "region_type": "tourism_region",
+          "slug": "thompson-okanagan",
+          "active": true
+        },
+        "project_title": "Super project"
+      }
+    }
+  ]
+}
