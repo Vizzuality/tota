@@ -34,10 +34,9 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
 
   const handleHover = (evt: MapEvent) => {
     const feature = evt.features.find((f) => !!f.properties.TOURISM_REGION_NAME);
-    const source = 'tourism_regions';
-    const sourceLayer = 'tourism_regions';
-
     if (feature) {
+      const source = 'tourism_regions';
+      const sourceLayer = 'tourism_regions';
       const centroid = getCentroid(feature);
       centroid.properties = feature.properties;
       centroid.id = feature.id;
@@ -47,17 +46,17 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
       setHighlightedFeature(centroid);
       map.setFeatureState({ source, id: feature.id, sourceLayer }, { hover: true });
     } else if (highlightedFeature) {
-      map.setFeatureState({ source, id: highlightedFeature.id, sourceLayer }, { hover: false });
-      setHighlightedFeature(null);
+      resetHighlight();
     }
   };
   const handleMapMouseLeave = () => {
-    console.log('map leave');
-    const source = 'tourism_regions';
-    const sourceLayer = 'tourism_regions';
+    resetHighlight();
+  };
+  const resetHighlight = () => {
+    const layer = 'tourism_regions';
 
     if (highlightedFeature) {
-      map.setFeatureState({ source, id: highlightedFeature.id, sourceLayer }, { hover: false });
+      map.setFeatureState({ source: layer, id: highlightedFeature.id, sourceLayer: layer }, { hover: false });
       setHighlightedFeature(null);
     }
   };
