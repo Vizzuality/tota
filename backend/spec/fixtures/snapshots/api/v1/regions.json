@@ -5,7 +5,7 @@
       "name": "British Columbia",
       "parent_id": null,
       "region_type": "tourism_region",
-      "slug": "british-columbia",
+      "slug": "british_columbia",
       "active": true
     },
     {
@@ -13,7 +13,7 @@
       "name": "Thompson Okanagan",
       "parent_id": 2,
       "region_type": "tourism_region",
-      "slug": "thompson-okanagan",
+      "slug": "thompson_okanagan",
       "active": true
     },
     {
@@ -21,7 +21,7 @@
       "name": "North Okanagan",
       "parent_id": 3,
       "region_type": "tourism_region",
-      "slug": "north-okanagan",
+      "slug": "north_okanagan",
       "active": true
     },
     {
@@ -29,7 +29,7 @@
       "name": "Central Okanagan",
       "parent_id": 3,
       "region_type": "tourism_region",
-      "slug": "central-okanagan",
+      "slug": "central_okanagan",
       "active": true
     }
   ]

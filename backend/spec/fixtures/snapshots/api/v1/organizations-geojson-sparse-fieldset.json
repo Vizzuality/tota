@@ -19,7 +19,7 @@
           "created_at": "2021-08-24T10:37:13.595Z",
           "updated_at": "2021-08-24T10:37:13.595Z",
           "region_type": "tourism_region",
-          "slug": "north-okanagan",
+          "slug": "north_okanagan",
           "active": true
         }
       }
@@ -42,7 +42,7 @@
           "created_at": "2021-08-24T10:37:13.598Z",
           "updated_at": "2021-08-24T10:37:13.598Z",
           "region_type": "tourism_region",
-          "slug": "central-okanagan",
+          "slug": "central_okanagan",
           "active": true
         }
       }

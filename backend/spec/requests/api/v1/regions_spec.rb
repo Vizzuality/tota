@@ -18,7 +18,7 @@ RSpec.describe 'API V1 Regions', type: :request do
 
     context 'filters' do
       it 'should filter by slug' do
-        params = URI.encode_www_form('filter[slug]' => 'british-columbia')
+        params = URI.encode_www_form('filter[slug]' => 'british_columbia')
         get "/api/v1/regions?#{params}"
 
         expect(response).to have_http_status(:ok)

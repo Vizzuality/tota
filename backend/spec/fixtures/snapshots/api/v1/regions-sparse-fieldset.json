@@ -3,22 +3,22 @@
     {
       "id": 2,
       "name": "British Columbia",
-      "slug": "british-columbia"
+      "slug": "british_columbia"
     },
     {
       "id": 3,
       "name": "Thompson Okanagan",
-      "slug": "thompson-okanagan"
+      "slug": "thompson_okanagan"
     },
     {
       "id": 4,
       "name": "North Okanagan",
-      "slug": "north-okanagan"
+      "slug": "north_okanagan"
     },
     {
       "id": 5,
       "name": "Central Okanagan",
-      "slug": "central-okanagan"
+      "slug": "central_okanagan"
     }
   ]
 }

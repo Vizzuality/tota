@@ -19,7 +19,7 @@
           "created_at": "2021-08-24T10:07:05.880Z",
           "updated_at": "2021-08-24T10:07:05.880Z",
           "region_type": "tourism_region",
-          "slug": "thompson-okanagan",
+          "slug": "thompson_okanagan",
           "active": true
         },
         "project_title": "Project title"
@@ -43,7 +43,7 @@
           "created_at": "2021-08-24T10:07:05.880Z",
           "updated_at": "2021-08-24T10:07:05.880Z",
           "region_type": "tourism_region",
-          "slug": "thompson-okanagan",
+          "slug": "thompson_okanagan",
           "active": true
         },
         "project_title": "Project title"
@@ -67,7 +67,7 @@
           "created_at": "2021-08-24T10:07:05.880Z",
           "updated_at": "2021-08-24T10:07:05.880Z",
           "region_type": "tourism_region",
-          "slug": "thompson-okanagan",
+          "slug": "thompson_okanagan",
           "active": true
         },
         "project_title": "Project title"
@@ -91,7 +91,7 @@
           "created_at": "2021-08-24T10:07:05.880Z",
           "updated_at": "2021-08-24T10:07:05.880Z",
           "region_type": "tourism_region",
-          "slug": "thompson-okanagan",
+          "slug": "thompson_okanagan",
           "active": true
         },
         "project_title": "Project title"
@@ -115,7 +115,7 @@
           "created_at": "2021-08-24T10:07:05.884Z",
           "updated_at": "2021-08-24T10:07:05.884Z",
           "region_type": "tourism_region",
-          "slug": "british-columbia",
+          "slug": "british_columbia",
           "active": true
         },
         "project_title": "Project title"
@@ -139,7 +139,7 @@
           "created_at": "2021-08-24T10:07:05.884Z",
           "updated_at": "2021-08-24T10:07:05.884Z",
           "region_type": "tourism_region",
-          "slug": "british-columbia",
+          "slug": "british_columbia",
           "active": true
         },
         "project_title": "Project title"
@@ -163,7 +163,7 @@
           "created_at": "2021-08-24T10:07:05.880Z",
           "updated_at": "2021-08-24T10:07:05.880Z",
           "region_type": "tourism_region",
-          "slug": "thompson-okanagan",
+          "slug": "thompson_okanagan",
           "active": true
         },
         "project_title": "Super project"
