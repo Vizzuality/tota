@@ -9,8 +9,13 @@ const Tooltip: FC<TooltipProps> = ({ year, regionName, funds }: TooltipProps) =>
     <div className="px-4 py-2 text-blue9">
       <div className="font-bold">{regionName} Projects</div>
       {funds.map((fund) => (
-        <div key={fund.name} className="flex justify-between">
-          <div>{fund.name}</div>
+        <div key={fund.name} className="flex justify-between mt-1">
+          <div>
+            <div className="flex items-center">
+              <div className="w-4 h-4 mr-2 inline-block" style={{ backgroundColor: fund.color }}></div>
+              {fund.name}
+            </div>
+          </div>
           <div className="font-bold text-right">
             {fund.count}
             <br />
