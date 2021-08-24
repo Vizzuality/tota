@@ -8,19 +8,6 @@
     font-family: 'Nunito Sans';
   }
 
-  .mapbox-custom-popup .mapboxgl-popup-tip {
-    display: none;
-  }
-
-  .mapbox-custom-popup .mapboxgl-popup-content {
-    padding: 0 !important;
-  }
-
-  .mapbox-overlays-no-overflow .overlays {
-    overflow: unset !important;
-    z-index: 1000;
-  }
-
   @font-face {
     font-family: 'Nunito Sans';
     src: url('/fonts/nunito-sans-v6-latin-regular.woff2') format('woff2'),
@@ -38,4 +25,17 @@
     font-style: normal;
     font-display: swap;
   }
+}
+
+.mapbox-custom-popup .mapboxgl-popup-tip {
+  display: none !important;
+}
+
+.mapbox-custom-popup .mapboxgl-popup-content {
+  padding: 0 !important;
+}
+
+.mapbox-overlays-no-overflow .overlays {
+  overflow: unset !important;
+  z-index: 1000;
 }
