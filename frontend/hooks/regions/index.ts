@@ -1,14 +1,16 @@
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+import snakeCase from 'lodash/snakeCase';
 
 import { UseRegionsResponse, UseSelectedRegionResponse, RegionProps, SelectRegionProps } from './types';
 
 const fakeRegions: RegionProps[] = [
-  { id: 0, name: 'British Columbia', slug: 'british-columbia', parent_id: null },
-  { id: 1, name: 'Cariboo Chilcotin Coast', slug: 'cariboo-chilcotin-coast', parent_id: 0 },
-  { id: 2, name: 'Kootenay Rockies', slug: 'kootenay-rockies', parent_id: 0 },
-  { id: 3, name: 'Northern BC', slug: 'northern-bc', parent_id: 0 },
-  { id: 4, name: 'Vancouver Island', slug: 'vancouver-island', parent_id: 0 },
-  { id: 5, name: 'Thompson Okanagan', slug: 'thompson-okanagan', parent_id: 0 },
+  { id: 0, name: 'British Columbia', slug: 'british_columbia', parent_id: null },
+  { id: 1, name: 'Cariboo Chilcotin Coast', slug: 'cariboo_chilcotin_coast', parent_id: 0 },
+  { id: 2, name: 'Kootenay Rockies', slug: 'kootenay_rockies', parent_id: 0 },
+  { id: 3, name: 'Northern BC', slug: 'northern_british_columbia', parent_id: 0 },
+  { id: 4, name: 'Vancouver Island', slug: 'vancouver_island', parent_id: 0 },
+  { id: 5, name: 'Thompson Okanagan', slug: 'thompson_okanagan', parent_id: 0 },
 ];
 
 function applyParentsAndChildren(regions: RegionProps[]): RegionProps[] {
@@ -30,6 +32,16 @@ export function useRegions(): UseRegionsResponse {
       regions,
     };
   }, [query]);
+}
+
+export function useRouterSelectedRegion(): RegionProps {
+  const router = useRouter();
+  const { region } = router.query;
+  const { regions } = useRegions();
+
+  if (!region) return null;
+
+  return regions.find((r) => r.slug === snakeCase(region));
 }
 
 export function useSelectedRegion(): UseSelectedRegionResponse {

@@ -1,14 +1,13 @@
 import React, { useState, useMemo, FC } from 'react';
 import cx from 'classnames';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import type { ThemeSectionType } from 'types';
 import Select from 'components/forms/select';
 import Switch from 'components/switch';
 import Loading from 'components/loading';
 import type { WidgetProps } from 'components/widgets/types';
 
-import { useRegions } from 'hooks/regions';
+import { useRouterSelectedRegion } from 'hooks/regions';
 import { useIndicatorValues } from 'hooks/indicators';
 
 export interface ThemeSectionProps {
@@ -26,17 +25,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
-  const { regions } = useRegions();
-  const router = useRouter();
-  const { region } = router.query;
+  const selectedRegion = useRouterSelectedRegion();
   const [state, setState] = useState(section.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
       ...state,
-      selectedRegion: regions.find((r) => r.slug === region),
+      selectedRegion,
     }),
-    [state, region, regions],
+    [state, selectedRegion],
   );
 
   const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));

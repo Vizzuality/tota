@@ -19,13 +19,14 @@ const regionsMap = {
 };
 
 const getDevelopmentFundsLayer = (fundSources, selectedRegion) => {
+  if (!fundSources) return null;
+  if (!fundSources.length) return null;
+
   let developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson`;
   if (selectedRegion) {
     developmentFundsGeoJSONUrl += `?filter[regions.slug]=${selectedRegion}`;
   }
   const fundColors = flatten(zip(fundSources, COLORS).filter((s) => s[0]));
-
-  console.log('fundColors', fundColors);
 
   return {
     id: 'development-funds',
@@ -94,7 +95,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             data: 'Data placeholder',
             controls: [{ type: 'select', side: 'right', name: 'year', options: getOptions(['2019', '2020', '2021']) }],
             selectedRegion,
-            extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion)],
+            extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion)].filter((x) => x),
             featureTooltip: function FeatureTooltip(feature: any) {
               const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
               const regionData = rawData.filter((x) => x.region === regionName);
