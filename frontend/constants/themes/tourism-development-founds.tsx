@@ -1,10 +1,11 @@
 import uniq from 'lodash/uniq';
 import zip from 'lodash/zip';
 import flatten from 'lodash/flatten';
-import type { ThemeType, IndicatorValue } from 'types';
-import { getOptions } from 'utils/charts';
-import { COLORS } from 'constants/charts';
+
 import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development-funds';
+import type { ThemeType, IndicatorValue } from 'types';
+import { getAvailableYearsOptions, getYear } from 'utils/charts';
+import { COLORS } from 'constants/charts';
 
 import mountains2Image from 'images/home/image-mountains2.png';
 
@@ -18,14 +19,17 @@ const regionsMap = {
   kootenay_rockies: 'Kootenay Rockies',
 };
 
-const getDevelopmentFundsLayer = (fundSources, selectedRegion) => {
+const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => {
   if (!fundSources) return null;
   if (!fundSources.length) return null;
 
-  let developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson`;
-  if (selectedRegion) {
-    developmentFundsGeoJSONUrl += `?filter[regions.slug]=${selectedRegion}`;
-  }
+  const params = new URLSearchParams();
+
+  if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
+  if (selectedYear) params.append('filter[funding_call_year]', selectedYear);
+  const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
+  const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
+
   const fundColors = flatten(zip(fundSources, COLORS).filter((s) => s[0]));
 
   return {
@@ -85,6 +89,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       widget: {
         type: 'map',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+          const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
           const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
           const selectedRegion =
             state.selectedRegion.name === 'British Columbia'
@@ -92,14 +97,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
 
           return {
-            data: 'Data placeholder',
-            controls: [{ type: 'select', side: 'right', name: 'year', options: getOptions(['2019', '2020', '2021']) }],
+            data: filteredByYear,
+            controls: [
+              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+            ],
             selectedRegion,
-            extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion)].filter((x) => x),
+            extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion, state.year)].filter((x) => x),
             featureTooltip: function FeatureTooltip(feature: any) {
               const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
               if (!regionName) return null;
-              const regionData = rawData.filter((x) => x.region === regionName);
+              const regionData = filteredByYear.filter((x) => x.region === regionName);
               const volumes = regionData.filter((x) => x.indicator === 'development_funds_volume_by_source');
               const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
               const funds = fundSources.map((source, index) => ({
