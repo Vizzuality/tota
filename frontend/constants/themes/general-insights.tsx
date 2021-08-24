@@ -1,5 +1,4 @@
 import { ThemeType } from 'types';
-import { getOptions } from 'utils/charts';
 
 const theme: ThemeType = {
   title: 'General Insights',
@@ -16,23 +15,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
       fetchParams: () => null,
       widget: {
-        type: 'map',
+        type: 'text',
         fetchProps(): any {
           return {
             data: 'Data placeholder',
-            controls: [{ type: 'select', side: 'right', name: 'year', options: getOptions(['2019', '2020', '2021']) }],
-            featureTooltip: (feature: any) => {
-              return (
-                <>
-                  <div className="bg-blue9 py-2 px-4 text-white flex flex-row justify-between">
-                    <div>Popup for {feature.properties.TOURISM_REGION_NAME} </div>
-                  </div>
-                  <div className="px-4 py-2" >
-                    Custom data
-                  </div>
-                </>
-              );
-            }
           };
         },
       },

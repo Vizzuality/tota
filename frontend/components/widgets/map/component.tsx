@@ -8,7 +8,7 @@ import getCentroid from '@turf/centroid';
 import type { MapWidgetProps } from './types';
 import { MapEvent, Popup } from 'react-map-gl';
 
-const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWidgetProps) => {
+const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLayers = [] }: MapWidgetProps) => {
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 54.123389,
@@ -76,10 +76,6 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
   const includeRegionOutline = Boolean(selectedRegion);
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;
   const regionOpacity = selectedRegion ? 0 : 0.8;
-  let developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson`;
-  if (selectedRegion) {
-    developmentFundsGeoJSONUrl += `?filter[regions.slug]=${selectedRegion}`;
-  }
 
   const layers = [
     {
@@ -146,37 +142,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
         ].filter((x) => x),
       },
     },
-    {
-      id: 'development-funds',
-      name: 'Development Funds',
-      type: 'geojson',
-      images: [{ id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } }],
-      source: {
-        type: 'geojson',
-        data: developmentFundsGeoJSONUrl,
-      },
-      render: {
-        metadata: {
-          position: 'top',
-        },
-        layers: [
-          {
-            type: 'symbol',
-            paint: {
-              'icon-color': '#fff',
-            },
-            layout: {
-              'icon-image': 'marker',
-              'icon-size': 1,
-            },
-            // It will put the layer on the top
-            metadata: {
-              position: 'top',
-            },
-          },
-        ],
-      },
-    },
+    ...extraLayers,
   ];
 
   return (

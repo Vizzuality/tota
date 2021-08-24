@@ -1,6 +1,9 @@
 import uniq from 'lodash/uniq';
+import zip from 'lodash/zip';
+import flatten from 'lodash/flatten';
 import type { ThemeType, IndicatorValue } from 'types';
 import { getOptions } from 'utils/charts';
+import { COLORS } from 'constants/charts';
 
 import mountains2Image from 'images/home/image-mountains2.png';
 
@@ -13,6 +16,53 @@ const regionsMap = {
   vancouver_island: 'Vancouver Island',
   kootenay_rockies: 'Kootenay Rockies'
 }
+
+const getDevelopmentFundsLayer = (fundSources, selectedRegion) => {
+  let developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson`;
+  if (selectedRegion) {
+    developmentFundsGeoJSONUrl += `?filter[regions.slug]=${selectedRegion}`;
+  }
+  const fundColors = flatten(zip(fundSources, COLORS).filter((s) => s[0]));
+
+  console.log('fundColors', fundColors);
+
+  return {
+    id: 'development-funds',
+    name: 'Development Funds',
+    type: 'geojson',
+    images: [{ id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } }],
+    source: {
+      type: 'geojson',
+      data: developmentFundsGeoJSONUrl,
+    },
+    render: {
+      metadata: {
+        position: 'top',
+      },
+      layers: [
+        {
+          type: 'symbol',
+          paint: {
+            'icon-color': [
+              'match',
+              ['get', 'key_funding_source'],
+              ...fundColors,
+              '#000', //other
+            ]
+          },
+          layout: {
+            'icon-image': 'marker',
+            'icon-size': 1,
+          },
+          // It will put the layer on the top
+          metadata: {
+            position: 'top',
+          },
+        },
+      ],
+    },
+  };
+};
 
 const theme: ThemeType = {
   title: 'Tourism Development Funds',
@@ -41,6 +91,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           data: 'Data placeholder',
           controls: [{ type: 'select', side: 'right', name: 'year', options: getOptions(['2019', '2020', '2021']) }],
           selectedRegion,
+          extraLayers: [
+            getDevelopmentFundsLayer(fundSources, selectedRegion),
+          ],
           featureTooltip: (feature: any) => {
             const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
             const regionData = rawData.filter(x => x.region === regionName);
