@@ -18,6 +18,7 @@
 
   .mapbox-overlays-no-overflow .overlays {
     overflow: unset !important;
+    z-index: 1000;
   }
 
   @font-face {
