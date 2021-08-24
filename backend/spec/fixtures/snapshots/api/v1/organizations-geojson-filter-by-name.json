@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "name": "Double E Sportsman Camp"
+      }
+    }
+  ]
+}

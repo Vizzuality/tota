@@ -12,30 +12,62 @@ RSpec.describe 'API V1 Organizations', type: :request do
     create(:organization, name: 'Double E Sportsman Camp', region: region2, business_type: subtype1)
   end
 
-  describe 'GET #index' do
-    it 'should return organizations' do
-      get '/api/v1/organizations'
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to match_snapshot('api/v1/organizations')
-    end
-
-    context 'filters' do
-      it 'should filter by name' do
-        params = URI.encode_www_form('filter[name]' => 'Double E Sportsman Camp')
-        get "/api/v1/organizations?#{params}"
+  context 'json response' do
+    describe 'GET #index' do
+      it 'should return organizations' do
+        get '/api/v1/organizations'
 
         expect(response).to have_http_status(:ok)
-        expect(response.body).to match_snapshot('api/v1/organizations-filter-by-name')
+        expect(response.body).to match_snapshot('api/v1/organizations')
+      end
+
+      context 'filters' do
+        it 'should filter by name' do
+          params = URI.encode_www_form('filter[name]' => 'Double E Sportsman Camp')
+          get "/api/v1/organizations?#{params}"
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to match_snapshot('api/v1/organizations-filter-by-name')
+        end
+      end
+
+      context 'sparse fieldset' do
+        it 'should work' do
+          get '/api/v1/organizations?fields=id,region'
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to match_snapshot('api/v1/organizations-sparse-fieldset')
+        end
       end
     end
+  end
 
-    context 'sparse fieldset' do
-      it 'should work' do
-        get '/api/v1/organizations?fields=id,region'
+  context 'geojson response' do
+    describe 'GET #index' do
+      it 'should return organizations' do
+        get '/api/v1/organizations.geojson'
 
         expect(response).to have_http_status(:ok)
-        expect(response.body).to match_snapshot('api/v1/organizations-sparse-fieldset')
+        expect(response.body).to match_snapshot('api/v1/organizations-geojson')
+      end
+
+      context 'filters' do
+        it 'should filter by name' do
+          params = URI.encode_www_form('filter[name]' => 'Double E Sportsman Camp')
+          get "/api/v1/organizations.geojson?#{params}"
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to match_snapshot('api/v1/organizations-geojson-filter-by-name')
+        end
+      end
+
+      context 'sparse fieldset' do
+        it 'should work' do
+          get '/api/v1/organizations.geojson?fields=id,region'
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to match_snapshot('api/v1/organizations-geojson-sparse-fieldset')
+        end
       end
     end
   end

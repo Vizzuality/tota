@@ -21,4 +21,19 @@ class Organization < ApplicationRecord
   belongs_to :business_type, optional: true
 
   validates_presence_of :name
+
+  def as_geojson(fields)
+    slice_attr = fields || [
+      :name
+    ]
+
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      },
+      properties: slice(slice_attr)
+    }
+  end
 end

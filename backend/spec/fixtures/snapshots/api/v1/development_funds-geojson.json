@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Project title",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "project_title": "Super project",
+        "key_funding_amount": null,
+        "key_funding_source": "Source"
+      }
+    }
+  ]
+}
