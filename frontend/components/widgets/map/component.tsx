@@ -33,7 +33,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
   }, []);
 
   const handleHover = (evt: MapEvent) => {
-    const feature = evt.features.find(f => !!f.properties.TOURISM_REGION_NAME);
+    const feature = evt.features.find((f) => !!f.properties.TOURISM_REGION_NAME);
     const source = 'tourism_regions';
     const sourceLayer = 'tourism_regions';
 
@@ -55,16 +55,12 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
     setMap(map);
     setTimeout(() => {
       if (selectedRegion) {
-        map.setFilter('tourism_regions_fills', [
-          'match',
-          ['get', 'TOURISM_REGION_NAME'],
-          selectedRegion,
-          true,
-          false
-        ]);
+        const selectedRegionFilter = ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false];
+        map.setFilter('tourism_regions_outline', selectedRegionFilter);
+        map.setFilter('tourism_regions_fills', selectedRegionFilter);
 
         setTimeout(() => {
-          const features = map.queryRenderedFeatures({ layers: ['tourism_regions_fills'] });
+          const features = map.queryRenderedFeatures({ layers: ['tourism_regions_outline'] });
           if (features.length > 0) {
             const zoomToBbox = getBBox(features[0]);
             setBounds({
@@ -72,10 +68,18 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
               bbox: zoomToBbox,
             });
           }
-        }, 200)
+        }, 200);
       }
     }, 0);
   };
+
+  const includeRegionOutline = Boolean(selectedRegion);
+  const regionHoverOpacity = selectedRegion ? 0.8 : 1;
+  const regionOpacity = selectedRegion ? 0 : 0.8;
+  let developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson`;
+  if (selectedRegion) {
+    developmentFundsGeoJSONUrl += `?filter[regions.slug]=${selectedRegion}`;
+  }
 
   const layers = [
     {
@@ -93,7 +97,12 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
             'source-layer': 'tourism_regions',
             type: 'fill',
             paint: {
-              'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.8],
+              'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                regionHoverOpacity,
+                regionOpacity,
+              ],
               'fill-color': [
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
@@ -111,23 +120,44 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
               ],
             },
           },
-        ],
+          includeRegionOutline && {
+            id: 'tourism_regions_outline',
+            'source-layer': 'tourism_regions',
+            type: 'line',
+            paint: {
+              'line-width': 3,
+              'line-color': [
+                'match',
+                ['get', 'TOURISM_REGION_NAME'],
+                'cariboo_chilcotin_coast',
+                '#9B6014',
+                'thompson_okanagan',
+                '#76ACA9',
+                'vancouver_island',
+                '#4F91CD',
+                'kootenay_rockies',
+                '#405E62',
+                'northern_british_columbia',
+                '#A9B937',
+                /* other */ '#DDDDDD',
+              ],
+            },
+          },
+        ].filter((x) => x),
       },
     },
     {
       id: 'development-funds',
       name: 'Development Funds',
       type: 'geojson',
-      images: [
-        { id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } },
-      ],
+      images: [{ id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } }],
       source: {
         type: 'geojson',
-        data: process.env.NEXT_PUBLIC_TOTA_API + '/development_funds.geojson',
+        data: developmentFundsGeoJSONUrl,
       },
       render: {
         metadata: {
-          position: 'top'
+          position: 'top',
         },
         layers: [
           {
@@ -137,16 +167,16 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWi
             },
             layout: {
               'icon-image': 'marker',
-              'icon-size': 1
+              'icon-size': 1,
             },
             // It will put the layer on the top
             metadata: {
-              position: 'top'
-            }
-          }
-        ]
-      }
-    }
+              position: 'top',
+            },
+          },
+        ],
+      },
+    },
   ];
 
   return (
