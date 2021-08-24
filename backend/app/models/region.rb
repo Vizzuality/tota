@@ -32,6 +32,6 @@ class Region < ApplicationRecord
   private
 
   def slugify
-    self.slug = name&.parameterize unless slug.present?
+    self.slug = name&.parameterize(separator: '_') unless slug.present?
   end
 end
