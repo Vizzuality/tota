@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+
 export interface MapWidgetProps {
-  data: string;
+  featureTooltip?: (feature: any) => ReactNode;
+  selectedRegion?: string;
 }

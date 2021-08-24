@@ -6,34 +6,17 @@ import getBBox from '@turf/bbox';
 import getCentroid from '@turf/centroid';
 
 import type { MapWidgetProps } from './types';
-import { MapEvent, Marker, Popup } from 'react-map-gl';
+import { MapEvent, Popup } from 'react-map-gl';
 
-interface TooltipProps {
-  data: any;
-  label: string;
-}
-
-const Tooltip: FC<TooltipProps> = ({ data = [], label }: TooltipProps) => {
-  return (
-    <div className="bg-white shadow-md text-sm" style={{ minWidth: 300 }}>
-      {label && <div className="bg-blue9 py-2 px-4 text-white flex flex-row justify-between">{label}</div>}
-      <div className="px-4 py-2">{data.length === 0 && <div>No data available</div>}</div>
-    </div>
-  );
-};
-
-const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, selectedRegion, markers }: MapWidgetProps) => {
-  const minZoom = 2;
-  const maxZoom = 10;
-
+const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion }: MapWidgetProps) => {
+  const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 54.123389,
     longitude: -124.950408,
     zoom: 4,
     minZoom: 4,
-    maxZoom: 4,
+    maxZoom: 6,
   });
-
   const [bounds, setBounds] = useState({
     bbox: null,
     options: {
@@ -43,35 +26,33 @@ const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, se
       transitionDuration: 0,
     },
   });
-  const [map, setMap] = useState(null);
   const [highlightedFeature, setHighlightedFeature] = useState(null);
 
   const handleViewportChange = useCallback((vw) => {
     setViewport(vw);
   }, []);
 
-  const handleMapClick = (evt: MapEvent) => {
-    console.log('map click', evt);
-    console.log('clicked on', evt.features[0]?.properties?.TOURISM_REGION_NAME);
-  };
   const handleHover = (evt: MapEvent) => {
-    const feature = evt.features[0];
+    const feature = evt.features.find(f => !!f.properties.TOURISM_REGION_NAME);
+    const source = 'tourism_regions';
+    const sourceLayer = 'tourism_regions';
 
-    if (feature && feature.properties.TOURISM_REGION_NAME) {
-      const bbox = getBBox(feature);
+    if (feature) {
       const centroid = getCentroid(feature);
       centroid.properties = feature.properties;
+      centroid.id = feature.id;
+      if (highlightedFeature) {
+        map.setFeatureState({ source, id: highlightedFeature.id, sourceLayer }, { hover: false });
+      }
       setHighlightedFeature(centroid);
-      const { id, source, sourceLayer } = feature;
-      map.setFeatureState({ source, id, sourceLayer }, { hover: true });
-    } else {
+      map.setFeatureState({ source, id: feature.id, sourceLayer }, { hover: true });
+    } else if (highlightedFeature) {
+      map.setFeatureState({ source, id: highlightedFeature.id, sourceLayer }, { hover: false });
       setHighlightedFeature(null);
     }
   };
-  const handleMapReady = ({ map }) => {
-    setMap(map);
-  };
   const handleMapLoad = ({ map }) => {
+    setMap(map);
     setTimeout(() => {
       if (selectedRegion) {
         map.setFilter('tourism_regions_fills', [
@@ -103,6 +84,7 @@ const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, se
       type: 'vector',
       source: {
         url: 'mapbox://totadata.8tgd889y',
+        promoteId: 'TOURISM_REGION_NAME',
       },
       render: {
         layers: [
@@ -132,6 +114,39 @@ const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, se
         ],
       },
     },
+    {
+      id: 'development-funds',
+      name: 'Development Funds',
+      type: 'geojson',
+      images: [
+        { id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } },
+      ],
+      source: {
+        type: 'geojson',
+        data: process.env.NEXT_PUBLIC_TOTA_API + '/development_funds.geojson',
+      },
+      render: {
+        metadata: {
+          position: 'top'
+        },
+        layers: [
+          {
+            type: 'symbol',
+            paint: {
+              'icon-color': '#fff',
+            },
+            layout: {
+              'icon-image': 'marker',
+              'icon-size': 1
+            },
+            // It will put the layer on the top
+            metadata: {
+              position: 'top'
+            }
+          }
+        ]
+      }
+    }
   ];
 
   return (
@@ -141,15 +156,11 @@ const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, se
           width="100%"
           height="100%"
           bounds={bounds}
-          minZoom={minZoom}
-          maxZoom={maxZoom}
           viewport={viewport}
           mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           onMapViewportChange={handleViewportChange}
-          onClick={handleMapClick}
           onHover={handleHover}
-          onMapReady={handleMapReady}
           onMapLoad={handleMapLoad}
         >
           {(map) => (
@@ -159,12 +170,6 @@ const MapWidget: FC<MapWidgetProps> = ({ data, featureTooltip, markerContent, se
                   <Layer key={l.id} {...l} />
                 ))}
               </LayerManager>
-
-              {(markers || []).map((marker) => (
-                <Marker latitude={marker.latitude} longitude={marker.longitude} offsetLeft={-20} offsetTop={-10}>
-                  {markerContent(marker)}
-                </Marker>
-              ))}
 
               {highlightedFeature && (
                 <Popup
