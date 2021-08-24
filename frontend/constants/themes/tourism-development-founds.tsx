@@ -98,6 +98,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion)].filter((x) => x),
             featureTooltip: function FeatureTooltip(feature: any) {
               const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
+              if (!regionName) return null;
               const regionData = rawData.filter((x) => x.region === regionName);
               const volumes = regionData.filter((x) => x.indicator === 'development_funds_volume_by_source');
               const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
