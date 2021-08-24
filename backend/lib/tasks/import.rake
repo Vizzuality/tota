@@ -21,7 +21,7 @@ class ImportTasks
           Region.create!(name: 'Thompson Okanagan', region_type: 'tourism_region', parent: bc)
           Region.create!(name: 'Cariboo Chilcotin Coast', region_type: 'tourism_region', parent: bc)
           Region.create!(name: 'Kootenay Rockies', region_type: 'tourism_region', parent: bc)
-          Region.create!(name: 'Northern BC', region_type: 'tourism_region', parent: bc)
+          Region.create!(name: 'Northern BC', slug: 'northern_british_columbia', region_type: 'tourism_region', parent: bc)
           Region.create!(name: 'Vancouver Island', region_type: 'tourism_region', parent: bc)
           Region.create!(name: 'Vancouver Coast and Mountains', region_type: 'tourism_region', active: false, parent: bc)
         end

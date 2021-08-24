@@ -62,14 +62,14 @@ module CSVImport
     end
 
     def prepare_cache
-      @regions = Region.all.map { |r| [r.name.downcase, r] }.to_h
+      @regions = Region.all.map { |r| [r.slug, r] }.to_h
     end
 
     def find_or_create_region(row)
       region_name = row[:tourism_region]
       return unless region_name.present?
 
-      @regions[region_name.downcase] ||= Region.create!(name: region_name)
+      @regions[Slug.create(region_name)] ||= Region.create!(name: region_name)
     end
   end
 end
