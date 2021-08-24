@@ -16,6 +16,10 @@
     padding: 0 !important;
   }
 
+  .mapbox-overlays-no-overflow .overlays {
+    overflow: unset !important;
+  }
+
   @font-face {
     font-family: 'Nunito Sans';
     src: url('/fonts/nunito-sans-v6-latin-regular.woff2') format('woff2'),

@@ -147,7 +147,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
 
   return (
     <div className="relative w-full h-full">
-      <div className="absolute -inset-5">
+      <div className="absolute -inset-5 mapbox-overlays-no-overflow">
         <Map
           width="100%"
           height="100%"
