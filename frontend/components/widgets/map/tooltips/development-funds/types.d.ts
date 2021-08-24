@@ -8,5 +8,5 @@ export interface Fund {
 export interface TooltipProps {
   funds: Fund[];
   regionName: string;
-  year: string | number;
+  years: string[];
 }

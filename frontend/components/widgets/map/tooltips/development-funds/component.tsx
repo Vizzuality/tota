@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import type { TooltipProps } from './types';
 
-const Tooltip: FC<TooltipProps> = ({ year, regionName, funds }: TooltipProps) => (
+const Tooltip: FC<TooltipProps> = ({ years, regionName, funds }: TooltipProps) => (
   <div>
     <div className="bg-blue9 py-2 px-4 text-white flex flex-row justify-between">
-      <div>{year}</div>
+      <div>{(years || []).join(' - ')}</div>
     </div>
     <div className="px-4 py-2 text-blue9">
       <div className="font-bold">{regionName} Projects</div>

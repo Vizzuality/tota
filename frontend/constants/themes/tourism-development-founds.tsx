@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 
 import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development-funds';
 import type { ThemeType, IndicatorValue } from 'types';
-import { getAvailableYearsOptions, getYear } from 'utils/charts';
+import { filterBySelectedYear, getAvailableYearsOptions, getYear } from 'utils/charts';
 import { COLORS } from 'constants/charts';
 
 import mountains2Image from 'images/home/image-mountains2.png';
@@ -89,12 +89,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       widget: {
         type: 'map',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+          const filteredByYear = filterBySelectedYear(rawData, state.year);
           const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
           const selectedRegion =
             state.selectedRegion.name === 'British Columbia'
               ? null
               : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
+          const allYears = uniq(rawData.map((x) => getYear(x.date)));
+          const tooltipYears =
+            state.year === 'all_years'
+              ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
+              : [state.year];
 
           return {
             data: filteredByYear,
@@ -116,7 +121,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 volume: volumes.find((x) => x.category_1 === source)?.value || 0,
               }));
 
-              return <DevelopmentFundsTooltip year={state.year} regionName={regionName} funds={funds} />;
+              return <DevelopmentFundsTooltip years={tooltipYears} regionName={regionName} funds={funds} />;
             },
           };
         },
