@@ -51,6 +51,16 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
       setHighlightedFeature(null);
     }
   };
+  const handleMapMouseLeave = () => {
+    console.log('map leave');
+    const source = 'tourism_regions';
+    const sourceLayer = 'tourism_regions';
+
+    if (highlightedFeature) {
+      map.setFeatureState({ source, id: highlightedFeature.id, sourceLayer }, { hover: false });
+      setHighlightedFeature(null);
+    }
+  };
   const handleMapLoad = ({ map }) => {
     setMap(map);
     setTimeout(() => {
@@ -157,6 +167,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
           mapStyle="mapbox://styles/mapbox/streets-v11"
           onMapViewportChange={handleViewportChange}
           onHover={handleHover}
+          onMouseOut={handleMapMouseLeave}
           onMapLoad={handleMapLoad}
         >
           {(map) => (

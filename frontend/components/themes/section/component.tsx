@@ -67,7 +67,9 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
       <div className="w-4/6 pl-5 flex flex-col relative">
         {controls?.length > 0 && (
-          <div className={cx('mb-3 w-full', { 'absolute z-10': widgetType === 'map' })}>
+          <div
+            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+          >
             {controls
               .filter((c) => c.options && c.options.length > 0)
               .map(({ type, side, name, options, ...rest }) => (
