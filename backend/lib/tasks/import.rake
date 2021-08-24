@@ -82,6 +82,8 @@ class ImportTasks
             Indicators::DomesticVisits.generate
             Indicators::AirportTotalDestinations.generate
             Indicators::AirportTopAverageConnectionsPerWeek.generate
+            Indicators::DevelopmentFundsBySource.generate
+            Indicators::DevelopmentFundsVolumeBySource.generate
           end
         end
       end
