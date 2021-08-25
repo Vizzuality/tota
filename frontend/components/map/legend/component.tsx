@@ -11,10 +11,17 @@ export interface LegendProps {
   className?: string;
   children: React.ReactNode;
   maxHeight: string | number;
-  onChangeOrder: (id: string[]) => void;
+  sortable?: boolean;
+  onChangeOrder?: (id: string[]) => void;
 }
 
-export const Legend: FC<LegendProps> = ({ children, className = '', maxHeight, onChangeOrder }: LegendProps) => {
+export const Legend: FC<LegendProps> = ({
+  children,
+  className = '',
+  sortable = false,
+  maxHeight,
+  onChangeOrder,
+}: LegendProps) => {
   const [active, setActive] = useState(true);
 
   const id = useId();
@@ -69,7 +76,8 @@ export const Legend: FC<LegendProps> = ({ children, className = '', maxHeight, o
           }}
         >
           <div className="overflow-x-hidden overflow-y-auto">
-            <SortableList onChangeOrder={onChangeOrder}>{children}</SortableList>
+            {sortable && <SortableList onChangeOrder={onChangeOrder}>{children}</SortableList>}
+            {!sortable && children}
           </div>
         </div>
       )}

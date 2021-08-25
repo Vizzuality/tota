@@ -16,18 +16,31 @@ export default {
 };
 
 const Template: Story<LegendProps> = (args) => {
+  const [items, setItems] = useState(ITEMS);
   const [sortArray, setSortArray] = useState([]);
 
   // Sorted
   const sortedItems = useMemo(() => {
-    const itms = ITEMS.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
+    const itms = items.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
     return itms;
-  }, [sortArray]);
+  }, [sortArray, items]);
 
   // Callbacks
   const onChangeOrder = useCallback((ids) => {
     setSortArray(ids);
   }, []);
+  const onRemove = useCallback(
+    (id) => {
+      setItems(items.filter((x) => x.id !== id));
+    },
+    [items],
+  );
+  const onVisibleChange = useCallback(
+    (id, visible) => {
+      setItems(items.map((el) => (el.id === id ? { ...el, visible } : el)));
+    },
+    [items],
+  );
 
   return (
     <div className="bg-gray0 p-10">
@@ -36,7 +49,7 @@ const Template: Story<LegendProps> = (args) => {
           {sortedItems.map((i) => {
             const { type, items } = i;
             return (
-              <LegendItem key={i.id} {...i}>
+              <LegendItem key={i.id} {...i} onRemove={onRemove} onVisibleChange={onVisibleChange}>
                 {type === 'basic' && <LegendTypeBasic items={items} />}
                 {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
                 {type === 'gradient' && <LegendTypeGradient items={items} />}
