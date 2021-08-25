@@ -30,18 +30,22 @@ const Template: Story<LegendProps> = (args) => {
   }, []);
 
   return (
-    <Legend {...args} onChangeOrder={onChangeOrder}>
-      {sortedItems.map((i) => {
-        const { type, items } = i;
-        return (
-          <LegendItem key={i.id} {...i}>
-            {type === 'basic' && <LegendTypeBasic className="text-sm text-gray-300" items={items} />}
-            {type === 'choropleth' && <LegendTypeChoropleth className="text-sm text-gray-300" items={items} />}
-            {type === 'gradient' && <LegendTypeGradient className="text-sm text-gray-300" items={items} />}
-          </LegendItem>
-        );
-      })}
-    </Legend>
+    <div className="bg-gray0 p-10">
+      <div style={{ maxWidth: 500 }}>
+        <Legend {...args} onChangeOrder={onChangeOrder}>
+          {sortedItems.map((i) => {
+            const { type, items } = i;
+            return (
+              <LegendItem key={i.id} {...i}>
+                {type === 'basic' && <LegendTypeBasic items={items} />}
+                {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
+                {type === 'gradient' && <LegendTypeGradient items={items} />}
+              </LegendItem>
+            );
+          })}
+        </Legend>
+      </div>
+    </div>
   );
 };
 

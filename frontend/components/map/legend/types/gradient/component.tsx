@@ -26,7 +26,7 @@ export const LegendTypeGradient: FC<LegendTypeGradientProps> = ({ className = ''
       {items
         .filter(({ value }) => !!value)
         .map(({ value }) => (
-          <li key={`${value}`} className="flex-shrink-0 text-xs">
+          <li key={`${value}`} className="flex-shrink-0 text-xs text-blue9">
             {value}
           </li>
         ))}

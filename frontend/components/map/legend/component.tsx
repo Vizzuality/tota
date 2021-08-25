@@ -2,8 +2,7 @@ import { FC, useCallback, useState } from 'react';
 import cx from 'classnames';
 
 import Icon from 'components/icon';
-import LEGEND_SVG from 'svgs/map/legend.svg?sprite';
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
 
 import { useId } from '@react-aria/utils';
 import SortableList from './sortable/list';
@@ -27,7 +26,7 @@ export const Legend: FC<LegendProps> = ({ children, className = '', maxHeight, o
   return (
     <div
       className={cx({
-        'bg-black rounded-3xl flex flex-col flex-grow': true,
+        'flex flex-col items-end': true,
         [className]: !!className,
       })}
     >
@@ -35,33 +34,43 @@ export const Legend: FC<LegendProps> = ({ children, className = '', maxHeight, o
         type="button"
         aria-expanded={active}
         aria-controls={id}
-        className="relative flex items-center w-full px-5 py-3 space-x-2 text-xs text-white uppercase font-heading"
+        className="relative flex items-center justify-center p-3 pr-6 text-sm text-blue9 bg-color2 font-heading"
         onClick={onToggleActive}
       >
-        <Icon icon={LEGEND_SVG} className="w-4 h-4 text-gray-300" />
-        <span>Legend</span>
-
-        <Icon
-          icon={ARROW_DOWN_SVG}
+        <span
           className={cx({
-            'absolute w-3 h-3 transition-transform transform -translate-y-1/2 text-blue-500 top-1/2 right-5': true,
-            'rotate-180': active,
+            'transition-width overflow-hidden text-left': true,
+            'w-0': active,
+            'w-24': !active,
           })}
-        />
+        >
+          Legend
+        </span>
+        <div
+          className={cx({
+            'absolute h-full p-3 right-0 bg-blue9 text-white': true,
+          })}
+        >
+          <Icon
+            icon={ARROW_DOWN_SVG}
+            className={cx({
+              'w-4 h-4 transition-transform transform': true,
+              'rotate-180': !active,
+            })}
+          />
+        </div>
       </button>
 
       {active && (
         <div
-          className="relative flex flex-col flex-grow overflow-hidden rounded-3xl"
+          className="relative flex flex-col flex-grow overflow-hidden"
           style={{
             maxHeight,
           }}
         >
-          <div className="absolute top-0 left-0 z-10 w-full h-4 pointer-events-none bg-gradient-to-b from-black via-black" />
           <div className="overflow-x-hidden overflow-y-auto">
             <SortableList onChangeOrder={onChangeOrder}>{children}</SortableList>
           </div>
-          <div className="absolute bottom-0 left-0 z-10 w-full h-3 pointer-events-none bg-gradient-to-t from-black via-black" />
         </div>
       )}
     </div>
