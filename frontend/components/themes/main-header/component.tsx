@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import kebabCase from 'lodash/kebabCase';
 import headerBackgroundImage from 'images/themes/header-background.png';
 
 import Hero from 'components/hero';
@@ -52,7 +53,7 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
             theme="transparent"
             size="base"
             maxHeight={400}
-            options={regions.map((r): SelectOptionProps => ({ label: r.name, value: r.slug }))}
+            options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
             selected={region}
             onChange={handleRegionChange}
           />

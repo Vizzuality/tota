@@ -26,3 +26,16 @@
     font-display: swap;
   }
 }
+
+.mapbox-custom-popup .mapboxgl-popup-tip {
+  display: none !important;
+}
+
+.mapbox-custom-popup .mapboxgl-popup-content {
+  padding: 0 !important;
+}
+
+.mapbox-overlays-no-overflow .overlays {
+  overflow: unset !important;
+  z-index: 1000;
+}

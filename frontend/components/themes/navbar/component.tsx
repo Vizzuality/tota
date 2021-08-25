@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cx from 'classnames';
+import kebabCase from 'lodash/kebabCase';
 
 import themes from 'constants/themes';
 
@@ -9,6 +10,7 @@ import type { SelectOptionProps } from 'components/forms/select/types';
 import Select from 'components/forms/select';
 
 import { useRegions } from 'hooks/regions';
+
 export interface ThemeNavbarProps {}
 
 const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
@@ -36,7 +38,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
             theme="dark"
             size="base"
             maxHeight={400}
-            options={regions.map((r): SelectOptionProps => ({ label: r.name, value: r.slug }))}
+            options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
             selected={region}
             onChange={handleRegionChange}
           />
