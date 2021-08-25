@@ -22,9 +22,9 @@ export const MainMap: FC<MapProps> = ({
   const minZoom = 2;
   const maxZoom = 10;
   const [viewport, setViewport] = useState({
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 4,
+    latitude: 54.123389,
+    longitude: -124.950408,
+    zoom: 5,
     minZoom,
     maxZoom,
   });

@@ -1,21 +1,36 @@
 import { FC, useState } from 'react';
 import classNames from 'classnames';
+import uniq from 'lodash/uniq';
+import { Layer } from '@vizzuality/layer-manager-react';
 
 import type { SelectOptionProps } from 'components/forms/select/types';
 
 import { useSelectedRegion } from 'hooks/regions';
 
 import Select from 'components/forms/select';
+import Switch from 'components/switch';
 
 export interface MapMenuProps {
+  layers?: Layer[];
+  activeLayers: string[];
   children?: React.ReactNode;
+  onActiveLayersChange?: (newLayers: string[]) => void;
 }
 
 const isServer = typeof window === 'undefined';
 
-const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
+const MapMenu: FC<MapMenuProps> = ({
+  children,
+  activeLayers = [],
+  layers = [],
+  onActiveLayersChange,
+}: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const { regions, selectRegion, selectedRegion } = useSelectedRegion();
+
+  const toggleActiveLayer = (layerId, checked) =>
+    onActiveLayersChange &&
+    onActiveLayersChange(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
 
   return (
     <aside
@@ -47,11 +62,20 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
           )}
         </div>
         {selectedRegion && (
-          <div className="flex flex-col mx-3 mt-4 gap-2">
+          <div className="flex flex-col mx-3 mt-4 gap-3">
             {/** @todo: add useIndicators(<SelectedRegion>) */}
-            <div className="flex-1 bg-gray-300 p-5 text-gray-700 rounded">Indicator #1</div>
-            <div className="flex-1 bg-gray-300 p-5 text-gray-700 rounded">Indicator #2</div>
-            <div className="flex-1 bg-gray-300 p-5 text-gray-700 rounded">Indicator #3</div>
+            {layers.map((layer) => (
+              <div
+                key={layer.id}
+                className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
+              >
+                <Switch
+                  checked={activeLayers.includes(layer.id)}
+                  onChange={(checked) => toggleActiveLayer(layer.id, checked)}
+                />
+                {layer.name}
+              </div>
+            ))}
           </div>
         )}
         {children}
