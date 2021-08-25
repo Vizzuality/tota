@@ -3,7 +3,7 @@ import cx from 'classnames';
 import dynamic from 'next/dynamic';
 import type { ThemeSectionType } from 'types';
 import Select from 'components/forms/select';
-import Switch from 'components/switch';
+import Tabs from 'components/tabs';
 import Loading from 'components/loading';
 import type { WidgetProps } from 'components/widgets/types';
 
@@ -74,8 +74,8 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
                   className={cx({ 'float-left': side === 'left', 'float-right': side === 'right' })}
                   key={`${index} - ${name}`}
                 >
-                  {type === 'switch' && (
-                    <Switch
+                  {type === 'tabs' && (
+                    <Tabs
                       selectedValue={state[name]}
                       onChange={(selectedValue) => handleControlChange(name, selectedValue)}
                       options={options}

@@ -1,16 +1,9 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
 
-import { OptionType } from 'types';
+import type { TabsProps } from './types';
 
-export interface SwitchProps {
-  options: OptionType[];
-  selectedValue: string;
-  className?: string;
-  onChange?: (selectedValue: string) => void;
-}
-
-const Switch: FC<SwitchProps> = ({ className, options, selectedValue, onChange }: SwitchProps) => {
+const Tabs: FC<TabsProps> = ({ className, options, selectedValue, onChange }: TabsProps) => {
   return (
     <div role="group" className={cx(className, 'flex gap-5')}>
       {options.map((option) => (
@@ -29,4 +22,4 @@ const Switch: FC<SwitchProps> = ({ className, options, selectedValue, onChange }
   );
 };
 
-export default Switch;
+export default Tabs;

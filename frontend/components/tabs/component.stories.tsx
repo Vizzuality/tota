@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Switch, { SwitchProps } from './component';
+import Tabs from './component';
+import type { TabsProps } from './types';
 
 export default {
-  title: 'Components/Switch',
-  component: Switch,
+  title: 'Components/Tabs',
+  component: Tabs,
 };
 
-const Template: Story<SwitchProps> = (args) => {
+const Template: Story<TabsProps> = (args) => {
   const [selectedValue, setSelectedValue] = useState(args.selectedValue);
 
-  return <Switch {...args} selectedValue={selectedValue} onChange={(v) => setSelectedValue(v)} />;
+  return <Tabs {...args} selectedValue={selectedValue} onChange={(v) => setSelectedValue(v)} />;
 };
 
 const options = [
