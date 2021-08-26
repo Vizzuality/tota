@@ -6,7 +6,7 @@ const ITEMS = [
     id: 'XXX',
     name: 'Included areas',
     icon: <Icon icon={HEXAGON_SVG} className="w-3.5 h-3.5 mt-1 text-purple-500" />,
-    visible: true,
+    visibility: true,
     removable: true,
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus minus eligendi doloremque unde, atque maxime dolore officiis quia architecto fugiat, dolorem animi vel! Velit minus facere maxime consequuntur iure. Nisi!',
@@ -14,7 +14,7 @@ const ITEMS = [
   {
     id: 'YYY',
     name: 'All features',
-    visible: true,
+    visibility: true,
     removable: true,
     icon: <div className="w-3 h-3 mt-1 bg-blue-500 rounded" />,
     description:
@@ -23,7 +23,7 @@ const ITEMS = [
   {
     id: 'ZZZ',
     name: 'Protected areas',
-    visible: false,
+    visibility: false,
     icon: <div className="w-3 h-3 mt-1 bg-pink-500 rounded" />,
     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
   },
@@ -31,7 +31,7 @@ const ITEMS = [
     id: 'basic-example-1',
     name: 'Basic example 1',
     icon: null,
-    visible: true,
+    visibility: true,
     removable: true,
     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     type: 'basic',

@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import type { SelectRegionProps, RegionProps } from 'hooks/regions/types';
 
 export interface LayerSettings {
-  id: string | number;
   opacity?: number;
   visibility?: boolean;
 }

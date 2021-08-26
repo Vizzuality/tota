@@ -113,8 +113,7 @@ export const useMap = () => {
 
 export function MapProvider({ children }: MapProviderProps) {
   const [layerSettings, setLayerSettings] = useState({
-    tourism_region: {
-      id: 'tourism_region',
+    tourism_regions: {
       visibility: true,
       opacity: 1,
     },

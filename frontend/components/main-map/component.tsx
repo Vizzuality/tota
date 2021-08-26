@@ -30,7 +30,6 @@ export const MainMap: FC<MapProps> = ({
   height = '100%',
   mapboxApiAccessToken,
 }: MapProps): JSX.Element => {
-  const [map, setMap] = useState(null);
   const minZoom = 2;
   const maxZoom = 10;
   const [viewport, setViewport] = useState({
@@ -81,7 +80,7 @@ export const MainMap: FC<MapProps> = ({
   const handleLegendItemRemove = (layerId) => {
     changeActiveLayers(activeLayers.filter((x) => x !== layerId));
   };
-  const handleLegendItemVisibleChange = (id, visibility) => {
+  const handleLegendItemVisibilityChange = (id, visibility) => {
     changeLayerSettings(id, { visibility });
   };
 
@@ -89,8 +88,8 @@ export const MainMap: FC<MapProps> = ({
     id: layer.id,
     name: layer.name,
     removable: layer.id !== 'tourism_regions',
-    visible: layerSettings[layer.id]?.visibility || false,
-    opacity: layerSettings[layer.id]?.opacity || 0,
+    visibility: layerSettings[layer.id]?.visibility ?? false,
+    opacity: layerSettings[layer.id]?.opacity ?? 0,
     ...(layer.legendConfig || {}),
   }));
 
@@ -102,6 +101,8 @@ export const MainMap: FC<MapProps> = ({
       });
     }
   }, [selectedRegion]);
+
+  console.log(legendItems);
 
   return (
     <div className="relative w-full h-full">
@@ -115,8 +116,6 @@ export const MainMap: FC<MapProps> = ({
         height={height}
         mapboxApiAccessToken={mapboxApiAccessToken}
         onMapViewportChange={handleViewportChange}
-        onMapLoad={({ map }) => setMap(map)}
-        onClick={(evt) => console.log(evt)}
       >
         {(map) => (
           <>
@@ -147,16 +146,19 @@ export const MainMap: FC<MapProps> = ({
         <Legend maxHeight={400} maxWidth={500}>
           {legendItems.map((i) => {
             const { type, items } = i;
+            const Component = {
+              basic: LegendTypeBasic,
+              choropleth: LegendTypeChoropleth,
+              gradient: LegendTypeGradient,
+            }[type];
             return (
               <LegendItem
                 key={i.id}
                 {...i}
                 onRemove={handleLegendItemRemove}
-                onVisibleChange={handleLegendItemVisibleChange}
+                onVisibilityChange={handleLegendItemVisibilityChange}
               >
-                {type === 'basic' && <LegendTypeBasic items={items} />}
-                {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
-                {type === 'gradient' && <LegendTypeGradient items={items} />}
+                {Component && <Component items={items} />}
               </LegendItem>
             );
           })}

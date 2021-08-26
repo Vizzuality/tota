@@ -35,9 +35,9 @@ const Template: Story<LegendProps> = (args) => {
     },
     [items],
   );
-  const onVisibleChange = useCallback(
-    (id, visible) => {
-      setItems(items.map((el) => (el.id === id ? { ...el, visible } : el)));
+  const onVisibilityChange = useCallback(
+    (id, visibility) => {
+      setItems(items.map((el) => (el.id === id ? { ...el, visibility } : el)));
     },
     [items],
   );
@@ -49,7 +49,7 @@ const Template: Story<LegendProps> = (args) => {
           {sortedItems.map((i) => {
             const { type, items } = i;
             return (
-              <LegendItem key={i.id} {...i} onRemove={onRemove} onVisibleChange={onVisibleChange}>
+              <LegendItem key={i.id} {...i} onRemove={onRemove} onVisibilityChange={onVisibilityChange}>
                 {type === 'basic' && <LegendTypeBasic items={items} />}
                 {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
                 {type === 'gradient' && <LegendTypeGradient items={items} />}

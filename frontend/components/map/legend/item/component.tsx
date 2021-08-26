@@ -10,11 +10,11 @@ export interface LegendItemProps {
   id: string;
   name: string;
   removable?: boolean;
-  visible?: boolean;
+  visibility?: boolean;
   opacity?: number;
   description?: string;
   children?: ReactNode;
-  onVisibleChange?: (id, visible: boolean) => void;
+  onVisibilityChange?: (id, visible: boolean) => void;
   onRemove?: (id) => void;
 }
 
@@ -24,12 +24,12 @@ export const LegendItem: FC<LegendItemProps> = ({
   name,
   removable = false,
   onRemove,
-  visible,
-  onVisibleChange,
+  visibility,
+  onVisibilityChange,
   children,
 }: LegendItemProps) => {
   const handleVisibleClick = () => {
-    onVisibleChange && onVisibleChange(id, !visible);
+    onVisibilityChange && onVisibilityChange(id, !visibility);
   };
   const handleRemoveClick = () => {
     onRemove && onRemove(id);
@@ -44,7 +44,7 @@ export const LegendItem: FC<LegendItemProps> = ({
             <Icon icon={OPACITY_SVG} className="w-4 h-4" />
           </button>
           <button type="button" onClick={handleVisibleClick}>
-            <Icon icon={visible ? VISIBLE_SVG : INVISIBLE_SVG} className="w-4 h-4" />
+            <Icon icon={visibility ? VISIBLE_SVG : INVISIBLE_SVG} className="w-4 h-4" />
           </button>
           {removable && (
             <>
