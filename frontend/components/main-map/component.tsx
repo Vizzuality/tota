@@ -79,6 +79,7 @@ export const MainMap: FC<MapProps> = ({
     removable: layer.id !== 'tourism_regions',
     visible: layerSettings[layer.id]?.visibility || false,
     opacity: layerSettings[layer.id]?.opacity || 0,
+    ...(layer.legendConfig || {}),
   }));
 
   return (

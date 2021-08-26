@@ -99,6 +99,16 @@ const layers: Layer[] = [
     source: {
       url: 'mapbox://totadata.8tgd889y',
     },
+    legendConfig: {
+      type: 'basic',
+      items: [
+        { value: 'Cariboo Chilcotin Coast', color: '#9B6014' },
+        { value: 'Thompson Okanagan', color: '#76ACA9' },
+        { value: 'Vancouver Island', color: '#4F91CD' },
+        { value: 'Kootenay Rockies', color: '#405E62' },
+        { value: 'Northern British Columbia', color: '#A9B937' },
+      ],
+    },
     render: {
       layers: [
         {
