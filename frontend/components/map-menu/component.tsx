@@ -25,7 +25,6 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const { regions, selectRegion, selectedRegion } = useSelectedRegion();
   const { activeLayers, changeActiveLayers } = useMap();
   const layers = LAYERS.filter((x) => x.id !== 'tourism_regions');
-
   const toggleActiveLayer = (layerId: string, checked: boolean) =>
     changeActiveLayers(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
 
@@ -46,8 +45,9 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
               id="map-select-region"
               theme="dark"
               size="base"
+              maxHeight={400}
               options={regions.map((r) => ({ label: r.name, value: r.id })) as unknown as SelectOptionProps[]}
-              initialSelected={selectedRegion ? (selectedRegion as unknown as string) : ''}
+              initialSelected={selectedRegion ? (selectedRegion.id as unknown as string) : ''}
               onChange={(value: string) => selectRegion({ id: parseInt(value, 10) })}
             />
           )}
