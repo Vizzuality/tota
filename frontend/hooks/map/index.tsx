@@ -1,28 +1,8 @@
-import { createContext, useCallback, useContext, useState, useMemo, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useState, useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
 
-import type { SelectRegionProps, RegionProps } from 'hooks/regions/types';
-
 import { useSelectedRegion } from 'hooks/regions';
-
-interface LayerSettings {
-  id: string | number;
-  opacity?: number;
-  visibility?: boolean;
-}
-
-interface MapContextProps {
-  activeLayers: string[];
-  changeActiveLayers: (layers: string[]) => void;
-  layerSettings: { [key: string]: LayerSettings };
-  changeLayerSettings: (layerId: string, settings: any) => void;
-  selectedRegion?: RegionProps;
-  selectRegion: (region: SelectRegionProps) => void;
-}
-
-interface MapProviderProps {
-  children: ReactNode;
-}
+import type { MapContextProps, MapProviderProps } from './types';
 
 const MapContext = createContext<MapContextProps>({
   activeLayers: [],

@@ -1,30 +1,22 @@
-export interface RegionProps {
-  id: number;
-  name: string;
-  slug: string;
-  parent_id: number;
-  parent?: RegionProps;
+import { ReactNode } from 'react';
+
+import type { SelectRegionProps, RegionProps } from 'hooks/regions/types';
+
+export interface LayerSettings {
+  id: string | number;
+  opacity?: number;
+  visibility?: boolean;
 }
 
-export interface SelectRegionProps {
-  id: number;
+export interface MapContextProps {
+  activeLayers: string[];
+  changeActiveLayers: (layers: string[]) => void;
+  layerSettings: { [key: string]: LayerSettings };
+  changeLayerSettings: (layerId: string, settings: any) => void;
+  selectedRegion?: RegionProps;
+  selectRegion: (region: SelectRegionProps) => void;
 }
 
-export interface RegionContextProps {
-  active: boolean;
-  regions: RegionProps[];
-}
-
-export interface RegionProviderProps {
+export interface MapProviderProps {
   children: ReactNode;
-}
-
-export interface UseRegionsResponse {
-  regions: RegionProps[];
-}
-
-export interface UseSelectedRegionResponse {
-  regions: RegionProps[];
-  selectRegion: ({}: SelectRegionProps) => void;
-  selectedRegion: RegionProps;
 }
