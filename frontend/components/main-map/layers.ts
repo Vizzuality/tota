@@ -92,51 +92,6 @@ const layers: Layer[] = [
     },
   },
   {
-    id: 'tourism_regions',
-    name: 'Regions',
-    version: '0.0.1',
-    type: 'vector',
-    source: {
-      url: 'mapbox://totadata.8tgd889y',
-    },
-    legendConfig: {
-      type: 'basic',
-      items: [
-        { value: 'Cariboo Chilcotin Coast', color: '#9B6014' },
-        { value: 'Thompson Okanagan', color: '#76ACA9' },
-        { value: 'Vancouver Island', color: '#4F91CD' },
-        { value: 'Kootenay Rockies', color: '#405E62' },
-        { value: 'Northern British Columbia', color: '#A9B937' },
-      ],
-    },
-    render: {
-      layers: [
-        {
-          'source-layer': 'tourism_regions',
-          type: 'fill',
-          paint: {
-            'fill-opacity': 0.8,
-            'fill-color': [
-              'match',
-              ['get', 'TOURISM_REGION_NAME'],
-              'cariboo_chilcotin_coast',
-              '#9B6014',
-              'thompson_okanagan',
-              '#76ACA9',
-              'vancouver_island',
-              '#4F91CD',
-              'kootenay_rockies',
-              '#405E62',
-              'northern_british_columbia',
-              '#A9B937',
-              /* other */ '#DDDDDD',
-            ],
-          },
-        },
-      ],
-    },
-  },
-  {
     id: 'trails',
     name: 'Trails',
     version: '0.0.1',

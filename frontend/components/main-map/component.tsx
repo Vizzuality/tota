@@ -1,6 +1,7 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback, useEffect } from 'react';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
+
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import ZoomControl from 'components/map/controls/zoom';
@@ -9,7 +10,8 @@ import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
 import FitBoundsControl from 'components/map/controls/fit-bounds';
 
-import { useMap } from 'hooks/map';
+import { REGION_BBOX } from 'constants/regions';
+import { useMap, useTourismRegionsLayer } from 'hooks/map';
 import LAYERS from 'components/main-map/layers';
 
 export interface MapProps {
@@ -23,6 +25,7 @@ export const MainMap: FC<MapProps> = ({
   height = '100%',
   mapboxApiAccessToken,
 }: MapProps): JSX.Element => {
+  const [map, setMap] = useState(null);
   const minZoom = 2;
   const maxZoom = 10;
   const [viewport, setViewport] = useState({
@@ -32,11 +35,15 @@ export const MainMap: FC<MapProps> = ({
     minZoom,
     maxZoom,
   });
-  const { activeLayers, layerSettings, changeActiveLayers, changeLayerSettings } = useMap();
-  const layers = LAYERS.filter((x) => activeLayers.includes(x.id)).map((l) => ({
-    ...l,
-    visibility: layerSettings[l.id]?.visibility || false,
-  }));
+  const { activeLayers, layerSettings, changeActiveLayers, changeLayerSettings, selectedRegion } = useMap();
+  const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
+  const tourismRegionLayer = useTourismRegionsLayer(showSingleRegionSlug);
+  const layers = [...LAYERS, tourismRegionLayer]
+    .filter((x) => activeLayers.includes(x.id))
+    .map((l) => ({
+      ...l,
+      visibility: layerSettings[l.id]?.visibility || false,
+    }));
 
   const [bounds, setBounds] = useState({
     bbox: null,
@@ -82,6 +89,15 @@ export const MainMap: FC<MapProps> = ({
     ...(layer.legendConfig || {}),
   }));
 
+  useEffect(() => {
+    if (selectedRegion) {
+      setBounds({
+        ...bounds,
+        bbox: REGION_BBOX[selectedRegion.slug],
+      });
+    }
+  }, [selectedRegion]);
+
   return (
     <div className="relative w-full h-full">
       <Map
@@ -94,11 +110,8 @@ export const MainMap: FC<MapProps> = ({
         height={height}
         mapboxApiAccessToken={mapboxApiAccessToken}
         onMapViewportChange={handleViewportChange}
-        onClick={(e) => {
-          if (e && e.features) {
-            console.log('e', e.features);
-          }
-        }}
+        onMapLoad={({ map }) => setMap(map)}
+        onClick={(evt) => console.log(evt)}
       >
         {(map) => (
           <>
