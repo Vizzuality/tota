@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import React, { FC, useState, useCallback, useEffect } from 'react';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import Map from 'components/map';
@@ -62,25 +62,27 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
   };
   const handleMapLoad = ({ map }) => {
     setMap(map);
-    setTimeout(() => {
-      if (selectedRegion) {
-        const selectedRegionFilter = ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false];
-        map.setFilter('tourism_regions_outline', selectedRegionFilter);
-        map.setFilter('tourism_regions_fills', selectedRegionFilter);
-
-        setTimeout(() => {
-          const features = map.queryRenderedFeatures({ layers: ['tourism_regions_outline'] });
-          if (features.length > 0) {
-            const zoomToBbox = getBBox(features[0]);
-            setBounds({
-              ...bounds,
-              bbox: zoomToBbox,
-            });
-          }
-        }, 200);
-      }
-    }, 0);
   };
+
+  useEffect(() => {
+    if (selectedRegion && map) {
+      const selectedRegionFilter = ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false];
+      map.setFilter('tourism_regions_outline', selectedRegionFilter);
+      map.setFilter('tourism_regions_fills', selectedRegionFilter);
+
+      const interval = setInterval(() => {
+        const features = map.queryRenderedFeatures({ layers: ['tourism_regions_outline'] });
+        if (features.length > 0) {
+          clearInterval(interval);
+          const zoomToBbox = getBBox(features[0]);
+          setBounds({
+            ...bounds,
+            bbox: zoomToBbox,
+          });
+        }
+      }, 50);
+    }
+  }, [map, selectedRegion]);
 
   const includeRegionOutline = Boolean(selectedRegion);
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;

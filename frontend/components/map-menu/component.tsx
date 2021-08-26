@@ -6,7 +6,7 @@ import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
 
 import type { SelectOptionProps } from 'components/forms/select/types';
 
-import { useSelectedRegion } from 'hooks/regions';
+import { useRegions } from 'hooks/regions';
 import { useMap } from 'hooks/map';
 import LAYERS from 'components/main-map/layers';
 
@@ -22,8 +22,8 @@ const isServer = typeof window === 'undefined';
 
 const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const { regions, selectRegion, selectedRegion } = useSelectedRegion();
-  const { activeLayers, changeActiveLayers } = useMap();
+  const { regions } = useRegions();
+  const { activeLayers, changeActiveLayers, selectedRegion, selectRegion } = useMap();
   const layers = LAYERS.filter((x) => x.id !== 'tourism_regions');
   const toggleActiveLayer = (layerId: string, checked: boolean) =>
     changeActiveLayers(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
