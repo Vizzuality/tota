@@ -28,21 +28,17 @@ export const LegendItem: FC<LegendItemProps> = ({
   onVisibleChange,
   children,
 }: LegendItemProps) => {
-  const handleVisibleClick = (evt) => {
-    evt.stopPropagation();
-    evt.preventDefault();
+  const handleVisibleClick = () => {
     onVisibleChange && onVisibleChange(id, !visible);
   };
-  const handleRemoveClick = (evt) => {
-    evt.stopPropagation();
-    evt.preventDefault();
+  const handleRemoveClick = () => {
     onRemove && onRemove(id);
   };
 
   return (
     <div key={id} className="bg-white">
       <div className="flex justify-between items-center bg-color2 text-blue9 font-heading py-2.5 px-5">
-        <span>{name}</span>
+        {name && <span className="mr-10">{name}</span>}
         <div className="flex gap-3">
           <button type="button">
             <Icon icon={OPACITY_SVG} className="w-4 h-4" />

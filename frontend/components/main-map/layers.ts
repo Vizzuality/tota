@@ -1,6 +1,6 @@
 import { Layer } from '@vizzuality/layer-manager-react';
 
-const layers: Layer = [
+const layers: Layer[] = [
   {
     id: 'ski_resorts',
     name: 'Ski Resorts',

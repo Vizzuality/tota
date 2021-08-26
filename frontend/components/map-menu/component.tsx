@@ -1,36 +1,30 @@
 import { FC, useState } from 'react';
 import classNames from 'classnames';
 import uniq from 'lodash/uniq';
-import { Layer } from '@vizzuality/layer-manager-react';
 
 import type { SelectOptionProps } from 'components/forms/select/types';
 
 import { useSelectedRegion } from 'hooks/regions';
+import { useMap } from 'hooks/map';
+import LAYERS from 'components/main-map/layers';
 
 import Select from 'components/forms/select';
 import Switch from 'components/switch';
 
 export interface MapMenuProps {
-  layers?: Layer[];
-  activeLayers: string[];
   children?: React.ReactNode;
-  onActiveLayersChange?: (newLayers: string[]) => void;
 }
 
 const isServer = typeof window === 'undefined';
 
-const MapMenu: FC<MapMenuProps> = ({
-  children,
-  activeLayers = [],
-  layers = [],
-  onActiveLayersChange,
-}: MapMenuProps) => {
+const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const { regions, selectRegion, selectedRegion } = useSelectedRegion();
+  const { activeLayers, changeActiveLayers } = useMap();
+  const layers = LAYERS.filter((x) => x.id !== 'tourism_regions');
 
-  const toggleActiveLayer = (layerId, checked) =>
-    onActiveLayersChange &&
-    onActiveLayersChange(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
+  const toggleActiveLayer = (layerId: string, checked: boolean) =>
+    changeActiveLayers(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
 
   return (
     <aside

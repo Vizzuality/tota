@@ -4,12 +4,19 @@ import cx from 'classnames';
 export interface ControlsProps {
   className?: string;
   children: React.ReactNode;
+  placement?: 'bottom-left' | 'bottom-right';
 }
 
-export const Controls: FC<ControlsProps> = ({ className = 'absolute bottom-10 right-2', children }: ControlsProps) => (
+const PLACEMENT = {
+  'bottom-left': 'bottom-10 left-2',
+  'bottom-right': 'bottom-10 right-2',
+};
+
+export const Controls: FC<ControlsProps> = ({ className, placement = 'bottom-right', children }: ControlsProps) => (
   <div
     className={cx({
-      'w-10': true,
+      absolute: true,
+      [PLACEMENT[placement]]: !!placement,
       [className]: !!className,
     })}
   >

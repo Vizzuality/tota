@@ -11,6 +11,7 @@ export interface LegendProps {
   className?: string;
   children: React.ReactNode;
   maxHeight: string | number;
+  maxWidth: string | number;
   sortable?: boolean;
   onChangeOrder?: (id: string[]) => void;
 }
@@ -20,6 +21,7 @@ export const Legend: FC<LegendProps> = ({
   className = '',
   sortable = false,
   maxHeight,
+  maxWidth,
   onChangeOrder,
 }: LegendProps) => {
   const [active, setActive] = useState(true);
@@ -73,6 +75,7 @@ export const Legend: FC<LegendProps> = ({
           className="relative flex flex-col flex-grow overflow-hidden"
           style={{
             maxHeight,
+            maxWidth,
           }}
         >
           <div className="overflow-x-hidden overflow-y-auto">
