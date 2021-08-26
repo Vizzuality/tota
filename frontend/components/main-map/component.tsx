@@ -1,6 +1,7 @@
-import { FC, useState, useCallback, useEffect } from 'react';
+import React, { FC, useState, useCallback, useEffect } from 'react';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
+import CartoProvider from '@vizzuality/layer-manager-provider-carto';
 
 import Map from 'components/map';
 import Controls from 'components/map/controls';
@@ -8,11 +9,15 @@ import ZoomControl from 'components/map/controls/zoom';
 import Legend from 'components/map/legend';
 import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
+import LegendTypeChoropleth from 'components/map/legend/types/choropleth';
+import LegendTypeGradient from 'components/map/legend/types/gradient';
 import FitBoundsControl from 'components/map/controls/fit-bounds';
 
 import { REGION_BBOX } from 'constants/regions';
 import { useMap, useTourismRegionsLayer } from 'hooks/map';
 import LAYERS from 'components/main-map/layers';
+
+const cartoProvider = new CartoProvider();
 
 export interface MapProps {
   width?: string | number;
@@ -42,7 +47,7 @@ export const MainMap: FC<MapProps> = ({
     .filter((x) => activeLayers.includes(x.id))
     .map((l) => ({
       ...l,
-      visibility: layerSettings[l.id]?.visibility || false,
+      visibility: layerSettings[l.id]?.visibility ?? true,
     }));
 
   const [bounds, setBounds] = useState({
@@ -115,7 +120,11 @@ export const MainMap: FC<MapProps> = ({
       >
         {(map) => (
           <>
-            <LayerManager map={map} plugin={PluginMapboxGl}>
+            <LayerManager
+              map={map}
+              plugin={PluginMapboxGl}
+              providers={{ [cartoProvider.name]: cartoProvider.handleData }}
+            >
               {layers.map((l) => (
                 <Layer key={l.id} {...l} />
               ))}
@@ -146,6 +155,8 @@ export const MainMap: FC<MapProps> = ({
                 onVisibleChange={handleLegendItemVisibleChange}
               >
                 {type === 'basic' && <LegendTypeBasic items={items} />}
+                {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
+                {type === 'gradient' && <LegendTypeGradient items={items} />}
               </LegendItem>
             );
           })}
