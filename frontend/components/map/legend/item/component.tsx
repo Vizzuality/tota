@@ -58,8 +58,8 @@ export const LegendItem: FC<LegendItemProps> = ({
           )}
         </div>
       </div>
-      {description && <div className="mt-2.5 py-2.5 px-5">{description}</div>}
-      {children && <div className="mt-2.5 py-2.5 px-5">{children}</div>}
+      {description && <div className="my-2.5 py-2.5 px-5">{description}</div>}
+      {children && <div className="py-4 px-5">{children}</div>}
     </div>
   );
 };
