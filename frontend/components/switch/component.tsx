@@ -1,31 +1,31 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
 
-import { OptionType } from 'types';
+import type { SwitchProps } from './types';
 
-export interface SwitchProps {
-  options: OptionType[];
-  selectedValue: string;
-  className?: string;
-  onChange?: (selectedValue: string) => void;
-}
-
-const Switch: FC<SwitchProps> = ({ className, options, selectedValue, onChange }: SwitchProps) => {
+const Switch: FC<SwitchProps> = ({ className, checked, onChange }: SwitchProps) => {
   return (
-    <div role="group" className={cx(className, 'flex gap-5')}>
-      {options.map((option) => (
-        <button
-          key={option.value}
-          type="button"
-          className={cx('py-2 border-b-4 text-lg border-transparent', {
-            'border-color1': option.value === selectedValue,
-          })}
-          onClick={() => onChange(option.value)}
-        >
-          {option.label}
-        </button>
-      ))}
-    </div>
+    <label className={cx(className, 'relative cursor-pointer')}>
+      <input
+        type="checkbox"
+        className="sr-only"
+        checked={checked}
+        onChange={(e) => onChange && onChange(e.target.checked)}
+      />
+      <div
+        className={cx('w-9 h-5 rounded-full shadow-inner border-2 border-blue9', {
+          'bg-white': !checked,
+          'bg-blue9': checked,
+        })}
+      ></div>
+      <div
+        className={cx('dot w-2.5 h-2.5 absolute bg-white rounded-full shadow transition duration-300', {
+          'bg-blue9': !checked,
+          'transform translate-x-4 bg-white': checked,
+        })}
+        style={{ top: 5, left: 5 }}
+      ></div>
+    </label>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Switch, { SwitchProps } from './component';
+import Switch from './component';
+import type { SwitchProps } from './types';
 
 export default {
   title: 'Components/Switch',
@@ -8,28 +9,11 @@ export default {
 };
 
 const Template: Story<SwitchProps> = (args) => {
-  const [selectedValue, setSelectedValue] = useState(args.selectedValue);
+  const [checked, setChecked] = useState(args.checked);
 
-  return <Switch {...args} selectedValue={selectedValue} onChange={(v) => setSelectedValue(v)} />;
+  return <Switch {...args} checked={checked} onChange={(v) => setChecked(v)} />;
 };
-
-const options = [
-  {
-    name: 'Trips',
-    value: 'trips',
-  },
-  {
-    name: 'Stays',
-    value: 'stays',
-  },
-  {
-    name: 'Visits',
-    value: 'visits',
-  },
-];
 
 export const Default = Template.bind({});
-Default.args = {
-  options,
-  selectedValue: 'trips',
-};
+
+Default.args = {};

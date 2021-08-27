@@ -71,7 +71,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           return {
             data: getTop10AndOthers(rawData, 'category_1'),
             controls: [
-              { type: 'switch', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) },
+              { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) },
             ],
             pies: [
               {
@@ -127,7 +127,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           return {
             data: chartData,
             controls: [
-              { type: 'switch', side: 'left', name: 'group', options: getOptions(['Visits', 'Trips', 'Stays']) },
+              { type: 'tabs', side: 'left', name: 'group', options: getOptions(['Visits', 'Trips', 'Stays']) },
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
             ],
             legend: {
@@ -176,7 +176,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           return {
             data,
             controls: [
-              { type: 'switch', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
+              { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
             ],
           };
@@ -247,7 +247,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           return {
             data,
             controls: [
-              { type: 'switch', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
+              { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
             ],
             bars,
