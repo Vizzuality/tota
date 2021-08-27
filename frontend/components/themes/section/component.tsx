@@ -38,10 +38,12 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   );
 
   const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
-  const { data, controls, ...widgetConfig } = useMemo(
-    () => section.widget.fetchProps(rawData, wholeState),
-    [rawData, wholeState],
-  );
+  const {
+    data,
+    controls,
+    widgetWrapper: WidgetWrapper,
+    ...widgetConfig
+  } = useMemo(() => section.widget.fetchProps(rawData, wholeState), [rawData, wholeState]);
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -71,7 +73,16 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         />
         <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched && data && data.length > 0 && <Widget data={data} {...widgetConfig} />}
+          {isFetched &&
+            data &&
+            data.length > 0 &&
+            (WidgetWrapper ? (
+              <WidgetWrapper>
+                <Widget data={data} {...widgetConfig} />
+              </WidgetWrapper>
+            ) : (
+              <Widget data={data} {...widgetConfig} />
+            ))}
           {isFetched && data && data.length === 0 && <span>No data available</span>}
         </div>
       </div>

@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 
 import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development-funds';
 
-import type { ThemeType, IndicatorValue } from 'types';
+import type { ThemeType, IndicatorValue, WidgetWrapperProps } from 'types';
 
 import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart } from 'utils/charts';
 import { previousYear, moneyTickFormatter } from './utils';
@@ -96,18 +96,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           const filtered = filterBySelectedYear(rawData, state.year).filter(
             (x) => x.indicator === 'development_funds_volume_by_source',
           );
+          const filteredCount = filterBySelectedYear(rawData, state.year).filter(
+            (x) => x.indicator === 'development_funds_by_source',
+          );
           const chartData = mergeForChart({
             data: filtered,
             mergeBy: 'category_1',
             labelKey: 'category_1',
             valueKey: 'value',
           });
-          const sources = uniq(rawData.map((x) => x.category_1));
+          const sources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
 
           return {
             data: chartData,
             controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-            bars: sources.filter((x) => x).map((x) => ({ dataKey: x, stackId: 1 })),
+            bars: sources.map((x) => ({ dataKey: x, stackId: 1 })),
             chartProps: {
               margin: {
                 left: 70,
@@ -123,6 +126,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               cursor: false,
               valueFormatter: moneyTickFormatter,
             },
+            widgetWrapper: function WidgetWrapper({ children: widget }: WidgetWrapperProps) {
+              return (
+                <>
+                  <div className="w-1/2">{widget}</div>
+                  <div className="w-1/2 p-20 flex justify-center items-center">
+                    <div className="flex flex-col justify-center items-center ">
+                      <div className="font-bold text-lg text-blue9">Projects</div>
+                      <div className="font-bold text-lg text-white flex gap-3 mt-5">
+                        {sources.map((source, index) => (
+                          <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: COLORS[index] }}>
+                            {filteredCount.find((x) => x.category_1 === source)?.value || 0}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            },
           };
         },
       },
@@ -130,7 +152,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
     {
       title: 'Volume and projects by region',
       description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       initialState: {
         year: previousYear,
       },

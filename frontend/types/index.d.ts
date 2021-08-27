@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 declare module '*.svg';
 declare module '*.png';
 declare module '*.jpg';
@@ -39,4 +41,8 @@ export interface ThemeType extends ThemeBaseType {
 export interface OptionType {
   label: string;
   value: string;
+}
+
+export interface WidgetWrapperProps {
+  children: ReactNode;
 }
