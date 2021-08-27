@@ -37,6 +37,9 @@ module.exports = {
       translate: {
         'map-sidebar': '-300px',
       },
+      transitionProperty: {
+        width: 'width',
+      },
     },
   },
   variants: {

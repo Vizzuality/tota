@@ -3121,6 +3121,14 @@
     cancelable-promise "^3.2.3"
     react "^17.0.2"
 
+"@vizzuality/layer-manager-provider-carto@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@vizzuality/layer-manager-provider-carto/-/layer-manager-provider-carto-1.0.0-alpha.3.tgz#24f7fecc4d991850a7b642093873103ff38d2fd8"
+  integrity sha512-ft+Ao1hJAWmR6a6nOyfzrvcV8rkOV50mIZWaSx4FEfie4nubzHXLDepIy6sSG+gdTCdyMtcCTzBOmOT0Si334w==
+  dependencies:
+    "@vizzuality/layer-manager" "^4.0.0-alpha.4"
+    "@vizzuality/layer-manager-utils" "^1.0.0-alpha.3"
+
 "@vizzuality/layer-manager-react@^1.0.0-alpha.3":
   version "1.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@vizzuality/layer-manager-react/-/layer-manager-react-1.0.0-alpha.3.tgz#4438203d588d565d23f6084ea397cffc6d3f4eb2"
