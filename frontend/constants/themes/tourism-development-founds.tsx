@@ -6,12 +6,7 @@ import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development
 
 import type { ThemeType, IndicatorValue } from 'types';
 
-import {
-  filterBySelectedYear,
-  getAvailableYearsOptions,
-  getYear,
-  mergeForChart,
-} from 'utils/charts';
+import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart } from 'utils/charts';
 import { previousYear, moneyTickFormatter } from './utils';
 
 import mountains2Image from 'images/home/image-mountains2.png';
@@ -98,20 +93,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       widget: {
         type: 'charts/bar',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          let filtered = filterBySelectedYear(rawData, state.year).filter(x => x.indicator === 'development_funds_volume_by_source');
-          let chartData = mergeForChart({ data: filtered, mergeBy: 'category_1', labelKey: 'category_1', valueKey: 'value' });
+          const filtered = filterBySelectedYear(rawData, state.year).filter(
+            (x) => x.indicator === 'development_funds_volume_by_source',
+          );
+          const chartData = mergeForChart({
+            data: filtered,
+            mergeBy: 'category_1',
+            labelKey: 'category_1',
+            valueKey: 'value',
+          });
           const sources = uniq(rawData.map((x) => x.category_1));
 
           return {
             data: chartData,
-            controls: [
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
-            ],
-            bars: sources.filter(x => x).map((x) => ({ dataKey: x, stackId: 1 })),
+            controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
+            bars: sources.filter((x) => x).map((x) => ({ dataKey: x, stackId: 1 })),
             chartProps: {
               margin: {
-                left: 70
-              }
+                left: 70,
+              },
             },
             xAxis: {
               dataKey: 'category_1',
