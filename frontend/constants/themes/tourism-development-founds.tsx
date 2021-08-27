@@ -3,11 +3,20 @@ import zip from 'lodash/zip';
 import flatten from 'lodash/flatten';
 
 import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development-funds';
+
 import type { ThemeType, IndicatorValue } from 'types';
-import { filterBySelectedYear, getAvailableYearsOptions, getYear } from 'utils/charts';
-import { COLORS } from 'constants/charts';
+
+import {
+  filterBySelectedYear,
+  getAvailableYearsOptions,
+  getYear,
+  mergeForChart,
+} from 'utils/charts';
+import { previousYear, moneyTickFormatter } from './utils';
 
 import mountains2Image from 'images/home/image-mountains2.png';
+
+import { COLORS } from 'constants/charts';
 
 // TODO: That will be removed when I clean up mess with regions and connect with API
 const regionsMap = {
@@ -76,11 +85,54 @@ const theme: ThemeType = {
   image: mountains2Image,
   sections: [
     {
+      title: 'Total volume and projects awarded',
+      description: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      initialState: {
+        year: previousYear,
+      },
+      fetchParams: (state: any) => ({
+        slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
+        region: [state.selectedRegion.name].filter((x) => x),
+      }),
+      widget: {
+        type: 'charts/bar',
+        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
+          let filtered = filterBySelectedYear(rawData, state.year).filter(x => x.indicator === 'development_funds_volume_by_source');
+          let chartData = mergeForChart({ data: filtered, mergeBy: 'category_1', labelKey: 'category_1', valueKey: 'value' });
+          const sources = uniq(rawData.map((x) => x.category_1));
+
+          return {
+            data: chartData,
+            controls: [
+              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+            ],
+            bars: sources.filter(x => x).map((x) => ({ dataKey: x, stackId: 1 })),
+            chartProps: {
+              margin: {
+                left: 70
+              }
+            },
+            xAxis: {
+              dataKey: 'category_1',
+            },
+            yAxis: {
+              tickFormatter: moneyTickFormatter,
+            },
+            tooltip: {
+              cursor: false,
+              valueFormatter: moneyTickFormatter,
+            },
+          };
+        },
+      },
+    },
+    {
       title: 'Volume and projects by region',
       description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: '2020',
+        year: previousYear,
       },
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
