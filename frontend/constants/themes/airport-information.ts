@@ -1,12 +1,12 @@
 import uniq from 'lodash/uniq';
 import { IndicatorValue, ThemeType } from 'types';
 import {
-  allMonths,
   expandToFullYear,
   filterBySelectedYear,
   getAvailableYearsOptions,
   getOptions,
   getTopN,
+  getWithMinMaxAreas,
   mergeForChart,
 } from 'utils/charts';
 import { bottomLegend } from 'constants/charts';
@@ -38,21 +38,8 @@ const theme: ThemeType = {
           const airports = uniq(rawData.map((x) => x.category_2));
           let areas = [];
           if (state.year !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
             chartData = expandToFullYear(chartData);
-            chartData.forEach((d: any) => {
-              airports.forEach((airport: string) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.category_2 === airport && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d[`${airport} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
-              });
-            });
-            areas = airports.map((airport: string) => ({
-              dataKey: `${airport} min-max`,
-              fillOpacity: 0.07,
-              stroke: 'none',
-            }));
+            [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2');
           }
 
           return {
@@ -66,6 +53,7 @@ const theme: ThemeType = {
             },
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {},
             tooltip: {
@@ -103,11 +91,7 @@ const theme: ThemeType = {
           let chartData = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
 
           if (state.year !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
-            chartData = allMonths.map((month) => ({
-              date: month,
-              ...(chartData.find((d) => d.date === month) || {}),
-            }));
+            chartData = expandToFullYear(chartData);
           }
 
           return {
@@ -119,6 +103,7 @@ const theme: ThemeType = {
             bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x })),
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {
               tickFormatter: compactNumberTickFormatter,
@@ -153,7 +138,6 @@ const theme: ThemeType = {
           let chartData = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
 
           if (state.year !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
             chartData = expandToFullYear(chartData);
           }
 
@@ -169,6 +153,7 @@ const theme: ThemeType = {
             bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x, stackId: 1 })),
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {
               tickFormatter: (val) => `${val * 100}%`,
@@ -253,14 +238,16 @@ const theme: ThemeType = {
       widget: {
         type: 'charts/bar',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const destinationAirports = uniq(rawData.map((x) => x.category_2));
           let data = filterBySelectedYear(rawData, state.year);
-          data = data.filter((x) => x.category_2 === (state.airport || destinationAirports[0]));
+
           const originAirports = uniq(data.map((x) => x.category_1));
+          const destinationAirports = uniq(rawData.map((x) => x.category_2));
+
+          data = data.filter((x) => x.category_2 === (state.airport || destinationAirports[0]));
+
           let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
 
-          if (state.select2SelectedValue !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
+          if (state.year !== 'all_years') {
             chartData = expandToFullYear(chartData);
           }
 
@@ -273,6 +260,7 @@ const theme: ThemeType = {
             bars: originAirports.map((x) => ({ dataKey: x, stackId: 1 })),
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {},
             tooltip: {

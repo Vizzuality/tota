@@ -1,7 +1,9 @@
 import groupBy from 'lodash/groupBy';
+import mapValues from 'lodash/mapValues';
 import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
+import uniq from 'lodash/uniq';
 
 import { IndicatorValue, OptionType } from 'types';
 
@@ -73,11 +75,22 @@ export function getTop10AndOthersByYear(data: any[], key: string) {
   return newData;
 }
 
-export function expandToFullYear(data: any[]) {
-  return allMonths.map((month) => ({
-    date: month,
-    ...(data.find((d) => d.date === month) || {}),
-  }));
+export function expandToFullYear(data: IndicatorValue[]) {
+  if (!data || !data.length) return data;
+
+  const lastDate = data
+    .map((x) => x.date)
+    .sort()
+    .reverse()[0];
+  const lastDateMonth = getMonth(lastDate);
+  const lastDateYear = getYear(lastDate);
+
+  if (lastDateMonth === 12) return data;
+
+  return [
+    ...data,
+    ...range(lastDateMonth + 1, 12).map((month: number) => ({ date: `${lastDateYear}-${('0' + month).slice(-2)}` })),
+  ];
 }
 
 export function getTopN(data: any[], take: number, valueKey: string) {
@@ -105,6 +118,8 @@ export function getTop10AndOthers(data: any[], key: string) {
   ].filter((x) => x);
 }
 
+export const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (v, k) => start + k);
+
 export function getYear(str: string): string {
   return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear().toString();
 }
@@ -113,6 +128,10 @@ export function getYears(data: any[]): string[] {
   return Array.from(new Set((data || []).map((d) => getYear(d['date']))))
     .sort()
     .reverse();
+}
+
+export function getMonth(date: string) {
+  return new Date(date).getMonth() + 1;
 }
 
 export function getStackedBarsData(data: any[], groupedBy: string) {
@@ -176,4 +195,31 @@ export function filterBySelectedYear(data: IndicatorValue[], selectedYear: strin
 
 export function getOptions(options: string[], lowerCaseValue = true): OptionType[] {
   return options.map((opt) => ({ label: opt, value: lowerCaseValue ? opt.toLowerCase() : opt }));
+}
+
+export function getMonthlyMinMax(data: IndicatorValue[], groupByKey: string) {
+  return mapValues(groupBy(data, groupByKey), (grouped: IndicatorValue[]) => {
+    return mapValues(
+      groupBy(grouped, (x: IndicatorValue) => getMonth(x.date)),
+      (dataPerMonth: IndicatorValue[]) => {
+        const values = dataPerMonth.map((x) => x.value);
+        return [Math.min(...values), Math.max(...values)];
+      },
+    );
+  });
+}
+
+export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], groupByKey: string) {
+  const monthlyMinMax = getMonthlyMinMax(rawData, groupByKey);
+  const uniqKeys = uniq(rawData.map((x) => x[groupByKey]));
+  const newChartData = chartData.map((d) => ({
+    ...d,
+    ...uniqKeys.reduce((acc, key) => ({ ...acc, [`${key} min-max`]: monthlyMinMax[key][getMonth(d.date)] }), {}),
+  }));
+  const areas = uniqKeys.map((key: string) => ({
+    dataKey: `${key} min-max`,
+    fillOpacity: 0.07,
+    stroke: 'none',
+  }));
+  return [newChartData, areas];
 }

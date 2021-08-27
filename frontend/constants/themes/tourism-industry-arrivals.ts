@@ -10,6 +10,7 @@ import {
   getTop10AndOthers,
   getTop10AndOthersByYear,
   getTopN,
+  getWithMinMaxAreas,
   getYear,
   mergeForChart,
 } from 'utils/charts';
@@ -108,21 +109,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           let areas = [];
           const regions = uniq(rawData.map((x) => x.region));
           if (state.year !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
             chartData = expandToFullYear(chartData);
-            chartData.forEach((d: any) => {
-              regions.forEach((region: string) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === region && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d[`${region} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
-              });
-            });
-            areas = regions.map((region: string) => ({
-              dataKey: `${region} min-max`,
-              fillOpacity: 0.07,
-              stroke: 'none',
-            }));
+            [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
           }
           return {
             data: chartData,
@@ -138,6 +126,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             areas,
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {
               tickFormatter: compactNumberTickFormatter,
@@ -378,21 +367,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           let areas = [];
           const regions = uniq(rawData.map((x) => x.region));
           if (state.year !== 'all_years') {
-            chartData.forEach((d: any) => (d.date = shortMonthName(d.date)));
             chartData = expandToFullYear(chartData);
-            chartData.forEach((d: any) => {
-              regions.forEach((region: string) => {
-                const valuesForMonth = rawData
-                  .filter((rd: any) => rd.region === region && shortMonthName(rd.date) === d.date)
-                  .map((rd: any) => rd.value);
-                d[`${region} min-max`] = [Math.min(...valuesForMonth), Math.max(...valuesForMonth)];
-              });
-            });
-            areas = regions.map((region: string) => ({
-              dataKey: `${region} min-max`,
-              fillOpacity: 0.07,
-              stroke: 'none',
-            }));
+            [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
           }
 
           return {
@@ -406,6 +382,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             lines: regions.map((x) => ({ dataKey: x })),
             xAxis: {
               dataKey: 'date',
+              tickFormatter: state.year !== 'all_years' && shortMonthName,
             },
             yAxis: {},
             tooltip: {
