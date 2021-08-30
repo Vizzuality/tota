@@ -79,6 +79,42 @@ RSpec.describe Indicators::DevelopmentFundsVolumeBySource do
             region: 'Province',
             category_1: 'Source 2',
             value: 200
+          },
+          {
+            date: nil,
+            region: 'Region 1',
+            category_1: 'Source 1',
+            value: 200
+          },
+          {
+            date: nil,
+            region: 'Region 1',
+            category_1: 'Source 2',
+            value: 300
+          },
+          {
+            date: nil,
+            region: 'Region 2',
+            category_1: 'Source 1',
+            value: 100
+          },
+          {
+            date: nil,
+            region: 'Region 2',
+            category_1: 'Source 2',
+            value: 400
+          },
+          {
+            date: nil,
+            region: 'Province',
+            category_1: 'Source 1',
+            value: 300
+          },
+          {
+            date: nil,
+            region: 'Province',
+            category_1: 'Source 2',
+            value: 700
           }
         )
       end

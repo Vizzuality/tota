@@ -79,6 +79,42 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
             region: 'Province',
             category_1: 'Source 2',
             value: 1
+          },
+          {
+            date: nil,
+            region: 'Region 1',
+            category_1: 'Source 1',
+            value: 2
+          },
+          {
+            date: nil,
+            region: 'Region 1',
+            category_1: 'Source 2',
+            value: 2
+          },
+          {
+            date: nil,
+            region: 'Region 2',
+            category_1: 'Source 1',
+            value: 1
+          },
+          {
+            date: nil,
+            region: 'Region 2',
+            category_1: 'Source 2',
+            value: 2
+          },
+          {
+            date: nil,
+            region: 'Province',
+            category_1: 'Source 1',
+            value: 3
+          },
+          {
+            date: nil,
+            region: 'Province',
+            category_1: 'Source 2',
+            value: 4
           }
         )
       end
