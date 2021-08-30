@@ -59,8 +59,8 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
           />
         </div>
         <div className="w-full mt-20 flex justify-around items-center bg-white bg-opacity-20">
-          {statistics.map((s) => (
-            <StatisticBlock key={s.title} {...s} />
+          {statistics.map((s, index) => (
+            <StatisticBlock key={index} {...s} />
           ))}
         </div>
       </div>

@@ -163,7 +163,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       widget: {
         type: 'map',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = filterBySelectedYear(rawData, state.year);
+          const filteredByYear = filterBySelectedYear(rawData, state.year, true);
           const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
           const selectedRegion =
             state.selectedRegion.name === 'British Columbia'
@@ -177,9 +177,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
 
           return {
             data: filteredByYear,
-            controls: [
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
+            controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
             selectedRegion,
             extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion, state.year)].filter((x) => x),
             featureTooltip: function FeatureTooltip(feature: any) {
