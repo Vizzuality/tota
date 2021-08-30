@@ -41,7 +41,7 @@ export function useRouterSelectedRegion(): RegionProps {
 
   if (!region) return null;
 
-  return regions.find((r) => r.slug === snakeCase(region));
+  return regions.find((r) => r.slug === snakeCase(region as string));
 }
 
 export function useSelectedRegion(): UseSelectedRegionResponse {

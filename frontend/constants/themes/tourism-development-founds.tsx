@@ -95,7 +95,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             state.selectedRegion.name === 'British Columbia'
               ? null
               : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
-          const allYears = uniq(rawData.map((x) => getYear(x.date)));
+          const allYears = uniq(rawData.map((x) => parseInt(getYear(x.date), 10)));
           const tooltipYears =
             state.year === 'all_years'
               ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
