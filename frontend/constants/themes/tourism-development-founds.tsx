@@ -93,10 +93,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       widget: {
         type: 'charts/bar',
         fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filtered = filterBySelectedYear(rawData, state.year).filter(
+          const filtered = filterBySelectedYear(rawData, state.year, true).filter(
             (x) => x.indicator === 'development_funds_volume_by_source',
           );
-          const filteredCount = filterBySelectedYear(rawData, state.year).filter(
+          const filteredCount = filterBySelectedYear(rawData, state.year, true).filter(
             (x) => x.indicator === 'development_funds_by_source',
           );
           const chartData = mergeForChart({

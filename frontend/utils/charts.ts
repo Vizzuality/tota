@@ -121,11 +121,13 @@ export function getTop10AndOthers(data: any[], key: string) {
 export const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (v, k) => start + k);
 
 export function getYear(str: string): string {
+  if (!str) return str;
+
   return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear().toString();
 }
 
 export function getYears(data: any[]): string[] {
-  return Array.from(new Set((data || []).map((d) => getYear(d['date']))))
+  return uniq((data || []).map((d) => getYear(d['date'])).filter((x) => x))
     .sort()
     .reverse();
 }
@@ -187,8 +189,10 @@ export function getAvailableYearsOptions(data: any[], withAllOptions = true): an
   return yearsOptions;
 }
 
-export function filterBySelectedYear(data: IndicatorValue[], selectedYear: string) {
-  if (selectedYear === 'all_years' || !selectedYear) return data;
+export function filterBySelectedYear(data: IndicatorValue[], selectedYear: string, matchAllYearsToNulls = false) {
+  if (!selectedYear) return data;
+  if (selectedYear === 'all_years' && !matchAllYearsToNulls) return data;
+  if (selectedYear === 'all_years' && matchAllYearsToNulls) return data.filter((x: any) => x.date === null);
 
   return data.filter((x: any) => getYear(x.date) === selectedYear);
 }
