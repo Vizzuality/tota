@@ -102,8 +102,6 @@ export const MainMap: FC<MapProps> = ({
     }
   }, [selectedRegion]);
 
-  console.log(legendItems);
-
   return (
     <div className="relative w-full h-full">
       <Map
