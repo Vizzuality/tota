@@ -1,6 +1,8 @@
 import { FC, useState } from 'react';
 import cx from 'classnames';
 import uniq from 'lodash/uniq';
+import groupBy from 'lodash/groupBy';
+import map from 'lodash/map';
 
 import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
 
@@ -13,6 +15,7 @@ import LAYERS from 'components/main-map/layers';
 import Icon from 'components/icon';
 import Select from 'components/forms/select';
 import Switch from 'components/switch';
+import Expando from 'components/expando';
 
 export interface MapMenuProps {
   children?: React.ReactNode;
@@ -25,6 +28,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const { regions } = useRegions();
   const { activeLayers, changeActiveLayers, selectedRegion, selectRegion } = useMap();
   const layers = LAYERS.filter((x) => x.id !== 'tourism_regions');
+  const layersByCategory = groupBy(layers, 'category');
   const toggleActiveLayer = (layerId: string, checked: boolean) =>
     changeActiveLayers(uniq([...activeLayers, layerId]).filter((l) => l !== layerId || checked));
 
@@ -66,17 +70,21 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
           {selectedRegion && (
             <div className="flex flex-col p-3 gap-3">
               {/** @todo: add useIndicators(<SelectedRegion>) */}
-              {layers.map((layer) => (
-                <div
-                  key={layer.id}
-                  className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
-                >
-                  <Switch
-                    checked={activeLayers.includes(layer.id)}
-                    onChange={(checked) => toggleActiveLayer(layer.id, checked)}
-                  />
-                  {layer.name}
-                </div>
+              {map(layersByCategory, (layers, category) => (
+                <Expando title={category}>
+                  {layers.map((layer) => (
+                    <div
+                      key={layer.id}
+                      className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
+                    >
+                      <Switch
+                        checked={activeLayers.includes(layer.id)}
+                        onChange={(checked) => toggleActiveLayer(layer.id, checked)}
+                      />
+                      {layer.name}
+                    </div>
+                  ))}
+                </Expando>
               ))}
             </div>
           )}
