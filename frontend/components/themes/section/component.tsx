@@ -2,9 +2,9 @@ import React, { useState, useMemo, FC } from 'react';
 import cx from 'classnames';
 import dynamic from 'next/dynamic';
 import type { ThemeSectionType } from 'types';
-import Select from 'components/forms/select';
-import Tabs from 'components/tabs';
 import Loading from 'components/loading';
+import Controls from './controls';
+
 import type { WidgetProps } from 'components/widgets/types';
 
 import { useRouterSelectedRegion } from 'hooks/regions';
@@ -16,6 +16,9 @@ export interface ThemeSectionProps {
 }
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
+  const [state, setState] = useState(section.initialState || {});
+  const selectedRegion = useRouterSelectedRegion();
+
   const widgetType = section.widget?.type || 'charts/pie';
   const LoadingWidget = () => (
     <div style={{ height: 400 }} className="flex items-center justify-center">
@@ -25,8 +28,6 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
-  const selectedRegion = useRouterSelectedRegion();
-  const [state, setState] = useState(section.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
@@ -37,11 +38,12 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   );
 
   const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
-
-  const { data, controls, controls1, ...widgetConfig } = useMemo(
-    () => section.widget.fetchProps(rawData, wholeState),
-    [rawData, wholeState],
-  );
+  const {
+    data,
+    controls,
+    widgetWrapper: WidgetWrapper,
+    ...widgetConfig
+  } = useMemo(() => section.widget.fetchProps(rawData, wholeState), [rawData, wholeState]);
 
   return (
     <div className="mb-10 p-5 bg-white flex">
@@ -63,44 +65,24 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="w-4/6 pl-5 flex flex-col relative">
-        {controls?.length > 0 && (
-          <div
-            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
-          >
-            {controls
-              .filter((c) => c.options && c.options.length > 0)
-              .map(({ type, side, name, options, ...rest }) => (
-                <div
-                  className={cx({ 'float-left': side === 'left', 'float-right': side === 'right' })}
-                  key={`${index} - ${name}`}
-                >
-                  {type === 'tabs' && (
-                    <Tabs
-                      selectedValue={state[name]}
-                      onChange={(selectedValue) => handleControlChange(name, selectedValue)}
-                      options={options}
-                      {...rest}
-                    />
-                  )}
-                  {type === 'select' && (
-                    <Select
-                      id={`select-section-${index}-${name}`}
-                      theme="light"
-                      size="base"
-                      selected={state[name]}
-                      initialSelected={state[name] || options[0].value}
-                      onChange={(selectedValue) => handleControlChange(name, selectedValue as string)}
-                      options={options}
-                      {...rest}
-                    />
-                  )}
-                </div>
-              ))}
-          </div>
-        )}
+        <Controls
+          className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+          controls={controls}
+          state={state}
+          onControlChange={handleControlChange}
+        />
         <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched && data && data.length > 0 && <Widget data={data} {...widgetConfig} />}
+          {isFetched &&
+            data &&
+            data.length > 0 &&
+            (WidgetWrapper ? (
+              <WidgetWrapper>
+                <Widget data={data} {...widgetConfig} />
+              </WidgetWrapper>
+            ) : (
+              <Widget data={data} {...widgetConfig} />
+            ))}
           {isFetched && data && data.length === 0 && <span>No data available</span>}
         </div>
       </div>
