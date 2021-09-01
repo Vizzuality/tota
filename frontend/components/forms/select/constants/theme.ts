@@ -63,6 +63,6 @@ export default {
   },
   sizes: {
     base: 'pl-4 pr-4 py-6 text-lg',
-    s: 'pl-4 pr-4 py-1.5 text-sm',
+    s: 'pl-4 pr-4 py-4 text-base',
   },
 };

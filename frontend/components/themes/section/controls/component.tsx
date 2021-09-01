@@ -47,7 +47,7 @@ const Controls: FC<ControlsProps> = ({ controls, state, className, onControlChan
               <Select
                 id={`select-section-${componentId}`}
                 theme="light"
-                size="base"
+                size="s"
                 selected={state[name]}
                 initialSelected={state[name] || options[0].value}
                 onChange={(selectedValue) => onControlChange(name, selectedValue as string)}
