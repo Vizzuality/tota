@@ -30,7 +30,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
   };
 
   return (
-    <div className="w-full h-18 z-30 bg-blue9">
+    <div className="hidden lg:block w-full h-18 z-30 bg-blue9">
       <div className="container m-auto flex items-center text-white">
         <div className="w-72 -ml-4">
           <Select

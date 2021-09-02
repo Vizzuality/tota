@@ -46,8 +46,8 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   } = useMemo(() => section.widget.fetchProps(rawData, wholeState), [rawData, wholeState]);
 
   return (
-    <div className="mb-10 p-5 bg-white flex">
-      <div className="w-2/6 pr-5 border-r-2">
+    <div className="p-5 bg-white flex flex-col lg:flex-row">
+      <div className="lg:w-2/6 lg:pr-5 lg:border-r-2">
         <div className="relative">
           <div
             className="absolute rounded-full bg-color2 text-blue9 text-2xl h-50 w-50 flex items-center justify-center"
@@ -61,10 +61,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
           </div>
         </div>
 
-        <p className="mt-10 leading-8">{section.description}</p>
+        <p className="mt-4 lg:mt-10 leading-8">{section.description}</p>
       </div>
 
-      <div className="w-4/6 pl-5 flex flex-col relative">
+      <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
         <Controls
           className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
           controls={controls}

@@ -1,15 +1,11 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 
-import themes from 'constants/themes';
+import { useRouterSelectedTheme } from 'hooks/themes';
 
 export interface ThemeHeaderProps {}
 
 const ThemeHeader: React.FC<ThemeHeaderProps> = () => {
-  const router = useRouter();
-  const { theme: themeSlug } = router.query;
-
-  const theme = themes.find((t) => t.slug === themeSlug);
+  const theme = useRouterSelectedTheme();
 
   return (
     <div className="mb-10">

@@ -1,22 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import Layout from 'layout';
 
-import ThemeSection from 'components/themes/section';
 import ThemeMainHeader from 'components/themes/main-header';
 import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
+import ThemeSections from 'components/themes/sections';
 import ThemesNavbar from 'components/themes/navbar';
 
-import themes from 'constants/themes';
+import { useRouterSelectedTheme } from 'hooks/themes';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
-  const router = useRouter();
-  const { theme: themeSlug } = router.query;
-
-  const theme = themes.find((t) => t.slug === themeSlug);
+  const theme = useRouterSelectedTheme();
 
   return (
     <Layout className="w-full">
@@ -30,9 +26,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
           <ThemesNavbar />
           <div className="container mx-auto">
             <ThemeHeader />
-            {theme?.sections?.map((section, index) => (
-              <ThemeSection key={`${theme.slug} - ${section.title}`} index={index + 1} section={section} />
-            ))}
+            <ThemeSections />
             <ThemeMobileFooter />
           </div>
         </>

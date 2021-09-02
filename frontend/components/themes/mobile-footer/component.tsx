@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import cx from 'classnames';
+
+import { useRouterSelectedTheme } from 'hooks/themes';
 
 import Drawer from 'components/drawer';
 import Button from 'components/button';
@@ -15,11 +16,7 @@ export interface ThemeMobileFooterProps {}
 
 const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
   const [isOpen, setOpen] = useState(false);
-
-  const router = useRouter();
-  const { theme: themeSlug } = router.query;
-
-  const theme = themes.find((t) => t.slug === themeSlug);
+  const theme = useRouterSelectedTheme();
 
   return (
     <div className="lg:hidden">

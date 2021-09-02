@@ -7,7 +7,8 @@ import Hero from 'components/hero';
 import Select from 'components/forms/select';
 import StatisticBlock from './statistic-block';
 
-import { useRegions } from 'hooks/regions';
+import { useRegions, useRouterSelectedRegion } from 'hooks/regions';
+import { useRouterSelectedTheme } from 'hooks/themes';
 
 import type { SelectOptionProps } from 'components/forms/select/types';
 
@@ -34,13 +35,14 @@ const statistics = [
 
 const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const router = useRouter();
-  const { theme: themeSlug, region } = router.query;
+  const theme = useRouterSelectedTheme();
+  const selectedRegion = useRouterSelectedRegion();
   const { regions } = useRegions();
   const handleRegionChange = (value: string) => {
-    if (themeSlug === 'general-insights') {
+    if (theme.slug === 'general-insights') {
       router.push(`/themes/${value}/tourism-industry-arrivals`, undefined, { scroll: false });
     } else {
-      router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false });
+      router.push(`/themes/${value}/${theme.slug}`, undefined, { scroll: false });
     }
   };
 
@@ -54,7 +56,7 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
             size="base"
             maxHeight={400}
             options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
-            selected={region}
+            selected={kebabCase(selectedRegion.slug)}
             onChange={handleRegionChange}
           />
         </div>
