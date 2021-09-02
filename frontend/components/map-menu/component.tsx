@@ -30,15 +30,11 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
 
   return (
     <aside
-      className={cx(
-        'fixed w-map-sidebar h-screen-minus-header mt-20 top-0 left-0 z-10 transform translate-x-0',
-        'transition-transform duration-200 ease-in-out',
-        {
-          'translate-x-map-sidebar': collapsed,
-        },
-      )}
+      className={cx('w-map-sidebar h-full z-10', 'transition-all duration-200 ease-in-out', {
+        '-ml-map-sidebar': collapsed,
+      })}
     >
-      <section className="bg-gray-100 w-full h-full">
+      <section className="bg-gray-100 w-full h-full flex flex-col">
         <div suppressHydrationWarning={true}>
           {!isServer && (
             <Select

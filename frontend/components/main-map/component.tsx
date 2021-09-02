@@ -138,7 +138,6 @@ export const MainMap: FC<MapProps> = ({
           }}
           onZoomChange={handleZoomChange}
         />
-        <FitBoundsControl bounds={bounds} onFitBoundsChange={handleFitBoundsChange} />
       </Controls>
       <Controls placement="bottom-right">
         <Legend maxHeight={400} maxWidth={500}>

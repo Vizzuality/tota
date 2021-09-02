@@ -34,8 +34,9 @@ module.exports = {
       width: {
         'map-sidebar': '300px',
       },
-      translate: {
-        'map-sidebar': '-300px',
+      margin: {
+        'map-sidebar': '300px',
+        '-map-sidebar': '-300px',
       },
       transitionProperty: {
         width: 'width',
