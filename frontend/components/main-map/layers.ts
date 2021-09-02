@@ -123,6 +123,65 @@ const layers: Layer[] = [
       ],
     },
   },
+  {
+    id: 'traffic',
+    name: 'Traffic',
+    category: CATEGORY.INFRASTRUCTURES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://mapbox.mapbox-traffic-v1',
+    },
+    render: {
+      layers: [
+        {
+          id: 'traffic',
+          source: 'mapbox-traffic',
+          'source-layer': 'traffic',
+          type: 'line',
+          paint: {
+            'line-width': 1.5,
+            'line-color': [
+              'case',
+              ['==', 'low', ['get', 'congestion']],
+              '#aab7ef',
+              ['==', 'moderate', ['get', 'congestion']],
+              '#4264fb',
+              ['==', 'heavy', ['get', 'congestion']],
+              '#ee4e8b',
+              ['==', 'severe', ['get', 'congestion']],
+              '#b43b71',
+              '#000000',
+            ],
+          },
+        },
+      ],
+    },
+    legendConfig: {
+      type: 'choropleth',
+      items: [
+        {
+          name: 'low',
+          color: '#aab7ef',
+          id: 0,
+        },
+        {
+          name: 'moderate',
+          color: '#4264fb',
+          id: 1,
+        },
+        {
+          name: 'heavy',
+          color: '#ee4e8b',
+          id: 2,
+        },
+        {
+          name: 'severe',
+          color: '#b43b71',
+          id: 3,
+        },
+      ],
+    },
+  },
 ];
 
 export default layers;
