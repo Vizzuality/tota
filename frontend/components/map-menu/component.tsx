@@ -72,18 +72,20 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
               {/** @todo: add useIndicators(<SelectedRegion>) */}
               {map(layersByCategory, (layers, category) => (
                 <Expando title={category}>
-                  {layers.map((layer) => (
-                    <div
-                      key={layer.id}
-                      className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
-                    >
-                      <Switch
-                        checked={activeLayers.includes(layer.id)}
-                        onChange={(checked) => toggleActiveLayer(layer.id, checked)}
-                      />
-                      {layer.name}
-                    </div>
-                  ))}
+                  <div className="flex flex-col gap-2">
+                    {layers.map((layer) => (
+                      <div
+                        key={layer.id}
+                        className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
+                      >
+                        <Switch
+                          checked={activeLayers.includes(layer.id)}
+                          onChange={(checked) => toggleActiveLayer(layer.id, checked)}
+                        />
+                        {layer.name}
+                      </div>
+                    ))}
+                  </div>
                 </Expando>
               ))}
             </div>
