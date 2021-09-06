@@ -93,6 +93,52 @@ const layers: Layer[] = [
     },
   },
   {
+    id: 'accommodations',
+    name: 'Hello BC Accommodations Listing',
+    category: CATEGORY.TOURISM_BUSINESSES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://totadata.4y0iosdv',
+    },
+    render: {
+      layers: [
+        {
+          'source-layer': 'accommodations',
+          type: 'circle',
+          paint: {
+            'circle-color': '#34444c',
+            'circle-radius': 4,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 3,
+          },
+        },
+      ],
+    },
+  },
+  {
+    id: 'visitor_centres',
+    name: 'BC Tourism Centers',
+    category: CATEGORY.TOURISM_BUSINESSES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://totadata.a7fetiq7',
+    },
+    render: {
+      layers: [
+        {
+          'source-layer': 'visitor_centres',
+          type: 'circle',
+          paint: {
+            'circle-color': '#34444c',
+            'circle-radius': 4,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 3,
+          },
+        },
+      ],
+    },
+  },
+  {
     id: 'first_nations_business',
     name: 'BC Indigenous Business Listings',
     category: CATEGORY.TOURISM_BUSINESSES,
@@ -162,6 +208,29 @@ const layers: Layer[] = [
           paint: {
             'fill-color': '#aab7ef',
             'fill-opacity': 0.5,
+          },
+        },
+      ],
+    },
+  },
+  {
+    id: 'stops',
+    name: 'Stops of Interest',
+    category: CATEGORY.INFRASTRUCTURES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://totadata.00a7vg81',
+    },
+    render: {
+      layers: [
+        {
+          'source-layer': 'stops',
+          type: 'circle',
+          paint: {
+            'circle-color': '#34444c',
+            'circle-radius': 4,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 3,
           },
         },
       ],
