@@ -166,6 +166,31 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           ],
         },
       },
+      totaMembers,
+      {
+        id: 'visitor_centres',
+        name: 'BC Tourism Centers',
+        category: CATEGORY.TOURISM_BUSINESSES,
+        type: 'vector',
+        source: {
+          url: 'mapbox://totadata.a7fetiq7',
+        },
+        render: {
+          layers: [
+            {
+              'source-layer': 'visitor_centres',
+              type: 'circle',
+              paint: {
+                'circle-color': '#34444c',
+                'circle-radius': 4,
+                'circle-stroke-color': '#fff',
+                'circle-stroke-width': 3,
+              },
+              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+            },
+          ],
+        },
+      },
       {
         id: 'ski_resorts',
         name: 'BC Ski resorts',
@@ -191,7 +216,30 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           ],
         },
       },
-      totaMembers,
+      {
+        id: 'accommodations',
+        name: 'Hello BC Accommodations Listing',
+        category: CATEGORY.TOURISM_BUSINESSES,
+        type: 'vector',
+        source: {
+          url: 'mapbox://totadata.4y0iosdv',
+        },
+        render: {
+          layers: [
+            {
+              'source-layer': 'accommodations',
+              type: 'circle',
+              paint: {
+                'circle-color': '#34444c',
+                'circle-radius': 4,
+                'circle-stroke-color': '#fff',
+                'circle-stroke-width': 3,
+              },
+              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+            },
+          ],
+        },
+      },
       {
         id: 'campgrounds',
         name: 'Campsites',
@@ -226,41 +274,17 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         },
       },
       {
-        id: 'accommodations',
-        name: 'Hello BC Accommodations Listing',
+        id: 'first_nations_communities',
+        name: 'First Nation Community locations',
         category: CATEGORY.TOURISM_BUSINESSES,
         type: 'vector',
         source: {
-          url: 'mapbox://totadata.4y0iosdv',
+          url: 'mapbox://totadata.7q627o47',
         },
         render: {
           layers: [
             {
-              'source-layer': 'accommodations',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-          ],
-        },
-      },
-      {
-        id: 'visitor_centres',
-        name: 'BC Tourism Centers',
-        category: CATEGORY.TOURISM_BUSINESSES,
-        type: 'vector',
-        source: {
-          url: 'mapbox://totadata.a7fetiq7',
-        },
-        render: {
-          layers: [
-            {
-              'source-layer': 'visitor_centres',
+              'source-layer': 'first_nations_communities',
               type: 'circle',
               paint: {
                 'circle-color': '#34444c',
@@ -285,30 +309,6 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           layers: [
             {
               'source-layer': 'first_nations_business',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-          ],
-        },
-      },
-      {
-        id: 'first_nations_communities',
-        name: 'First Nation Community locations',
-        category: CATEGORY.TOURISM_BUSINESSES,
-        type: 'vector',
-        source: {
-          url: 'mapbox://totadata.7q627o47',
-        },
-        render: {
-          layers: [
-            {
-              'source-layer': 'first_nations_communities',
               type: 'circle',
               paint: {
                 'circle-color': '#34444c',
@@ -477,7 +477,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'airports',
-        name: 'Airports',
+        name: 'BC Airports',
         category: CATEGORY.INFRASTRUCTURES,
         version: '0.0.1',
         type: 'vector',
