@@ -11,11 +11,10 @@ import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
 import LegendTypeChoropleth from 'components/map/legend/types/choropleth';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
-import FitBoundsControl from 'components/map/controls/fit-bounds';
 
 import { REGION_BBOX } from 'constants/regions';
-import { useMap, useTourismRegionsLayer } from 'hooks/map';
-import LAYERS from 'components/main-map/layers';
+import { useMap } from 'hooks/map';
+import { useLayers } from 'hooks/layers';
 
 const cartoProvider = new CartoProvider();
 
@@ -41,8 +40,7 @@ export const MainMap: FC<MapProps> = ({
   });
   const { activeLayers, layerSettings, changeActiveLayers, changeLayerSettings, selectedRegion } = useMap();
   const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
-  const tourismRegionLayer = useTourismRegionsLayer(showSingleRegionSlug);
-  const layers = [...LAYERS, tourismRegionLayer]
+  const layers = useLayers(showSingleRegionSlug)
     .filter((x) => activeLayers.includes(x.id))
     .map((l) => ({
       ...l,
@@ -72,10 +70,6 @@ export const MainMap: FC<MapProps> = ({
     },
     [viewport],
   );
-
-  const handleFitBoundsChange = useCallback((b) => {
-    setBounds(b);
-  }, []);
 
   const handleLegendItemRemove = (layerId) => {
     changeActiveLayers(activeLayers.filter((x) => x !== layerId));

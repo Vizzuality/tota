@@ -10,8 +10,8 @@ import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
 import type { SelectOptionProps } from 'components/forms/select/types';
 
 import { useRegions } from 'hooks/regions';
+import { useLayers, CATEGORY } from 'hooks/layers';
 import { useMap } from 'hooks/map';
-import LAYERS, { CATEGORY } from 'components/main-map/layers';
 
 import Icon from 'components/icon';
 import Select from 'components/forms/select';
@@ -28,7 +28,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const { regions } = useRegions();
   const { activeLayers, changeActiveLayers, selectedRegion, selectRegion } = useMap();
-  const layers = LAYERS.filter((x) => x.id !== 'tourism_regions');
+  const layers = useLayers(selectedRegion.slug).filter((x) => x.id !== 'tourism_regions');
   const layersByCategory = groupBy(
     sortBy(layers, (x) => Object.values(CATEGORY).indexOf(x.category)),
     'category',
