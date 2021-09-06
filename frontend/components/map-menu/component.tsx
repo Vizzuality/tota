@@ -56,9 +56,10 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
             />
           )}
         </div>
-        <div className="h-full relative border-r border-gray1">
+        <div className="relative">
           <button
             className="cursor-pointer absolute flex items-center justify-center -right-10 top-0 w-10 h-10 bg-gray2 border-r border-b border-t border-gray1"
+            style={{ transform: 'translate(-1px, -1px)' }}
             onClick={() => setCollapsed(!collapsed)}
           >
             <Icon
@@ -70,7 +71,8 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
               })}
             />
           </button>
-
+        </div>
+        <div className="flex-1 border-r border-gray1 overflow-y-auto">
           {selectedRegion && (
             <div className="flex flex-col p-3 gap-3">
               {/** @todo: add useIndicators(<SelectedRegion>) */}
