@@ -24,7 +24,7 @@ export const Legend: FC<LegendProps> = ({
   maxWidth,
   onChangeOrder,
 }: LegendProps) => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   const id = useId();
 

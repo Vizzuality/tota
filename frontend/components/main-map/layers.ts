@@ -1,9 +1,17 @@
 import { Layer } from '@vizzuality/layer-manager-react';
 
+const CATEGORY = {
+  INFRASTRUCTURES: 'Infrastructures',
+  ADMIN_BOUNDARIES: 'Admin boundaries',
+  TOURISM_BUSINESSES: 'Tourism businesses',
+  ENVIRONMENT: 'Environment',
+};
+
 const layers: Layer[] = [
   {
     id: 'ski_resorts',
     name: 'Ski Resorts',
+    category: CATEGORY.INFRASTRUCTURES,
     version: '0.0.1',
     type: 'vector',
     source: {
@@ -34,6 +42,7 @@ const layers: Layer[] = [
   {
     id: 'campgrounds',
     name: 'Campgrounds',
+    category: CATEGORY.TOURISM_BUSINESSES,
     version: '0.0.1',
     type: 'vector',
     source: {
@@ -64,6 +73,7 @@ const layers: Layer[] = [
   {
     id: 'airports',
     name: 'Airports',
+    category: CATEGORY.INFRASTRUCTURES,
     version: '0.0.1',
     type: 'vector',
     source: {
@@ -94,6 +104,7 @@ const layers: Layer[] = [
   {
     id: 'trails',
     name: 'Trails',
+    category: CATEGORY.INFRASTRUCTURES,
     version: '0.0.1',
     type: 'vector',
     source: {
