@@ -9,7 +9,7 @@ import type { MapWidgetProps } from './types';
 import Map from 'components/map';
 
 import { REGION_BBOX } from 'constants/regions';
-import { useTourismRegionsLayer } from 'hooks/map';
+import { useTourismRegionsLayer } from 'hooks/layers';
 
 const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLayers = [] }: MapWidgetProps) => {
   const [map, setMap] = useState(null);
