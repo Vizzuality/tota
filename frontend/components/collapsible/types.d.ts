@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface ExpandoProps {
+export interface CollapsibleProps {
   title: string;
   children: ReactNode;
 }

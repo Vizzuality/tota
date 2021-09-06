@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react';
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import type { ExpandoProps } from './types';
+import type { CollapsibleProps } from './types';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
 import Icon from 'components/icon';
 
-const Expando: FC<ExpandoProps> = ({ title, children }: ExpandoProps) => {
+const Collapsible: FC<CollapsibleProps> = ({ title, children }: CollapsibleProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -45,4 +45,4 @@ const Expando: FC<ExpandoProps> = ({ title, children }: ExpandoProps) => {
   );
 };
 
-export default Expando;
+export default Collapsible;

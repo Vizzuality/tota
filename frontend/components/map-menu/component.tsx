@@ -15,7 +15,7 @@ import LAYERS from 'components/main-map/layers';
 import Icon from 'components/icon';
 import Select from 'components/forms/select';
 import Switch from 'components/switch';
-import Expando from 'components/expando';
+import Collapsible from 'components/collapsible';
 
 export interface MapMenuProps {
   children?: React.ReactNode;
@@ -71,7 +71,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
             <div className="flex flex-col p-3 gap-3">
               {/** @todo: add useIndicators(<SelectedRegion>) */}
               {map(layersByCategory, (layers, category) => (
-                <Expando title={category}>
+                <Collapsible title={category}>
                   <div className="flex flex-col gap-2">
                     {layers.map((layer) => (
                       <div
@@ -86,7 +86,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
                       </div>
                     ))}
                   </div>
-                </Expando>
+                </Collapsible>
               ))}
             </div>
           )}
