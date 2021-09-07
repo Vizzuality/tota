@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cx from 'classnames';
@@ -14,6 +14,7 @@ import { useRegions } from 'hooks/regions';
 export interface ThemeNavbarProps {}
 
 const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
+  const [fixed, setFixed] = useState(false);
   const router = useRouter();
   const { theme: themeSlug, region } = router.query;
   const { regions } = useRegions();
@@ -29,34 +30,52 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
     }
   };
 
+  useEffect(() => {
+    const onScroll = () => {
+      const currentPosition = window.pageYOffset;
+      if (currentPosition > 600) {
+        setFixed(true);
+      } else {
+        setFixed(false);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <div className="hidden lg:block w-full h-18 z-30 bg-blue9">
-      <div className="container m-auto flex items-center text-white">
-        <div className="w-72 -ml-4">
-          <Select
-            id="map-select-region"
-            theme="dark"
-            size="base"
-            maxHeight={400}
-            options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
-            selected={region}
-            onChange={handleRegionChange}
-          />
+    <>
+      <div className={cx('hidden lg:block w-full h-18 z-30 bg-blue9', { 'fixed top-24': fixed })}>
+        <div className="container m-auto flex items-center text-white">
+          <div className="w-72 -ml-4">
+            <Select
+              id="map-select-region"
+              theme="dark"
+              size="base"
+              maxHeight={400}
+              options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
+              selected={region}
+              onChange={handleRegionChange}
+            />
+          </div>
+          <div className="w-0 border-r-2 h-16"></div>
+          {filteredThemes.map((t) => (
+            <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
+              <a
+                className={cx('px-4 py-2 text-sm h-16 flex-1 flex items-center justify-center text-center', {
+                  'font-bold bg-blue10': t.slug === themeSlug,
+                })}
+              >
+                {t.title}
+              </a>
+            </Link>
+          ))}
         </div>
-        <div className="w-0 border-r-2 h-16"></div>
-        {filteredThemes.map((t) => (
-          <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
-            <a
-              className={cx('px-4 py-2 text-sm h-16 flex-1 flex items-center justify-center text-center', {
-                'font-bold bg-blue10': t.slug === themeSlug,
-              })}
-            >
-              {t.title}
-            </a>
-          </Link>
-        ))}
       </div>
-    </div>
+      {/* Dummy element to avoid jumps */}
+      {fixed && <div className="hidden lg:block w-full h-20" />}
+    </>
   );
 };
 
