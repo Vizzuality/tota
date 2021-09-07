@@ -1,5 +1,5 @@
 class IndicatorValueBlueprint < Blueprinter::Base
-  fields :date, :category_1, :category_2, :region, :value
+  fields :date, :category_1, :category_2, :value
 
   # TOOD: fix this to be imported in better format, ensure that in importer
   field :date do |val|
@@ -11,5 +11,9 @@ class IndicatorValueBlueprint < Blueprinter::Base
     else
       val.date
     end
+  end
+
+  field :region do |val|
+    val.region&.name
   end
 end

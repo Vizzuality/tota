@@ -32,7 +32,7 @@ class API {
     const category_1Array = wrap(category_1);
     const category_2Array = wrap(category_2);
     if (slugArray.length > 0) params.append('filter[slug]', slugArray.join(','));
-    if (regionArray.length > 0) params.append('filter[indicator_values.region]', regionArray.join(','));
+    if (regionArray.length > 0) params.append('filter[region.name]', regionArray.join(','));
     if (category_1Array.length > 0) params.append('filter[indicator_values.category_1]', category_1Array.join(','));
     if (category_2Array.length > 0) params.append('filter[indicator_values.category_2]', category_2Array.join(','));
     const queryString = Array.from(params).length > 0 ? `?${params.toString()}` : '';

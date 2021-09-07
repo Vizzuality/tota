@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 describe CSVImport::IndicatorValues do
+  before_all do
+    @bc = create(:region, name: 'British Columbia')
+    @to = create(:region, name: 'Thompson Okanagan')
+  end
+
   describe 'errors' do
     it 'should return error if required column not provided' do
       csv_content = <<-CSV
@@ -53,18 +58,18 @@ describe CSVImport::IndicatorValues do
       values = Indicator
         .find_by(slug: 'visits_by_prizm_monthly')
         .indicator_values
-        .map { |v| v.slice(:date, :region, :category_1, :category_2, :value).symbolize_keys }
+        .map { |v| v.slice(:date, :region_id, :category_1, :category_2, :value).symbolize_keys }
       expect(values).to eq(
         [{
           date: '2019-3',
-          region: 'Thompson Okanagan',
+          region_id: @to.id,
           category_1: 'British Columbia',
           category_2: 'Country & Western',
           value: 8.031
         },
          {
            date: '2019-3',
-           region: 'Thompson Okanagan',
+           region_id: @to.id,
            category_1: 'British Columbia',
            category_2: 'Suburban Sports',
            value: 7.33
