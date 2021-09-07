@@ -1,6 +1,8 @@
 module CSVImport
   class IndicatorValues < BaseImporter
     def import
+      prepare_cache
+
       values = []
 
       import_each_csv_row(csv) do |row|
@@ -11,7 +13,7 @@ module CSVImport
         next if row[:region] == 'not defined'
 
         value.indicator = Indicator.find_or_create_by(slug: row[:indicator_code])
-        value.region = row[:region]
+        value.region = find_region(row[:region])
         value.date = row[:date]
         value.category_1 = row[:category_1]
         value.category_2 = row[:category_2]
@@ -36,6 +38,16 @@ module CSVImport
         :category_2,
         :value
       ]
+    end
+
+    def prepare_cache
+      @regions = Region.all.map { |r| [r.slug, r] }.to_h
+    end
+
+    def find_region(region_name)
+      return if region_name.blank?
+
+      @regions[Slug.create(region_name)] or raise ActiveRecord::NotFound, "Cannot find region with name #{region_name}"
     end
   end
 end

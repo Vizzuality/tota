@@ -12,28 +12,29 @@ RSpec.describe Indicators::AirportTopAverageConnectionsPerWeek do
 
     describe 'when airport_arrivals_by_origin_weekly does exists' do
       before :each do
+        r1 = create(:region, name: 'Region 1')
         Indicator.create(
           slug: 'airport_arrivals_by_origin_weekly',
           indicator_values: [
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'JFK', date: '2020-01', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'JFK', date: '2020-02', value: 20),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'JFK', date: '2020-03', value: 30),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'JFK', date: '2020-04', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'JFK', date: '2020-05', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'JFK', date: '2020-06', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAB', category_2: 'JFK', date: '2021-01', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAB', category_2: 'JFK', date: '2021-02', value: 20),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'JFK', date: '2021-03', value: 50),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'LAX', date: '2020-01', value: 60),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAB', category_2: 'LAX', date: '2020-02', value: 20),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'LAX', date: '2020-03', value: 50),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAB', category_2: 'LAX', date: '2020-03', value: 50),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'LAX', date: '2020-04', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'LAX', date: '2020-05', value: 20),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'LAX', date: '2020-06', value: 40),
-            IndicatorValue.new(region: 'Region 1', category_1: 'AAA', category_2: 'KTW', date: '2021-01', value: 10),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'KTW', date: '2021-02', value: 20),
-            IndicatorValue.new(region: 'Region 1', category_1: 'KLM', category_2: 'KTW', date: '2021-03', value: 50)
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'JFK', date: '2020-01', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'JFK', date: '2020-02', value: 20),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'JFK', date: '2020-03', value: 30),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'JFK', date: '2020-04', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'JFK', date: '2020-05', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'JFK', date: '2020-06', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'AAB', category_2: 'JFK', date: '2021-01', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'AAB', category_2: 'JFK', date: '2021-02', value: 20),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'JFK', date: '2021-03', value: 50),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'LAX', date: '2020-01', value: 60),
+            IndicatorValue.new(region: r1, category_1: 'AAB', category_2: 'LAX', date: '2020-02', value: 20),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'LAX', date: '2020-03', value: 50),
+            IndicatorValue.new(region: r1, category_1: 'AAB', category_2: 'LAX', date: '2020-03', value: 50),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'LAX', date: '2020-04', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'LAX', date: '2020-05', value: 20),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'LAX', date: '2020-06', value: 40),
+            IndicatorValue.new(region: r1, category_1: 'AAA', category_2: 'KTW', date: '2021-01', value: 10),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'KTW', date: '2021-02', value: 20),
+            IndicatorValue.new(region: r1, category_1: 'KLM', category_2: 'KTW', date: '2021-03', value: 50)
           ]
         )
       end
@@ -42,7 +43,7 @@ RSpec.describe Indicators::AirportTopAverageConnectionsPerWeek do
 
       it 'returns correct values' do
         expect { subject }.to change { IndicatorValue.count }
-        values = Indicator.find_by(slug: 'airport_top_average_connections_per_week').indicator_values.where(region: 'Region 1')
+        values = Indicator.find_by(slug: 'airport_top_average_connections_per_week').indicator_values.includes(:region).where(region: {name: 'Region 1'})
         values_json = values.map { |v| v.slice(:date, :category_1, :category_2, :value).symbolize_keys }
 
         expect(values_json).to contain_exactly(

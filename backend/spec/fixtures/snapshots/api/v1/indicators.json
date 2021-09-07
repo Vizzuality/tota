@@ -4,10 +4,10 @@
       "slug": "establishments_by_type",
       "indicator_values": [
         {
-          "category_1": "Activity / Attraction",
+          "category_1": "Accommodation",
           "category_2": "all",
           "date": null,
-          "region": "region 1",
+          "region": "region 2",
           "value": 2.0
         },
         {
@@ -18,10 +18,17 @@
           "value": 1.0
         },
         {
-          "category_1": "Accommodation",
+          "category_1": "Activity / Attraction",
           "category_2": "all",
           "date": null,
           "region": "region 2",
+          "value": 1.0
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "date": null,
+          "region": "region 1",
           "value": 2.0
         },
         {
@@ -33,23 +40,9 @@
         },
         {
           "category_1": "Activity / Attraction",
-          "category_2": "all",
-          "date": null,
-          "region": "region 2",
-          "value": 1.0
-        },
-        {
-          "category_1": "Activity / Attraction",
           "category_2": "biosphere",
           "date": null,
           "region": "region 1",
-          "value": 1.0
-        },
-        {
-          "category_1": "Accommodation",
-          "category_2": "biosphere",
-          "date": null,
-          "region": "region 2",
           "value": 1.0
         },
         {
@@ -58,6 +51,13 @@
           "date": null,
           "region": "region 1",
           "value": 2.0
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0
         },
         {
           "category_1": "Activity / Attraction",
@@ -94,28 +94,28 @@
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-01",
-          "region": "TO",
+          "region": "region 1",
           "value": 33434.0
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-01",
-          "region": "TO",
+          "region": "region 1",
           "value": 33333.0
         },
         {
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-02",
-          "region": "TO",
+          "region": "region 1",
           "value": 2222.0
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-02",
-          "region": "TO",
+          "region": "region 1",
           "value": 2222.0
         }
       ]
@@ -127,28 +127,28 @@
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-01",
-          "region": "TO",
+          "region": "region 1",
           "value": 11111.0
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-01",
-          "region": "TO",
+          "region": "region 1",
           "value": 33333.0
         },
         {
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-02",
-          "region": "TO",
+          "region": "region 1",
           "value": 2222.0
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-02",
-          "region": "TO",
+          "region": "region 1",
           "value": 2222.0
         }
       ]

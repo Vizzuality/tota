@@ -11,10 +11,11 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
     end
 
     describe 'when development funds do exist' do
+      let(:province) { create(:region, name: 'Province', region_type: 'province') }
+      let(:r1) { create(:region, name: 'Region 1', parent: province) }
+      let(:r2) { create(:region, name: 'Region 2', parent: province) }
+
       before :each do
-        province = create(:region, name: 'Province', region_type: 'province')
-        r1 = create(:region, name: 'Region 1', parent: province)
-        r2 = create(:region, name: 'Region 2', parent: province)
         create(:development_fund, region: r1, key_funding_source: 'Source 1', funding_call_year: 2019)
         create(:development_fund, region: r1, key_funding_source: 'Source 1', funding_call_year: 2019)
         create(:development_fund, region: r1, key_funding_source: 'Source 2', funding_call_year: 2019)
@@ -29,90 +30,90 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
       it 'returns correct values' do
         expect { subject }.to change { IndicatorValue.count }
         values = Indicator.find_by(slug: 'development_funds_by_source').indicator_values
-        values_json = values.map { |v| v.slice(:date, :category_1, :value, :region).symbolize_keys }
+        values_json = values.map { |v| v.slice(:date, :category_1, :value, :region_id).symbolize_keys }
 
         expect(values_json).to contain_exactly(
           {
             date: '2019',
-            region: 'Region 1',
+            region_id: r1.id,
             category_1: 'Source 1',
             value: 2
           },
           {
             date: '2019',
-            region: 'Region 1',
+            region_id: r1.id,
             category_1: 'Source 2',
             value: 2
           },
           {
             date: '2019',
-            region: 'Region 2',
+            region_id: r2.id,
             category_1: 'Source 1',
             value: 1
           },
           {
             date: '2019',
-            region: 'Region 2',
+            region_id: r2.id,
             category_1: 'Source 2',
             value: 1
           },
           {
             date: '2019',
-            region: 'Province',
+            region_id: province.id,
             category_1: 'Source 1',
             value: 3
           },
           {
             date: '2019',
-            region: 'Province',
+            region_id: province.id,
             category_1: 'Source 2',
             value: 3
           },
           {
             date: '2020',
-            region: 'Region 2',
+            region_id: r2.id,
             category_1: 'Source 2',
             value: 1
           },
           {
             date: '2020',
-            region: 'Province',
+            region_id: province.id,
             category_1: 'Source 2',
             value: 1
           },
           {
             date: nil,
-            region: 'Region 1',
+            region_id: r1.id,
             category_1: 'Source 1',
             value: 2
           },
           {
             date: nil,
-            region: 'Region 1',
+            region_id: r1.id,
             category_1: 'Source 2',
             value: 2
           },
           {
             date: nil,
-            region: 'Region 2',
+            region_id: r2.id,
             category_1: 'Source 1',
             value: 1
           },
           {
             date: nil,
-            region: 'Region 2',
+            region_id: r2.id,
             category_1: 'Source 2',
             value: 2
           },
           {
             date: nil,
-            region: 'Province',
+            region_id: province.id,
             category_1: 'Source 1',
             value: 3
           },
           {
             date: nil,
-            region: 'Province',
+            region_id: province.id,
             category_1: 'Source 2',
             value: 4
           }

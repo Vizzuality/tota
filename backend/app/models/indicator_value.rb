@@ -14,6 +14,7 @@
 #
 class IndicatorValue < ApplicationRecord
   belongs_to :indicator
+  belongs_to :region, optional: true
 
   validates_presence_of :value
 

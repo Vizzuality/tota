@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_131555) do
+ActiveRecord::Schema.define(version: 2021_09_06_160355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,13 +51,14 @@ ActiveRecord::Schema.define(version: 2021_08_18_131555) do
   create_table "indicator_values", force: :cascade do |t|
     t.bigint "indicator_id", null: false
     t.string "date"
-    t.string "region"
     t.string "category_1"
     t.string "category_2"
     t.float "value", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "region_id"
     t.index ["indicator_id"], name: "index_indicator_values_on_indicator_id"
+    t.index ["region_id"], name: "index_indicator_values_on_region_id"
   end
 
   create_table "indicators", force: :cascade do |t|
@@ -99,6 +100,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_131555) do
   add_foreign_key "business_types", "business_types", column: "parent_id"
   add_foreign_key "development_funds", "regions", on_delete: :cascade
   add_foreign_key "indicator_values", "indicators"
+  add_foreign_key "indicator_values", "regions", on_delete: :cascade
   add_foreign_key "organizations", "business_types"
   add_foreign_key "organizations", "regions", on_delete: :cascade
   add_foreign_key "regions", "regions", column: "parent_id", on_delete: :cascade

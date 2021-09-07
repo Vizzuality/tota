@@ -32,7 +32,7 @@ module Indicators
           indicator: indicator,
           date: year,
           category_1: source,
-          region: Region.find(region_id).name, # TODO: change this
+          region_id: region_id,
           value: value
         )
       end
@@ -47,7 +47,7 @@ module Indicators
         IndicatorValue.new(
           indicator: indicator,
           category_1: source,
-          region: Region.find(region_id).name, # TODO: change this
+          region_id: region_id,
           value: value
         )
       end
@@ -65,7 +65,7 @@ module Indicators
             indicator: indicator,
             date: year,
             category_1: source,
-            region: province.name,
+            region_id: province.id,
             value: value
           )
         end
@@ -82,7 +82,7 @@ module Indicators
           IndicatorValue.new(
             indicator: indicator,
             category_1: source,
-            region: province.name,
+            region_id: province.id,
             value: value
           )
         end
