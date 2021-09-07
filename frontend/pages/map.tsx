@@ -7,12 +7,12 @@ import Layout from 'layout';
 
 const Map: React.FC<void> = (): JSX.Element => {
   return (
-    <Layout navbarTheme="gray" navbarPosition="fixed" className="w-full" hideFooter>
+    <Layout navbarTheme="gray" navbarPosition="relative" className="w-full" hideFooter>
       <Head>
         <title>Map</title>
       </Head>
       <MapProvider>
-        <div className="w-full flex h-screen">
+        <div className="w-full flex h-screen-minus-header">
           <MapMenu />
           <MapComponent mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN} />
         </div>

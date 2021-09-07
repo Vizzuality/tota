@@ -1,5 +1,5 @@
 export type NavbarTheme = 'transparent' | 'gray';
-export type NavbarPosition = 'fixed' | 'absolute';
+export type NavbarPosition = 'fixed' | 'relative';
 
 export interface NavbarProps {
   theme: NavbarTheme;

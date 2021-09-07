@@ -28,7 +28,7 @@ const THEMES = {
   },
 };
 
-const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position = 'absolute' }: NavbarProps) => {
+const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position = 'fixed' }: NavbarProps) => {
   const [isOpen, setOpen] = useState(false);
   const [theme, setTheme] = useState(initialTheme);
 
@@ -54,13 +54,14 @@ const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position
 
   return (
     <div
-      className={cx('w-full h-24 z-30 top-0 transition-colors duration-500 ease-in-out', position, {
+      className={cx('w-full h-24 z-30 top-0 transition-colors duration-200 ease-in-out', position, {
         [THEMES[theme].container]: theme,
       })}
     >
       <nav
         aria-label="Main Navigation"
-        className={cx('flex justify-between items-center text-lg container mx-auto pt-6', {
+        className={cx('flex justify-between items-center text-lg px-4 py-6', {
+          'container mx-auto p-6': position !== 'relative', // not full width
           [THEMES[theme].nav]: theme,
         })}
       >
