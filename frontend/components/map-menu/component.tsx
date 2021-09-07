@@ -34,7 +34,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
 
   return (
     <aside
-      className={cx('w-map-sidebar h-full z-10', 'transition-all duration-200 ease-in-out', {
+      className={cx('w-map-sidebar h-full z-10 mt-24', 'transition-all duration-200 ease-in-out', {
         '-ml-map-sidebar': collapsed,
       })}
     >

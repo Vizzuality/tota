@@ -28,9 +28,6 @@ module.exports = {
         gray3: '#cccccc',
         red1: '#953530',
       },
-      height: {
-        'screen-minus-header': "calc(100vh - theme('spacing.20'))",
-      },
       width: {
         'map-sidebar': '300px',
       },

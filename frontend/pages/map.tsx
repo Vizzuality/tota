@@ -12,7 +12,7 @@ const Map: React.FC<void> = (): JSX.Element => {
         <title>Map</title>
       </Head>
       <MapProvider>
-        <div className="w-full flex h-screen-minus-header">
+        <div className="w-full flex h-screen">
           <MapMenu />
           <MapComponent mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN} />
         </div>
