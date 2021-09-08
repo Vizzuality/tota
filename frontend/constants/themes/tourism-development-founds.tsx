@@ -84,7 +84,7 @@ const theme: ThemeType = {
       description: `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: previousYear,
+        year: 'all_years',
       },
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
@@ -154,7 +154,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       description: `
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: previousYear,
+        year: 'all_years',
       },
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
@@ -169,7 +169,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             state.selectedRegion.name === 'British Columbia'
               ? null
               : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
-          const allYears = uniq(rawData.map((x) => parseInt(getYear(x.date), 10)));
+          const allYears = uniq(rawData.filter((x) => x.date).map((x) => parseInt(getYear(x.date), 10)));
           const tooltipYears =
             state.year === 'all_years'
               ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
