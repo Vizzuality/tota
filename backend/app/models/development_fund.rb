@@ -28,7 +28,7 @@
 class DevelopmentFund < ApplicationRecord
   belongs_to :region
 
-  validates_presence_of :project_title
+  validates_presence_of :project_title, :key_funding_source
 
   def as_geojson(fields)
     slice_attr = fields || [
