@@ -1,9 +1,22 @@
 import { IndicatorValue, ThemeType } from 'types';
 import uniq from 'lodash/uniq';
+import { parseISO, format } from 'date-fns';
+
 import { filterBySelectedYear, getAvailableYearsOptions, getOptions, mergeForChart, getYear } from 'utils/charts';
 import { previousYear } from './utils';
 
 import mountains3Image from 'images/home/image-mountains3.png';
+
+function getWeekOptions(weeks: string[]) {
+  return weeks.map((weekString) => {
+    const date = parseISO(weekString);
+
+    return {
+      value: weekString,
+      label: format(date, "'Week' I / MMMM / y"),
+    };
+  });
+}
 
 function getFetchWidgetPropsFunction(indicatorPrefix: string) {
   const changeIndicator = `${indicatorPrefix}_change_week`;
@@ -42,7 +55,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
         currentYear: parseInt(selectedYear, 10),
         controls: [
           { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
-          { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
+          { type: 'select', side: 'right', name: 'week', options: getWeekOptions(weeks) },
         ],
         chartType: 'bar',
         chartConfig: {
