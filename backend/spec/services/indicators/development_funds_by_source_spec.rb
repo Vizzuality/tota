@@ -23,6 +23,7 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
         create(:development_fund, region: r2, key_funding_source: 'Source 1', funding_call_year: 2019)
         create(:development_fund, region: r2, key_funding_source: 'Source 2', funding_call_year: 2019)
         create(:development_fund, region: r2, key_funding_source: 'Source 2', funding_call_year: 2020)
+        create(:development_fund, region: province, key_funding_source: 'Source 2', funding_call_year: 2020)
       end
 
       subject { Indicators::DevelopmentFundsBySource.generate }
@@ -79,7 +80,7 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
             date: '2020',
             region_id: province.id,
             category_1: 'Source 2',
-            value: 1
+            value: 2
           },
           {
             date: nil,
@@ -115,7 +116,7 @@ RSpec.describe Indicators::DevelopmentFundsBySource do
             date: nil,
             region_id: province.id,
             category_1: 'Source 2',
-            value: 4
+            value: 5
           }
         )
       end

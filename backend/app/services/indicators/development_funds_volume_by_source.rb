@@ -24,6 +24,8 @@ module Indicators
 
     def append_by_source_year_region
       by_source_year_region = DevelopmentFund
+        .includes(:region)
+        .where(region: {region_type: 'tourism_region'})
         .group(:key_funding_source, :funding_call_year, :region_id)
         .sum(:key_funding_amount)
       by_source_year_region.map do |key, value|
@@ -40,6 +42,8 @@ module Indicators
 
     def append_by_source_region_totals
       by_source_region = DevelopmentFund
+        .includes(:region)
+        .where(region: {region_type: 'tourism_region'})
         .group(:key_funding_source, :region_id)
         .sum(:key_funding_amount)
       by_source_region.map do |key, value|

@@ -23,7 +23,11 @@ module Indicators
     private
 
     def append_by_source_year_region
-      by_source_year_region = DevelopmentFund.group(:key_funding_source, :funding_call_year, :region_id).count
+      by_source_year_region = DevelopmentFund
+        .includes(:region)
+        .where(region: {region_type: 'tourism_region'})
+        .group(:key_funding_source, :funding_call_year, :region_id)
+        .count
       by_source_year_region.map do |key, value|
         source, year, region_id = key
         IndicatorValue.new(
@@ -37,7 +41,11 @@ module Indicators
     end
 
     def append_by_source_region_totals
-      by_source_region = DevelopmentFund.group(:key_funding_source, :region_id).count
+      by_source_region = DevelopmentFund
+        .includes(:region)
+        .where(region: {region_type: 'tourism_region'})
+        .group(:key_funding_source, :region_id)
+        .count
       by_source_region.map do |key, value|
         source, region_id = key
         IndicatorValue.new(
