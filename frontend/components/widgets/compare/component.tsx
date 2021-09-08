@@ -86,13 +86,13 @@ const Compare: FC<CompareProps> = ({
                   { '-translate-y-16 opacity-1': showCompare, 'opacity-1': !showCompare },
                 )}
               >
-                <span>{currentYear}</span>
-                <Icon className="w-3 h-3 text-blue9" icon={ArrowIcon} />
                 <span>{currentYear - 1}</span>
+                <Icon className="w-3 h-3 text-blue9" icon={ArrowIcon} />
+                <span>{currentYear}</span>
               </div>
               <div
                 className={cx(
-                  'absolute transition duration-500 ease-in-out transform flex flex-row justify-between w-full',
+                  'absolute transition duration-300 ease-in-out transform flex flex-row justify-between w-full',
                   { 'translate-y-20 opacity-1': showCompare, 'opacity-0': !showCompare },
                 )}
               >
