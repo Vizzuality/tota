@@ -12,12 +12,24 @@ import type { CompareProps } from './types';
 import type { WidgetProps } from 'components/widgets/types';
 import { COLORS } from 'constants/charts';
 
-function calculate(data, changeToPreviousYear) {
+function changeValues(data, changeToPreviousYear) {
   return data.map((x: any) =>
     Object.entries(x).reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: isNaN(value as any) ? value : ((value as any) * (1 + changeToPreviousYear[key] / 100)).toFixed(2),
+        [key]: isNaN(value as any) ? value : ((value as any) / (1 + changeToPreviousYear[key] / 100)).toFixed(2),
+      }),
+      {},
+    ),
+  );
+}
+
+function appendYear(data, year) {
+  return data.map((x: any) =>
+    Object.entries(x).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: isNaN(value as any) ? `${value} ${year}` : value,
       }),
       {},
     ),
@@ -47,7 +59,10 @@ const Compare: FC<CompareProps> = ({
     [chartType, chartConfig, data],
   );
   const theme = showCompare ? 'gray' : 'primary';
-  const chartData = showCompare ? calculate(data, changeToPreviousYear) : data;
+  let chartData = appendYear(data, showCompare ? currentYear - 1 : currentYear);
+  if (showCompare) {
+    chartData = changeValues(chartData, changeToPreviousYear);
+  }
 
   return (
     <div className="w-full flex">

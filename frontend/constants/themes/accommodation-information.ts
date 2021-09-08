@@ -20,6 +20,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
         .sort()
         .reverse();
       const selectedWeek = state.week || weeks[0];
+      const selectedYear = getYear(selectedWeek);
       const dataForWeek = rawData.filter((x) => x.date === selectedWeek);
       let data = dataForWeek.filter((x) => x.indicator !== changeIndicator);
       const changeData = dataForWeek.filter((x) => x.indicator === changeIndicator);
@@ -38,7 +39,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
         type: 'compare',
         data: chartData,
         changeToPreviousYear,
-        currentYear: parseInt(getYear(selectedWeek), 10),
+        currentYear: parseInt(selectedYear, 10),
         controls: [
           { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
           { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
@@ -78,7 +79,7 @@ const theme: ThemeType = {
     {
       title: 'Occupancy rates',
       description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
         year: previousYear,
         week: undefined,
@@ -97,7 +98,7 @@ const theme: ThemeType = {
     {
       title: 'Average daily hotel rate (ADR)',
       description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
         year: previousYear,
         week: undefined,
@@ -116,7 +117,7 @@ const theme: ThemeType = {
     {
       title: 'Hotel revenue per available room',
       description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
         year: previousYear,
         week: undefined,
