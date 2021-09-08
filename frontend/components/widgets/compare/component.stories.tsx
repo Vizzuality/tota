@@ -1,4 +1,5 @@
 import React from 'react';
+import uniq from 'lodash/uniq';
 import { Story } from '@storybook/react/types-6-0';
 import CompareWidget from './component';
 import { mergeForChart } from 'utils/charts';
@@ -21,20 +22,6 @@ const rawData = [
   {
     category_1: 'Weekday',
     category_2: null,
-    date: '2019-W38',
-    region: 'Thompson Okanagan',
-    value: 47,
-  },
-  {
-    category_1: 'Weekday',
-    category_2: null,
-    date: '2019-W30',
-    region: 'British Columbia',
-    value: 43,
-  },
-  {
-    category_1: 'Weekday',
-    category_2: null,
     date: '2020-W38',
     region: 'British Columbia',
     value: 49.3,
@@ -49,41 +36,23 @@ const rawData = [
   {
     category_1: 'Weekend',
     category_2: null,
-    date: '2019-W38',
-    region: 'Thompson Okanagan',
-    value: 67.3,
-  },
-  {
-    category_1: 'Weekend',
-    category_2: null,
     date: '2020-W38',
     region: 'British Columbia',
     value: 70,
   },
-  {
-    category_1: 'Weekend',
-    category_2: null,
-    date: '2019-W38',
-    region: 'British Columbia',
-    value: 75,
-  },
 ];
 // those are fake data not computed
-const dataDifference = [-13.4, 23.5];
+const changeToPreviousYear = {
+  'British Columbia': 20.3,
+  'Thompson Okanagan': -34.5,
+};
 
-const currentRawData = rawData.filter((x) => x.date.includes('2020'));
-const previousRawData = rawData.filter((x) => x.date.includes('2019'));
-
-const data = mergeForChart({ data: currentRawData, mergeBy: 'category_1', labelKey: 'region', valueKey: 'value' });
-const previousYearData = mergeForChart({
-  data: previousRawData,
-  mergeBy: 'category_1',
-  labelKey: 'region',
-  valueKey: 'value',
-});
-const bars = Array.from(new Set(rawData.map((rd) => rd.region))).map((barName) => ({
-  dataKey: barName,
-}));
+const data = mergeForChart({ data: rawData, mergeBy: 'category_1', labelKey: 'region', valueKey: 'value' });
+const bars = uniq(rawData.map((rd) => rd.region))
+  .sort()
+  .map((region) => ({
+    dataKey: region,
+  }));
 
 const config = {
   xAxis: {
@@ -97,9 +66,8 @@ const Template: Story<CompareProps> = ({ ...restProps }: CompareProps) => <Compa
 export const Default = Template.bind({});
 Default.args = {
   data,
-  previousYearData,
   currentYear: 2020,
-  dataDifference,
+  changeToPreviousYear,
   chartConfig: config,
   chartType: 'bar',
 };

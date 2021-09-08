@@ -20,7 +20,7 @@ const theme: ThemeType = {
         type: 'weekly',
       },
       fetchParams: (state: any) => ({
-        slug: ['occupancy_weekday', 'occupancy_weekend'],
+        slug: ['occupancy_weekday', 'occupancy_weekend', 'occupancy_change_week'],
         region: [
           state.selectedRegion.name,
           state.selectedRegion.parent?.name,
@@ -37,10 +37,16 @@ const theme: ThemeType = {
           const weeks = uniq(rawData.map((x) => x.date))
             .sort()
             .reverse();
-          const data = rawData.filter((x) => x.date === (state.week || weeks[0]));
-          const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+          const dataForWeek = rawData.filter((x) => x.date === (state.week || weeks[0]));
+          let data = dataForWeek.filter((x) => x.indicator !== 'occupancy_change_week');
+          const changeData = dataForWeek.filter((x) => x.indicator === 'occupancy_change_week');
+          const changeToPreviousYear = regions.reduce(
+            (acc, region) => ({ ...acc, [region]: changeData.find((x) => x.region === region)?.value }),
+            {},
+          );
+          data = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
           const chartData = mergeForChart({
-            data: changed,
+            data,
             mergeBy: 'indicator',
             labelKey: 'region',
             valueKey: 'value',
@@ -48,6 +54,8 @@ const theme: ThemeType = {
           return {
             type: 'compare',
             data: chartData,
+            changeToPreviousYear,
+            currentYear: state.year,
             controls: [
               { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
               { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
@@ -61,7 +69,8 @@ const theme: ThemeType = {
             },
           };
         }
-        const data = filterBySelectedYear(rawData, state.year);
+        const withoutChange = rawData.filter((x) => x.indicator !== 'occupancy_change_week');
+        const data = filterBySelectedYear(withoutChange, state.year);
         const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
         return {
           type: 'charts/line',

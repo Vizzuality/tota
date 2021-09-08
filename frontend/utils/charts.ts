@@ -16,6 +16,9 @@ interface MergeForChartArgs {
   valueKey: string;
 }
 
+/**
+ * Gets the data format that most of recharts charts expect
+ */
 export function mergeForChart({ data, mergeBy, labelKey, valueKey }: MergeForChartArgs): any[] {
   if (!data || !data.length) return [];
   const dataObj = {};

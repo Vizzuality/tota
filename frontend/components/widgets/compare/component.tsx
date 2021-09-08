@@ -1,6 +1,7 @@
 import React, { FC, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import cx from 'classnames';
+import mapValues from 'lodash/mapValues';
 
 import Loading from 'components/loading';
 import Button from 'components/button';
@@ -11,11 +12,22 @@ import type { CompareProps } from './types';
 import type { WidgetProps } from 'components/widgets/types';
 import { COLORS } from 'constants/charts';
 
+function calculate(data, changeToPreviousYear) {
+  return data.map((x: any) =>
+    Object.entries(x).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: isNaN(value as any) ? value : ((value as any) * (1 + changeToPreviousYear[key] / 100)).toFixed(2),
+      }),
+      {},
+    ),
+  );
+}
+
 const Compare: FC<CompareProps> = ({
   data,
-  previousYearData,
+  changeToPreviousYear,
   currentYear,
-  dataDifference,
   chartType,
   chartConfig,
 }: CompareProps) => {
@@ -34,16 +46,17 @@ const Compare: FC<CompareProps> = ({
       }),
     [chartType, chartConfig, data],
   );
-  const theme = showCompare ? 'gray' : 'primary-alt';
+  const theme = showCompare ? 'gray' : 'primary';
+  const chartData = showCompare ? calculate(data, changeToPreviousYear) : data;
 
   return (
     <div className="w-full flex">
       <div className="w-1/2">
-        <ChartWidget data={showCompare ? previousYearData : data} {...chartConfig} />
+        <ChartWidget data={chartData} {...chartConfig} />
       </div>
       <div className="w-1/2 p-20 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
-          {(previousYearData || []).length > 0 ? (
+          {changeToPreviousYear !== null ? (
             <>
               <Button
                 theme={theme}
@@ -68,7 +81,7 @@ const Compare: FC<CompareProps> = ({
                   { 'translate-y-20 opacity-1': showCompare, 'opacity-0': !showCompare },
                 )}
               >
-                {dataDifference.map((value, index) => (
+                {Object.entries(changeToPreviousYear).map(([_key, value], index) => (
                   <div
                     key={index}
                     className="px-4 py-3 text-lg text-white font-bold"
