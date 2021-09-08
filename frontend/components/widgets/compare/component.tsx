@@ -58,7 +58,7 @@ const Compare: FC<CompareProps> = ({
       }),
     [chartType, chartConfig, data],
   );
-  const theme = showCompare ? 'gray' : 'primary';
+  const theme = showCompare ? 'dark-gray-alt' : 'dark-gray';
   let chartData = appendYear(data, showCompare ? currentYear - 1 : currentYear);
   if (showCompare) {
     chartData = changeValues(chartData, changeToPreviousYear);
