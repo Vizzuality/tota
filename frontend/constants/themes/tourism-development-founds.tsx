@@ -30,7 +30,7 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
   const params = new URLSearchParams();
 
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
-  if (selectedYear) params.append('filter[funding_call_year]', selectedYear);
+  if (selectedYear && selectedYear !== 'all_years') params.append('filter[funding_call_year]', selectedYear);
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
   const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
 
