@@ -34,7 +34,7 @@ const Compare: FC<CompareProps> = ({
       }),
     [chartType, chartConfig, data],
   );
-  const theme = showCompare ? 'gray' : 'white-alt';
+  const theme = showCompare ? 'gray' : 'primary-alt';
 
   return (
     <div className="w-full flex">

@@ -14,13 +14,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         year: '2020',
       },
       fetchParams: () => null,
-      widget: {
-        type: 'text',
-        fetchProps(): any {
-          return {
-            data: 'Data placeholder',
-          };
-        },
+      fetchWidgetProps(): any {
+        return {
+          type: 'text',
+          data: 'Data placeholder',
+        };
       },
     },
     {
@@ -28,13 +26,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       description: `
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       fetchParams: () => null,
-      widget: {
-        type: 'text',
-        fetchProps(): any {
-          return {
-            data: 'Data placeholder',
-          };
-        },
+      fetchWidgetProps(): any {
+        return {
+          type: 'text',
+          data: 'Data placeholder',
+        };
       },
     },
     {
@@ -42,13 +38,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       description: `
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       fetchParams: () => null,
-      widget: {
-        type: 'text',
-        fetchProps(): any {
-          return {
-            data: 'Data placeholder',
-          };
-        },
+      fetchWidgetProps(): any {
+        return {
+          type: 'text',
+          data: 'Data placeholder',
+        };
       },
     },
     {
@@ -56,13 +50,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       description: `
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       fetchParams: () => null,
-      widget: {
-        type: 'text',
-        fetchProps(): any {
-          return {
-            data: 'Data placeholder',
-          };
-        },
+      fetchWidgetProps(): any {
+        return {
+          type: 'text',
+          data: 'Data placeholder',
+        };
       },
     },
   ],

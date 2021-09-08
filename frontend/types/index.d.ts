@@ -24,7 +24,7 @@ export interface ThemeSectionType {
   description: string;
   initialState?: any;
   fetchParams: (state: any) => any;
-  widget: any;
+  fetchWidgetProps: (indicatorValues: IndicatorValue[], state: any) => any;
 }
 
 export interface ThemeBaseType {

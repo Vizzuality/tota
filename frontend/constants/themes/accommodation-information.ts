@@ -27,56 +27,54 @@ const theme: ThemeType = {
           ...state.selectedRegion.children?.map((x) => x.name),
         ].filter((x) => x),
       }),
-      widget: {
-        type: 'compare',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const regions = uniq(rawData.map((x) => x.region));
-          if (state.type === 'weekly') {
-            const indicatorsMap = {
-              occupancy_weekday: 'Weekday',
-              occupancy_weekend: 'Weekend',
-            };
-            const weeks = uniq(rawData.map((x) => x.date))
-              .sort()
-              .reverse();
-            const data = rawData.filter((x) => x.date === (state.week || weeks[0]));
-            const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
-            const chartData = mergeForChart({
-              data: changed,
-              mergeBy: 'indicator',
-              labelKey: 'region',
-              valueKey: 'value',
-            });
-            return {
-              data: chartData,
-              controls: [
-                { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
-                { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
-              ],
-              chartType: 'bar',
-              chartConfig: {
-                bars: regions.map((x) => ({ dataKey: x })),
-                xAxis: {
-                  dataKey: 'indicator',
-                },
-              },
-            };
-          }
-          const data = filterBySelectedYear(rawData, state.year);
-          const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const regions = uniq(rawData.map((x) => x.region));
+        if (state.type === 'weekly') {
+          const indicatorsMap = {
+            occupancy_weekday: 'Weekday',
+            occupancy_weekend: 'Weekend',
+          };
+          const weeks = uniq(rawData.map((x) => x.date))
+            .sort()
+            .reverse();
+          const data = rawData.filter((x) => x.date === (state.week || weeks[0]));
+          const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+          const chartData = mergeForChart({
+            data: changed,
+            mergeBy: 'indicator',
+            labelKey: 'region',
+            valueKey: 'value',
+          });
           return {
+            type: 'compare',
             data: chartData,
-            widgetTypeOverride: 'charts/line',
             controls: [
               { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+              { type: 'select', side: 'right', name: 'week', options: getOptions(weeks, false) },
             ],
-            lines: regions.map((x) => ({ dataKey: x })),
-            xAxis: {
-              dataKey: 'date',
+            chartType: 'bar',
+            chartConfig: {
+              bars: regions.map((x) => ({ dataKey: x })),
+              xAxis: {
+                dataKey: 'indicator',
+              },
             },
           };
-        },
+        }
+        const data = filterBySelectedYear(rawData, state.year);
+        const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        return {
+          type: 'charts/line',
+          data: chartData,
+          controls: [
+            { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+          ],
+          lines: regions.map((x) => ({ dataKey: x })),
+          xAxis: {
+            dataKey: 'date',
+          },
+        };
       },
     },
   ],
