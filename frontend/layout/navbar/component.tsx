@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 
@@ -14,22 +14,37 @@ import type { HamburgerColor } from 'components/hamburger/types';
 const THEMES = {
   transparent: {
     container: 'bg-transparent',
-    nav: 'container mx-auto py-6 text-white',
+    nav: 'text-white',
     logo: LogoWhite,
     hamburger: 'white',
     mobile: 'bg-gray-500',
   },
   gray: {
-    container: 'bg-gray2',
-    nav: 'p-4 text-blue9',
+    container: 'bg-gray2 border-b border-color1',
+    nav: 'text-blue9',
     logo: LogoColour,
     hamburger: 'black',
     mobile: 'bg-gray-200',
   },
 };
 
-const Navbar: FC<NavbarProps> = ({ theme = 'transparent', position = 'absolute' }: NavbarProps) => {
+const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position = 'fixed' }: NavbarProps) => {
   const [isOpen, setOpen] = useState(false);
+  const [theme, setTheme] = useState(initialTheme);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentPosition = window.pageYOffset;
+      if (currentPosition > 0) {
+        setTheme('gray');
+      } else {
+        setTheme(initialTheme);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const offScreenSlide = cx('transform lg:transform-none duration-300 ease-in-out', {
     '-translate-x-0': isOpen,
@@ -38,10 +53,17 @@ const Navbar: FC<NavbarProps> = ({ theme = 'transparent', position = 'absolute' 
   const navLinkTheme = theme === 'transparent' ? 'light' : 'dark';
 
   return (
-    <div className={cx('w-full h-20 z-30 top-0', position, { [THEMES[theme].container]: theme })}>
+    <div
+      className={cx('w-full h-24 z-30 top-0 transition-colors duration-200 ease-in-out', position, {
+        [THEMES[theme].container]: theme,
+      })}
+    >
       <nav
         aria-label="Main Navigation"
-        className={cx('flex justify-between items-center text-lg', { [THEMES[theme].nav]: theme })}
+        className={cx('flex justify-between items-center text-lg px-4 py-6', {
+          'container mx-auto p-6': position !== 'relative', // not full width
+          [THEMES[theme].nav]: theme,
+        })}
       >
         <Link href="/">
           <a className="relative z-20">

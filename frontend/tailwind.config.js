@@ -29,7 +29,7 @@ module.exports = {
         red1: '#953530',
       },
       height: {
-        'screen-minus-header': "calc(100vh - theme('spacing.20'))",
+        'screen-minus-header': "calc(100vh - theme('spacing.24'))",
       },
       width: {
         'map-sidebar': '300px',

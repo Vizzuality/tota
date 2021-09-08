@@ -17,7 +17,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({
   className = 'container',
   navbarTheme = 'transparent',
-  navbarPosition = 'absolute',
+  navbarPosition = 'fixed',
   hideFooter = false,
   children,
 }: LayoutProps) => {
@@ -30,7 +30,7 @@ const Layout: FC<LayoutProps> = ({
 
       <Navbar theme={navbarTheme} position={navbarPosition} />
 
-      <main className={cx(className, 'mx-auto flex-1 bg-gray0', { 'mt-20': navbarPosition === 'fixed' })}>{children}</main>
+      <main className={cx(className, 'mx-auto flex-1 bg-gray0')}>{children}</main>
 
       {!hideFooter && <Footer />}
     </div>
