@@ -1,9 +1,11 @@
+import { IndicatorValue } from 'types';
 import { ChartProps } from '../types';
 
 export interface CompareProps {
-  data: any[];
-  changeToPreviousYear: { [key: string]: number };
+  data: IndicatorValue[];
+  changeData: IndicatorValue[];
   currentYear: number;
-  chartType: string;
-  chartConfig: ChartProps;
+  mergeBy: string;
+  labelKey: string;
+  valueKey: string;
 }

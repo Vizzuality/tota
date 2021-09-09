@@ -37,33 +37,19 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
       const dataForWeek = rawData.filter((x) => x.date === selectedWeek);
       let data = dataForWeek.filter((x) => x.indicator !== changeIndicator);
       const changeData = dataForWeek.filter((x) => x.indicator === changeIndicator);
-      const changeToPreviousYear = regions.reduce(
-        (acc, region) => ({ ...acc, [region]: changeData.find((x) => x.region === region)?.value }),
-        {},
-      );
       data = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
-      const chartData = mergeForChart({
-        data,
-        mergeBy: 'indicator',
-        labelKey: 'region',
-        valueKey: 'value',
-      });
       return {
         type: 'compare',
-        data: chartData,
-        changeToPreviousYear,
+        data,
+        changeData,
         currentYear: parseInt(selectedYear, 10),
         controls: [
           { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
           { type: 'select', side: 'right', name: 'week', options: getWeekOptions(weeks) },
         ],
-        chartType: 'bar',
-        chartConfig: {
-          bars: regions.map((x) => ({ dataKey: x })),
-          xAxis: {
-            dataKey: 'indicator',
-          },
-        },
+        mergeBy: 'indicator',
+        labelKey: 'region',
+        valueKey: 'value',
       };
     }
     const withoutChange = rawData.filter((x) => x.indicator !== changeIndicator);

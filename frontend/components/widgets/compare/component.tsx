@@ -1,77 +1,68 @@
-import React, { FC, useState, useMemo } from 'react';
-import dynamic from 'next/dynamic';
+import React, { FC, useState } from 'react';
 import cx from 'classnames';
-import mapValues from 'lodash/mapValues';
+import uniq from 'lodash/uniq';
 
-import Loading from 'components/loading';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import ArrowIcon from 'svgs/arrow-right.svg?sprite';
 
 import type { CompareProps } from './types';
-import type { WidgetProps } from 'components/widgets/types';
+import type { IndicatorValue } from 'types';
+
+import BarChart from 'components/widgets/charts/bar';
 import { COLORS } from 'constants/charts';
+import { mergeForChart } from 'utils/charts';
 
-function changeValues(data, changeToPreviousYear) {
-  return data.map((x: any) =>
-    Object.entries(x).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: isNaN(value as any) ? value : ((value as any) / (1 + changeToPreviousYear[key] / 100)).toFixed(2),
-      }),
-      {},
-    ),
-  );
+function changeValues(data: IndicatorValue[], changeData: IndicatorValue[], key: string): IndicatorValue[] {
+  return data.map((d) => {
+    const percentage = changeData.find((x) => x[key] === d[key])?.value;
+
+    return {
+      ...d,
+      value: Number((d.value / (1 + percentage / 100)).toFixed(2)),
+    };
+  });
 }
 
-function appendYear(data, year) {
-  return data.map((x: any) =>
-    Object.entries(x).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: isNaN(value as any) ? `${value} ${year}` : value,
-      }),
-      {},
-    ),
-  );
-}
-
-const Compare: FC<CompareProps> = ({
-  data,
-  changeToPreviousYear,
-  currentYear,
-  chartType,
-  chartConfig,
-}: CompareProps) => {
+const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, labelKey, valueKey }: CompareProps) => {
   const [showCompare, setShowCompare] = useState(false);
-
-  const LoadingWidget = () => (
-    <div style={{ height: 400 }} className="flex items-center justify-center">
-      <Loading iconClassName="w-10 h-10" visible />
-    </div>
-  );
-
-  const ChartWidget = useMemo(
-    () =>
-      dynamic<WidgetProps>(() => import(`components/widgets/charts/${chartType}`), {
-        loading: LoadingWidget,
-      }),
-    [chartType, chartConfig, data],
-  );
   const theme = showCompare ? 'dark-gray-alt' : 'dark-gray';
-  let chartData = appendYear(data, showCompare ? currentYear - 1 : currentYear);
-  if (showCompare) {
-    chartData = changeValues(chartData, changeToPreviousYear);
-  }
+  const year = showCompare ? currentYear - 1 : currentYear;
+  const currentYearData = data;
+  const previousYearData = changeValues(currentYearData, changeData, labelKey);
+  const useData = showCompare ? previousYearData : currentYearData;
+
+  const allDataValues = [...currentYearData, ...previousYearData].map((x) => x.value);
+  const minValue = Math.min(...allDataValues);
+  const maxValue = Math.max(...allDataValues);
+
+  const chartData = mergeForChart({
+    data: useData,
+    mergeBy,
+    labelKey,
+    valueKey,
+  });
+  const labels = uniq(data.map((x) => x[labelKey]));
+  const chartConfig = {
+    bars: labels.map((x) => ({ dataKey: x })),
+    yAxis: {
+      domain: [Math.min(0, minValue), Math.round(maxValue * 1.1)],
+    },
+    xAxis: {
+      dataKey: mergeBy,
+      tickFormatter: (text: any) => `${text} ${year}`,
+    },
+  };
+  const changeDataValues = labels.map((b) => changeData.find((x) => x[labelKey] === b)?.value);
 
   return (
     <div className="w-full flex">
       <div className="w-1/2">
-        <ChartWidget data={chartData} {...chartConfig} />
+        <BarChart data={chartData} {...chartConfig} />
       </div>
       <div className="w-1/2 p-20 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
-          {changeToPreviousYear !== null ? (
+          {(changeData || []).length > 0 !== null ? (
             <>
               <Button
                 theme={theme}
@@ -96,7 +87,7 @@ const Compare: FC<CompareProps> = ({
                   { 'translate-y-20 opacity-1': showCompare, 'opacity-0': !showCompare },
                 )}
               >
-                {Object.entries(changeToPreviousYear).map(([_key, value], index) => (
+                {changeDataValues.map((value, index) => (
                   <div
                     key={index}
                     className="px-4 py-3 text-lg text-white font-bold"
