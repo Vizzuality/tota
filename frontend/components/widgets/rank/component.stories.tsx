@@ -9,7 +9,20 @@ export default {
   argTypes: {},
 };
 
-const data = ['50% lorem ipsum dolor', '20% lorem ipsum dolor', '40% lorem ipsum dolor'];
+const data = [
+  {
+    text: '{value} lorem ipsum dolor',
+    value: '50%',
+  },
+  {
+    text: '{value} lorem ipsum dolor',
+    value: '40%',
+  },
+  {
+    text: '{value} lorem ipsum dolor',
+    value: '30%',
+  },
+];
 
 const Template: Story<RankProps> = ({ ...restProps }: RankProps) => <Rank {...restProps} />;
 
