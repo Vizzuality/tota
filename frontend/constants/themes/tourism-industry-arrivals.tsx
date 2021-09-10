@@ -148,9 +148,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         const take = state.frequency === 'quarterly' ? 4 : 5;
         const formatDate = state.frequency === 'quarterly' ? (d) => d : shortMonthName;
         const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.year);
-        const data = getTopN(filteredByYear, take, 'value').map(
-          (x) => `${formatDate(x.date)}: ${formatPercentage(x.value)} of visitors`,
-        );
+        const data = getTopN(filteredByYear, take, 'value').map((x) => ({
+          text: `${formatDate(x.date)}: {value} of visitors`,
+          value: formatPercentage(x.value),
+        }));
 
         return {
           type: 'rank',
@@ -175,13 +176,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.year)[0];
-
-        let ratioText = '';
+        let ratioText: string | React.ReactNode = '';
         if (ratio) {
           const ratioNumber = Number(ratio.value).toFixed(2);
-          ratioText = `peak/lowest month (${shortMonthName(ratio.category_1)}/${shortMonthName(
-            ratio.category_2,
-          )}): ${ratioNumber} x visitors`;
+          ratioText = (
+            <div>
+              peak/lowest month ({shortMonthName(ratio.category_1)}/{shortMonthName(ratio.category_2)}):{' '}
+              <span className="text-green1 text-5xl font-bold">{ratioNumber}</span> x visitors
+            </div>
+          );
         }
 
         return {

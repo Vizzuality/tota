@@ -70,11 +70,11 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
           state={state}
           onControlChange={handleControlChange}
         />
-        <div className="flex justify-center items-center" style={{ minHeight: 400 }}>
+        <div className="flex justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
           {isFetched &&
             data &&
-            data.length > 0 &&
+            ((Array.isArray(data) && data.length > 0) || !Array.isArray(data)) &&
             (WidgetWrapper ? (
               <WidgetWrapper>
                 <Widget data={data} {...widgetConfig} />

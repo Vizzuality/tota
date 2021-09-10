@@ -175,8 +175,10 @@ const theme: ThemeType = {
         const top5 = getTopN(data, 5, 'value');
 
         return {
-          type: 'rank',
-          data: top5.map((x) => `${x.category_2} - ${x.value} destinations`),
+          data: top5.map((x) => ({
+            text: `${x.category_2} - {value} destinations`,
+            value: x.value,
+          })),
           controls: [
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
