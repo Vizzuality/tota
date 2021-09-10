@@ -1,5 +1,6 @@
 import { IndicatorValue, ThemeType } from 'types';
 import uniq from 'lodash/uniq';
+import groupBy from 'lodash/groupBy';
 import { parseISO, format } from 'date-fns';
 
 import { filterBySelectedYear, getAvailableYearsOptions, getOptions, mergeForChart, getYear } from 'utils/charts';
@@ -53,7 +54,11 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
       };
     }
     const withoutChange = rawData.filter((x) => x.indicator !== changeIndicator);
-    const data = filterBySelectedYear(withoutChange, state.year);
+    let data = filterBySelectedYear(withoutChange, state.year);
+    data = Object.values(groupBy(data, (d: IndicatorValue) => [d.date, d.region])).map((grouped: IndicatorValue[]) => ({
+      ...grouped[0],
+      value: Number((grouped.reduce((acc, v) => acc + v.value, 0) / grouped.length).toFixed(2)),
+    }));
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
@@ -80,7 +85,7 @@ const theme: ThemeType = {
       description: `
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: previousYear,
+        year: 'all_years',
         week: undefined,
         type: 'weekly',
       },
@@ -99,7 +104,7 @@ const theme: ThemeType = {
       description: `
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: previousYear,
+        year: 'all_years',
         week: undefined,
         type: 'weekly',
       },
@@ -118,7 +123,7 @@ const theme: ThemeType = {
       description: `
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
       initialState: {
-        year: previousYear,
+        year: 'all_years',
         week: undefined,
         type: 'weekly',
       },
