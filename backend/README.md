@@ -51,6 +51,16 @@ Query parameters:
 * `filter[field_name]` - filter by field name, exact match, example `filter[category_1]=category_1&filter[category_2]=category_2`
 * `fields` - select fields to return, example `/organizations?fields=id,latitude,longitude` will return only those 3 attributes for each organization
 
+### Regions
+
+#### `GET /regions`
+
+Returns all regions
+
+#### `GET /regions?filter[region_type]=province,tourism_region`
+
+Only provinces and tourism regions.
+
 ### Organizations
 
 #### `GET /organizations`
