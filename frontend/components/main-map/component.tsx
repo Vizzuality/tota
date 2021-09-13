@@ -30,15 +30,16 @@ export const MainMap: FC<MapProps> = ({
   mapboxApiAccessToken,
 }: MapProps): JSX.Element => {
   const minZoom = 2;
-  const maxZoom = 10;
-  const [viewport, setViewport] = useState({
-    latitude: 54.123389,
-    longitude: -124.950408,
-    zoom: 5,
-    minZoom,
-    maxZoom,
-  });
-  const { activeLayers, layerSettings, changeActiveLayers, changeLayerSettings, selectedRegion } = useMap();
+  const maxZoom = 20;
+  const {
+    activeLayers,
+    layerSettings,
+    viewport,
+    changeActiveLayers,
+    changeLayerSettings,
+    setViewport,
+    selectedRegion,
+  } = useMap();
   const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
   const layers = useLayers(showSingleRegionSlug)
     .filter((x) => activeLayers.includes(x.id))
@@ -46,6 +47,8 @@ export const MainMap: FC<MapProps> = ({
       ...l,
       visibility: layerSettings[l.id]?.visibility ?? true,
     }));
+
+  console.log('layers', layers);
 
   const [bounds, setBounds] = useState({
     bbox: null,
@@ -57,10 +60,7 @@ export const MainMap: FC<MapProps> = ({
     },
   });
 
-  const handleViewportChange = useCallback((vw) => {
-    setViewport(vw);
-  }, []);
-
+  const handleViewportChange = (vw) => setViewport(vw);
   const handleZoomChange = useCallback(
     (zoom) => {
       setViewport({
@@ -68,7 +68,7 @@ export const MainMap: FC<MapProps> = ({
         zoom,
       });
     },
-    [viewport],
+    [viewport, setViewport],
   );
 
   const handleLegendItemRemove = (layerId) => {

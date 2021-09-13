@@ -154,6 +154,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       initialState: {
         year: 'all_years',
       },
+      viewOnMap: true,
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
