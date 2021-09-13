@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext } from 'react';
 import { useRouter } from 'next/router';
 import type { ViewportProps } from 'react-map-gl';
 
-import { useSelectedRegion } from 'hooks/regions';
+import { useRegions } from 'hooks/regions';
 import type { MapContextProps, MapProviderProps } from './types';
 import { useQueryParams } from 'hooks/query-params';
 import { encodeParam, decodeParam } from 'utils/url';
@@ -56,10 +56,9 @@ export function MapProvider({ children }: MapProviderProps) {
       },
     },
   });
-  const activeLayers = mapSettings.activeLayers || [];
-  const layerSettings = mapSettings.layerSettings || {};
-  const viewport = mapSettings.viewport;
-  const { selectRegion, selectedRegion } = useSelectedRegion();
+  const { activeLayers, layerSettings, viewport, selectedRegion: selectedRegionSlug } = mapSettings;
+  const { regions } = useRegions();
+  const selectedRegion = regions.find((r) => r.slug === selectedRegionSlug) || regions[0];
 
   const changeLayerSettings = useCallback(
     (layerId, settings) => {
@@ -92,6 +91,15 @@ export function MapProvider({ children }: MapProviderProps) {
       setMapSettings({
         ...mapSettings,
         viewport: newViewport,
+      });
+    },
+    [mapSettings],
+  );
+  const selectRegion = useCallback(
+    (region: string) => {
+      setMapSettings({
+        ...mapSettings,
+        selectedRegion: region,
       });
     },
     [mapSettings],

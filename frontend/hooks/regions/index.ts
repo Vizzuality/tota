@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
 
-import { UseRegionsResponse, UseSelectedRegionResponse, RegionProps, SelectRegionProps } from './types';
+import type { UseRegionsResponse, RegionProps } from './types';
 
 const fakeRegions: RegionProps[] = [
   { id: 0, name: 'British Columbia', slug: 'british_columbia', parent_id: null },
@@ -42,24 +42,4 @@ export function useRouterSelectedRegion(): RegionProps {
   if (!region) return null;
 
   return regions.find((r) => r.slug === snakeCase(region as string));
-}
-
-export function useSelectedRegion(): UseSelectedRegionResponse {
-  const { regions } = useRegions();
-  const [selectedRegion, setSelectedRegion] = useState<RegionProps>(regions[0]);
-
-  const selectRegion = ({ id }: SelectRegionProps): void => {
-    const selected = regions.find((r) => r.id === id);
-    if (selected) {
-      setSelectedRegion(selected);
-    } else {
-      setSelectedRegion(regions[0]);
-    }
-  };
-
-  return {
-    regions,
-    selectRegion,
-    selectedRegion,
-  };
 }
