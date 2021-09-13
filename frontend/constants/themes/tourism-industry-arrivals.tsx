@@ -38,19 +38,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         category_2: 'all',
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
       }),
-      widget: {
-        type: 'charts/pie',
-        fetchProps(rawData: IndicatorValue[]): any {
-          return {
-            data: getTop10AndOthers(rawData, 'category_1'),
-            pies: [
-              {
-                nameKey: 'category_1',
-                dataKey: 'value',
-              },
-            ],
-          };
-        },
+      fetchWidgetProps(rawData: IndicatorValue[]): any {
+        return {
+          type: 'charts/pie',
+          data: getTop10AndOthers(rawData, 'category_1'),
+          pies: [
+            {
+              nameKey: 'category_1',
+              dataKey: 'value',
+            },
+          ],
+        };
       },
     },
     {
@@ -66,22 +64,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       initialState: {
         type: 'biosphere',
       },
-      widget: {
-        type: 'charts/pie',
-        fetchProps(rawData: IndicatorValue[]): any {
-          return {
-            data: getTop10AndOthers(rawData, 'category_1'),
-            controls: [
-              { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) },
-            ],
-            pies: [
-              {
-                nameKey: 'category_1',
-                dataKey: 'value',
-              },
-            ],
-          };
-        },
+      fetchWidgetProps(rawData: IndicatorValue[]): any {
+        return {
+          type: 'charts/pie',
+          data: getTop10AndOthers(rawData, 'category_1'),
+          controls: [{ type: 'tabs', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) }],
+          pies: [
+            {
+              nameKey: 'category_1',
+              dataKey: 'value',
+            },
+          ],
+        };
       },
     },
     {
@@ -101,43 +95,41 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         ].filter((x) => x),
         category_1: 'Canada',
       }),
-      widget: {
-        type: 'charts/composed',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const data = filterBySelectedYear(rawData, state.year);
-          let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-          let areas = [];
-          const regions = uniq(rawData.map((x) => x.region));
-          if (state.year !== 'all_years') {
-            chartData = expandToFullYear(chartData);
-            [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
-          }
-          return {
-            data: chartData,
-            controls: [
-              { type: 'tabs', side: 'left', name: 'group', options: getOptions(['Visits', 'Trips', 'Stays']) },
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
-            ],
-            legend: {
-              ...bottomLegend,
-              payloadFilter: (y) => !y.value.includes('min-max'),
-            },
-            lines: regions.map((x) => ({ dataKey: x })),
-            areas,
-            xAxis: {
-              dataKey: 'date',
-              tickFormatter: state.year !== 'all_years' && shortMonthName,
-            },
-            yAxis: {
-              tickFormatter: compactNumberTickFormatter,
-            },
-            tooltip: {
-              cursor: { stroke: '#314057', strokeWidth: 1 },
-              valueFormatter: compactNumberTickFormatter,
-              payloadFilter: (y) => !y.name.includes('min-max'),
-            },
-          };
-        },
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const data = filterBySelectedYear(rawData, state.year);
+        let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        let areas = [];
+        const regions = uniq(rawData.map((x) => x.region));
+        if (state.year !== 'all_years') {
+          chartData = expandToFullYear(chartData);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
+        }
+        return {
+          data: chartData,
+          type: 'charts/composed',
+          controls: [
+            { type: 'tabs', side: 'left', name: 'group', options: getOptions(['Visits', 'Trips', 'Stays']) },
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+          ],
+          legend: {
+            ...bottomLegend,
+            payloadFilter: (y) => !y.value.includes('min-max'),
+          },
+          lines: regions.map((x) => ({ dataKey: x })),
+          areas,
+          xAxis: {
+            dataKey: 'date',
+            tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
+          },
+          tooltip: {
+            cursor: { stroke: '#314057', strokeWidth: 1 },
+            valueFormatter: compactNumberTickFormatter,
+            payloadFilter: (y) => !y.name.includes('min-max'),
+          },
+        };
       },
     },
     {
@@ -152,25 +144,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: `domestic_visits_percentage_${state.frequency}`,
         region: state.selectedRegion.name,
       }),
-      widget: {
-        type: 'rank',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const take = state.frequency === 'quarterly' ? 4 : 5;
-          const formatDate = state.frequency === 'quarterly' ? (d) => d : shortMonthName;
-          const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.year);
-          const data = getTopN(filteredByYear, take, 'value').map((x) => ({
-            text: `${formatDate(x.date)}: {value} of visitors`,
-            value: formatPercentage(x.value),
-          }));
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const take = state.frequency === 'quarterly' ? 4 : 5;
+        const formatDate = state.frequency === 'quarterly' ? (d) => d : shortMonthName;
+        const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.year);
+        const data = getTopN(filteredByYear, take, 'value').map((x) => ({
+          text: `${formatDate(x.date)}: {value} of visitors`,
+          value: formatPercentage(x.value),
+        }));
 
-          return {
-            data,
-            controls: [
-              { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
-          };
-        },
+        return {
+          type: 'rank',
+          data,
+          controls: [
+            { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+          ],
+        };
       },
     },
     {
@@ -184,29 +174,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: 'domestic_visits_peak_lowest_month_ratio',
         region: state.selectedRegion.name,
       }),
-      widget: {
-        type: 'text',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.year)[0];
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.year)[0];
+        let ratioText: string | React.ReactNode = '';
+        if (ratio) {
+          const ratioNumber = Number(ratio.value).toFixed(2);
+          ratioText = (
+            <div>
+              peak/lowest month ({shortMonthName(ratio.category_1)}/{shortMonthName(ratio.category_2)}):{' '}
+              <span className="text-green1 text-5xl font-bold">{ratioNumber}</span> x visitors
+            </div>
+          );
+        }
 
-          let ratioText: string | React.ReactNode = '';
-          if (ratio) {
-            const ratioNumber = Number(ratio.value).toFixed(2);
-            ratioText = (
-              <div>
-                peak/lowest month ({shortMonthName(ratio.category_1)}/{shortMonthName(ratio.category_2)}):{' '}
-                <span className="text-green1 text-5xl font-bold">{ratioNumber}</span> x visitors
-              </div>
-            );
-          }
-
-          return {
-            data: ratioText,
-            controls: [
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
-          };
-        },
+        return {
+          type: 'text',
+          data: ratioText,
+          controls: [
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+          ],
+        };
       },
     },
     {
@@ -221,41 +208,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: `visits_by_origin_province_${state.frequency}`,
         region: state.selectedRegion.name,
       }),
-      widget: {
-        type: 'charts/bar',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
-          const data = mergeForChart({
-            data: filteredByYear,
-            mergeBy: 'date',
-            labelKey: 'category_1',
-            valueKey: 'value',
-          });
-          if (state.frequency === 'monthly') {
-            data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-          }
-          const bars = getStackedBarsData(data, 'date');
-          const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const data = mergeForChart({
+          data: filteredByYear,
+          mergeBy: 'date',
+          labelKey: 'category_1',
+          valueKey: 'value',
+        });
+        if (state.frequency === 'monthly') {
+          data.forEach((d: any) => (d.date = shortMonthName(d.date)));
+        }
+        const bars = getStackedBarsData(data, 'date');
+        const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
-          return {
-            data,
-            controls: [
-              { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
-            bars,
-            xAxis: {
-              dataKey: 'date',
-            },
-            yAxis: {
-              tickFormatter: compactNumberTickFormatter,
-            },
-            tooltip: {
-              cursor: false,
-              totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.year} total`,
-            },
-          };
-        },
+        return {
+          type: 'charts/bar',
+          data,
+          controls: [
+            { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+          ],
+          bars,
+          xAxis: {
+            dataKey: 'date',
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
+          },
+          tooltip: {
+            cursor: false,
+            totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.year} total`,
+          },
+        };
       },
     },
     {
@@ -270,38 +255,36 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: 'visits_by_origin_city_quarterly',
         region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
       }),
-      widget: {
-        type: 'charts/bar',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
-          const top10 = getTop10AndOthersByYear(filteredByYear, 'category_1');
-          const data = mergeForChart({
-            data: top10,
-            mergeBy: 'date',
-            labelKey: 'category_1',
-            valueKey: 'value',
-          });
-          const bars = getStackedBarsData(data, 'date');
-          const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const top10 = getTop10AndOthersByYear(filteredByYear, 'category_1');
+        const data = mergeForChart({
+          data: top10,
+          mergeBy: 'date',
+          labelKey: 'category_1',
+          valueKey: 'value',
+        });
+        const bars = getStackedBarsData(data, 'date');
+        const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
-          return {
-            data,
-            controls: [
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
-            bars,
-            xAxis: {
-              dataKey: 'date',
-            },
-            yAxis: {
-              tickFormatter: compactNumberTickFormatter,
-            },
-            tooltip: {
-              cursor: false,
-              totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.year} total`,
-            },
-          };
-        },
+        return {
+          type: 'charts/bar',
+          data,
+          controls: [
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+          ],
+          bars,
+          xAxis: {
+            dataKey: 'date',
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
+          },
+          tooltip: {
+            cursor: false,
+            totalFormatter: (label) => `${percentagePerPeriod[label]}% of ${state.year} total`,
+          },
+        };
       },
     },
     {
@@ -313,43 +296,41 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         year: previousYear,
       },
       fetchParams: (state: any) => ({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
-      widget: {
-        type: 'charts/bar',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
-          const data = mergeForChart({
-            data: filteredByYear,
-            mergeBy: 'date',
-            labelKey: 'category_2',
-            valueKey: 'value',
-          });
-          data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-          const bars = getStackedBarsData(data, 'date');
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const data = mergeForChart({
+          data: filteredByYear,
+          mergeBy: 'date',
+          labelKey: 'category_2',
+          valueKey: 'value',
+        });
+        data.forEach((d: any) => (d.date = shortMonthName(d.date)));
+        const bars = getStackedBarsData(data, 'date');
 
-          return {
-            data,
-            controls: [
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
-            ],
-            chartProps: {
-              layout: 'vertical',
-            },
-            legend: {
-              ...bottomLegend,
-              removable: true,
-            },
-            bars,
-            xAxis: {
-              hide: true,
-              type: 'number',
-            },
-            yAxis: {
-              dataKey: 'date',
-              type: 'category',
-            },
-            height: 250 + 50 * data.length,
-          };
-        },
+        return {
+          type: 'charts/bar',
+          data,
+          controls: [
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+          ],
+          chartProps: {
+            layout: 'vertical',
+          },
+          legend: {
+            ...bottomLegend,
+            removable: true,
+          },
+          bars,
+          xAxis: {
+            hide: true,
+            type: 'number',
+          },
+          yAxis: {
+            dataKey: 'date',
+            type: 'category',
+          },
+          height: 250 + 50 * data.length,
+        };
       },
     },
     {
@@ -363,37 +344,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: 'nights_per_visitor_by_country_monthly',
         region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
       }),
-      widget: {
-        type: 'charts/composed',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const data = filterBySelectedYear(rawData, state.year);
-          let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-          let areas = [];
-          const regions = uniq(rawData.map((x) => x.region));
-          if (state.year !== 'all_years') {
-            chartData = expandToFullYear(chartData);
-            [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
-          }
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const data = filterBySelectedYear(rawData, state.year);
+        let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        let areas = [];
+        const regions = uniq(rawData.map((x) => x.region));
+        if (state.year !== 'all_years') {
+          chartData = expandToFullYear(chartData);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
+        }
 
-          return {
-            data: chartData,
-            controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-            legend: {
-              ...bottomLegend,
-              payloadFilter: (y) => !y.value.includes('min-max'),
-            },
-            areas,
-            lines: regions.map((x) => ({ dataKey: x })),
-            xAxis: {
-              dataKey: 'date',
-              tickFormatter: state.year !== 'all_years' && shortMonthName,
-            },
-            yAxis: {},
-            tooltip: {
-              payloadFilter: (y) => !y.name.includes('min-max'),
-            },
-          };
-        },
+        return {
+          type: 'charts/composed',
+          data: chartData,
+          controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
+          legend: {
+            ...bottomLegend,
+            payloadFilter: (y) => !y.value.includes('min-max'),
+          },
+          areas,
+          lines: regions.map((x) => ({ dataKey: x })),
+          xAxis: {
+            dataKey: 'date',
+            tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          tooltip: {
+            payloadFilter: (y) => !y.name.includes('min-max'),
+          },
+        };
       },
     },
     {
@@ -411,53 +389,50 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           ...state.selectedRegion.children?.map((x) => x.name),
         ].filter((x) => x),
       }),
-      widget: {
-        type: 'charts/line',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const yearsOptions = uniq(rawData.map((x: any) => x.category_1))
-            .sort()
-            .reverse()
-            .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
-          let data = rawData.filter((x: any) => x.category_1 === state.year);
-          const allDates = data.map((x) => parseISO(x.date).getTime());
-          const months = allMonths.map((x) => new Date(`${thisYear} ${x}`).getTime());
-          const minDate = Math.min(...allDates);
-          data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
-          const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-          const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
-          return {
-            data: chartData,
-            controls: [
-              {
-                type: 'select',
-                side: 'right',
-                name: 'year',
-                options: yearsOptions,
-                prefix: `${thisYear} Compared to: `,
-              },
-            ],
-            lines: regions,
-            xAxis: {
-              dataKey: 'date',
-              ticks: [minDate, ...months.slice(1)],
-              tickFormatter: (date) => {
-                const parsedDate = new Date(parseInt(date));
-                if (isNaN(parsedDate.getTime())) return date;
-                return format(parsedDate, 'MMM');
-              },
-              type: 'number',
-              scale: 'time',
-              domain: ['auto', 'auto'],
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const yearsOptions = uniq(rawData.map((x: any) => x.category_1))
+          .sort()
+          .reverse()
+          .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
+        let data = rawData.filter((x: any) => x.category_1 === state.year);
+        const allDates = data.map((x) => parseISO(x.date).getTime());
+        const months = allMonths.map((x) => new Date(`${thisYear} ${x}`).getTime());
+        const minDate = Math.min(...allDates);
+        data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
+        const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
+        return {
+          type: 'charts/line',
+          data: chartData,
+          controls: [
+            {
+              type: 'select',
+              side: 'right',
+              name: 'year',
+              options: yearsOptions,
+              prefix: `${thisYear} Compared to: `,
             },
-            yAxis: {},
-            tooltip: {
-              labelFormatter: (value) => {
-                const parsedDate = new Date(parseInt(value));
-                return format(parsedDate, 'MMM d');
-              },
+          ],
+          lines: regions,
+          xAxis: {
+            dataKey: 'date',
+            ticks: [minDate, ...months.slice(1)],
+            tickFormatter: (date) => {
+              const parsedDate = new Date(parseInt(date));
+              if (isNaN(parsedDate.getTime())) return date;
+              return format(parsedDate, 'MMM');
             },
-          };
-        },
+            type: 'number',
+            scale: 'time',
+            domain: ['auto', 'auto'],
+          },
+          tooltip: {
+            labelFormatter: (value) => {
+              const parsedDate = new Date(parseInt(value));
+              return format(parsedDate, 'MMM d');
+            },
+          },
+        };
       },
     },
   ],

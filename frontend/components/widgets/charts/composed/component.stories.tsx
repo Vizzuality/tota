@@ -80,8 +80,6 @@ const config = {
   xAxis: {
     dataKey: 'date',
   },
-  yAxis: {},
-  tooltip: {},
 };
 
 const Template: Story<ComposedChartProps> = ({ ...restProps }: ComposedChartProps) => <Chart {...restProps} />;

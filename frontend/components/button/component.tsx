@@ -10,6 +10,8 @@ const THEME = {
   'primary-alt': 'text-blue2 bg-white',
   secondary: 'text-white bg-red1',
   gray: 'text-white bg-gray3',
+  'dark-gray': 'text-white bg-gray4',
+  'dark-gray-alt': 'text-blue9 border border-gray4 bg-white',
 };
 
 const SIZE = {

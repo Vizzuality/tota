@@ -80,8 +80,6 @@ const config = {
   xAxis: {
     dataKey: 'date',
   },
-  yAxis: {},
-  tooltip: {},
 };
 
 const Template: Story<LineChartProps> = ({ ...restProps }: LineChartProps) => <Chart {...restProps} />;

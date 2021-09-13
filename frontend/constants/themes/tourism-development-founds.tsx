@@ -90,63 +90,61 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
         region: [state.selectedRegion.name].filter((x) => x),
       }),
-      widget: {
-        type: 'charts/bar',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filtered = filterBySelectedYear(rawData, state.year, true).filter(
-            (x) => x.indicator === 'development_funds_volume_by_source',
-          );
-          const filteredCount = filterBySelectedYear(rawData, state.year, true).filter(
-            (x) => x.indicator === 'development_funds_by_source',
-          );
-          const chartData = mergeForChart({
-            data: filtered,
-            mergeBy: 'category_1',
-            labelKey: 'category_1',
-            valueKey: 'value',
-          });
-          const sources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filtered = filterBySelectedYear(rawData, state.year, true).filter(
+          (x) => x.indicator === 'development_funds_volume_by_source',
+        );
+        const filteredCount = filterBySelectedYear(rawData, state.year, true).filter(
+          (x) => x.indicator === 'development_funds_by_source',
+        );
+        const chartData = mergeForChart({
+          data: filtered,
+          mergeBy: 'category_1',
+          labelKey: 'category_1',
+          valueKey: 'value',
+        });
+        const sources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
 
-          return {
-            data: chartData,
-            controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-            bars: sources.map((x) => ({ dataKey: x, stackId: 1 })),
-            chartProps: {
-              margin: {
-                left: 70,
-              },
+        return {
+          type: 'charts/bar',
+          data: chartData,
+          controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
+          bars: sources.map((x) => ({ dataKey: x, stackId: 1 })),
+          chartProps: {
+            margin: {
+              left: 70,
             },
-            xAxis: {
-              dataKey: 'category_1',
-            },
-            yAxis: {
-              tickFormatter: moneyTickFormatter,
-            },
-            tooltip: {
-              cursor: false,
-              valueFormatter: moneyTickFormatter,
-            },
-            widgetWrapper: function WidgetWrapper({ children: widget }: WidgetWrapperProps) {
-              return (
-                <>
-                  <div className="w-1/2">{widget}</div>
-                  <div className="w-1/2 p-20 -mt-20 flex justify-center items-center">
-                    <div className="flex flex-col justify-center items-center ">
-                      <div className="font-bold text-lg text-blue9">Projects</div>
-                      <div className="font-bold text-lg text-white flex gap-3 mt-5">
-                        {sources.map((source, index) => (
-                          <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: COLORS[index] }}>
-                            {filteredCount.find((x) => x.category_1 === source)?.value || 0}
-                          </div>
-                        ))}
-                      </div>
+          },
+          xAxis: {
+            dataKey: 'category_1',
+          },
+          yAxis: {
+            tickFormatter: moneyTickFormatter,
+          },
+          tooltip: {
+            cursor: false,
+            valueFormatter: moneyTickFormatter,
+          },
+          widgetWrapper: function WidgetWrapper({ children: widget }: WidgetWrapperProps) {
+            return (
+              <>
+                <div className="w-1/2">{widget}</div>
+                <div className="w-1/2 p-20 -mt-20 flex justify-center items-center">
+                  <div className="flex flex-col justify-center items-center ">
+                    <div className="font-bold text-lg text-blue9">Projects</div>
+                    <div className="font-bold text-lg text-white flex gap-3 mt-5">
+                      {sources.map((source, index) => (
+                        <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: COLORS[index] }}>
+                          {filteredCount.find((x) => x.category_1 === source)?.value || 0}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </>
-              );
-            },
-          };
-        },
+                </div>
+              </>
+            );
+          },
+        };
       },
     },
     {
@@ -160,43 +158,41 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
-      widget: {
-        type: 'map',
-        fetchProps(rawData: IndicatorValue[] = [], state: any): any {
-          const filteredByYear = filterBySelectedYear(rawData, state.year, true);
-          const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
-          const selectedRegion =
-            state.selectedRegion.name === 'British Columbia'
-              ? null
-              : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
-          const allYears = uniq(rawData.filter((x) => x.date).map((x) => parseInt(getYear(x.date), 10)));
-          const tooltipYears =
-            state.year === 'all_years'
-              ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
-              : [state.year];
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filteredByYear = filterBySelectedYear(rawData, state.year, true);
+        const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
+        const selectedRegion =
+          state.selectedRegion.name === 'British Columbia'
+            ? null
+            : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
+        const allYears = uniq(rawData.filter((x) => x.date).map((x) => parseInt(getYear(x.date), 10)));
+        const tooltipYears =
+          state.year === 'all_years'
+            ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
+            : [state.year];
 
-          return {
-            data: filteredByYear,
-            controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-            selectedRegion,
-            extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion, state.year)].filter((x) => x),
-            featureTooltip: function FeatureTooltip(feature: any) {
-              const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
-              if (!regionName) return null;
-              const regionData = filteredByYear.filter((x) => x.region === regionName);
-              const volumes = regionData.filter((x) => x.indicator === 'development_funds_volume_by_source');
-              const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
-              const funds = fundSources.map((source, index) => ({
-                name: source,
-                color: COLORS[index],
-                count: counts.find((x) => x.category_1 === source)?.value || 0,
-                volume: volumes.find((x) => x.category_1 === source)?.value || 0,
-              }));
+        return {
+          type: 'map',
+          data: filteredByYear,
+          controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
+          selectedRegion,
+          extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion, state.year)].filter((x) => x),
+          featureTooltip: function FeatureTooltip(feature: any) {
+            const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
+            if (!regionName) return null;
+            const regionData = filteredByYear.filter((x) => x.region === regionName);
+            const volumes = regionData.filter((x) => x.indicator === 'development_funds_volume_by_source');
+            const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
+            const funds = fundSources.map((source, index) => ({
+              name: source,
+              color: COLORS[index],
+              count: counts.find((x) => x.category_1 === source)?.value || 0,
+              volume: volumes.find((x) => x.category_1 === source)?.value || 0,
+            }));
 
-              return <DevelopmentFundsTooltip years={tooltipYears} regionName={regionName} funds={funds} />;
-            },
-          };
-        },
+            return <DevelopmentFundsTooltip years={tooltipYears} regionName={regionName} funds={funds} />;
+          },
+        };
       },
     },
   ],

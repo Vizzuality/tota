@@ -18,16 +18,11 @@ export interface ThemeSectionProps {
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
   const [state, setState] = useState(section.initialState || {});
   const selectedRegion = useRouterSelectedRegion();
-
-  const widgetType = section.widget?.type || 'charts/pie';
   const LoadingWidget = () => (
     <div style={{ height: 400 }} className="flex items-center justify-center">
       <Loading iconClassName="w-10 h-10" visible />
     </div>
   );
-  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
-    loading: LoadingWidget,
-  });
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
@@ -36,14 +31,18 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     }),
     [state, selectedRegion],
   );
-
   const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
   const {
     data,
-    controls,
+    widgetTypeOverride,
     widgetWrapper: WidgetWrapper,
+    type: widgetType,
+    controls,
     ...widgetConfig
-  } = useMemo(() => section.widget.fetchProps(rawData, wholeState), [rawData, wholeState]);
+  } = useMemo(() => section.fetchWidgetProps(rawData, wholeState), [rawData, wholeState]);
+  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
+    loading: LoadingWidget,
+  });
 
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">
