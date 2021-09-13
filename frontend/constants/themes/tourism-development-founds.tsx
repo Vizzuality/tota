@@ -7,6 +7,7 @@ import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development
 import type { ThemeType, IndicatorValue, WidgetWrapperProps } from 'types';
 
 import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart } from 'utils/charts';
+import { getMapUrl } from 'hooks/map';
 import { previousYear, moneyTickFormatter } from './utils';
 
 import mountains2Image from 'images/home/image-mountains2.png';
@@ -37,7 +38,7 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
   const fundColors = flatten(zip(fundSources, COLORS).filter((s) => s[0]));
 
   return {
-    id: 'development-funds',
+    id: 'development_funds',
     name: 'Development Funds',
     type: 'geojson',
     images: [{ id: 'marker', src: '/images/map/marker.svg', options: { sdf: true } }],
@@ -154,7 +155,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       initialState: {
         year: 'all_years',
       },
-      viewOnMap: true,
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
@@ -173,6 +173,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             : [state.year];
 
         return {
+          viewOnMap: {
+            title: 'View Projects on Map',
+            link: getMapUrl(state.selectedRegion.slug, ['tourism_regions', 'development_funds']),
+          },
           type: 'map',
           data: filteredByYear,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],

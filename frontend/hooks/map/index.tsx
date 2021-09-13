@@ -39,6 +39,26 @@ function useEncodedQueryParam(paramName: string, defaultParams: any = {}) {
   return [defaultParams, setParams];
 }
 
+function getLayerSettings(layerSettings: any = {}, activeLayers: string[] = []) {
+  const newLayerSettings = {};
+  activeLayers.forEach((layer) => {
+    newLayerSettings[layer] = layerSettings[layer] || {
+      visibility: true,
+      opacity: 1,
+    };
+  });
+  return newLayerSettings;
+}
+
+export function getMapUrl(selectedRegion: string, activeLayers: string[] = []) {
+  const mapSettings = {
+    selectedRegion,
+    layerSettings: getLayerSettings({}, activeLayers),
+  };
+
+  return `/map?map=${encodeParam(mapSettings)}`;
+}
+
 export function MapProvider({ children }: MapProviderProps) {
   const [mapSettings, setMapSettings] = useEncodedQueryParam('map', {
     viewport: {
@@ -48,17 +68,12 @@ export function MapProvider({ children }: MapProviderProps) {
       minZoom: 4,
       maxZoom: 20,
     },
-    activeLayers: ['tourism_regions'],
-    layerSettings: {
-      tourism_regions: {
-        visibility: true,
-        opacity: 1,
-      },
-    },
+    layerSettings: getLayerSettings({}, ['tourism_regions']),
   });
-  const { activeLayers, layerSettings, viewport, selectedRegion: selectedRegionSlug } = mapSettings;
+  const { layerSettings, viewport, selectedRegion: selectedRegionSlug } = mapSettings;
   const { regions } = useRegions();
   const selectedRegion = regions.find((r) => r.slug === selectedRegionSlug) || regions[0];
+  const activeLayers = Object.keys(layerSettings);
 
   const changeLayerSettings = useCallback(
     (layerId, settings) => {
@@ -81,7 +96,7 @@ export function MapProvider({ children }: MapProviderProps) {
     (layers: string[]) => {
       setMapSettings({
         ...mapSettings,
-        activeLayers: layers,
+        layerSettings: getLayerSettings(mapSettings.layerSettings || {}, layers),
       });
     },
     [mapSettings],

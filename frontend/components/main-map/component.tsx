@@ -48,8 +48,6 @@ export const MainMap: FC<MapProps> = ({
       visibility: layerSettings[l.id]?.visibility ?? true,
     }));
 
-  console.log('layers', layers);
-
   const [bounds, setBounds] = useState({
     bbox: null,
     options: {
