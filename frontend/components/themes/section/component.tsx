@@ -61,8 +61,11 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             <div>{section.subTitle}</div>
           </div>
         </div>
+        <div className="flex-1">
+          <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
+          {section.notes && <p className="mt-2 leading-8" dangerouslySetInnerHTML={{ __html: section.notes }} />}
+        </div>
 
-        <p className="mt-4 lg:mt-10 leading-8 flex-1">{section.description}</p>
         {viewOnMap && (
           <div className="mt-4">
             <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>

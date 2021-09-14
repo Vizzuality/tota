@@ -10,6 +10,8 @@ export const defaultGrid = {
   strokeDasharray: '0',
 };
 
+export const defaultTooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } };
+
 export const COLORS = [
   '#00B6A1',
   '#009AAC',

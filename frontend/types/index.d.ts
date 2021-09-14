@@ -22,6 +22,7 @@ export interface ThemeSectionType {
   title: string;
   subTitle?: string;
   description: string;
+  notes?: string;
   initialState?: any;
   fetchParams: (state: any) => any;
   fetchWidgetProps: (indicatorValues: IndicatorValue[], state: any) => any;

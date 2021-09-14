@@ -10,7 +10,7 @@ import {
   LineChart,
   Legend,
 } from 'recharts';
-import { COLORS, defaultGrid, bottomLegend } from 'constants/charts';
+import { COLORS, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
 import { LineChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
@@ -24,7 +24,7 @@ const Chart: FC<LineChartProps> = ({
   xAxis,
   yAxis = {},
   lines,
-  tooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } },
+  tooltip = defaultTooltip,
 }: LineChartProps) => {
   const yAxisWidth = 60;
   const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};

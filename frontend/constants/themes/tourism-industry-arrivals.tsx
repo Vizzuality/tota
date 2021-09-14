@@ -15,7 +15,7 @@ import {
   mergeForChart,
 } from 'utils/charts';
 import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
-import { bottomLegend } from 'constants/charts';
+import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
 
@@ -32,8 +32,8 @@ const theme: ThemeType = {
     {
       title: 'Tourism establishments',
       subTitle: '(by type)',
-      description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      description: `Total number of tourism businesses in the province/regions (by type of business).`,
+      notes: `Aggregated number. Includes Hubspot entries, as well as additional businesses of the tourism supply side (e.g. campgrounds, visitor information centres, etc.).`,
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: 'all',
@@ -60,7 +60,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       title: 'Biosphere committed & accessible businesses',
       subTitle: '(by type)',
       description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        Total number of tourism businesses in the province/regions with official commitments to the Biosphere program (by type of businesses).<br/>
+        Total number of tourism businesses with accessible features.<br/>
+        Total number of tourism businesses with at least half of their staff being Indigenous (50%+)
+      `,
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: state.type,
@@ -88,9 +91,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: 'Monthly domestic (Canadian) arrivals',
+      title: 'Domestic arrivals',
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+        Total amount of domestic (Canadian) overnight arrivals to the province/regions by month.
+      `,
+      notes: `
+        <strong class='font-bold'>Visits:</strong> count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.<br/>
+        <strong class='font-bold'>Trips:</strong> count of domestic traveler trips which involved spending one or more nights over a certain time period as part of a continuous visit to the destination. includes unique visitors i.e. visitors that came twice in e.g. one month are counted as two trips.<br/>
+        <strong class='font-bold'>Stays:</strong> count of unique nights a domestic visitor was observed in the destination over a certain time period, i.e. overnights.
+      `,
       initialState: {
         group: 'visits',
         year: 'all_years',
@@ -142,9 +151,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: '% of annual domestic overnight visitors occurring in peak month & quarter',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Seasonality',
+      description: `Share of annual domestic overnight visitors occurring in peak month & quarter`,
       initialState: {
         year: previousYear,
         frequency: 'monthly',
@@ -173,9 +181,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: 'Ratio of number of domestic tourists in peak month to lowest month',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Seasonality - ratio peak month vs. lowest month',
+      description: `Ratio of domestic visitors in peak month to lowest month`,
       initialState: {
         year: previousYear,
       },
@@ -207,8 +214,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
     },
     {
       title: 'Domestic (canadian) visitors by origin province',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      description: `Total amount of domestic (Canadian) overnight visitors by their respective origin provinces`,
       initialState: {
         frequency: 'monthly',
         year: previousYear,
@@ -225,9 +231,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           labelKey: 'category_1',
           valueKey: 'value',
         });
-        if (state.frequency === 'monthly') {
-          data.forEach((d: any) => (d.date = shortMonthName(d.date)));
-        }
         const bars = getStackedBarsData(data, 'date');
         const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
@@ -241,6 +244,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           bars,
           xAxis: {
             dataKey: 'date',
+            tickFormatter: state.frequency === 'monthly' && shortMonthName,
           },
           yAxis: {
             tickFormatter: compactNumberTickFormatter,
@@ -253,10 +257,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: 'Quarterly visits by origin city',
+      title: 'Origins of domestic visitors (by cities)',
       subTitle: '(top 10)',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      description: `Total amount of domestic (Canadian) overnight visitors by their respective origin cities`,
       initialState: {
         year: previousYear,
       },
@@ -297,10 +300,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: 'Monthly visits by PRIZM cluster',
+      title: 'Market Segmentation Insights',
       subTitle: '(top 10)',
       description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      Top 10 PRIZM clusters showing the largest lifestyle groups/top markets of potential domestic (Canadian) visitors per month for the province/regions
+      `,
       initialState: {
         year: previousYear,
       },
@@ -313,7 +317,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           labelKey: 'category_2',
           valueKey: 'value',
         });
-        data.forEach((d: any) => (d.date = shortMonthName(d.date)));
         const bars = getStackedBarsData(data, 'date');
 
         return {
@@ -337,15 +340,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           yAxis: {
             dataKey: 'date',
             type: 'category',
+            tickFormatter: shortMonthName,
           },
           height: 250 + 50 * data.length,
         };
       },
     },
     {
-      title: 'Average length of stay of domestic (Canadian) overnight visitors',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Length of stay',
+      description: `Average length of stay of domestic (Canadian) overnight visitors in the province/regions`,
       initialState: {
         year: previousYear,
       },
@@ -378,15 +381,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
           tooltip: {
+            ...defaultTooltip,
             payloadFilter: (y) => !y.name.includes('min-max'),
           },
         };
       },
     },
     {
-      title: 'Weekly Canadian travel patterns',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Domestic overnight visitors',
+      description: `Weekly travel patterns of domestic (Canadian) overnight visitors showing the variation in volumes between the current year and the selected year`,
       initialState: {
         year: `compared_to_${previousYear}`,
       },
@@ -436,6 +439,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             domain: ['auto', 'auto'],
           },
           tooltip: {
+            ...defaultTooltip,
             labelFormatter: (value) => {
               const parsedDate = new Date(parseInt(value));
               return format(parsedDate, 'MMM d');

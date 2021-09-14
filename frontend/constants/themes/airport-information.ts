@@ -9,7 +9,7 @@ import {
   getWithMinMaxAreas,
   mergeForChart,
 } from 'utils/charts';
-import { bottomLegend } from 'constants/charts';
+import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { shortMonthName, compactNumberTickFormatter, previousYear } from './utils';
 
 import airportImage from 'images/home/image-airport.png';
@@ -20,9 +20,10 @@ const theme: ThemeType = {
   image: airportImage,
   sections: [
     {
-      title: 'Total number of arriving flights per month',
+      title: 'Number of arriving flights',
       description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      Total number of arriving flights in the top 3 airports per region. Flights per destination include all airlines serving that route
+       `,
       initialState: {
         year: previousYear,
       },
@@ -55,7 +56,7 @@ const theme: ThemeType = {
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
           tooltip: {
-            cursor: { stroke: '#314057', strokeWidth: 1 },
+            ...defaultTooltip,
             valueFormatter: compactNumberTickFormatter,
             payloadFilter: (y) => !y.name.includes('min-max'),
           },
@@ -64,8 +65,7 @@ const theme: ThemeType = {
     },
     {
       title: 'Total passenger volume',
-      description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      description: `Total air passenger traffic (arrivals) to the top 3 airports per region.`,
       initialState: {
         year: previousYear,
         airport: undefined,
@@ -108,9 +108,8 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Share of international & domestic arrivals',
-      description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'International vs. domestic arrivals',
+      description: `Share of international and domestic air (Canadian) passenger traffic (arrivals) to the top 3 airport per region. The passenger splits are based on O/D data.`,
       initialState: {
         year: previousYear,
         airport: undefined,
@@ -160,9 +159,8 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Total number of destinations per year',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Airport connections',
+      description: `Total number of destinations the selected airport is directly connected with (per year)`,
       initialState: {
         year: previousYear,
       },
@@ -188,8 +186,7 @@ const theme: ThemeType = {
     },
     {
       title: 'Top average connections per week',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      description: `Most frequent flight activity (per week) between the selected airport and its available destinations.`,
       initialState: {
         year: previousYear,
       },
@@ -217,8 +214,7 @@ const theme: ThemeType = {
     },
     {
       title: 'Daily arrivals by origin airport',
-      description: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      description: `Average daily number of arriving flights to the selected airport by origin airport (per month).`,
       initialState: {
         year: previousYear,
         airport: undefined,
