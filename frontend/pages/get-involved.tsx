@@ -12,7 +12,7 @@ import ParticipatingRegions from 'components/static-pages/participating-regions'
 
 const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
-    <Layout className="w-full bg-gray0">
+    <Layout className="w-full bg-blue-50">
       <Head>
         <title>Get involved</title>
       </Head>
@@ -48,7 +48,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="text-blue9 mt-10 xl:mt-20 py-24 px-10 text-center bg-white">
+        <div className="text-blue-800 mt-10 xl:mt-20 py-24 px-10 text-center bg-white">
           <h2 className="text-4xl">Feedback & Questions</h2>
 
           <p className="mt-10 leading-7">

@@ -17,7 +17,7 @@ export const LegendTypeBasic: FC<LegendTypeBasicProps> = ({ className = '', item
   >
     <ul className="grid grid-cols-2 w-full gap-2">
       {items.map(({ value, color }) => (
-        <li key={`${value}`} className="flex text-xs text-blue9">
+        <li key={`${value}`} className="flex text-xs text-blue-800">
           <div
             className="flex-shrink-0 w-3 h-3 mr-2"
             style={{

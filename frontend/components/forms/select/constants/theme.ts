@@ -1,9 +1,9 @@
 export default {
   dark: {
-    container: 'text-white bg-transparent bg-blue9',
-    open: 'bg-blue9 text-white',
+    container: 'text-white bg-transparent bg-blue-800',
+    open: 'bg-blue-800 text-white',
     closed: 'text-white',
-    menu: 'border-t border-gray2',
+    menu: 'border-t border-gray-50',
     prefix: {
       base: 'text-white text-lg font-bold',
     },
@@ -19,12 +19,12 @@ export default {
     },
   },
   light: {
-    container: 'text-blue9 bg-transparent',
+    container: 'text-blue-800 bg-transparent',
     open: 'ring-2 ring-blue-400 bg-white text-gray-600',
     closed: 'text-gray-400',
     menu: '',
     prefix: {
-      base: 'text-blue9 text-lg',
+      base: 'text-blue-800 text-lg',
     },
     icon: {
       closed: 'text-gray-600',
@@ -51,7 +51,7 @@ export default {
       disabled: 'text-gray-400',
     },
     item: {
-      base: 'text-lg text-color1 font-bold',
+      base: 'text-lg text-blue-800 font-bold',
       highlighted: 'text-lg bg-gray-100 text-gray-800 font-bold',
       disabled: 'text-lg opacity-50 pointer-events-none',
     },

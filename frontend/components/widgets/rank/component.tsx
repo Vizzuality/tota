@@ -6,7 +6,7 @@ function format(text: string, value: string) {
   return (
     <>
       {before}
-      <span className="text-green1 text-5xl font-bold">{value}</span>
+      <span className="text-green-400 text-5xl font-bold">{value}</span>
       {after}
     </>
   );
@@ -18,12 +18,12 @@ const Rank: FC<RankProps> = ({ data }: RankProps) => {
       {data.map((item, index) => (
         <div key={index} className="flex items-baseline">
           <div
-            className="rounded-full bg-color1 text-white text-xl flex items-center justify-center mr-5 transform -translate-y-1"
+            className="rounded-full bg-blue-800 text-white text-xl flex items-center justify-center mr-5 transform -translate-y-1"
             style={{ width: 40, height: 40 }}
           >
             {index + 1}
           </div>
-          <div className="text-3xl text-color1">{format(item.text, item.value)}</div>
+          <div className="text-3xl text-blue-800">{format(item.text, item.value)}</div>
         </div>
       ))}
     </div>

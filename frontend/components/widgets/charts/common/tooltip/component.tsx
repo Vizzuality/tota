@@ -19,7 +19,7 @@ const Tooltip: FC<TooltipProps> = ({
   return (
     <div className="bg-white shadow-md text-sm" style={{ minWidth: 300 }}>
       {label && (
-        <div className="bg-blue9 py-2 px-4 text-white flex flex-row justify-between">
+        <div className="bg-blue-800 py-2 px-4 text-white flex flex-row justify-between">
           <span>{labelFormatter(label)}</span>
           {totalFormatter && <span className="font-bold">{totalFormatter(label)}</span>}
         </div>
@@ -28,7 +28,7 @@ const Tooltip: FC<TooltipProps> = ({
         {sortedPayload &&
           sortedPayload.length > 0 &&
           sortedPayload.map((y: any) => (
-            <div key={`${y.dataKey}`} className="py-1 flex flex-row justify-between text-blue9">
+            <div key={`${y.dataKey}`} className="py-1 flex flex-row justify-between text-blue-800">
               <div className="mr-10 flex items-center">
                 <div
                   className="w-4 h-4 mr-2 inline-block"

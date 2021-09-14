@@ -48,7 +48,7 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className, viewport, onZoomC
     >
       <button
         className={cx({
-          'mb-0.5 p-1.5 text-blue9 bg-white': true,
+          'mb-0.5 p-1.5 text-blue-800 bg-white': true,
           'hover:bg-gray-200 active:bg-gray-100': zoom !== maxZoom,
           'opacity-50 cursor-default': zoom === maxZoom,
         })}
@@ -61,7 +61,7 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className, viewport, onZoomC
       </button>
       <button
         className={cx({
-          'p-1.5 text-blue9 bg-white': true,
+          'p-1.5 text-blue-800 bg-white': true,
           'hover:bg-gray-200 active:bg-gray-100': zoom !== minZoom,
           'opacity-50 cursor-default': zoom === minZoom,
         })}

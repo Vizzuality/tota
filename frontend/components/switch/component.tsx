@@ -13,14 +13,17 @@ const Switch: FC<SwitchProps> = ({ className, checked, onChange }: SwitchProps) 
         onChange={(e) => onChange && onChange(e.target.checked)}
       />
       <div
-        className={cx('w-9 h-5 rounded-full shadow-inner border-2 transition duration-300 ease-in-out border-blue9', {
-          'bg-white': !checked,
-          'bg-blue9': checked,
-        })}
+        className={cx(
+          'w-9 h-5 rounded-full shadow-inner border-2 transition duration-300 ease-in-out border-blue-800',
+          {
+            'bg-white': !checked,
+            'bg-blue-800': checked,
+          },
+        )}
       ></div>
       <div
         className={cx('dot w-2.5 h-2.5 absolute rounded-full shadow transition duration-300 ease-in-out', {
-          'bg-blue9': !checked,
+          'bg-blue-800': !checked,
           'transform translate-x-4 bg-white': checked,
         })}
         style={{ top: 5, left: 5 }}

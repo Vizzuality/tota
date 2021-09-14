@@ -43,7 +43,7 @@ const Template: Story<LegendProps> = (args) => {
   );
 
   return (
-    <div className="bg-gray0 p-10">
+    <div className="bg-gray-50 p-10">
       <div style={{ maxWidth: 500 }}>
         <Legend {...args} onChangeOrder={onChangeOrder}>
           {sortedItems.map((i) => {

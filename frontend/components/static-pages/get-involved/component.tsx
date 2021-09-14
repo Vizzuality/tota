@@ -7,7 +7,7 @@ export interface GetInvolvedProps {
 }
 
 const GetInvolved: FC<GetInvolvedProps> = ({ className }: GetInvolvedProps) => (
-  <div className={cx('text-blue9 py-24 text-center', { [className]: !!className })}>
+  <div className={cx('text-blue-800 py-24 text-center', { [className]: !!className })}>
     <div className="text-4xl">Get involved</div>
 
     <div className="mt-10 flex flex-row flex-wrap gap-8 justify-center">

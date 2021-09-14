@@ -21,7 +21,7 @@ const About: React.FC<void> = (): JSX.Element => {
       auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
       />
 
-      <div className="container mx-auto lg:px-16 text-blue9 py-24 text-center">
+      <div className="container mx-auto lg:px-16 text-blue-800 py-24 text-center">
         <h3 className="text-4xl font-bold">Background</h3>
 
         <p className="mt-10 leading-7">
@@ -44,7 +44,7 @@ const About: React.FC<void> = (): JSX.Element => {
         </p>
       </div>
 
-      <div className="text-blue9 py-24 text-center bg-color2">
+      <div className="text-blue-800 py-24 text-center bg-yellow-50">
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">What&apos;s the impact portal?</h3>
 
@@ -63,7 +63,7 @@ const About: React.FC<void> = (): JSX.Element => {
         <ParticipatingRegions />
       </div>
 
-      <div className="text-blue9 bg-color2 py-24 text-center">
+      <div className="text-blue-800 bg-yellow-50 py-24 text-center">
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">Our mission</h3>
 
@@ -104,7 +104,7 @@ const About: React.FC<void> = (): JSX.Element => {
       </div>
 
       <div className="container mx-auto lg:px-16">
-        <GetInvolved className="border-b border-gray3" />
+        <GetInvolved className="border-b border-gray-300" />
         <NewsletterSignUp />
       </div>
     </Layout>

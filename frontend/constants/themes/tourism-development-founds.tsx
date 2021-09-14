@@ -132,7 +132,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                 <div className="w-1/2">{widget}</div>
                 <div className="w-1/2 p-20 -mt-20 flex justify-center items-center">
                   <div className="flex flex-col justify-center items-center ">
-                    <div className="font-bold text-lg text-blue9">Projects</div>
+                    <div className="font-bold text-lg text-blue-800">Projects</div>
                     <div className="font-bold text-lg text-white flex gap-3 mt-5">
                       {sources.map((source, index) => (
                         <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: COLORS[index] }}>

@@ -13,7 +13,7 @@ const Tooltip: FC<TooltipProps> = ({ active, payload, valueFormatter = (value: s
         {sortedPayload &&
           sortedPayload.length > 0 &&
           sortedPayload.map((y: any, index) => (
-            <div key={index} className="py-1 flex flex-row justify-between text-blue9">
+            <div key={index} className="py-1 flex flex-row justify-between text-blue-800">
               <div className="mr-10 flex items-center">
                 <div className="w-4 h-4 mr-2 inline-block" style={{ backgroundColor: y.payload.color }}></div>
                 {y.payload.name}

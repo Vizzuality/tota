@@ -58,7 +58,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
         </div>
         <div className="relative">
           <button
-            className="cursor-pointer absolute flex items-center justify-center -right-10 top-0 w-10 h-10 bg-gray2 border-r border-b border-t border-gray1"
+            className="cursor-pointer absolute flex items-center justify-center -right-10 top-0 w-10 h-10 bg-gray-50 border-r border-b border-t border-gray-400"
             style={{ transform: 'translate(-1px, -1px)' }}
             onClick={() => setCollapsed(!collapsed)}
           >
@@ -72,7 +72,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
             />
           </button>
         </div>
-        <div className="flex-1 border-r border-gray1 overflow-y-auto">
+        <div className="flex-1 border-r border-gray-400 overflow-y-auto">
           {selectedRegion && (
             <div className="flex flex-col p-3 gap-3">
               {/** @todo: add useIndicators(<SelectedRegion>) */}
@@ -82,7 +82,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
                     {layers.map((layer) => (
                       <div
                         key={layer.id}
-                        className="flex gap-2 leading-5 bg-white border border-blue9 p-3 text-blue9 font-bold"
+                        className="flex gap-2 leading-5 bg-white border border-blue-800 p-3 text-blue-800 font-bold"
                       >
                         <Switch
                           checked={activeLayers.includes(layer.id)}

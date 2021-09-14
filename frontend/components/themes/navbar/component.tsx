@@ -46,7 +46,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
 
   return (
     <>
-      <div className={cx('hidden lg:block w-full h-18 z-30 bg-blue9', { 'fixed top-24': fixed })}>
+      <div className={cx('hidden lg:block w-full h-18 z-30 bg-blue-800', { 'fixed top-24': fixed })}>
         <div className="container m-auto flex items-center text-white">
           <div className="w-72 -ml-4">
             <Select
@@ -64,7 +64,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
             <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
               <a
                 className={cx('px-4 py-2 text-sm h-16 flex-1 flex items-center justify-center text-center', {
-                  'font-bold bg-blue10': t.slug === themeSlug,
+                  'font-bold bg-blue-900': t.slug === themeSlug,
                 })}
               >
                 {t.title}

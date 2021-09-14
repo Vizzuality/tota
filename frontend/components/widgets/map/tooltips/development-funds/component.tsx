@@ -3,10 +3,10 @@ import type { TooltipProps } from './types';
 
 const Tooltip: FC<TooltipProps> = ({ years, regionName, funds }: TooltipProps) => (
   <div>
-    <div className="bg-blue9 py-2 px-4 text-white flex flex-row justify-between">
+    <div className="bg-blue-800 py-2 px-4 text-white flex flex-row justify-between">
       <div>{(years || []).join(' - ')}</div>
     </div>
-    <div className="px-4 py-2 text-blue9">
+    <div className="px-4 py-2 text-blue-800">
       <div className="font-bold">{regionName} Projects</div>
       {funds.map((fund) => (
         <div key={fund.name} className="flex justify-between mt-1">

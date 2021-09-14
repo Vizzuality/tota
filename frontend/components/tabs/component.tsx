@@ -11,7 +11,7 @@ const Tabs: FC<TabsProps> = ({ className, options, selectedValue, onChange }: Ta
           key={option.value}
           type="button"
           className={cx('py-1.5 border-b-4 text-lg border-transparent', {
-            'border-color1 font-bold': option.value === selectedValue,
+            'border-blue-800 font-bold': option.value === selectedValue,
           })}
           onClick={() => onChange(option.value)}
         >

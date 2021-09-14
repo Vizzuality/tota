@@ -73,12 +73,12 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
               </Button>
               <div
                 className={cx(
-                  'text-blue9 text-lg font-bold absolute transition duration-500 ease-in-out transform z-0 flex gap-2 items-center',
+                  'text-blue-800 text-lg font-bold absolute transition duration-500 ease-in-out transform z-0 flex gap-2 items-center',
                   { '-translate-y-16 opacity-1': showCompare, 'opacity-1': !showCompare },
                 )}
               >
                 <span>{currentYear - 1}</span>
-                <Icon className="w-3 h-3 text-blue9" icon={ArrowIcon} />
+                <Icon className="w-3 h-3 text-blue-800" icon={ArrowIcon} />
                 <span>{currentYear}</span>
               </div>
               <div

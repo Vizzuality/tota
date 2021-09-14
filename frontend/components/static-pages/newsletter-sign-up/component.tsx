@@ -8,7 +8,7 @@ export interface NewsletterSignUpProps {
 }
 
 const NewsletterSignUp: FC<NewsletterSignUpProps> = ({ className }: NewsletterSignUpProps) => (
-  <div className={cx('text-blue9 py-24 text-center', { [className]: !!className })}>
+  <div className={cx('text-blue-800 py-24 text-center', { [className]: !!className })}>
     <div className="text-4xl">Want to receive updates on the platform?</div>
 
     <div className="mt-10 flex flex-row flex-wrap gap-10 xl:gap-16 justify-center">

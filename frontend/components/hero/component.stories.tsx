@@ -13,7 +13,7 @@ const Template: Story<HeroProps> = ({ ...restProps }: HeroProps) => <Hero {...re
 export const Default = Template.bind({});
 Default.args = {
   title: 'Hero title',
-  className: 'text-blue9',
+  className: 'text-blue-800',
   subtitle: 'This is the hero subtitle',
   image: 'example.jpeg',
   height: 500,

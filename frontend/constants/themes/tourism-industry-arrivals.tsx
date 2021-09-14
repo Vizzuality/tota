@@ -198,7 +198,7 @@ const theme: ThemeType = {
           ratioText = (
             <div>
               peak/lowest month ({shortMonthName(ratio.category_1)}/{shortMonthName(ratio.category_2)}):{' '}
-              <span className="text-green1 text-5xl font-bold">{ratioNumber}</span> x visitors
+              <span className="text-green-400 text-5xl font-bold">{ratioNumber}</span> x visitors
             </div>
           );
         }

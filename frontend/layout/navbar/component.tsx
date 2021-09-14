@@ -20,8 +20,8 @@ const THEMES = {
     mobile: 'bg-gray-500',
   },
   gray: {
-    container: 'bg-gray2 border-b border-color1',
-    nav: 'text-blue9',
+    container: 'bg-gray-50 border-b border-blue-800',
+    nav: 'text-blue-800',
     logo: LogoColour,
     hamburger: 'black',
     mobile: 'bg-gray-200',

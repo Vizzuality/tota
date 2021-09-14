@@ -51,7 +51,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       <div className="lg:w-2/6 lg:pr-5 lg:border-r-2 flex flex-col">
         <div className="relative">
           <div
-            className="absolute rounded-full bg-color2 text-blue9 text-2xl h-50 w-50 flex items-center justify-center"
+            className="absolute rounded-full bg-yellow-50 text-blue-800 text-2xl h-50 w-50 flex items-center justify-center"
             style={{ width: 50, height: 50 }}
           >
             {index}

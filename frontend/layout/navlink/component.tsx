@@ -13,8 +13,8 @@ const THEMES = {
     active: 'border-white',
   },
   dark: {
-    base: 'text-blue9 hover:border-blue9',
-    active: 'border-blue9',
+    base: 'text-blue-800 hover:border-blue-800',
+    active: 'border-blue-800',
   },
 };
 

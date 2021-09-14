@@ -41,7 +41,7 @@ const Menu: FC<MenuProps> = ({ options, onSelect }: MenuProps) => {
 
   return (
     <li
-      className="relative flex items-center justify-center border border-gray1 w-9 h-9 self-stretch opacity-40"
+      className="relative flex items-center justify-center border border-gray-400 w-9 h-9 self-stretch opacity-40"
       ref={triggerRef}
     >
       <div className="overflow-hidden w-4 h-4">
@@ -69,7 +69,7 @@ const Menu: FC<MenuProps> = ({ options, onSelect }: MenuProps) => {
             >
               <ul
                 {...getMenuProps()}
-                className="bg-white text-blue9 py-1 overflow-y-auto overflow-x-hidden"
+                className="bg-white text-blue-800 py-1 overflow-y-auto overflow-x-hidden"
                 style={{
                   maxHeight,
                 }}

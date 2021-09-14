@@ -40,7 +40,7 @@ const Home: React.FC<void> = (): JSX.Element => {
       />
 
       <div className="container mx-auto lg:px-16">
-        <div className="text-blue9 text-center py-24 mx-auto" style={{ maxWidth: 800 }}>
+        <div className="text-blue-800 text-center py-24 mx-auto" style={{ maxWidth: 800 }}>
           <h4 className="text-2xl leading-10">
             British Columbia is one of the most attractive tourism destinations worldwide. With this initiative, the
             participating regions within the province seek to strengthen their commitment towards more sustainable
@@ -54,7 +54,7 @@ const Home: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="text-blue9 text-center py-10 mx-auto">
+        <div className="text-blue-800 text-center py-10 mx-auto">
           <h3 className="font-bold text-4xl leading-normal">Explore the data</h3>
           <p className="mt-10 mx-auto leading-7" style={{ maxWidth: 800 }}>
             This platform includes a variety of tourism-relevant information gathered from different sources across BC.
@@ -73,7 +73,7 @@ const Home: React.FC<void> = (): JSX.Element => {
               />
             ))}
             <div
-              className="relative w-full border-2 border-blue9 text-blue9 text-2xl font-bold"
+              className="relative w-full border-2 border-blue-800 text-blue-800 text-2xl font-bold"
               style={{ paddingBottom: '100%' }}
             >
               <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
@@ -81,8 +81,8 @@ const Home: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <ParticipatingRegions className="border-b border-gray3" />
-        <GetInvolved className="border-b border-gray3" />
+        <ParticipatingRegions className="border-b border-gray-300" />
+        <GetInvolved className="border-b border-gray-300" />
         <NewsletterSignUp />
       </div>
     </Layout>

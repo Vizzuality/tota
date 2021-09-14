@@ -46,7 +46,7 @@ interface FooterProps {}
 
 const Footer: FC<FooterProps> = () => {
   return (
-    <div className="bg-blue9">
+    <div className="bg-blue-800">
       <div className="container px-10 py-14 mx-auto text-white flex flex-row justify-between">
         <div>
           <Link href="/">

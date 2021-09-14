@@ -5,13 +5,13 @@ import cx from 'classnames';
 import type { ButtonProps, AnchorProps, Overload } from './types';
 
 const THEME = {
-  /* primary: 'text-blue9 bg-white border border-gray3', */
-  primary: 'text-white bg-blue2',
-  'primary-alt': 'text-blue2 bg-white',
-  secondary: 'text-white bg-red1',
-  gray: 'text-white bg-gray3',
-  'dark-gray': 'text-white bg-gray4',
-  'dark-gray-alt': 'text-blue9 border border-gray4 bg-white',
+  /* primary: 'text-blue-800 bg-white border border-gray-300', */
+  primary: 'text-white bg-green-600',
+  'primary-alt': 'text-green-600 bg-white',
+  secondary: 'text-white bg-red-100',
+  gray: 'text-white bg-gray-300',
+  'dark-gray': 'text-white bg-gray-500',
+  'dark-gray-alt': 'text-blue-800 border border-gray-500 bg-white',
 };
 
 const SIZE = {

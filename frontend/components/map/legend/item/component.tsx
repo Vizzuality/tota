@@ -37,7 +37,7 @@ export const LegendItem: FC<LegendItemProps> = ({
 
   return (
     <div key={id} className="bg-white">
-      <div className="flex justify-between items-center bg-color2 text-blue9 font-heading py-2.5 px-5">
+      <div className="flex justify-between items-center bg-yellow-50 text-blue-800 font-heading py-2.5 px-5">
         {name && <span className="mr-10">{name}</span>}
         <div className="flex gap-3">
           <button type="button">
@@ -49,7 +49,7 @@ export const LegendItem: FC<LegendItemProps> = ({
           {removable && (
             <>
               <div className="relative w-0 ">
-                <div className="absolute -top-1.5 -bottom-1.5 border-r-2 border-gray1"></div>
+                <div className="absolute -top-1.5 -bottom-1.5 border-r-2 border-gray-400"></div>
               </div>
               <button type="button" onClick={handleRemoveClick}>
                 <Icon icon={REMOVE_SVG} className="w-4 h-4" />

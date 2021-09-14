@@ -43,7 +43,7 @@ export const Legend: FC<LegendProps> = ({
         type="button"
         aria-expanded={active}
         aria-controls={id}
-        className="relative flex items-center justify-center p-3 pr-6 text-sm text-blue9 bg-color2 font-heading"
+        className="relative flex items-center justify-center p-3 pr-6 text-sm text-blue-800 bg-yellow-50 font-heading"
         onClick={onToggleActive}
       >
         <span
@@ -57,7 +57,7 @@ export const Legend: FC<LegendProps> = ({
         </span>
         <div
           className={cx({
-            'absolute h-full p-3 right-0 bg-blue9 text-white': true,
+            'absolute h-full p-3 right-0 bg-blue-800 text-white': true,
           })}
         >
           <Icon

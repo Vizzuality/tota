@@ -21,7 +21,7 @@ const Collapsible: FC<CollapsibleProps> = ({ title, children }: CollapsibleProps
             '-rotate-90': !open,
           })}
         />
-        <span className="ml-2.5 font-bold text-lg text-blue9">{title}</span>
+        <span className="ml-2.5 font-bold text-lg text-blue-800">{title}</span>
       </div>
       <AnimatePresence>
         {open && (
