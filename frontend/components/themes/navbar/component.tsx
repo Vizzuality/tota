@@ -63,7 +63,9 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
           {filteredThemes.map((t) => (
             <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
               <a
-                className={cx('px-4 py-2 text-sm h-16 flex-1 flex items-center justify-center text-center', {
+                className={cx({
+                  'px-4 py-2 text-sm h-16 hover:bg-blue-900': true,
+                  'flex-1 flex items-center justify-center text-center': true,
                   'font-bold bg-blue-900': t.slug === themeSlug,
                 })}
               >

@@ -6,9 +6,9 @@ import type { ButtonProps, AnchorProps, Overload } from './types';
 
 const THEME = {
   /* primary: 'text-blue-800 bg-white border border-gray-300', */
-  primary: 'text-white bg-green-600',
-  'primary-alt': 'text-green-600 bg-white',
-  secondary: 'text-white bg-red-100',
+  primary: 'text-white bg-green-600 hover:bg-blue-400',
+  'primary-alt': 'text-green-600 bg-white hover:bg-gray-300',
+  secondary: 'text-white bg-red-100 hover:bg-red-200',
   gray: 'text-white bg-gray-300',
   'dark-gray': 'text-white bg-gray-500',
   'dark-gray-alt': 'text-blue-800 border border-gray-500 bg-white',
