@@ -9,6 +9,7 @@ import type { WidgetProps } from 'components/widgets/types';
 
 import { useRouterSelectedRegion } from 'hooks/regions';
 import { useIndicatorValues } from 'hooks/indicators';
+import LinkButton from 'components/button/component';
 
 export interface ThemeSectionProps {
   section: ThemeSectionType;
@@ -38,6 +39,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     widgetWrapper: WidgetWrapper,
     type: widgetType,
     controls,
+    viewOnMap,
     ...widgetConfig
   } = useMemo(() => section.fetchWidgetProps(rawData, wholeState), [rawData, wholeState]);
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
@@ -46,7 +48,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
 
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">
-      <div className="lg:w-2/6 lg:pr-5 lg:border-r-2">
+      <div className="lg:w-2/6 lg:pr-5 lg:border-r-2 flex flex-col">
         <div className="relative">
           <div
             className="absolute rounded-full bg-color2 text-blue9 text-2xl h-50 w-50 flex items-center justify-center"
@@ -60,7 +62,14 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
           </div>
         </div>
 
-        <p className="mt-4 lg:mt-10 leading-8">{section.description}</p>
+        <p className="mt-4 lg:mt-10 leading-8 flex-1">{section.description}</p>
+        {viewOnMap && (
+          <div className="mt-4">
+            <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
+              {viewOnMap.title}
+            </LinkButton>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
@@ -70,7 +79,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
           state={state}
           onControlChange={handleControlChange}
         />
-        <div className="flex justify-center items-center" style={{ minHeight: 300 }}>
+        <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
           {isFetched &&
             data &&

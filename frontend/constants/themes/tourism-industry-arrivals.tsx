@@ -20,6 +20,7 @@ import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
 
 import mountainsImage from 'images/home/image-mountains.png';
+import { getMapUrl } from 'hooks/map';
 
 const theme: ThemeType = {
   title: 'Tourism Industry & Arrivals',
@@ -38,8 +39,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
         category_2: 'all',
         region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
       }),
-      fetchWidgetProps(rawData: IndicatorValue[]): any {
+      fetchWidgetProps(rawData: IndicatorValue[], state): any {
         return {
+          viewOnMap: {
+            title: 'View on Map',
+            link: getMapUrl(state.selectedRegion.slug, ['tourism_regions', 'organizations']),
+          },
           type: 'charts/pie',
           data: getTop10AndOthers(rawData, 'category_1'),
           pies: [
@@ -64,8 +69,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       initialState: {
         type: 'biosphere',
       },
-      fetchWidgetProps(rawData: IndicatorValue[]): any {
+      fetchWidgetProps(rawData: IndicatorValue[], state): any {
         return {
+          viewOnMap: {
+            title: 'View on Map',
+            link: getMapUrl(state.selectedRegion.slug, ['tourism_regions', 'organizations']),
+          },
           type: 'charts/pie',
           data: getTop10AndOthers(rawData, 'category_1'),
           controls: [{ type: 'tabs', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) }],

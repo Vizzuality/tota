@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
+import developmentFunds from 'components/widgets/map/tooltips/development-funds';
 
 export const CATEGORY = {
   ADMIN_BOUNDARIES: 'Admin boundaries',
@@ -129,8 +130,40 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
   };
 };
 
+export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
+  const params = new URLSearchParams();
+  if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
+  const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
+  const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
+
+  return {
+    id: 'development_funds',
+    category: CATEGORY.TOURISM_BUSINESSES,
+    name: 'Development Funds',
+    type: 'geojson',
+    source: {
+      type: 'geojson',
+      data: developmentFundsGeoJSONUrl,
+    },
+    render: {
+      layers: [
+        {
+          type: 'circle',
+          paint: {
+            'circle-color': '#34444c',
+            'circle-radius': 4,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 3,
+          },
+        },
+      ],
+    },
+  };
+};
+
 export const useLayers = (selectedRegion: string): Layer[] => {
   const totaMembers = useTOTAMembersLayer(selectedRegion);
+  const developmentFunds = useDevelopmentFundsLayer(selectedRegion);
   const tourismRegions = useTourismRegionsLayer(selectedRegion);
 
   return useMemo(
@@ -167,6 +200,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         },
       },
       totaMembers,
+      developmentFunds,
       {
         id: 'visitor_centres',
         name: 'BC Tourism Centers',

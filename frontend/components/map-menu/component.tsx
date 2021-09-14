@@ -50,9 +50,9 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
               theme="dark"
               size="base"
               maxHeight={400}
-              options={regions.map((r) => ({ label: r.name, value: r.id })) as unknown as SelectOptionProps[]}
-              initialSelected={selectedRegion ? (selectedRegion.id as unknown as string) : ''}
-              onChange={(value: string) => selectRegion({ id: parseInt(value, 10) })}
+              options={regions.map((r) => ({ label: r.name, value: r.slug })) as unknown as SelectOptionProps[]}
+              selected={selectedRegion ? selectedRegion.slug : ''}
+              onChange={(value: string) => selectRegion(value)}
             />
           )}
         </div>

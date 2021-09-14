@@ -8,10 +8,6 @@ export interface RegionProps {
   parent?: RegionProps;
 }
 
-export interface SelectRegionProps {
-  id: number;
-}
-
 export interface RegionContextProps {
   active: boolean;
   regions: RegionProps[];
@@ -23,10 +19,4 @@ export interface RegionProviderProps {
 
 export interface UseRegionsResponse {
   regions: RegionProps[];
-}
-
-export interface UseSelectedRegionResponse {
-  regions: RegionProps[];
-  selectRegion: ({}: SelectRegionProps) => void;
-  selectedRegion: RegionProps;
 }
