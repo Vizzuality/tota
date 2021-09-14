@@ -30,7 +30,7 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
       legendConfig: {
         type: 'basic',
         items: [
-          { value: 'Cariboo Chilcotin Coast', color: '#9B6014' },
+          { value: 'Cariboo Chilcotin Coast', color: '#BB9075' },
           { value: 'Thompson Okanagan', color: '#76ACA9' },
           { value: 'Vancouver Island', color: '#4F91CD' },
           { value: 'Kootenay Rockies', color: '#405E62' },
@@ -55,7 +55,7 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#9B6014',
+                '#BB9075',
                 'thompson_okanagan',
                 '#76ACA9',
                 'vancouver_island',
@@ -79,7 +79,7 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#9B6014',
+                '#BB9075',
                 'thompson_okanagan',
                 '#76ACA9',
                 'vancouver_island',
