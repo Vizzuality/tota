@@ -42,7 +42,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
         '-ml-map-sidebar': collapsed,
       })}
     >
-      <section className="bg-gray-100 w-full h-full flex flex-col">
+      <section className="bg-gray-50 w-full h-full flex flex-col">
         <div suppressHydrationWarning={true}>
           {!isServer && (
             <Select
