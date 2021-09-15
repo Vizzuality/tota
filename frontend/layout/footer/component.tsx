@@ -47,8 +47,8 @@ interface FooterProps {}
 const Footer: FC<FooterProps> = () => {
   return (
     <div className="bg-blue-800">
-      <div className="container px-10 py-14 mx-auto text-white flex flex-row justify-between">
-        <div>
+      <div className="container px-10 pt-14 pb-8 mx-auto text-white flex flex-row flex-wrap justify-between">
+        <div className="w-full lg:w-auto pb-10">
           <Link href="/">
             <a>
               <img src={LogoWhite} />
@@ -56,7 +56,7 @@ const Footer: FC<FooterProps> = () => {
           </Link>
         </div>
         {links.map((link) => (
-          <div key={link.title} className="pt-2">
+          <div key={link.title} className="pt-2 pb-6 w-1/2 lg:w-auto">
             <Link href={link.href}>
               <a className="font-bold text-lg">{link.title}</a>
             </Link>
