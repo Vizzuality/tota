@@ -1,27 +1,27 @@
 import React from 'react';
 import { Story } from '@storybook/react/types-6-0';
-import Hero from './component';
-import type { HeroProps } from './types';
+import ImageCarousel from './component';
+import type { ImageCarouselProps } from './types';
+import heroBackgroundImage1 from 'images/home/hero-background-1.png';
+import heroBackgroundImage2 from 'images/home/hero-background-2.png';
+import heroBackgroundImage3 from 'images/home/hero-background-3.png';
+import heroBackgroundImage4 from 'images/home/hero-background-4.png';
+import heroBackgroundImage5 from 'images/home/hero-background-5.png';
 
 export default {
-  title: 'Components/Hero',
-  component: Hero,
+  title: 'Components/ImageCarousel',
+  component: ImageCarousel,
 };
 
-const Template: Story<HeroProps> = ({ ...restProps }: HeroProps) => <Hero {...restProps} />;
+const Template: Story<ImageCarouselProps> = ({ ...restProps }: ImageCarouselProps) => <ImageCarousel {...restProps} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  title: 'Hero title',
-  className: 'text-blue-800',
-  subtitle: 'This is the hero subtitle',
-  image: 'example.jpeg',
-  height: 500,
-};
-
-export const JustTitle = Template.bind({});
-
-JustTitle.args = {
-  title: 'Hero title',
-  image: 'example.jpeg',
+  images: [
+    heroBackgroundImage1,
+    heroBackgroundImage2,
+    heroBackgroundImage3,
+    heroBackgroundImage4,
+    heroBackgroundImage5,
+  ],
 };
