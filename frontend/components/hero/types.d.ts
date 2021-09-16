@@ -4,7 +4,8 @@ export interface HeroProps {
   className?: string;
   title?: ReactNode;
   subtitle?: ReactNode;
-  image: string;
+  image?: string;
+  images?: string[];
   height?: string | number;
   maxTextWidth?: string | number;
 }

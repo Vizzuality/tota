@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
-
+import Image from 'next/image';
+import ImageCarousel from 'components/image-carousel';
 import type { HeroProps } from './types';
 
 const Hero: FC<HeroProps> = ({
@@ -10,17 +11,22 @@ const Hero: FC<HeroProps> = ({
   title,
   subtitle,
   image,
+  images,
   height = 700,
   maxTextWidth = 700,
 }: HeroProps) => (
-  <div
-    className={cx(className, 'w-full py-32 md:py-40 flex justify-center items-center bg-cover')}
-    style={{ backgroundImage: `url(${image})`, height }}
-  >
+  <div className={cx(className, 'w-full flex justify-center items-center bg-cover ')}>
+    <div id="hero" className="absolute h-full w-screen overflow-hidden z-0" style={{ height }}>
+      {images ? (
+        <ImageCarousel images={images} />
+      ) : (
+        <Image alt="Hero image" src={image} layout="fill" objectFit="cover" objectPosition="bottom" quality={100} />
+      )}
+    </div>
     {children ? (
       children
     ) : (
-      <div className="text-center container">
+      <div className="text-center py-24 container z-10">
         {title && (
           <h1 className="text-4xl md:text-5xl font-semibold mt-20 mb-3 leading-tight md:leading-tight">{title}</h1>
         )}
