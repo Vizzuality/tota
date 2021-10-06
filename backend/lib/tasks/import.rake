@@ -77,6 +77,10 @@ class ImportTasks
             run_importer CSVImport::IndicatorValues, csv_file('Block5_Employment - EXPORT_CSV.csv')
           end
 
+          TimedLogger.log('Import Indicator Values for Block 6 Headers and General Insights') do
+            run_importer CSVImport::IndicatorValues, csv_file('Block6_Headers_and_General_insights - EXPORT_CSV.csv')
+          end
+
           TimedLogger.log('Create dynamic indicators') do
             Indicators::EstablishmentsByType.generate
             Indicators::DomesticVisits.generate
