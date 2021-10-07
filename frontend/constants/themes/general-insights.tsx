@@ -30,6 +30,9 @@ const theme: ThemeType = {
             color: REGION_COLORS[d.region_slug],
             value: d.value,
           })),
+          chartConfig: {
+            isAnimationActive: false,
+          },
           controls: [
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
