@@ -148,7 +148,7 @@ export function getStackedBarsData(data: any[], groupedBy: string) {
   return (
     data &&
     data.length &&
-    Array.from(new Set(bars)).map((barName: string) => ({
+    uniq(bars).map((barName: string) => ({
       dataKey: barName,
       stackId: 1,
     }))

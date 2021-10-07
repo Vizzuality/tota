@@ -23,9 +23,9 @@ const Chart: FC<PieChartProps> = ({
         {legend && <Legend {...legend} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (
-            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data} fill={COLORS[index]}>
+            <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data}>
               {data.map((d, i) => (
-                <Cell key={`cell-${d}`} fill={COLORS[i % COLORS.length]} />
+                <Cell key={`cell-${d}`} fill={d.color || COLORS[i % COLORS.length]} />
               ))}
             </Pie>
           ))}
