@@ -8,63 +8,72 @@
           "category_2": "all",
           "date": null,
           "region": "region 2",
-          "value": 2.0
+          "value": 2.0,
+          "region_slug": "region_2"
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "all",
+          "date": null,
+          "region": "region 1",
+          "value": 3.0,
+          "region_slug": "region_1"
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "date": null,
+          "region": "region 2",
+          "value": 1.0,
+          "region_slug": "region_2"
         },
         {
           "category_1": "Transportation",
           "category_2": "all",
           "date": null,
           "region": "region 2",
-          "value": 1.0
-        },
-        {
-          "category_1": "Activity / Attraction",
-          "category_2": "all",
-          "date": null,
-          "region": "region 2",
-          "value": 1.0
+          "value": 1.0,
+          "region_slug": "region_2"
         },
         {
           "category_1": "Activity / Attraction",
           "category_2": "all",
           "date": null,
           "region": "region 1",
-          "value": 2.0
-        },
-        {
-          "category_1": "Accommodation",
-          "category_2": "all",
-          "date": null,
-          "region": "region 1",
-          "value": 3.0
-        },
-        {
-          "category_1": "Activity / Attraction",
-          "category_2": "biosphere",
-          "date": null,
-          "region": "region 1",
-          "value": 1.0
-        },
-        {
-          "category_1": "Accommodation",
-          "category_2": "biosphere",
-          "date": null,
-          "region": "region 1",
-          "value": 2.0
+          "value": 2.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Accommodation",
           "category_2": "biosphere",
           "date": null,
           "region": "region 2",
-          "value": 1.0
+          "value": 1.0,
+          "region_slug": "region_2"
+        },
+        {
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 1",
+          "value": 2.0,
+          "region_slug": "region_1"
+        },
+        {
+          "category_1": "Activity / Attraction",
+          "category_2": "biosphere",
+          "date": null,
+          "region": "region 1",
+          "value": 1.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Activity / Attraction",
           "category_2": "biosphere",
           "date": null,
           "region": "region 2",
-          "value": 1.0
+          "value": 1.0,
+          "region_slug": "region_2"
         }
       ]
     },
@@ -75,15 +84,17 @@
           "category_1": null,
           "category_2": null,
           "date": null,
-          "region": "region 2",
-          "value": 4.0
+          "region": "region 1",
+          "value": 5.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": null,
           "category_2": null,
           "date": null,
-          "region": "region 1",
-          "value": 5.0
+          "region": "region 2",
+          "value": 4.0,
+          "region_slug": "region_2"
         }
       ]
     },
@@ -95,28 +106,32 @@
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 33434.0
+          "value": 33434.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 33333.0
+          "value": 33333.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         }
       ]
     },
@@ -128,28 +143,32 @@
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 11111.0
+          "value": 11111.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 33333.0
+          "value": 33333.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         }
       ]
     }

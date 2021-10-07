@@ -8,28 +8,32 @@
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 33434.0
+          "value": 33434.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-01",
           "region": "region 1",
-          "value": 33333.0
+          "value": 33333.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Canada",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         },
         {
           "category_1": "Germany",
           "category_2": null,
           "date": "2020-02",
           "region": "region 1",
-          "value": 2222.0
+          "value": 2222.0,
+          "region_slug": "region_1"
         }
       ]
     }

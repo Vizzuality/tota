@@ -88,6 +88,7 @@ class ImportTasks
             Indicators::AirportTopAverageConnectionsPerWeek.generate
             Indicators::DevelopmentFundsBySource.generate
             Indicators::DevelopmentFundsVolumeBySource.generate
+            Indicators::EmploymentByRegionAnnually.generate
           end
         end
       end

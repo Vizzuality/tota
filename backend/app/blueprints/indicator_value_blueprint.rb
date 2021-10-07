@@ -16,4 +16,7 @@ class IndicatorValueBlueprint < Blueprinter::Base
   field :region do |val|
     val.region&.name
   end
+  field :region_slug do |val|
+    val.region&.slug
+  end
 end
