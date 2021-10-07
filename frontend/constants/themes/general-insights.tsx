@@ -122,23 +122,27 @@ const theme: ThemeType = {
     {
       title: 'Employment',
       description: `Total number of people employed in the tourism industry in the province (& share of total employment)`,
+      initialState: {
+        year: previousYear,
+      },
       fetchParams: (state: any) => ({
         slug: ['tourism_employment_by_economic_region_annually', 'total_employment_by_economic_region_annually'],
         region: [...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const filteredByYear = filterBySelectedYear(rawData, state.year);
         const indicatorsMap = {
           tourism_employment_by_economic_region_annually: 'Tourism',
           total_employment_by_economic_region_annually: 'Total',
         };
-        const changed = rawData.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+        const changed = filteredByYear.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
         const data = mergeForChart({
           data: changed,
-          mergeBy: 'date',
+          mergeBy: 'region',
           labelKey: 'indicator',
           valueKey: 'value',
         });
-        const bars = getStackedBarsData(data, 'date');
+        const bars = getStackedBarsData(data, 'region');
 
         return {
           type: 'charts/bar',
@@ -148,6 +152,9 @@ const theme: ThemeType = {
           ],
           chartProps: {
             layout: 'vertical',
+            margin: {
+              left: 100,
+            },
           },
           bars,
           xAxis: {
@@ -155,10 +162,9 @@ const theme: ThemeType = {
             type: 'number',
           },
           yAxis: {
-            dataKey: 'date',
+            dataKey: 'region',
             type: 'category',
           },
-          height: 250 + 50 * data.length,
         };
       },
     },
