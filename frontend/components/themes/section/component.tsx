@@ -78,12 +78,14 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
-        <Controls
-          className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
-          controls={controls}
-          state={state}
-          onControlChange={handleControlChange}
-        />
+        {isFetched && (
+          <Controls
+            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+            controls={controls}
+            state={state}
+            onControlChange={handleControlChange}
+          />
+        )}
         <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
           {isFetched &&
