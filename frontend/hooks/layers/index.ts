@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
-import developmentFunds from 'components/widgets/map/tooltips/development-funds';
+
+import { REGION_COLORS } from 'constants/regions';
 
 export const CATEGORY = {
   ADMIN_BOUNDARIES: 'Admin boundaries',
@@ -30,11 +31,11 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
       legendConfig: {
         type: 'basic',
         items: [
-          { value: 'Cariboo Chilcotin Coast', color: '#BB9075' },
-          { value: 'Thompson Okanagan', color: '#76ACA9' },
-          { value: 'Vancouver Island', color: '#4F91CD' },
-          { value: 'Kootenay Rockies', color: '#405E62' },
-          { value: 'Northern British Columbia', color: '#A9B937' },
+          { value: 'Cariboo Chilcotin Coast', color: REGION_COLORS.cariboo_chilcotin_coast },
+          { value: 'Thompson Okanagan', color: REGION_COLORS.thompson_okanagan },
+          { value: 'Vancouver Island', color: REGION_COLORS.vancouver_island },
+          { value: 'Kootenay Rockies', color: REGION_COLORS.kootenay_rockies },
+          { value: 'Northern British Columbia', color: REGION_COLORS.northern_british_columbia },
         ],
       },
       render: {
@@ -55,15 +56,15 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#BB9075',
+                REGION_COLORS.cariboo_chilcotin_coast,
                 'thompson_okanagan',
-                '#76ACA9',
+                REGION_COLORS.thompson_okanagan,
                 'vancouver_island',
-                '#4F91CD',
+                REGION_COLORS.vancouver_island,
                 'kootenay_rockies',
-                '#405E62',
+                REGION_COLORS.kootenay_rockies,
                 'northern_british_columbia',
-                '#A9B937',
+                REGION_COLORS.northern_british_columbia,
                 /* other */ '#DDDDDD',
               ],
             },
@@ -79,15 +80,15 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#BB9075',
+                REGION_COLORS.cariboo_chilcotin_coast,
                 'thompson_okanagan',
-                '#76ACA9',
+                REGION_COLORS.thompson_okanagan,
                 'vancouver_island',
-                '#4F91CD',
+                REGION_COLORS.vancouver_island,
                 'kootenay_rockies',
-                '#405E62',
+                REGION_COLORS.kootenay_rockies,
                 'northern_british_columbia',
-                '#A9B937',
+                REGION_COLORS.northern_british_columbia,
                 /* other */ '#DDDDDD',
               ],
             },

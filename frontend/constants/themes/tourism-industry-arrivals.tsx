@@ -310,7 +310,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const filteredByYear = filterBySelectedYear(rawData, state.year);
         const data = mergeForChart({
           data: filteredByYear,
           mergeBy: 'date',
