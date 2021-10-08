@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
 
-import type { UseRegionsResponse, RegionProps } from './types';
+import type { UseRegionsResponse } from './types';
+import type { Region } from 'types';
 
-const fakeRegions: RegionProps[] = [
+const fakeRegions: Region[] = [
   { id: 0, name: 'British Columbia', slug: 'british_columbia', parent_id: null },
   { id: 1, name: 'Cariboo Chilcotin Coast', slug: 'cariboo_chilcotin_coast', parent_id: 0 },
   { id: 2, name: 'Kootenay Rockies', slug: 'kootenay_rockies', parent_id: 0 },
@@ -13,7 +14,7 @@ const fakeRegions: RegionProps[] = [
   { id: 5, name: 'Thompson Okanagan', slug: 'thompson_okanagan', parent_id: 0 },
 ];
 
-function applyParentsAndChildren(regions: RegionProps[]): RegionProps[] {
+function applyParentsAndChildren(regions: Region[]): Region[] {
   return regions.map((r) => ({
     ...r,
     parent: regions.find((rp) => rp.id === r.parent_id),
@@ -22,7 +23,7 @@ function applyParentsAndChildren(regions: RegionProps[]): RegionProps[] {
 }
 
 export function useRegions(): UseRegionsResponse {
-  const [regions, setRegions] = useState<RegionProps[]>(applyParentsAndChildren(fakeRegions)); // eslint-disable-line
+  const [regions, setRegions] = useState<Region[]>(applyParentsAndChildren(fakeRegions)); // eslint-disable-line
 
   // Replace with react query
   const [query, useQuery] = useState('https://such-query'); // eslint-disable-line
@@ -34,7 +35,7 @@ export function useRegions(): UseRegionsResponse {
   }, [query]);
 }
 
-export function useRouterSelectedRegion(): RegionProps {
+export function useRouterSelectedRegion(): Region {
   const router = useRouter();
   const { region } = router.query;
   const { regions } = useRegions();

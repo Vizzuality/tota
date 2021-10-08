@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import type { ViewportProps } from 'react-map-gl';
 
-import type { RegionProps } from 'hooks/regions/types';
+import type { Region } from 'types';
 
 export interface LayerSettings {
   opacity?: number;
@@ -14,7 +14,7 @@ export interface MapContextProps {
   changeActiveLayers: (layers: string[]) => void;
   layerSettings: { [key: string]: LayerSettings };
   changeLayerSettings: (layerId: string, settings: any) => void;
-  selectedRegion?: RegionProps;
+  selectedRegion?: Region;
   selectRegion: (slug: string) => void;
   setViewport: (viewport: Partial<ViewportProps>) => void;
 }
