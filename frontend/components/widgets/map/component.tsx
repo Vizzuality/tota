@@ -10,8 +10,10 @@ import Map from 'components/map';
 
 import { REGION_BBOX } from 'constants/regions';
 import { useTourismRegionsLayer } from 'hooks/layers';
+import { useRegions } from 'hooks/regions';
 
 const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLayers = [] }: MapWidgetProps) => {
+  const { regions } = useRegions();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 54.123389,
@@ -114,7 +116,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
                   dynamicPosition={false}
                   anchor="top"
                 >
-                  {featureTooltip(highlightedFeature)}
+                  {featureTooltip(highlightedFeature, regions)}
                 </Popup>
               )}
             </>

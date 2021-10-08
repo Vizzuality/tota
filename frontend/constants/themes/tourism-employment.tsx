@@ -281,14 +281,13 @@ const theme: ThemeType = {
         year: 'all_years',
       },
       fetchParams: (state: any) => {
-        const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
-        const region = anySubRegions
-          ? state.selectedRegion.children.map((x) => x.name)
-          : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
-
         return {
           slug: 'tourism_employment_hourly_earnings_by_economic_region',
-          region,
+          region: [
+            state.selectedRegion.name,
+            state.selectedRegion.parent?.name,
+            ...state.selectedRegion.children.map((x) => x.name),
+          ].filter((x) => x),
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
