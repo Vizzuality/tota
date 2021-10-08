@@ -104,7 +104,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
                 ))}
               </LayerManager>
 
-              {highlightedFeature && (
+              {highlightedFeature && featureTooltip && (
                 <Popup
                   className="mapbox-custom-popup"
                   latitude={highlightedFeature.geometry.coordinates[1]}
