@@ -10,7 +10,7 @@ export interface IndicatorValue {
   category_2?: string;
   date?: string;
   region: string;
-  region_slug: string;
+  region_slug?: string;
   value: number;
 }
 
