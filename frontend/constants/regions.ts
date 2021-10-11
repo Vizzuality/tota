@@ -8,6 +8,7 @@ export const REGION_BBOX = {
 };
 
 export const REGION_COLORS = {
+  british_columbia: '#314057',
   thompson_okanagan: '#76ACA9',
   northern_british_columbia: '#A9B937',
   cariboo_chilcotin_coast: '#BB9075',
