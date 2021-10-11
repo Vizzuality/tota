@@ -2,13 +2,19 @@ import React, { FC } from 'react';
 import orderBy from 'lodash/orderBy';
 import type { TooltipProps } from './types';
 
+const defaultValueFormatter = (value: string) => {
+  if (isNaN(Number(value))) return value;
+
+  return Number(value).toLocaleString();
+};
+
 const Tooltip: FC<TooltipProps> = ({
   active,
   label,
   payload,
   totalFormatter,
   labelFormatter = (label: string) => label,
-  valueFormatter = (value: string) => value,
+  valueFormatter = defaultValueFormatter,
   payloadFilter = () => true,
 }: TooltipProps) => {
   if (!active) return null;

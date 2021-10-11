@@ -10,10 +10,13 @@ const Chart: FC<PieChartProps> = ({
   chartProps,
   pies,
   legend = {
-    width: 250,
+    width: 300,
     layout: 'vertical',
     verticalAlign: 'middle',
     align: 'right',
+    formatter: function Formatter(v: string) {
+      return <span className="text-blue-800">{v}</span>;
+    },
   },
   tooltip = { cursor: false },
 }: PieChartProps) => {

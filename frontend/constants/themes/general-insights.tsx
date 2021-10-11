@@ -34,6 +34,9 @@ const theme: ThemeType = {
           chartConfig: {
             isAnimationActive: false,
           },
+          tooltip: {
+            valueFormatter: (v) => `${Number(v).toLocaleString()} km2`,
+          },
           controls: [
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
@@ -77,7 +80,7 @@ const theme: ThemeType = {
         slug: ['gdp_tourism', 'gdp_total'],
         region: [state.selectedRegion.name].filter((x) => x),
       }),
-      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+      fetchWidgetProps(rawData: IndicatorValue[] = [], _state: any): any {
         const indicatorsMap = {
           gdp_tourism: 'Tourism',
           gdp_total: 'Total',
@@ -89,6 +92,10 @@ const theme: ThemeType = {
           type: 'charts/bar',
           data,
           bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x })),
+          tooltip: {
+            cursor: false,
+            valueFormatter: (v) => `${Number(v).toLocaleString()} million CAD`,
+          },
           xAxis: {
             dataKey: 'date',
           },
@@ -203,6 +210,10 @@ const theme: ThemeType = {
           lines: regions,
           xAxis: {
             dataKey: 'date',
+          },
+          tooltip: {
+            ...defaultTooltip,
+            valueFormatter: (v) => `${Number(v).toLocaleString()} million CAD`,
           },
         };
       },
