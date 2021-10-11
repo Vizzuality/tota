@@ -32,7 +32,12 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     }),
     [state, selectedRegion],
   );
-  const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
+  const {
+    data: indicatorValues,
+    isFetched,
+    isFetching,
+    isLoading,
+  } = useIndicatorValues(section.fetchParams(wholeState));
   const {
     data,
     widgetTypeOverride,
@@ -41,7 +46,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     controls,
     viewOnMap,
     ...widgetConfig
-  } = useMemo(() => section.fetchWidgetProps(rawData, wholeState), [rawData, wholeState]);
+  } = useMemo(() => section.fetchWidgetProps(indicatorValues, wholeState), [indicatorValues, wholeState]);
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
