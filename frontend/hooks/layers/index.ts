@@ -10,6 +10,57 @@ export const CATEGORY = {
   INFRASTRUCTURES: 'Infrastructures',
 };
 
+export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {
+  return {
+    id: 'economic_regions',
+    name: 'Economic Regions',
+    category: CATEGORY.ADMIN_BOUNDARIES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://totadata.1gw3u20m',
+    },
+    render: {
+      layers: [
+        {
+          'source-layer': 'dev_region',
+          type: 'line',
+          paint: {
+            'line-width': 2,
+            'line-color': '#000',
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+        {
+          'source-layer': 'dev_region',
+          type: 'fill',
+          paint: {
+            'fill-color': '#000',
+            'fill-opacity': 0.2,
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+        {
+          'source-layer': 'dev_region',
+          type: 'symbol',
+          layout: {
+            'text-field': ['get', 'ECONOMIC_REGION_NAME'],
+            'text-justify': 'auto',
+            'text-size': 14,
+            'text-allow-overlap': true,
+          },
+          paint: {
+            'text-halo-color': '#fff',
+            'text-halo-width': 1,
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+      ],
+    },
+  };
+};
+
+export const useEconomicRegionsLayer = getEconomicRegionsLayer;
+
 export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpacity = 0): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
 
@@ -165,40 +216,11 @@ export const useLayers = (selectedRegion: string): Layer[] => {
   const totaMembers = useTOTAMembersLayer(selectedRegion);
   const developmentFunds = useDevelopmentFundsLayer(selectedRegion);
   const tourismRegions = useTourismRegionsLayer(selectedRegion);
+  const economicRegions = useEconomicRegionsLayer(selectedRegion);
 
   return useMemo(
     () => [
-      {
-        id: 'economic_regions',
-        name: 'Economic Regions',
-        category: CATEGORY.ADMIN_BOUNDARIES,
-        type: 'vector',
-        source: {
-          url: 'mapbox://totadata.1gw3u20m',
-        },
-        render: {
-          layers: [
-            {
-              'source-layer': 'dev_region',
-              type: 'line',
-              paint: {
-                'line-width': 2,
-                'line-color': '#000',
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-            {
-              'source-layer': 'dev_region',
-              type: 'fill',
-              paint: {
-                'fill-color': '#000',
-                'fill-opacity': 0.2,
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-          ],
-        },
-      },
+      economicRegions,
       totaMembers,
       developmentFunds,
       {

@@ -15,45 +15,7 @@ import {
 import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
 import { defaultTooltip } from 'constants/charts';
 import { getMapUrl } from 'hooks/map';
-
-function getEconomicRegionsLayer(selectedRegion: string) {
-  return {
-    id: 'economic_regions',
-    name: 'Economic Regions',
-    type: 'vector',
-    source: {
-      url: 'mapbox://totadata.1gw3u20m',
-    },
-    render: {
-      layers: [
-        {
-          'source-layer': 'dev_region',
-          type: 'line',
-          paint: {
-            'line-width': 2,
-            'line-color': '#000',
-          },
-          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-        },
-        {
-          'source-layer': 'dev_region',
-          type: 'symbol',
-          layout: {
-            'text-field': ['get', 'ECONOMIC_REGION_NAME'],
-            'text-justify': 'auto',
-            'text-size': 14,
-            'text-allow-overlap': true,
-          },
-          paint: {
-            'text-halo-color': '#fff',
-            'text-halo-width': 1,
-          },
-          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-        },
-      ],
-    },
-  };
-}
+import { getEconomicRegionsLayer } from 'hooks/layers';
 
 const theme: ThemeType = {
   title: 'Tourism Employment',
