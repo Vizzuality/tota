@@ -46,7 +46,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     controls,
     viewOnMap,
     ...widgetConfig
-  } = useMemo(() => section.fetchWidgetProps(indicatorValues, wholeState), [indicatorValues, wholeState]);
+  } = useMemo(
+    () => section.fetchWidgetProps(indicatorValues, wholeState),
+    [section.fetchWidgetProps, indicatorValues, wholeState],
+  );
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
@@ -93,17 +96,19 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         )}
         <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched &&
-            data &&
-            ((Array.isArray(data) && data.length > 0) || !Array.isArray(data)) &&
-            (WidgetWrapper ? (
-              <WidgetWrapper>
-                <Widget data={data} {...widgetConfig} />
-              </WidgetWrapper>
-            ) : (
-              <Widget data={data} {...widgetConfig} />
-            ))}
-          {isFetched && data && data.length === 0 && <span>No data available</span>}
+          {isFetched && data !== undefined && data !== null && (
+            <>
+              {((Array.isArray(data) && data.length > 0) || (!Array.isArray(data) && data !== '')) &&
+                (WidgetWrapper ? (
+                  <WidgetWrapper>
+                    <Widget data={data} {...widgetConfig} />
+                  </WidgetWrapper>
+                ) : (
+                  <Widget data={data} {...widgetConfig} />
+                ))}
+              {data.length === 0 && <span>No data available</span>}
+            </>
+          )}
         </div>
       </div>
     </div>
