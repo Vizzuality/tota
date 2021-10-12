@@ -12,7 +12,13 @@ import { REGION_BBOX } from 'constants/regions';
 import { useTourismRegionsLayer } from 'hooks/layers';
 import { useRegions } from 'hooks/regions';
 
-const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLayers = [] }: MapWidgetProps) => {
+const MapWidget: FC<MapWidgetProps> = ({
+  disableHighlight = false,
+  featureTooltip,
+  selectedRegion,
+  extraLayers = [],
+  prependExtraLayers = false,
+}: MapWidgetProps) => {
   const { regions } = useRegions();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({
@@ -38,6 +44,8 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
   }, []);
 
   const handleHover = (evt: MapEvent) => {
+    if (disableHighlight) return;
+
     const feature = evt.features.find((f) => !!f.properties.TOURISM_REGION_NAME);
     if (feature) {
       const source = 'tourism_regions';
@@ -55,6 +63,8 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
     }
   };
   const handleMapMouseLeave = () => {
+    if (disableHighlight) return;
+
     resetHighlight();
   };
   const resetHighlight = () => {
@@ -68,7 +78,7 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
   const handleMapLoad = ({ map }) => {
     setMap(map);
   };
-  const tourismRegionLayer = useTourismRegionsLayer(selectedRegion);
+  const tourismRegionLayer = useTourismRegionsLayer(selectedRegion, disableHighlight ? 0.8 : 0);
 
   useEffect(() => {
     if (selectedRegion) {
@@ -79,7 +89,12 @@ const MapWidget: FC<MapWidgetProps> = ({ featureTooltip, selectedRegion, extraLa
     }
   }, [selectedRegion]);
 
-  const layers = [tourismRegionLayer, ...extraLayers];
+  const layers = [tourismRegionLayer];
+  if (prependExtraLayers) {
+    layers.unshift(...extraLayers);
+  } else {
+    layers.push(...extraLayers);
+  }
 
   return (
     <div className="relative w-full h-full">

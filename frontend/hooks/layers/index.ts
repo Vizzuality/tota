@@ -10,12 +10,11 @@ export const CATEGORY = {
   INFRASTRUCTURES: 'Infrastructures',
 };
 
-export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
-  /* const includeFillLayer = !Boolean(selectedRegion); */
+export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpacity = 0): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
 
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;
-  const regionOpacity = selectedRegion ? 0 : 0.8;
+  const regionOpacity = selectedRegion ? selectedRegionOpacity : 0.8;
 
   return useMemo(() => {
     return {

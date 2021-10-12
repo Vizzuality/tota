@@ -37,10 +37,16 @@ function getEconomicRegionsLayer(selectedRegion: string) {
         },
         {
           'source-layer': 'dev_region',
-          type: 'fill',
+          type: 'symbol',
+          layout: {
+            'text-field': ['get', 'ECONOMIC_REGION_NAME'],
+            'text-justify': 'auto',
+            'text-size': 14,
+            'text-allow-overlap': true,
+          },
           paint: {
-            'fill-color': '#000',
-            'fill-opacity': 0.2,
+            'text-halo-color': '#fff',
+            'text-halo-width': 1,
           },
           ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
         },
@@ -59,7 +65,7 @@ const theme: ThemeType = {
       description: `
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
       fetchParams: () => false,
-      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+      fetchWidgetProps(_rawData: IndicatorValue[] = [], state: any): any {
         const selectedRegion = state.selectedRegion.slug === 'british_columbia' ? null : state.selectedRegion.slug;
 
         return {
@@ -70,7 +76,9 @@ const theme: ThemeType = {
           type: 'map',
           data: {},
           selectedRegion,
+          disableHighlight: true,
           extraLayers: [getEconomicRegionsLayer(selectedRegion)].filter((x) => x),
+          prependExtraLayers: true,
         };
       },
     },
