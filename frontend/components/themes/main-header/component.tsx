@@ -30,11 +30,11 @@ const STATISTICS = [
   },
   {
     title: 'Tourism employment',
-    indicator: 'tourism_employment_by_economic_region',
+    indicator: 'tourism_employment_by_tourism_region_monthly',
   },
   {
     title: 'Total employment',
-    indicator: 'total_employment_by_economic_region',
+    indicator: 'total_employment_by_tourism_region_monthly',
   },
 ];
 
