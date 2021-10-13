@@ -1,6 +1,6 @@
 import uniq from 'lodash/uniq';
+import startCase from 'lodash/startCase';
 import { IndicatorValue, Region, ThemeType } from 'types';
-import { format, parseISO } from 'date-fns';
 
 import forestImage from 'images/home/image-forest.png';
 
@@ -13,9 +13,8 @@ import {
   getStackedBarsData,
   mergeForChart,
 } from 'utils/charts';
-import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
+import { shortMonthName, previousYear } from './utils';
 import { defaultTooltip } from 'constants/charts';
-import { REGION_COLORS } from 'constants/regions';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
 
@@ -114,6 +113,13 @@ const theme: ThemeType = {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
+          yAxis: {
+            tickFormatter: (val) => `${val}%`,
+          },
+          tooltip: {
+            ...defaultTooltip,
+            valueFormatter: (value) => `${value.toFixed(2)}%`,
+          },
         };
       },
     },
@@ -168,6 +174,10 @@ const theme: ThemeType = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
+        const controls = [
+          { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
+          { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
+        ];
         if (state.frequency === 'annually') {
           return {
             type: 'rank',
@@ -176,10 +186,7 @@ const theme: ThemeType = {
               value: `${x.value}%`,
             })),
             hideNumber: true,
-            controls: [
-              { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
-              { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
-            ],
+            controls,
           };
         }
         const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
@@ -189,10 +196,7 @@ const theme: ThemeType = {
         return {
           type: 'charts/bar',
           data: chartData,
-          controls: [
-            { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
-            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
-          ],
+          controls,
           bars: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
@@ -263,18 +267,23 @@ const theme: ThemeType = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region));
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
+        const colorsByRegionName = getColorsByRegionName(filtered);
 
         return {
           type: 'charts/line',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          tooltip: {
+            ...defaultTooltip,
+            valueFormatter: (value) => `${value} CAD/h`,
           },
         };
       },
@@ -287,7 +296,7 @@ const theme: ThemeType = {
       },
       display: (selectedRegion: Region) => {
         if (selectedRegion.parent) return false;
-        return true;
+        return true; //only for parent regions like british columbia
       },
       fetchParams: (state: any) => {
         return {
@@ -296,7 +305,10 @@ const theme: ThemeType = {
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filtered = filterBySelectedYear(rawData, state.year);
+        const filtered = filterBySelectedYear(rawData, state.year).map((x) => ({
+          ...x,
+          category_2: startCase(x.category_2),
+        }));
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
