@@ -202,7 +202,11 @@ const theme: ThemeType = {
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const chartData = mergeForChart({ data: rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
+        const colorsByRegionName = rawData.reduce(
+          (acc, x) => ({ ...acc, [x.region]: REGION_COLORS[x.region_slug] }),
+          {},
+        );
+        const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x, color: colorsByRegionName[x] }));
 
         return {
           type: 'charts/line',
