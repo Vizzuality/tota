@@ -6,6 +6,7 @@ import sumBy from 'lodash/sumBy';
 import uniq from 'lodash/uniq';
 
 import { IndicatorValue, OptionType } from 'types';
+import { REGION_COLORS } from 'constants/regions';
 
 export const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -229,4 +230,8 @@ export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], gr
     stroke: 'none',
   }));
   return [newChartData, areas];
+}
+
+export function getColorsByRegionName(indicatorValues: IndicatorValue[]) {
+  return indicatorValues.reduce((acc, x) => ({ ...acc, [x.region]: REGION_COLORS[x.region_slug] }), {});
 }

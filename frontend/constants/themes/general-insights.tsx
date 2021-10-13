@@ -3,7 +3,13 @@ import uniq from 'lodash/uniq';
 import { ThemeType, IndicatorValue } from 'types';
 import { previousYear, thisYear, compactNumberTickFormatter } from './utils';
 import { defaultTooltip } from 'constants/charts';
-import { filterBySelectedYear, getStackedBarsData, getAvailableYearsOptions, mergeForChart } from 'utils/charts';
+import {
+  filterBySelectedYear,
+  getColorsByRegionName,
+  getStackedBarsData,
+  getAvailableYearsOptions,
+  mergeForChart,
+} from 'utils/charts';
 import { REGION_COLORS } from 'constants/regions';
 
 const theme: ThemeType = {
@@ -202,10 +208,7 @@ const theme: ThemeType = {
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const chartData = mergeForChart({ data: rawData, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-        const colorsByRegionName = rawData.reduce(
-          (acc, x) => ({ ...acc, [x.region]: REGION_COLORS[x.region_slug] }),
-          {},
-        );
+        const colorsByRegionName = getColorsByRegionName(rawData);
         const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x, color: colorsByRegionName[x] }));
 
         return {

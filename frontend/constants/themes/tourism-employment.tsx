@@ -8,12 +8,14 @@ import {
   expandToFullYear,
   filterBySelectedYear,
   getAvailableYearsOptions,
+  getColorsByRegionName,
   getOptions,
   getStackedBarsData,
   mergeForChart,
 } from 'utils/charts';
 import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
 import { defaultTooltip } from 'constants/charts';
+import { REGION_COLORS } from 'constants/regions';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
 
@@ -57,23 +59,22 @@ const theme: ThemeType = {
           : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
 
         return {
-          slug: 'total_employment_by_economic_region',
+          slug: 'total_employment_by_tourism_region_monthly',
           region,
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/line',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
@@ -102,9 +103,7 @@ const theme: ThemeType = {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         const regions = uniq(rawData.map((x) => x.category_2));
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/line',
@@ -131,23 +130,22 @@ const theme: ThemeType = {
           : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
 
         return {
-          slug: 'tourism_employment_by_economic_region',
+          slug: 'tourism_employment_by_tourism_region_monthly',
           region,
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/line',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
@@ -169,13 +167,12 @@ const theme: ThemeType = {
           : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
 
         return {
-          slug: `tourism_to_total_employment_ratio_${state.frequency}`,
+          slug: `tourism_to_total_employment_percentage_${state.frequency}`,
           region,
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-
         if (state.frequency === 'annually') {
           return {
             type: 'rank',
@@ -185,7 +182,6 @@ const theme: ThemeType = {
             ],
           };
         }
-
         const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         const regions = uniq(rawData.map((x) => x.category_2));
 
@@ -217,16 +213,13 @@ const theme: ThemeType = {
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
-        const bars = getStackedBarsData(chartData, 'date');
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-          bars,
+          bars: getStackedBarsData(chartData, 'date'),
           chartProps: {
             stackOffset: 'expand',
           },
@@ -264,9 +257,7 @@ const theme: ThemeType = {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         const regions = uniq(rawData.map((x) => x.category_2));
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/line',
@@ -299,17 +290,13 @@ const theme: ThemeType = {
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
-
-        const bars = getStackedBarsData(chartData, 'date');
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-          bars,
+          bars: getStackedBarsData(chartData, 'date'),
           xAxis: {
             dataKey: 'date',
           },
