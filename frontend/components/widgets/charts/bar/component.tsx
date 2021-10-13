@@ -35,7 +35,7 @@ const Chart: FC<BarChartProps> = ({
 
   const newBars = bars.map((bar, index) => ({
     ...bar,
-    fill: COLORS[index],
+    fill: bar.color || COLORS[index],
     hide: selectedData && !selectedData.includes(bar.dataKey),
   }));
   const handleLegendChange = (filtered: string[]) => setSelectedData(filtered);

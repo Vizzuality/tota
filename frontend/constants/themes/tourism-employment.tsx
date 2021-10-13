@@ -161,14 +161,9 @@ const theme: ThemeType = {
         year: previousYear,
       },
       fetchParams: (state: any) => {
-        const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
-        const region = anySubRegions
-          ? state.selectedRegion.children.map((x) => x.name)
-          : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
-
         return {
           slug: `tourism_to_total_employment_percentage_${state.frequency}`,
-          region,
+          region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
@@ -176,14 +171,20 @@ const theme: ThemeType = {
         if (state.frequency === 'annually') {
           return {
             type: 'rank',
+            data: filtered.map((x) => ({
+              text: `${x.region} - {value}`,
+              value: `${x.value}%`,
+            })),
+            hideNumber: true,
             controls: [
               { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
               { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
             ],
           };
         }
-        const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
+        const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
 
         return {
           type: 'charts/bar',
@@ -192,10 +193,17 @@ const theme: ThemeType = {
             { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
           ],
-          lines: regions.map((x) => ({ dataKey: x })),
+          bars: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          yAxis: {
+            tickFormatter: (val) => `${val}%`,
+          },
+          tooltip: {
+            cursor: false,
+            valueFormatter: (value) => `${value.toFixed(2)}%`,
           },
         };
       },
