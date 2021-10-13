@@ -149,13 +149,13 @@ const theme: ThemeType = {
         year: previousYear,
       },
       fetchParams: (state: any) => ({
-        slug: ['tourism_employment_by_economic_region_annually', 'total_employment_by_economic_region_annually'],
+        slug: ['tourism_employment_by_tourism_region_annually', 'total_employment_by_tourism_region_annually'],
         region: [...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const indicatorsMap = {
-          tourism_employment_by_economic_region_annually: 'Tourism',
-          total_employment_by_economic_region_annually: 'Total',
+          tourism_employment_by_tourism_region_annually: 'Tourism',
+          total_employment_by_tourism_region_annually: 'Total',
         };
         const changed = filterBySelectedYear(rawData, state.year).map((x) => ({
           ...x,
