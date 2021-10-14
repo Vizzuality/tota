@@ -1,6 +1,26 @@
 import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
 
+import ACCESSIBLE_BUSINESSES_SVG from 'svgs/map/markers/accessible-businesses.svg?url';
+import BC_AIRPORTS_SVG from 'svgs/map/markers/bc-airports.svg?url';
+import BC_TOURISM_CENTERS_SVG from 'svgs/map/markers/bc-tourism-centers.svg?url';
+import BIOSPHERE_PROGRAM_SVG from 'svgs/map/markers/biosphere-program.svg?url';
+import CAMPSITES_SVG from 'svgs/map/markers/campsites.svg?url';
+import DEVELOPMENT_FUNDS_SVG from 'svgs/map/markers/development-funds.svg?url';
+import FIRES_1_SVG from 'svgs/map/markers/fires-1.svg?url';
+import FIRES_2_SVG from 'svgs/map/markers/fires-2.svg?url';
+import FIRES_3_SVG from 'svgs/map/markers/fires-3.svg?url';
+import FIRES_4_SVG from 'svgs/map/markers/fires-4.svg?url';
+import FIRES_5_SVG from 'svgs/map/markers/fires-5.svg?url';
+import FIRES_6_SVG from 'svgs/map/markers/fires-6.svg?url';
+import FIRES_7_SVG from 'svgs/map/markers/fires-7.svg?url';
+import FIRST_NATION_COMMUNITY_SVG from 'svgs/map/markers/first-nation-community.svg?url';
+import HELLO_BC_ACCOMMODATIONS_SVG from 'svgs/map/markers/hello-bc-accommodations.svg?url';
+import INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/indigenous-businesses.svg?url';
+import SKI_RESORTS_SVG from 'svgs/map/markers/ski-resorts.svg?url';
+import STOPS_OF_INTEREST_SVG from 'svgs/map/markers/stops-of-interest.svg?url';
+import WILDLIFE_HABITATS_SVG from 'svgs/map/markers/wildlife-habitats.svg?url';
+
 import { REGION_COLORS } from 'constants/regions';
 
 export const CATEGORY = {
@@ -8,6 +28,23 @@ export const CATEGORY = {
   TOURISM_BUSINESSES: 'Tourism businesses',
   ENVIRONMENT: 'Environment',
   INFRASTRUCTURES: 'Infrastructures',
+};
+
+const TRAFFIC_COLORS = {
+  low: '#93C761',
+  moderate: '#E08331',
+  heavy: '#D22D1F',
+  severe: '#91241D',
+};
+
+const FIRE_COLORS = {
+  days1: '#FFFF55',
+  days2: '#F9DB4A',
+  days3: '#F4B53F',
+  days4: '#F09236',
+  days5: '#ED702E',
+  days6: '#EB4025',
+  days7: '#D72D20',
 };
 
 export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {
@@ -196,15 +233,14 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
       type: 'geojson',
       data: developmentFundsGeoJSONUrl,
     },
+    images: [{ id: 'development_funds_marker', src: DEVELOPMENT_FUNDS_SVG }],
     render: {
       layers: [
         {
-          type: 'circle',
-          paint: {
-            'circle-color': '#34444c',
-            'circle-radius': 4,
-            'circle-stroke-color': '#fff',
-            'circle-stroke-width': 3,
+          type: 'symbol',
+          layout: {
+            'icon-image': 'development_funds_marker',
+            'icon-size': 1,
           },
         },
       ],
@@ -231,16 +267,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.a7fetiq7',
         },
+        images: [{ id: 'bc_tourism_centers_marker', src: BC_TOURISM_CENTERS_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'visitor_centres',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'bc_tourism_centers_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -256,16 +291,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.arvkb438',
         },
+        images: [{ id: 'ski_resorts_marker', src: SKI_RESORTS_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'ski_resorts',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'ski_resorts_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -280,16 +314,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.4y0iosdv',
         },
+        images: [{ id: 'hello_bc_accommodations_marker', src: HELLO_BC_ACCOMMODATIONS_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'accommodations',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'hello_bc_accommodations_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -305,24 +338,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.3521qubk',
         },
+        images: [{ id: 'campsites_marker', src: CAMPSITES_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'campgrounds',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-            {
-              'source-layer': 'campgrounds',
-              type: 'fill',
-              paint: {
-                'fill-color': 'transparent',
+              type: 'symbol',
+              layout: {
+                'icon-image': 'campsites_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -337,16 +361,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.7q627o47',
         },
+        images: [{ id: 'first_nation_community_marker', src: FIRST_NATION_COMMUNITY_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'first_nations_communities',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'first_nation_community_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -361,16 +384,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.3pqlvqwr',
         },
+        images: [{ id: 'indigenous_businesses_marker', src: INDIGENOUS_BUSINESSES_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'first_nations_business',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'indigenous_businesses_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -434,33 +456,39 @@ export const useLayers = (selectedRegion: string): Layer[] => {
             ],
           },
         },
+        images: [
+          { id: 'fires_marker_1', src: FIRES_1_SVG },
+          { id: 'fires_marker_2', src: FIRES_2_SVG },
+          { id: 'fires_marker_3', src: FIRES_3_SVG },
+          { id: 'fires_marker_4', src: FIRES_4_SVG },
+          { id: 'fires_marker_5', src: FIRES_5_SVG },
+          { id: 'fires_marker_6', src: FIRES_6_SVG },
+          { id: 'fires_marker_7', src: FIRES_7_SVG },
+        ],
         render: {
           layers: [
             {
-              type: 'circle',
               'source-layer': 'layer0',
-              paint: {
-                'circle-color': [
+              type: 'symbol',
+              layout: {
+                'icon-image': [
                   'step',
                   ['to-number', ['get', 'days_ago']],
-                  '#FFFF00',
+                  'fires_marker_1',
                   2,
-                  '#FFD900',
+                  'fires_marker_2',
                   3,
-                  '#FFB200',
+                  'fires_marker_3',
                   4,
-                  '#FF8C00',
+                  'fires_marker_4',
                   5,
-                  '#FF6600',
+                  'fires_marker_5',
                   6,
-                  '#FF2600',
+                  'fires_marker_6',
                   7,
-                  '#EA0000',
+                  'fires_marker_7',
                 ],
-                'circle-stroke-color': '#ccc',
-                'circle-opacity': 0.9,
-                'circle-stroke-opacity': 0.3,
-                'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 1, 6, 4, 12, 12, 16, 90],
+                'icon-size': 1,
               },
               filter: ['all'],
             },
@@ -471,37 +499,37 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           items: [
             {
               value: '7 days ago',
-              color: '#EA0000',
+              color: FIRE_COLORS.days7,
               id: 0,
             },
             {
               value: '6 days ago',
-              color: '#FF2600',
+              color: FIRE_COLORS.days6,
               id: 1,
             },
             {
               value: '5 days ago',
-              color: '#FF6600',
+              color: FIRE_COLORS.days5,
               id: 2,
             },
             {
               value: '4 days ago',
-              color: '#FF8C00',
+              color: FIRE_COLORS.days4,
               id: 3,
             },
             {
               value: '3 days ago',
-              color: '#FFB200',
+              color: FIRE_COLORS.days3,
               id: 4,
             },
             {
               value: '2 days ago',
-              color: '#FFD900',
+              color: FIRE_COLORS.days2,
               id: 5,
             },
             {
               value: '1 day ago',
-              color: '#FFFF00',
+              color: FIRE_COLORS.days1,
               id: 6,
             },
           ],
@@ -515,16 +543,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.00a7vg81',
         },
+        images: [{ id: 'stops_of_interest_marker', src: STOPS_OF_INTEREST_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'stops',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'stops_of_interest_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -540,16 +567,15 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.1oumvy1n',
         },
+        images: [{ id: 'bc_airports_marker', src: BC_AIRPORTS_SVG }],
         render: {
           layers: [
             {
               'source-layer': 'airports',
-              type: 'circle',
-              paint: {
-                'circle-color': '#34444c',
-                'circle-radius': 4,
-                'circle-stroke-color': '#fff',
-                'circle-stroke-width': 3,
+              type: 'symbol',
+              layout: {
+                'icon-image': 'bc_airports_marker',
+                'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -599,13 +625,13 @@ export const useLayers = (selectedRegion: string): Layer[] => {
                 'line-color': [
                   'case',
                   ['==', 'low', ['get', 'congestion']],
-                  '#aab7ef',
+                  TRAFFIC_COLORS.low,
                   ['==', 'moderate', ['get', 'congestion']],
-                  '#4264fb',
+                  TRAFFIC_COLORS.moderate,
                   ['==', 'heavy', ['get', 'congestion']],
-                  '#ee4e8b',
+                  TRAFFIC_COLORS.heavy,
                   ['==', 'severe', ['get', 'congestion']],
-                  '#b43b71',
+                  TRAFFIC_COLORS.severe,
                   '#000000',
                 ],
               },
@@ -617,22 +643,22 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           items: [
             {
               value: 'low',
-              color: '#aab7ef',
+              color: TRAFFIC_COLORS.low,
               id: 0,
             },
             {
               value: 'moderate',
-              color: '#4264fb',
+              color: TRAFFIC_COLORS.moderate,
               id: 1,
             },
             {
               value: 'heavy',
-              color: '#ee4e8b',
+              color: TRAFFIC_COLORS.heavy,
               id: 2,
             },
             {
               value: 'severe',
-              color: '#b43b71',
+              color: TRAFFIC_COLORS.severe,
               id: 3,
             },
           ],
