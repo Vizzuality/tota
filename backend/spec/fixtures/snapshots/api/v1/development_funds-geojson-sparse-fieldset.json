@@ -11,17 +11,7 @@
         ]
       },
       "properties": {
-        "id": 33,
-        "region": {
-          "id": 89,
-          "name": "Thompson Okanagan",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.880Z",
-          "updated_at": "2021-08-24T10:07:05.880Z",
-          "region_type": "tourism_region",
-          "slug": "thompson_okanagan",
-          "active": true
-        },
+        "id": 616,
         "project_title": "Project title"
       }
     },
@@ -35,17 +25,7 @@
         ]
       },
       "properties": {
-        "id": 34,
-        "region": {
-          "id": 89,
-          "name": "Thompson Okanagan",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.880Z",
-          "updated_at": "2021-08-24T10:07:05.880Z",
-          "region_type": "tourism_region",
-          "slug": "thompson_okanagan",
-          "active": true
-        },
+        "id": 617,
         "project_title": "Project title"
       }
     },
@@ -59,17 +39,7 @@
         ]
       },
       "properties": {
-        "id": 35,
-        "region": {
-          "id": 89,
-          "name": "Thompson Okanagan",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.880Z",
-          "updated_at": "2021-08-24T10:07:05.880Z",
-          "region_type": "tourism_region",
-          "slug": "thompson_okanagan",
-          "active": true
-        },
+        "id": 618,
         "project_title": "Project title"
       }
     },
@@ -83,17 +53,7 @@
         ]
       },
       "properties": {
-        "id": 36,
-        "region": {
-          "id": 89,
-          "name": "Thompson Okanagan",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.880Z",
-          "updated_at": "2021-08-24T10:07:05.880Z",
-          "region_type": "tourism_region",
-          "slug": "thompson_okanagan",
-          "active": true
-        },
+        "id": 619,
         "project_title": "Project title"
       }
     },
@@ -107,17 +67,7 @@
         ]
       },
       "properties": {
-        "id": 37,
-        "region": {
-          "id": 90,
-          "name": "British Columbia",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.884Z",
-          "updated_at": "2021-08-24T10:07:05.884Z",
-          "region_type": "tourism_region",
-          "slug": "british_columbia",
-          "active": true
-        },
+        "id": 620,
         "project_title": "Project title"
       }
     },
@@ -131,17 +81,7 @@
         ]
       },
       "properties": {
-        "id": 38,
-        "region": {
-          "id": 90,
-          "name": "British Columbia",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.884Z",
-          "updated_at": "2021-08-24T10:07:05.884Z",
-          "region_type": "tourism_region",
-          "slug": "british_columbia",
-          "active": true
-        },
+        "id": 621,
         "project_title": "Project title"
       }
     },
@@ -155,17 +95,7 @@
         ]
       },
       "properties": {
-        "id": 39,
-        "region": {
-          "id": 89,
-          "name": "Thompson Okanagan",
-          "parent_id": null,
-          "created_at": "2021-08-24T10:07:05.880Z",
-          "updated_at": "2021-08-24T10:07:05.880Z",
-          "region_type": "tourism_region",
-          "slug": "thompson_okanagan",
-          "active": true
-        },
+        "id": 622,
         "project_title": "Super project"
       }
     }

@@ -14,7 +14,7 @@ const Hero: FC<HeroProps> = ({
   maxTextWidth = 700,
 }: HeroProps) => (
   <div
-    className={cx(className, 'w-full py-40 flex justify-center items-center bg-cover')}
+    className={cx(className, 'w-full py-32 md:py-40 flex justify-center items-center bg-cover')}
     style={{ backgroundImage: `url(${image})`, height }}
   >
     {children ? (

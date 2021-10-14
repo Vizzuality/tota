@@ -1,24 +1,24 @@
 {
   "data": [
     {
-      "id": 2,
-      "name": "British Columbia",
-      "slug": "british_columbia"
+      "id": 862,
+      "slug": "british_columbia",
+      "name": "British Columbia"
     },
     {
-      "id": 3,
-      "name": "Thompson Okanagan",
-      "slug": "thompson_okanagan"
+      "id": 863,
+      "slug": "thompson_okanagan",
+      "name": "Thompson Okanagan"
     },
     {
-      "id": 4,
-      "name": "North Okanagan",
-      "slug": "north_okanagan"
+      "id": 864,
+      "slug": "north_okanagan",
+      "name": "North Okanagan"
     },
     {
-      "id": 5,
-      "name": "Central Okanagan",
-      "slug": "central_okanagan"
+      "id": 865,
+      "slug": "central_okanagan",
+      "name": "Central Okanagan"
     }
   ]
 }
