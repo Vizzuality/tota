@@ -30,20 +30,7 @@ class DevelopmentFund < ApplicationRecord
 
   validates_presence_of :project_title, :key_funding_source
 
-  def as_geojson(fields)
-    slice_attr = fields || [
-      :project_title,
-      :key_funding_amount,
-      :key_funding_source
-    ]
-
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [longitude, latitude]
-      },
-      properties: slice(slice_attr)
-    }
+  def blueprint
+    DevelopmentFundBlueprint
   end
 end

@@ -7,7 +7,12 @@ module API
         if params[:format] == 'geojson'
           render json: {
             type: 'FeatureCollection',
-            features: organizations.map { |o| o.as_geojson(fields) }
+            features: PointGeojsonBlueprint.render_as_hash(
+              organizations,
+              blueprint_options: {
+                fields: fields || [:name]
+              }
+            )
           }
         else
           render json: OrganizationBlueprint.render(

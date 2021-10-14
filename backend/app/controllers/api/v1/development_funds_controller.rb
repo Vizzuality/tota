@@ -7,7 +7,12 @@ module API
         if params[:format] == 'geojson'
           render json: {
             type: 'FeatureCollection',
-            features: funds.map { |f| f.as_geojson(fields) }
+            features: PointGeojsonBlueprint.render_as_hash(
+              funds,
+              blueprint_options: {
+                fields: fields || [:project_title, :key_funding_amount, :key_funding_source]
+              }
+            )
           }
         else
           render json: DevelopmentFundBlueprint.render(

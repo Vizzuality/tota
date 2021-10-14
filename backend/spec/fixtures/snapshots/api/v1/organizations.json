@@ -1,24 +1,24 @@
 {
   "data": [
     {
-      "id": 3,
-      "business_subtype": null,
-      "business_type": "Accommodation",
+      "id": 593,
+      "name": "Summit River Lodge And Campsites",
       "latitude": "50.2323",
       "longitude": "34.2333",
-      "name": "Summit River Lodge And Campsites",
       "region": "Thompson Okanagan",
-      "subregion": "North Okanagan"
+      "subregion": "North Okanagan",
+      "business_type": "Accommodation",
+      "business_subtype": null
     },
     {
-      "id": 4,
-      "business_subtype": "Motel",
-      "business_type": "Accommodation",
+      "id": 594,
+      "name": "Double E Sportsman Camp",
       "latitude": "50.2323",
       "longitude": "34.2333",
-      "name": "Double E Sportsman Camp",
       "region": "Thompson Okanagan",
-      "subregion": "Central Okanagan"
+      "subregion": "Central Okanagan",
+      "business_type": "Accommodation",
+      "business_subtype": "Motel"
     }
   ]
 }
