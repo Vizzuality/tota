@@ -61,11 +61,11 @@ module.exports = {
         'screen-minus-header': "calc(100vh - theme('spacing.24'))",
       },
       width: {
-        'map-sidebar': '300px',
+        'map-sidebar': '350px',
       },
       margin: {
-        'map-sidebar': '300px',
-        '-map-sidebar': '-300px',
+        'map-sidebar': '350px',
+        '-map-sidebar': '-350px',
       },
       transitionProperty: {
         width: 'width',
