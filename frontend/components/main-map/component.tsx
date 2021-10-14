@@ -1,4 +1,5 @@
 import React, { FC, useState, useCallback, useEffect } from 'react';
+import { MapEvent, Popup } from 'react-map-gl';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import CartoProvider from '@vizzuality/layer-manager-provider-carto';
@@ -11,6 +12,7 @@ import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
 import LegendTypeChoropleth from 'components/map/legend/types/choropleth';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
+import BasicTooltip from 'components/map/tooltips/basic';
 
 import { REGION_BBOX } from 'constants/regions';
 import { useMap } from 'hooks/map';
@@ -23,6 +25,21 @@ export interface MapProps {
   height?: string | number;
   mapboxApiAccessToken: string;
 }
+
+const SELECTABLE_FEATURES = [
+  'development_funds',
+  'organizations',
+  'campgrounds',
+  'accommodations',
+  'airports',
+  'stops',
+  'ski_resorts',
+  'visitor_centers',
+  'first_nations_communities',
+  'first_nations_business',
+  'trails',
+  'fires',
+];
 
 export const MainMap: FC<MapProps> = ({
   width = '100%',
@@ -75,6 +92,17 @@ export const MainMap: FC<MapProps> = ({
   const handleLegendItemVisibilityChange = (id, visibility) => {
     changeLayerSettings(id, { visibility });
   };
+  const [selectedFeature, setSelectedFeature] = useState(null);
+
+  const handleClick = (evt: MapEvent) => {
+    const selectable = evt.features.find((f) => SELECTABLE_FEATURES.includes(f.source));
+
+    if (selectable) {
+      setSelectedFeature(selectable);
+    } else {
+      setSelectedFeature(null);
+    }
+  };
 
   const legendItems = layers.map((layer) => ({
     id: layer.id,
@@ -84,6 +112,7 @@ export const MainMap: FC<MapProps> = ({
     opacity: layerSettings[layer.id]?.opacity ?? 0,
     ...(layer.legendConfig || {}),
   }));
+  const interactiveLayerIds = layers.filter((layer) => SELECTABLE_FEATURES.includes(layer.id)).map((layer) => layer.id);
 
   useEffect(() => {
     if (selectedRegion) {
@@ -104,8 +133,10 @@ export const MainMap: FC<MapProps> = ({
         mapStyle="mapbox://styles/mapbox/streets-v11"
         width={width}
         height={height}
+        interactiveLayerIds={interactiveLayerIds}
         mapboxApiAccessToken={mapboxApiAccessToken}
         onMapViewportChange={handleViewportChange}
+        onClick={handleClick}
       >
         {(map) => (
           <>
@@ -118,6 +149,20 @@ export const MainMap: FC<MapProps> = ({
                 <Layer key={l.id} {...l} />
               ))}
             </LayerManager>
+
+            {selectedFeature && (
+              <Popup
+                className="mapbox-custom-popup"
+                latitude={selectedFeature.geometry.coordinates[1]}
+                longitude={selectedFeature.geometry.coordinates[0]}
+                closeButton={false}
+                closeOnClick={false}
+                dynamicPosition={false}
+                anchor="top"
+              >
+                <BasicTooltip properties={selectedFeature.properties} />
+              </Popup>
+            )}
           </>
         )}
       </Map>

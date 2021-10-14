@@ -205,6 +205,7 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
     render: {
       layers: [
         {
+          id: 'organizations',
           type: 'circle',
           paint: {
             'circle-color': '#34444c',
@@ -237,6 +238,7 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
     render: {
       layers: [
         {
+          id: 'development_funds',
           type: 'symbol',
           layout: {
             'icon-image': 'development_funds_marker',
@@ -260,7 +262,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       totaMembers,
       developmentFunds,
       {
-        id: 'visitor_centres',
+        id: 'visitor_centers',
         name: 'BC Tourism Centers',
         category: CATEGORY.TOURISM_BUSINESSES,
         type: 'vector',
@@ -271,6 +273,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'visitor_centers',
               'source-layer': 'visitor_centres',
               type: 'symbol',
               layout: {
@@ -295,6 +298,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'ski_resorts',
               'source-layer': 'ski_resorts',
               type: 'symbol',
               layout: {
@@ -318,6 +322,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'accommodations',
               'source-layer': 'accommodations',
               type: 'symbol',
               layout: {
@@ -342,6 +347,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'campgrounds',
               'source-layer': 'campgrounds',
               type: 'symbol',
               layout: {
@@ -365,6 +371,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'first_nations_communities',
               'source-layer': 'first_nations_communities',
               type: 'symbol',
               layout: {
@@ -388,6 +395,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'first_nations_business',
               'source-layer': 'first_nations_business',
               type: 'symbol',
               layout: {
@@ -419,6 +427,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
             {
+              id: 'wildlife_habitats',
               'source-layer': 'wildlife_habitats',
               type: 'fill',
               paint: {
@@ -468,6 +477,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'fires',
               'source-layer': 'layer0',
               type: 'symbol',
               layout: {
@@ -547,6 +557,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'stops',
               'source-layer': 'stops',
               type: 'symbol',
               layout: {
@@ -571,6 +582,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'airports',
               'source-layer': 'airports',
               type: 'symbol',
               layout: {
@@ -594,6 +606,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         render: {
           layers: [
             {
+              id: 'trails',
               'source-layer': 'trails',
               type: 'line',
               paint: {
