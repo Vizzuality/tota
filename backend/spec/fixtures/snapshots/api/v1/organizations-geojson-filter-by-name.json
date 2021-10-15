@@ -11,7 +11,14 @@
         ]
       },
       "properties": {
-        "name": "Double E Sportsman Camp"
+        "name": "Double E Sportsman Camp",
+        "id": 654,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "region": "Thompson Okanagan",
+        "subregion": "Central Okanagan",
+        "business_type": "Accommodation",
+        "business_subtype": "Motel"
       }
     }
   ]

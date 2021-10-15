@@ -10,7 +10,7 @@ module API
             features: PointGeojsonBlueprint.render_as_hash(
               funds,
               blueprint_options: {
-                fields: fields || [:project_title, :key_funding_amount, :key_funding_source]
+                fields: fields
               }
             )
           }

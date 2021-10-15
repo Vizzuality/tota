@@ -13,7 +13,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 697,
+        "project_description": null,
+        "region_id": 965,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -28,7 +46,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 698,
+        "project_description": null,
+        "region_id": 965,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -43,7 +79,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 699,
+        "project_description": null,
+        "region_id": 965,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -58,7 +112,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 700,
+        "project_description": null,
+        "region_id": 965,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -73,7 +145,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 701,
+        "project_description": null,
+        "region_id": 966,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -88,7 +178,25 @@
       "properties": {
         "project_title": "Project title",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 702,
+        "project_description": null,
+        "region_id": 966,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     },
     {
@@ -103,7 +211,25 @@
       "properties": {
         "project_title": "Super project",
         "key_funding_amount": null,
-        "key_funding_source": "Source"
+        "key_funding_source": "Source",
+        "id": 703,
+        "project_description": null,
+        "region_id": 965,
+        "recipient": null,
+        "lead_organization": null,
+        "latitude": "50.2323",
+        "longitude": "34.2333",
+        "categories": [
+
+        ],
+        "scope": null,
+        "planning_area": null,
+        "second_planning_area": null,
+        "total_project_cost": null,
+        "funding_subtype": "Subtype",
+        "funding_call_year": null,
+        "funding_call_month": null,
+        "project_status": null
       }
     }
   ]
