@@ -1,29 +1,53 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, useEffect, useState, useCallback } from 'react';
 import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
 import { PieChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 
 import { COLORS } from 'constants/charts';
 
-const Chart: FC<PieChartProps> = ({
-  data,
-  chartProps,
-  pies,
-  legend = {
-    width: 300,
+function getLegend(pieChartWidth?: number) {
+  if (pieChartWidth < 600) {
+    return {
+      layout: 'horizontal',
+      verticalAlign: 'bottom',
+      align: 'left',
+      formatter: function Formatter(v: string) {
+        return <span className="text-blue-800">{v}</span>;
+      },
+    };
+  }
+
+  return {
+    width: pieChartWidth < 700 ? 200 : 300,
     layout: 'vertical',
     verticalAlign: 'middle',
     align: 'right',
     formatter: function Formatter(v: string) {
       return <span className="text-blue-800">{v}</span>;
     },
-  },
-  tooltip = { cursor: false },
-}: PieChartProps) => {
+  };
+}
+
+const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { cursor: false } }: PieChartProps) => {
+  const [chartWidth, setChartWidth] = useState(null);
+  const containerRef = useRef(null);
+  const handleResize = useCallback(() => {
+    if (containerRef.current) {
+      setChartWidth(containerRef.current?.containerRef?.current?.clientWidth); // ?? not sure why containerRef twice
+    }
+  }, [containerRef]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
+  const legendProps = legend || getLegend(chartWidth);
+
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer ref={containerRef} width="100%" height={400}>
       <PieChart {...chartProps}>
-        {legend && <Legend {...legend} />}
+        {legendProps && <Legend {...legendProps} />}
         {pies &&
           Object.keys(pies).map((pie, index) => (
             <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data}>
