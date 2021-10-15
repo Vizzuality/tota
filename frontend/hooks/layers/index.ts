@@ -235,6 +235,10 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
       type: 'geojson',
       data: developmentFundsGeoJSONUrl,
     },
+    legendConfig: {
+      type: 'basic',
+      items: [{ value: 'Development Funds', icon: DEVELOPMENT_FUNDS_SVG }],
+    },
     images: [{ id: 'development_funds_marker', src: DEVELOPMENT_FUNDS_SVG }],
     render: {
       layers: [
@@ -271,6 +275,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.a7fetiq7',
         },
         images: [{ id: 'bc_tourism_centers_marker', src: BC_TOURISM_CENTERS_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'BC Tourism Centers', icon: BC_TOURISM_CENTERS_SVG }],
+        },
         render: {
           layers: [
             {
@@ -288,7 +296,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'ski_resorts',
-        name: 'BC Ski resorts',
+        name: 'BC Ski Resorts',
         category: CATEGORY.TOURISM_BUSINESSES,
         version: '0.0.1',
         type: 'vector',
@@ -296,6 +304,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.arvkb438',
         },
         images: [{ id: 'ski_resorts_marker', src: SKI_RESORTS_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'BC Ski Resorts', icon: SKI_RESORTS_SVG }],
+        },
         render: {
           layers: [
             {
@@ -320,6 +332,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.4y0iosdv',
         },
         images: [{ id: 'hello_bc_accommodations_marker', src: HELLO_BC_ACCOMMODATIONS_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'Hello BC Accommodations Listing', icon: HELLO_BC_ACCOMMODATIONS_SVG }],
+        },
         render: {
           layers: [
             {
@@ -345,6 +361,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.3521qubk',
         },
         images: [{ id: 'campsites_marker', src: CAMPSITES_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'Campsites', icon: CAMPSITES_SVG }],
+        },
         render: {
           layers: [
             {
@@ -362,13 +382,17 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'first_nations_communities',
-        name: 'First Nation Community locations',
+        name: 'First Nation Community Locations',
         category: CATEGORY.TOURISM_BUSINESSES,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.7q627o47',
         },
         images: [{ id: 'first_nation_community_marker', src: FIRST_NATION_COMMUNITY_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'First Nation Community Locations', icon: FIRST_NATION_COMMUNITY_SVG }],
+        },
         render: {
           layers: [
             {
@@ -393,6 +417,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.3pqlvqwr',
         },
         images: [{ id: 'indigenous_businesses_marker', src: INDIGENOUS_BUSINESSES_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'BC Indigenous Business Listings', icon: INDIGENOUS_BUSINESSES_SVG }],
+        },
         render: {
           layers: [
             {
@@ -415,6 +443,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         type: 'vector',
         source: {
           url: 'mapbox://totadata.d4oseqxz',
+        },
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'Wildlife Habitats', color: '#aab7ef' }],
         },
         render: {
           layers: [
@@ -555,6 +587,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.00a7vg81',
         },
         images: [{ id: 'stops_of_interest_marker', src: STOPS_OF_INTEREST_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'Stops of Interest', icon: STOPS_OF_INTEREST_SVG }],
+        },
         render: {
           layers: [
             {
@@ -580,6 +616,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
           url: 'mapbox://totadata.1oumvy1n',
         },
         images: [{ id: 'bc_airports_marker', src: BC_AIRPORTS_SVG }],
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'BC Airports', icon: BC_AIRPORTS_SVG }],
+        },
         render: {
           layers: [
             {
@@ -603,6 +643,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         type: 'vector',
         source: {
           url: 'mapbox://totadata.1mtxwqap',
+        },
+        legendConfig: {
+          type: 'basic',
+          items: [{ value: 'Trails', color: '#000' }],
         },
         render: {
           layers: [
