@@ -20,6 +20,9 @@ import INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/indigenous-businesses.sv
 import SKI_RESORTS_SVG from 'svgs/map/markers/ski-resorts.svg?url';
 import STOPS_OF_INTEREST_SVG from 'svgs/map/markers/stops-of-interest.svg?url';
 import WILDLIFE_HABITATS_SVG from 'svgs/map/markers/wildlife-habitats.svg?url';
+import ORGANIZATIONS_SVG from 'svgs/map/markers/organizations.svg?url';
+import ORGANIZATIONS_2_SVG from 'svgs/map/markers/organizations-2.svg?url';
+import ORGANIZATIONS_3_SVG from 'svgs/map/markers/organizations-3.svg?url';
 
 import { REGION_COLORS } from 'constants/regions';
 
@@ -190,7 +193,6 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
   const params = new URLSearchParams();
 
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
-  params.append('fields', 'name,business_type,business_subtype');
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
   const organizationsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/organizations.geojson${searchParams}`;
 
@@ -203,16 +205,47 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
       type: 'geojson',
       data: organizationsGeoJSONUrl,
     },
+    images: [
+      { id: 'organizations_accessiblity', src: ACCESSIBLE_BUSINESSES_SVG },
+      { id: 'organizations_indigenous', src: INDIGENOUS_BUSINESSES_SVG },
+      { id: 'organizations_biosphere', src: BIOSPHERE_PROGRAM_SVG },
+      { id: 'organizations_2', src: ORGANIZATIONS_2_SVG },
+      { id: 'organizations_3', src: ORGANIZATIONS_3_SVG },
+      { id: 'organizations_default', src: ORGANIZATIONS_SVG },
+    ],
+    legendConfig: {
+      type: 'basic',
+      items: [
+        { value: 'TOTA Member', icon: ORGANIZATIONS_SVG },
+        { value: 'Biosphere program', icon: BIOSPHERE_PROGRAM_SVG },
+        { value: 'Indigenous businesses', icon: INDIGENOUS_BUSINESSES_SVG },
+        { value: 'Accessible businesses', icon: ACCESSIBLE_BUSINESSES_SVG },
+      ],
+    },
     render: {
       layers: [
         {
           id: 'organizations',
-          type: 'circle',
-          paint: {
-            'circle-color': '#34444c',
-            'circle-radius': 4,
-            'circle-stroke-color': '#fff',
-            'circle-stroke-width': 3,
+          type: 'symbol',
+          layout: {
+            'icon-image': [
+              'case',
+              ['==', ['get', 'feature_number'], 2],
+              'organizations_2',
+              ['==', ['get', 'feature_number'], 3],
+              'organizations_3',
+              [
+                'case',
+                ['==', ['get', 'indigenous_tourism'], true],
+                'organizations_indigenous',
+                ['==', ['get', 'biosphere_program_member'], true],
+                'organizations_biosphere',
+                ['==', ['get', 'accessiblity'], true],
+                'organizations_accessibility',
+                'organizations_default',
+              ],
+            ],
+            'icon-size': 1,
           },
         },
       ],
