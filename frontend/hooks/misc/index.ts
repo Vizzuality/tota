@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 let uniqueId = 0;
 const getUniqueId = () => uniqueId++;
@@ -9,4 +9,12 @@ export function useComponentId() {
     idRef.current = getUniqueId();
   }
   return idRef.current;
+}
+
+export function useResize(callback: () => any) {
+  useEffect(() => {
+    window.addEventListener('resize', callback);
+    callback();
+    return () => window.removeEventListener('resize', callback);
+  }, [callback]);
 }

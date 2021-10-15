@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import {
   ResponsiveContainer,
   Bar,
@@ -9,16 +9,19 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Text,
 } from 'recharts';
-import { BarChartProps } from './types';
+
+import type { BarChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
+import { useChartWidth } from 'hooks/charts';
 
 import { bottomLegend, COLORS, defaultGrid } from 'constants/charts';
 
 const Chart: FC<BarChartProps> = ({
   data,
-  chartProps,
+  chartProps = {},
   cartesianGrid = defaultGrid,
   cartesianAxis,
   legend = bottomLegend,
@@ -30,7 +33,12 @@ const Chart: FC<BarChartProps> = ({
   tooltip = { cursor: false },
 }: BarChartProps) => {
   const [selectedData, setSelectedData] = useState(null);
-  const yAxisWidth = 60;
+  const { chartWidth, containerRef } = useChartWidth();
+  const { layout } = chartProps;
+  let yAxisWidth = 60;
+  if (layout === 'vertical') {
+    yAxisWidth += chartWidth < 600 ? 20 : 80;
+  }
   const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
 
   const newBars = bars.map((bar, index) => ({
@@ -39,9 +47,19 @@ const Chart: FC<BarChartProps> = ({
     hide: selectedData && !selectedData.includes(bar.dataKey),
   }));
   const handleLegendChange = (filtered: string[]) => setSelectedData(filtered);
+  const yAxisTick = useCallback(
+    ({ x, y, payload }) => {
+      return (
+        <Text x={x} y={y} width={yAxisWidth} textAnchor="end" verticalAnchor="middle">
+          {payload.value}
+        </Text>
+      );
+    },
+    [yAxisWidth],
+  );
 
   return (
-    <ResponsiveContainer width={width} height={height}>
+    <ResponsiveContainer ref={containerRef} width={width} height={height}>
       <BarChart data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
@@ -53,7 +71,7 @@ const Chart: FC<BarChartProps> = ({
           />
         )}
         {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
+        {yAxis && <YAxis width={yAxisWidth} tick={yAxisTick} {...yAxis} />}
         {/* @ts-expect-error: dunno why props erroring */}
         {bars && newBars.map((bar) => <Bar key={bar.dataKey as string} {...bar} />)}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}

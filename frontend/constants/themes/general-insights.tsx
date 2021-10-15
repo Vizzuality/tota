@@ -183,9 +183,6 @@ const theme: ThemeType = {
           ],
           chartProps: {
             layout: 'vertical',
-            margin: {
-              left: 100,
-            },
           },
           bars,
           xAxis: {

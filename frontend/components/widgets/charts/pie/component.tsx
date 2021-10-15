@@ -1,7 +1,9 @@
-import React, { FC, useRef, useEffect, useState, useCallback } from 'react';
+import React, { FC, useRef, useState, useCallback } from 'react';
 import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
-import { PieChartProps } from './types';
+
+import type { PieChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
+import { useChartWidth } from 'hooks/charts';
 
 import { COLORS } from 'constants/charts';
 
@@ -29,19 +31,7 @@ function getLegend(pieChartWidth?: number) {
 }
 
 const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { cursor: false } }: PieChartProps) => {
-  const [chartWidth, setChartWidth] = useState(null);
-  const containerRef = useRef(null);
-  const handleResize = useCallback(() => {
-    if (containerRef.current) {
-      setChartWidth(containerRef.current?.containerRef?.current?.clientWidth); // ?? not sure why containerRef twice
-    }
-  }, [containerRef]);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
+  const { chartWidth, containerRef } = useChartWidth();
   const legendProps = legend || getLegend(chartWidth);
 
   return (
