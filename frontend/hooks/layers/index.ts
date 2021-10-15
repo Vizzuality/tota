@@ -190,6 +190,7 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
   const params = new URLSearchParams();
 
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
+  params.append('fields', 'name,business_type,business_subtype');
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
   const organizationsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/organizations.geojson${searchParams}`;
 
