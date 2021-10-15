@@ -8,7 +8,11 @@
       "region": "Thompson Okanagan",
       "subregion": "North Okanagan",
       "business_type": "Accommodation",
-      "business_subtype": null
+      "business_subtype": null,
+      "indigenous_tourism": null,
+      "biosphere_program_member": null,
+      "accessibility": null,
+      "features_number": 0
     },
     {
       "id": 594,
@@ -18,7 +22,11 @@
       "region": "Thompson Okanagan",
       "subregion": "Central Okanagan",
       "business_type": "Accommodation",
-      "business_subtype": "Motel"
+      "business_subtype": "Motel",
+      "indigenous_tourism": null,
+      "biosphere_program_member": null,
+      "accessibility": null,
+      "features_number": 0
     }
   ]
 }

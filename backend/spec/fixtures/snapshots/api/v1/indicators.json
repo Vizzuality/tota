@@ -5,19 +5,11 @@
       "indicator_values": [
         {
           "date": null,
-          "category_1": "Activity / Attraction",
+          "category_1": "Accommodation",
           "category_2": "all",
-          "value": 2.0,
+          "value": 3.0,
           "region": "region 1",
           "region_slug": "region_1"
-        },
-        {
-          "date": null,
-          "category_1": "Activity / Attraction",
-          "category_2": "all",
-          "value": 1.0,
-          "region": "region 2",
-          "region_slug": "region_2"
         },
         {
           "date": null,
@@ -29,6 +21,14 @@
         },
         {
           "date": null,
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "value": 2.0,
+          "region": "region 1",
+          "region_slug": "region_1"
+        },
+        {
+          "date": null,
           "category_1": "Accommodation",
           "category_2": "all",
           "value": 2.0,
@@ -37,32 +37,8 @@
         },
         {
           "date": null,
-          "category_1": "Accommodation",
+          "category_1": "Activity / Attraction",
           "category_2": "all",
-          "value": 3.0,
-          "region": "region 1",
-          "region_slug": "region_1"
-        },
-        {
-          "date": null,
-          "category_1": "Activity / Attraction",
-          "category_2": "biosphere",
-          "value": 1.0,
-          "region": "region 1",
-          "region_slug": "region_1"
-        },
-        {
-          "date": null,
-          "category_1": "Activity / Attraction",
-          "category_2": "biosphere",
-          "value": 1.0,
-          "region": "region 2",
-          "region_slug": "region_2"
-        },
-        {
-          "date": null,
-          "category_1": "Accommodation",
-          "category_2": "biosphere",
           "value": 1.0,
           "region": "region 2",
           "region_slug": "region_2"
@@ -72,6 +48,30 @@
           "category_1": "Accommodation",
           "category_2": "biosphere",
           "value": 2.0,
+          "region": "region 1",
+          "region_slug": "region_1"
+        },
+        {
+          "date": null,
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
+          "value": 1.0,
+          "region": "region 2",
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
+          "category_1": "Activity / Attraction",
+          "category_2": "biosphere",
+          "value": 1.0,
+          "region": "region 2",
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
+          "category_1": "Activity / Attraction",
+          "category_2": "biosphere",
+          "value": 1.0,
           "region": "region 1",
           "region_slug": "region_1"
         }
@@ -84,17 +84,17 @@
           "date": null,
           "category_1": null,
           "category_2": null,
-          "value": 4.0,
-          "region": "region 2",
-          "region_slug": "region_2"
+          "value": 5.0,
+          "region": "region 1",
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": null,
           "category_2": null,
-          "value": 5.0,
-          "region": "region 1",
-          "region_slug": "region_1"
+          "value": 4.0,
+          "region": "region 2",
+          "region_slug": "region_2"
         }
       ]
     },
