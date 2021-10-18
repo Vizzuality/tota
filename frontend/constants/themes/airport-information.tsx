@@ -84,10 +84,7 @@ const theme: ThemeType = {
         };
         const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
         let chartData = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
-
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',
@@ -128,10 +125,7 @@ const theme: ThemeType = {
         };
         const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
         let chartData = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
-
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',
@@ -225,17 +219,11 @@ const theme: ThemeType = {
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         let data = filterBySelectedYear(rawData, state.year);
-
         const originAirports = uniq(data.map((x) => x.category_1));
         const destinationAirports = uniq(rawData.map((x) => x.category_2));
-
         data = data.filter((x) => x.category_2 === (state.airport || destinationAirports[0]));
-
         let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'category_1', valueKey: 'value' });
-
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-        }
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',

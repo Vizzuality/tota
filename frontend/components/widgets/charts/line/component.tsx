@@ -39,7 +39,14 @@ const Chart: FC<LineChartProps> = ({
         {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
-            <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
+            <Line
+              key={`line_${index}`}
+              strokeWidth={3}
+              dot={false}
+              activeDot
+              stroke={lines[line].color || COLORS[index]}
+              {...lines[line]}
+            />
           ))}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </LineChart>

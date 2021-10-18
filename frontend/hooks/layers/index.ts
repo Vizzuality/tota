@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
-import developmentFunds from 'components/widgets/map/tooltips/development-funds';
+
+import { REGION_COLORS } from 'constants/regions';
 
 export const CATEGORY = {
   ADMIN_BOUNDARIES: 'Admin boundaries',
@@ -9,12 +10,62 @@ export const CATEGORY = {
   INFRASTRUCTURES: 'Infrastructures',
 };
 
-export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
-  /* const includeFillLayer = !Boolean(selectedRegion); */
+export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {
+  return {
+    id: 'economic_regions',
+    name: 'Economic Regions',
+    category: CATEGORY.ADMIN_BOUNDARIES,
+    type: 'vector',
+    source: {
+      url: 'mapbox://totadata.1gw3u20m',
+    },
+    render: {
+      layers: [
+        {
+          'source-layer': 'dev_region',
+          type: 'line',
+          paint: {
+            'line-width': 2,
+            'line-color': '#000',
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+        {
+          'source-layer': 'dev_region',
+          type: 'fill',
+          paint: {
+            'fill-color': '#000',
+            'fill-opacity': 0.2,
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+        {
+          'source-layer': 'dev_region',
+          type: 'symbol',
+          layout: {
+            'text-field': ['get', 'ECONOMIC_REGION_NAME'],
+            'text-justify': 'auto',
+            'text-size': 14,
+            'text-allow-overlap': true,
+          },
+          paint: {
+            'text-halo-color': '#fff',
+            'text-halo-width': 1,
+          },
+          ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+        },
+      ],
+    },
+  };
+};
+
+export const useEconomicRegionsLayer = getEconomicRegionsLayer;
+
+export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpacity = 0): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
 
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;
-  const regionOpacity = selectedRegion ? 0 : 0.8;
+  const regionOpacity = selectedRegion ? selectedRegionOpacity : 0.8;
 
   return useMemo(() => {
     return {
@@ -30,11 +81,11 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
       legendConfig: {
         type: 'basic',
         items: [
-          { value: 'Cariboo Chilcotin Coast', color: '#BB9075' },
-          { value: 'Thompson Okanagan', color: '#76ACA9' },
-          { value: 'Vancouver Island', color: '#4F91CD' },
-          { value: 'Kootenay Rockies', color: '#405E62' },
-          { value: 'Northern British Columbia', color: '#A9B937' },
+          { value: 'Cariboo Chilcotin Coast', color: REGION_COLORS.cariboo_chilcotin_coast },
+          { value: 'Thompson Okanagan', color: REGION_COLORS.thompson_okanagan },
+          { value: 'Vancouver Island', color: REGION_COLORS.vancouver_island },
+          { value: 'Kootenay Rockies', color: REGION_COLORS.kootenay_rockies },
+          { value: 'Northern British Columbia', color: REGION_COLORS.northern_british_columbia },
         ],
       },
       render: {
@@ -55,15 +106,15 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#BB9075',
+                REGION_COLORS.cariboo_chilcotin_coast,
                 'thompson_okanagan',
-                '#76ACA9',
+                REGION_COLORS.thompson_okanagan,
                 'vancouver_island',
-                '#4F91CD',
+                REGION_COLORS.vancouver_island,
                 'kootenay_rockies',
-                '#405E62',
+                REGION_COLORS.kootenay_rockies,
                 'northern_british_columbia',
-                '#A9B937',
+                REGION_COLORS.northern_british_columbia,
                 /* other */ '#DDDDDD',
               ],
             },
@@ -79,15 +130,15 @@ export const useTourismRegionsLayer = (selectedRegion: string): Layer => {
                 'match',
                 ['get', 'TOURISM_REGION_NAME'],
                 'cariboo_chilcotin_coast',
-                '#BB9075',
+                REGION_COLORS.cariboo_chilcotin_coast,
                 'thompson_okanagan',
-                '#76ACA9',
+                REGION_COLORS.thompson_okanagan,
                 'vancouver_island',
-                '#4F91CD',
+                REGION_COLORS.vancouver_island,
                 'kootenay_rockies',
-                '#405E62',
+                REGION_COLORS.kootenay_rockies,
                 'northern_british_columbia',
-                '#A9B937',
+                REGION_COLORS.northern_british_columbia,
                 /* other */ '#DDDDDD',
               ],
             },
@@ -165,40 +216,11 @@ export const useLayers = (selectedRegion: string): Layer[] => {
   const totaMembers = useTOTAMembersLayer(selectedRegion);
   const developmentFunds = useDevelopmentFundsLayer(selectedRegion);
   const tourismRegions = useTourismRegionsLayer(selectedRegion);
+  const economicRegions = useEconomicRegionsLayer(selectedRegion);
 
   return useMemo(
     () => [
-      {
-        id: 'economic_regions',
-        name: 'Economic Regions',
-        category: CATEGORY.ADMIN_BOUNDARIES,
-        type: 'vector',
-        source: {
-          url: 'mapbox://totadata.1gw3u20m',
-        },
-        render: {
-          layers: [
-            {
-              'source-layer': 'dev_region',
-              type: 'line',
-              paint: {
-                'line-width': 2,
-                'line-color': '#000',
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-            {
-              'source-layer': 'dev_region',
-              type: 'fill',
-              paint: {
-                'fill-color': '#000',
-                'fill-opacity': 0.2,
-              },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
-            },
-          ],
-        },
-      },
+      economicRegions,
       totaMembers,
       developmentFunds,
       {

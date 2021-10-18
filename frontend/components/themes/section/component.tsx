@@ -32,7 +32,12 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     }),
     [state, selectedRegion],
   );
-  const { data: rawData, isFetched, isFetching, isLoading } = useIndicatorValues(section.fetchParams(wholeState));
+  const {
+    data: indicatorValues,
+    isFetched,
+    isFetching,
+    isLoading,
+  } = useIndicatorValues(section.fetchParams(wholeState));
   const {
     data,
     widgetTypeOverride,
@@ -41,7 +46,10 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     controls,
     viewOnMap,
     ...widgetConfig
-  } = useMemo(() => section.fetchWidgetProps(rawData, wholeState), [rawData, wholeState]);
+  } = useMemo(
+    () => section.fetchWidgetProps(indicatorValues, wholeState),
+    [section.fetchWidgetProps, indicatorValues, wholeState],
+  );
   const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
@@ -78,25 +86,29 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
       </div>
 
       <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
-        <Controls
-          className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
-          controls={controls}
-          state={state}
-          onControlChange={handleControlChange}
-        />
+        {isFetched && (
+          <Controls
+            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+            controls={controls}
+            state={state}
+            onControlChange={handleControlChange}
+          />
+        )}
         <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched &&
-            data &&
-            ((Array.isArray(data) && data.length > 0) || !Array.isArray(data)) &&
-            (WidgetWrapper ? (
-              <WidgetWrapper>
-                <Widget data={data} {...widgetConfig} />
-              </WidgetWrapper>
-            ) : (
-              <Widget data={data} {...widgetConfig} />
-            ))}
-          {isFetched && data && data.length === 0 && <span>No data available</span>}
+          {isFetched && data !== undefined && data !== null && (
+            <>
+              {((Array.isArray(data) && data.length > 0) || (!Array.isArray(data) && data !== '')) &&
+                (WidgetWrapper ? (
+                  <WidgetWrapper>
+                    <Widget data={data} {...widgetConfig} />
+                  </WidgetWrapper>
+                ) : (
+                  <Widget data={data} {...widgetConfig} />
+                ))}
+              {data.length === 0 && <span>No data available</span>}
+            </>
+          )}
         </div>
       </div>
     </div>

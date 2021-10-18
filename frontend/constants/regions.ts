@@ -6,3 +6,12 @@ export const REGION_BBOX = {
   vancouver_island: [-129.58648202571175, 48.086604066315296, -122.59235654133398, 52.02346847830237],
   british_columbia: [-140.0606314828667, 48.072232424896136, -113.32817105536152, 60.27452387093166],
 };
+
+export const REGION_COLORS = {
+  british_columbia: '#314057',
+  thompson_okanagan: '#76ACA9',
+  northern_british_columbia: '#A9B937',
+  cariboo_chilcotin_coast: '#BB9075',
+  kootenay_rockies: '#405E62',
+  vancouver_island: '#4F91CD',
+};

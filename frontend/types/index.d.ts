@@ -10,6 +10,7 @@ export interface IndicatorValue {
   category_2?: string;
   date?: string;
   region: string;
+  region_slug?: string;
   value: number;
 }
 
@@ -18,12 +19,21 @@ export interface Indicator {
   indicator_values: IndicatorValue[];
 }
 
+export interface Region {
+  id: number;
+  name: string;
+  slug: string;
+  parent_id: number;
+  parent?: Region;
+}
+
 export interface ThemeSectionType {
   title: string;
   subTitle?: string;
   description: string;
   notes?: string;
   initialState?: any;
+  display?: (selectedRegion: Region) => boolean;
   fetchParams: (state: any) => any;
   fetchWidgetProps: (indicatorValues: IndicatorValue[], state: any) => any;
 }

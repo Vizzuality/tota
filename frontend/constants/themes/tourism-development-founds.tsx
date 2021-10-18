@@ -8,21 +8,11 @@ import type { ThemeType, IndicatorValue, WidgetWrapperProps } from 'types';
 
 import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart } from 'utils/charts';
 import { getMapUrl } from 'hooks/map';
-import { previousYear, moneyTickFormatter } from './utils';
+import { moneyTickFormatter } from './utils';
 
 import mountains2Image from 'images/home/image-mountains2.png';
 
 import { COLORS } from 'constants/charts';
-
-// TODO: That will be removed when I clean up mess with regions and connect with API
-const regionsMap = {
-  thompson_okanagan: 'Thompson Okanagan',
-  british_columbia: 'British Columbia',
-  cariboo_chilcotin_coast: 'Cariboo Chilcotin Coast',
-  northern_british_columbia: 'Northern BC',
-  vancouver_island: 'Vancouver Island',
-  kootenay_rockies: 'Kootenay Rockies',
-};
 
 const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => {
   if (!fundSources) return null;
@@ -162,10 +152,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filteredByYear = filterBySelectedYear(rawData, state.year, true);
         const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
-        const selectedRegion =
-          state.selectedRegion.name === 'British Columbia'
-            ? null
-            : Object.keys(regionsMap).find((key) => regionsMap[key] === state.selectedRegion.name);
+        const selectedRegion = state.selectedRegion.slug === 'british_columbia' ? null : state.selectedRegion.slug;
         const allYears = uniq(rawData.filter((x) => x.date).map((x) => parseInt(getYear(x.date), 10)));
         const tooltipYears =
           state.year === 'all_years'
@@ -182,10 +169,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
           selectedRegion,
           extraLayers: [getDevelopmentFundsLayer(fundSources, selectedRegion, state.year)].filter((x) => x),
-          featureTooltip: function FeatureTooltip(feature: any) {
-            const regionName = regionsMap[feature.properties.TOURISM_REGION_NAME];
-            if (!regionName) return null;
-            const regionData = filteredByYear.filter((x) => x.region === regionName);
+          featureTooltip: function FeatureTooltip(feature: any, regions) {
+            const region = regions.find((r) => r.slug === feature.properties.TOURISM_REGION_NAME);
+            if (!region) return null;
+            const regionData = filteredByYear.filter((x) => x.region_slug === region.slug);
             const volumes = regionData.filter((x) => x.indicator === 'development_funds_volume_by_source');
             const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
             const funds = fundSources.map((source, index) => ({
@@ -195,7 +182,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
               volume: volumes.find((x) => x.category_1 === source)?.value || 0,
             }));
 
-            return <DevelopmentFundsTooltip years={tooltipYears} regionName={regionName} funds={funds} />;
+            return <DevelopmentFundsTooltip years={tooltipYears} regionName={region.name} funds={funds} />;
           },
         };
       },

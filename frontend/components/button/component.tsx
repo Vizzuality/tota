@@ -12,6 +12,7 @@ const THEME = {
   gray: 'text-white bg-gray-300',
   'dark-gray': 'text-white bg-gray-500',
   'dark-gray-alt': 'text-blue-800 border border-gray-500 bg-white',
+  blue: 'text-white bg-blue-800 hover:bg-blue-900',
 };
 
 const SIZE = {

@@ -5,4 +5,5 @@ interface RankItem {
 
 export interface RankProps {
   data: RankItem[];
+  hideNumber: boolean;
 }

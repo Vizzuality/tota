@@ -143,7 +143,7 @@ const theme: ThemeType = {
             tickFormatter: compactNumberTickFormatter,
           },
           tooltip: {
-            cursor: { stroke: '#314057', strokeWidth: 1 },
+            ...defaultTooltip,
             valueFormatter: compactNumberTickFormatter,
             payloadFilter: (y) => !y.name.includes('min-max'),
           },
@@ -191,7 +191,7 @@ const theme: ThemeType = {
         region: state.selectedRegion.name,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const ratio = (rawData || []).filter((x: any) => getYear(x.date) === state.year)[0];
+        const ratio = filterBySelectedYear(rawData, state.year)[0];
         let ratioText: string | React.ReactNode = '';
         if (ratio) {
           const ratioNumber = Number(ratio.value).toFixed(2);
@@ -224,14 +224,13 @@ const theme: ThemeType = {
         region: state.selectedRegion.name,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const filteredByYear = filterBySelectedYear(rawData, state.year);
         const data = mergeForChart({
           data: filteredByYear,
           mergeBy: 'date',
           labelKey: 'category_1',
           valueKey: 'value',
         });
-        const bars = getStackedBarsData(data, 'date');
         const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
         return {
@@ -241,7 +240,7 @@ const theme: ThemeType = {
             { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Quarterly']) },
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
-          bars,
+          bars: getStackedBarsData(data, 'date'),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.frequency === 'monthly' && shortMonthName,
@@ -268,7 +267,7 @@ const theme: ThemeType = {
         region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const filteredByYear = filterBySelectedYear(rawData, state.year);
         const top10 = getTop10AndOthersByYear(filteredByYear, 'category_1');
         const data = mergeForChart({
           data: top10,
@@ -276,7 +275,6 @@ const theme: ThemeType = {
           labelKey: 'category_1',
           valueKey: 'value',
         });
-        const bars = getStackedBarsData(data, 'date');
         const percentagePerPeriod = getPercentageTotalByLabel(data, 'date');
 
         return {
@@ -285,7 +283,7 @@ const theme: ThemeType = {
           controls: [
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
-          bars,
+          bars: getStackedBarsData(data, 'date'),
           xAxis: {
             dataKey: 'date',
           },
@@ -310,14 +308,13 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filteredByYear = rawData.filter((x: any) => getYear(x.date) === state.year);
+        const filteredByYear = filterBySelectedYear(rawData, state.year);
         const data = mergeForChart({
           data: filteredByYear,
           mergeBy: 'date',
           labelKey: 'category_2',
           valueKey: 'value',
         });
-        const bars = getStackedBarsData(data, 'date');
 
         return {
           type: 'charts/bar',
@@ -332,7 +329,7 @@ const theme: ThemeType = {
             ...bottomLegend,
             removable: true,
           },
-          bars,
+          bars: getStackedBarsData(data, 'date'),
           xAxis: {
             hide: true,
             type: 'number',

@@ -1,16 +1,9 @@
 import { ReactNode } from 'react';
-
-export interface RegionProps {
-  id: number;
-  name: string;
-  slug: string;
-  parent_id: number;
-  parent?: RegionProps;
-}
+import { Region } from 'types';
 
 export interface RegionContextProps {
   active: boolean;
-  regions: RegionProps[];
+  regions: Region[];
 }
 
 export interface RegionProviderProps {
@@ -18,5 +11,5 @@ export interface RegionProviderProps {
 }
 
 export interface UseRegionsResponse {
-  regions: RegionProps[];
+  regions: Region[];
 }

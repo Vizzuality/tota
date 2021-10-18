@@ -42,7 +42,14 @@ const Chart: FC<ComposedChartProps> = ({
         {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
-            <Line key={`line_${index}`} strokeWidth={3} dot={false} activeDot stroke={COLORS[index]} {...lines[line]} />
+            <Line
+              key={`line_${index}`}
+              strokeWidth={3}
+              dot={false}
+              activeDot
+              stroke={lines[line].color || COLORS[index]}
+              {...lines[line]}
+            />
           ))}
         {bars &&
           Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
