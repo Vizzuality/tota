@@ -95,13 +95,7 @@ export const MainMap: FC<MapProps> = ({
   const [selectedFeature, setSelectedFeature] = useState(null);
 
   const handleClick = (evt: MapEvent) => {
-    const selectable = evt.features.find((f) => SELECTABLE_FEATURES.includes(f.source));
-
-    if (selectable) {
-      setSelectedFeature(selectable);
-    } else {
-      setSelectedFeature(null);
-    }
+    setSelectedFeature(evt.features.find((f) => SELECTABLE_FEATURES.includes(f.source)));
   };
 
   const legendItems = layers.map((layer) => ({
