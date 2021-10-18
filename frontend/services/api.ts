@@ -1,6 +1,6 @@
 import type { IndicatorValue } from 'types';
 
-interface GetIndicatorsArgs {
+export interface GetIndicatorsArgs {
   slug?: string | string[];
   region?: string | string[];
   category_1?: string | string[];
