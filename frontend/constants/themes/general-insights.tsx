@@ -24,8 +24,9 @@ const theme: ThemeType = {
       initialState: {
         year: thisYear,
       },
-      fetchParams: () => ({
+      fetchParams: (state) => ({
         slug: ['size_tourism_region_km2'],
+        region: [...state.selectedRegion.children?.map((x) => x.name)],
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -55,8 +56,9 @@ const theme: ThemeType = {
       initialState: {
         year: thisYear,
       },
-      fetchParams: () => ({
+      fetchParams: (state) => ({
         slug: ['population_by_tourism_region'],
+        region: [...state.selectedRegion.children?.map((x) => x.name)],
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year).map((d) => ({
