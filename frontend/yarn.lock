@@ -1748,11 +1748,6 @@
   resolved "https://registry.yarnpkg.com/@mapbox/jsonlint-lines-primitives/-/jsonlint-lines-primitives-2.0.2.tgz#ce56e539f83552b58d10d672ea4d6fc9adc7b234"
   integrity sha1-zlblOfg1UrWNENZy6k1vya3HsjQ=
 
-"@mapbox/mapbox-gl-supported@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-supported/-/mapbox-gl-supported-1.5.0.tgz#f60b6a55a5d8e5ee908347d2ce4250b15103dc8e"
-  integrity sha512-/PT1P6DNf7vjEEiPkVIRJkvibbqWtqnyGaBz3nfRdcxclNSnSdaLU5tfAgcD7I8Yt5i+L19s406YLl1koLnLbg==
-
 "@mapbox/mapbox-gl-supported@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-supported/-/mapbox-gl-supported-2.0.0.tgz#bb133cd91e562c006713fbc83f21e4b6f711a388"
@@ -1763,7 +1758,7 @@
   resolved "https://registry.yarnpkg.com/@mapbox/point-geometry/-/point-geometry-0.1.0.tgz#8a83f9335c7860effa2eeeca254332aa0aeed8f2"
   integrity sha1-ioP5M1x4YO/6Lu7KJUMyqgru2PI=
 
-"@mapbox/tiny-sdf@^1.1.0", "@mapbox/tiny-sdf@^1.1.1":
+"@mapbox/tiny-sdf@^1.1.0":
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/@mapbox/tiny-sdf/-/tiny-sdf-1.2.5.tgz#424c620a96442b20402552be70a7f62a8407cc59"
   integrity sha512-cD8A/zJlm6fdJOk6DqPUV8mcpyJkRz2x2R+/fYcWDYG3oWbG7/L7Yl/WqQ1VZCjnL9OTIMAn6c+BC5Eru4sQEw==
@@ -6853,7 +6848,7 @@ github-slugger@^1.0.0:
   resolved "https://registry.yarnpkg.com/github-slugger/-/github-slugger-1.4.0.tgz#206eb96cdb22ee56fdc53a28d5a302338463444e"
   integrity sha512-w0dzqw/nt51xMVmlaV1+JRzN+oCa1KfcgGEWhxUG16wbdA+Xnt/yoFO8Z8x/V82ZcZ0wy6ln9QDup5avbhiDhQ==
 
-gl-matrix@^3.0.0, gl-matrix@^3.2.1, gl-matrix@^3.3.0:
+gl-matrix@^3.0.0, gl-matrix@^3.3.0:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.4.3.tgz#fc1191e8320009fd4d20e9339595c6041ddc22c9"
   integrity sha512-wcCp8vu8FT22BnvKVPjXa/ICBWRq/zjFfdofZy1WSpQZpphblv12/bOQLBC1rMM7SGOFS9ltVmKOHil5+Ml7gA==
@@ -8636,36 +8631,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mapbox-gl@^1.0.0:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-1.13.2.tgz#76639c44f141f8dff71b7d8f1504f2aed11f7517"
-  integrity sha512-CPjtWygL+f7naL+sGHoC2JQR0DG7u+9ik6WdkjjVmz2uy0kBC2l+aKfdi3ZzUR7VKSQJ6Mc/CeCN+6iVNah+ww==
-  dependencies:
-    "@mapbox/geojson-rewind" "^0.5.0"
-    "@mapbox/geojson-types" "^1.0.2"
-    "@mapbox/jsonlint-lines-primitives" "^2.0.2"
-    "@mapbox/mapbox-gl-supported" "^1.5.0"
-    "@mapbox/point-geometry" "^0.1.0"
-    "@mapbox/tiny-sdf" "^1.1.1"
-    "@mapbox/unitbezier" "^0.0.0"
-    "@mapbox/vector-tile" "^1.3.1"
-    "@mapbox/whoots-js" "^3.1.0"
-    csscolorparser "~1.0.3"
-    earcut "^2.2.2"
-    geojson-vt "^3.2.1"
-    gl-matrix "^3.2.1"
-    grid-index "^1.1.0"
-    minimist "^1.2.5"
-    murmurhash-js "^1.0.0"
-    pbf "^3.2.1"
-    potpack "^1.0.1"
-    quickselect "^2.0.0"
-    rw "^1.3.3"
-    supercluster "^7.1.0"
-    tinyqueue "^2.0.3"
-    vt-pbf "^3.1.1"
-
-mapbox-gl@^2.2.0:
+mapbox-gl@^2.2.0, mapbox-gl@^2.3.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-2.5.1.tgz#77678c903feeabf759548a216e2e94ceaf4bc7be"
   integrity sha512-mUYOe8z+00fWEtBDAtiNeVDH2wsoEQlOK0UskbIPKnG1XRTDYzzofh8f/1BHe1Q3OLxce2TQ+Ou3uo1yAlePaA==
@@ -10922,15 +10888,15 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-map-gl@5:
-  version "5.3.17"
-  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-5.3.17.tgz#944a105c551674729d3365126cb80326f0ae945f"
-  integrity sha512-AUMFPTsm0OQ128PhGIeK4Unul/2+i6amQD5EyokxWJmuGr37YPvKWBy/i6Zw2F3pDQmQ2ORlsroM99NeS8XEag==
+react-map-gl@6:
+  version "6.1.17"
+  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-6.1.17.tgz#3fe52ede87919080a6b8220b867e61c55be20ede"
+  integrity sha512-SKuMtvs7aQpHMJehf/GzUQnEhPWRIypTX7X2wVXGME2RBKdY0PnC1YTiy8W3aA4uwcolPvCCYB+ki3xal51ZXQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@types/geojson" "^7946.0.7"
     "@types/mapbox-gl" "^2.0.3"
-    mapbox-gl "^1.0.0"
+    mapbox-gl "^2.3.0"
     mjolnir.js "^2.5.0"
     prop-types "^15.7.2"
     resize-observer-polyfill "^1.5.1"
@@ -12251,7 +12217,7 @@ stylis@3.5.4:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
-supercluster@^7.1.0, supercluster@^7.1.3:
+supercluster@^7.1.3:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-7.1.4.tgz#6762aabfd985d3390b49f13b815567d5116a828a"
   integrity sha512-GhKkRM1jMR6WUwGPw05fs66pOFWhf59lXq+Q3J3SxPvhNcmgOtLRV6aVQPMRsmXdpaeFJGivt+t7QXUPL3ff4g==
