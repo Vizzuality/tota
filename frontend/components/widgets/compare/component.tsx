@@ -43,7 +43,7 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
     valueKey,
   });
   const labels = uniq(data.map((x) => x[labelKey]));
-  const chartConfig = {
+  const chartProps = {
     bars: labels.map((x) => ({ dataKey: x })),
     yAxis: {
       domain: [Math.min(0, minValue), Math.round(maxValue * 1.1)],
@@ -58,7 +58,7 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
   return (
     <div className="w-full flex">
       <div className="w-1/2">
-        <BarChart data={chartData} {...chartConfig} />
+        <BarChart data={chartData} {...chartProps} />
       </div>
       <div className="w-1/2 p-20 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">

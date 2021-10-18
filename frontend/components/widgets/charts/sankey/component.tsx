@@ -9,7 +9,7 @@ import type { SankeyChartProps } from './types';
 
 const Chart: FC<SankeyChartProps> = ({
   data,
-  chartConfig,
+  chartProps,
   sourceKey,
   targetKey,
   valueKey = 'value',
@@ -31,7 +31,7 @@ const Chart: FC<SankeyChartProps> = ({
   return (
     <ResponsiveContainer width="100%" height={400}>
       {/* @ts-expect-error: Disable type errors for SankeyLink and SankeyNode props missing */}
-      <Sankey data={chartData} nodePading={50} link={<SankeyLink />} node={<SankeyNode />} {...chartConfig}>
+      <Sankey data={chartData} nodePading={50} link={<SankeyLink />} node={<SankeyNode />} {...chartProps}>
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </Sankey>
     </ResponsiveContainer>

@@ -7,7 +7,7 @@ export interface TreemapDataPoint {
 export interface TreemapChartProps {
   data: TreemapDataPoint[];
   dataKey: string;
-  chartConfig: any;
+  chartProps: any;
   tooltip: any;
   width?: string | number;
   height?: string | number;

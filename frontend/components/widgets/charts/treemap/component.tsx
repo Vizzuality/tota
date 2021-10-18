@@ -8,7 +8,7 @@ import type { TreemapChartProps } from './types';
 
 const Chart: FC<TreemapChartProps> = ({
   data,
-  chartConfig,
+  chartProps,
   width = '100%',
   height = 400,
   tooltip = { cursor: false },
@@ -20,7 +20,7 @@ const Chart: FC<TreemapChartProps> = ({
         dataKey="value"
         ratio={4 / 3}
         fill="#fff"
-        {...chartConfig}
+        {...chartProps}
         content={
           /* @ts-expect-error: Disable type errors for CustomizedContent props missing */
           <CustomizedContent />

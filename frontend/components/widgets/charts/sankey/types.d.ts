@@ -1,6 +1,6 @@
 export interface SankeyChartProps {
   data: any[];
-  chartConfig: any;
+  chartProps: any;
   tooltip: any;
   sourceKey: string;
   targetKey: string;

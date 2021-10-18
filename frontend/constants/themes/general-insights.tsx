@@ -38,7 +38,7 @@ const theme: ThemeType = {
             color: REGION_COLORS[d.region_slug],
             value: d.value,
           })),
-          chartConfig: {
+          chartProps: {
             isAnimationActive: false,
           },
           tooltip: {
