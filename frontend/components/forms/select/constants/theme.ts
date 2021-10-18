@@ -52,7 +52,7 @@ export default {
     },
     item: {
       base: 'text-lg text-blue-800 font-bold',
-      highlighted: 'text-lg bg-gray-100 text-gray-800 font-bold',
+      highlighted: 'text-lg text-blue-800 font-bold opacity-40',
       disabled: 'text-lg opacity-50 pointer-events-none',
     },
   },
