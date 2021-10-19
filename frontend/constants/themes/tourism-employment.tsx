@@ -319,6 +319,7 @@ const theme: ThemeType = {
           bars: getStackedBarsData(chartData, 'date'),
           xAxis: {
             dataKey: 'date',
+            tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
           tooltip: {
             cursor: false,
