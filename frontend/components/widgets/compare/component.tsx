@@ -56,11 +56,11 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
   const changeDataValues = labels.map((b) => changeData.find((x) => x[labelKey] === b)?.value);
 
   return (
-    <div className="w-full flex">
-      <div className="w-1/2">
+    <div className="w-full flex flex-col lg:flex-row">
+      <div className="lg:w-1/2">
         <BarChart data={chartData} {...chartProps} />
       </div>
-      <div className="w-1/2 p-20 flex justify-center items-center relative">
+      <div className="lg:w-1/2 p-20 lg:p-6 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
           {(changeData || []).length > 0 !== null ? (
             <>
