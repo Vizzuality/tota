@@ -217,7 +217,7 @@ export function getMonthlyMinMax(data: IndicatorValue[], groupByKey: string) {
   });
 }
 
-export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], groupByKey: string) {
+export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], groupByKey: string, colors: any = {}) {
   const monthlyMinMax = getMonthlyMinMax(rawData, groupByKey);
   const uniqKeys = uniq(rawData.map((x) => x[groupByKey]));
   const newChartData = chartData.map((d) => ({
@@ -227,6 +227,7 @@ export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], gr
   const areas = uniqKeys.map((key: string) => ({
     dataKey: `${key} min-max`,
     fillOpacity: 0.07,
+    fill: colors[key],
     stroke: 'none',
   }));
   return [newChartData, areas];
