@@ -3,6 +3,7 @@ import { Layer } from '@vizzuality/layer-manager-react';
 
 import ACCESSIBLE_BUSINESSES_SVG from 'svgs/map/markers/accessible-businesses.svg?url';
 import BC_AIRPORTS_SVG from 'svgs/map/markers/bc-airports.svg?url';
+import BC_INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/bc-indigenous-businesses.svg?url';
 import BC_TOURISM_CENTERS_SVG from 'svgs/map/markers/bc-tourism-centers.svg?url';
 import BIOSPHERE_PROGRAM_SVG from 'svgs/map/markers/biosphere-program.svg?url';
 import CAMPSITES_SVG from 'svgs/map/markers/campsites.svg?url';
@@ -17,12 +18,12 @@ import FIRES_7_SVG from 'svgs/map/markers/fires-7.svg?url';
 import FIRST_NATION_COMMUNITY_SVG from 'svgs/map/markers/first-nation-community.svg?url';
 import HELLO_BC_ACCOMMODATIONS_SVG from 'svgs/map/markers/hello-bc-accommodations.svg?url';
 import INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/indigenous-businesses.svg?url';
+import ORGANIZATIONS_2_SVG from 'svgs/map/markers/organizations-2.svg?url';
+import ORGANIZATIONS_3_SVG from 'svgs/map/markers/organizations-3.svg?url';
+import ORGANIZATIONS_SVG from 'svgs/map/markers/organizations.svg?url';
 import SKI_RESORTS_SVG from 'svgs/map/markers/ski-resorts.svg?url';
 import STOPS_OF_INTEREST_SVG from 'svgs/map/markers/stops-of-interest.svg?url';
 import WILDLIFE_HABITATS_SVG from 'svgs/map/markers/wildlife-habitats.svg?url';
-import ORGANIZATIONS_SVG from 'svgs/map/markers/organizations.svg?url';
-import ORGANIZATIONS_2_SVG from 'svgs/map/markers/organizations-2.svg?url';
-import ORGANIZATIONS_3_SVG from 'svgs/map/markers/organizations-3.svg?url';
 
 import { REGION_COLORS } from 'constants/regions';
 import { useRegions } from 'hooks/regions';
@@ -470,10 +471,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         source: {
           url: 'mapbox://totadata.3pqlvqwr',
         },
-        images: [{ id: 'indigenous_businesses_marker', src: INDIGENOUS_BUSINESSES_SVG }],
+        images: [{ id: 'bc_indigenous_businesses_marker', src: BC_INDIGENOUS_BUSINESSES_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'BC Indigenous Business Listings', icon: INDIGENOUS_BUSINESSES_SVG }],
+          items: [{ value: 'BC Indigenous Business Listings', icon: BC_INDIGENOUS_BUSINESSES_SVG }],
         },
         render: {
           layers: [
@@ -482,7 +483,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               'source-layer': 'first_nations_business',
               type: 'symbol',
               layout: {
-                'icon-image': 'indigenous_businesses_marker',
+                'icon-image': 'bc_indigenous_businesses_marker',
                 'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
