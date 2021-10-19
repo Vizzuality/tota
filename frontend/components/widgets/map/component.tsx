@@ -77,6 +77,12 @@ const MapWidget: FC<MapWidgetProps> = ({
   };
   const handleMapLoad = ({ map }) => {
     setMap(map);
+    // removing labels as we don't need them on chart widget
+    map.style.stylesheet.layers.forEach((layer) => {
+      if (layer['source-layer'] === 'place_label') {
+        map.removeLayer(layer.id);
+      }
+    });
   };
   const tourismRegionLayer = useTourismRegionsLayer(selectedRegion, disableHighlight ? 0.8 : 0);
 

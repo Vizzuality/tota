@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
 
 import { REGION_COLORS } from 'constants/regions';
+import { useRegions } from 'hooks/regions';
 
 export const CATEGORY = {
   ADMIN_BOUNDARIES: 'Admin boundaries',
@@ -63,6 +64,7 @@ export const useEconomicRegionsLayer = getEconomicRegionsLayer;
 
 export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpacity = 0): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
+  const { regions } = useRegions();
 
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;
   const regionOpacity = selectedRegion ? selectedRegionOpacity : 0.8;
@@ -142,6 +144,21 @@ export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpa
                 /* other */ '#DDDDDD',
               ],
             },
+          },
+          {
+            'source-layer': 'tourism_regions',
+            type: 'symbol',
+            layout: {
+              'text-field': ['match', ['get', 'TOURISM_REGION_NAME'], ...regions.flatMap((r) => [r.slug, r.name]), ''],
+              'text-justify': 'auto',
+              'text-size': 14,
+              'text-allow-overlap': true,
+            },
+            paint: {
+              'text-halo-color': '#fff',
+              'text-halo-width': 1,
+            },
+            ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
           },
         ].filter((x) => x),
       },
