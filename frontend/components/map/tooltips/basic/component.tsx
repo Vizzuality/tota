@@ -5,7 +5,7 @@ import type { TooltipProps } from './types';
 const Tooltip: FC<TooltipProps> = ({ properties }: TooltipProps) => (
   <div>
     <div className="bg-blue-800 py-2 px-4 text-white flex flex-row justify-between">Feature</div>
-    <div className="px-4 py-2 text-blue-800" style={{ maxHeight: 500 }}>
+    <div className="px-4 py-2 text-blue-800 overflow-y-auto" style={{ maxHeight: 400 }}>
       {Object.keys(properties).map((key) => (
         <div key={key} className="flex justify-between mt-1">
           <div>{startCase(key)}</div>
