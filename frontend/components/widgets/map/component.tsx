@@ -18,6 +18,7 @@ const MapWidget: FC<MapWidgetProps> = ({
   selectedRegion,
   extraLayers = [],
   prependExtraLayers = false,
+  includeTourismRegionLabels = true,
 }: MapWidgetProps) => {
   const { regions } = useRegions();
   const [map, setMap] = useState(null);
@@ -84,7 +85,11 @@ const MapWidget: FC<MapWidgetProps> = ({
       }
     });
   };
-  const tourismRegionLayer = useTourismRegionsLayer(selectedRegion, disableHighlight ? 0.8 : 0);
+  const tourismRegionLayer = useTourismRegionsLayer(
+    selectedRegion,
+    disableHighlight ? 0.8 : 0,
+    includeTourismRegionLabels,
+  );
 
   useEffect(() => {
     if (selectedRegion) {

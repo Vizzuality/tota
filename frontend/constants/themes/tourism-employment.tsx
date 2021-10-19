@@ -42,6 +42,7 @@ const theme: ThemeType = {
           disableHighlight: true,
           extraLayers: [getEconomicRegionsLayer(selectedRegion)].filter((x) => x),
           prependExtraLayers: true,
+          includeTourismRegionLabels: false,
         };
       },
     },
@@ -306,6 +307,7 @@ const theme: ThemeType = {
         return {
           slug: 'tourism_employment_by_job_status',
           region: state.selectedRegion.name,
+          category_1: 'Tourism',
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {

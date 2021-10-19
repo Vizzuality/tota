@@ -62,7 +62,11 @@ export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {
 
 export const useEconomicRegionsLayer = getEconomicRegionsLayer;
 
-export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpacity = 0): Layer => {
+export const useTourismRegionsLayer = (
+  selectedRegion: string,
+  selectedRegionOpacity = 0,
+  includeLabels = true,
+): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
   const { regions } = useRegions();
 
@@ -145,7 +149,7 @@ export const useTourismRegionsLayer = (selectedRegion: string, selectedRegionOpa
               ],
             },
           },
-          {
+          includeLabels && {
             'source-layer': 'tourism_regions',
             type: 'symbol',
             layout: {

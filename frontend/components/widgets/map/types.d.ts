@@ -6,5 +6,6 @@ export interface MapWidgetProps {
   selectedRegion?: string;
   disableHighlight?: boolean;
   prependExtraLayers?: boolean;
+  includeTourismRegionLabels?: boolean;
   extraLayers?: any[];
 }
