@@ -281,6 +281,10 @@ const theme: ThemeType = {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
+          yAxis: {
+            tickFormatter: (value) => `${value}$/h`,
+            domain: [(dataMin) => Math.round(dataMin - 2), (dataMax) => Math.round(dataMax) + 2],
+          },
           tooltip: {
             ...defaultTooltip,
             valueFormatter: (value) => `${value} CAD/h`,
