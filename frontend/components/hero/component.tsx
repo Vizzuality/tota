@@ -16,7 +16,7 @@ const Hero: FC<HeroProps> = ({
   maxTextWidth = 700,
 }: HeroProps) => (
   <div className={cx(className, 'w-full flex justify-center items-center bg-cover')} style={{ height }}>
-    <div id="hero" className="absolute h-full w-screen overflow-hidden z-0" style={{ height }}>
+    <div id="hero" className="absolute h-full w-full overflow-hidden z-0" style={{ height }}>
       {images ? (
         <ImageCarousel images={images} />
       ) : (
