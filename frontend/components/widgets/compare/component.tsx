@@ -82,10 +82,11 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
                 <span>{currentYear}</span>
               </div>
               <div
-                className={cx(
-                  'absolute transition duration-300 ease-in-out transform flex flex-row justify-between w-full',
-                  { 'translate-y-20 opacity-1': showCompare, 'opacity-0': !showCompare },
-                )}
+                className={cx('absolute transition duration-300 ease-in-out transform flex flex-row justify-between', {
+                  'translate-y-20 opacity-1': showCompare,
+                  'opacity-0': !showCompare,
+                  'w-full': changeDataValues.length > 1,
+                })}
               >
                 {changeDataValues.map((value, index) => (
                   <div
