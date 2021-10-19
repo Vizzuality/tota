@@ -95,10 +95,12 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
             onChange={handleRegionChange}
           />
         </div>
-        <div className="w-full mt-20 flex justify-around items-center bg-white bg-opacity-20">
-          {statistics.map((s, index) => (
-            <StatisticBlock key={index} loading={isFetching} {...s} />
-          ))}
+        <div className="w-full flex justify-center mt-10 lg:mt-20 bg-white bg-opacity-20">
+          <div className="lg:w-full grid grid-cols-2 lg:grid-cols-4 place-content-center place-items-start lg:place-items-center">
+            {statistics.map((s, index) => (
+              <StatisticBlock key={index} loading={isFetching} {...s} />
+            ))}
+          </div>
         </div>
       </div>
     </Hero>

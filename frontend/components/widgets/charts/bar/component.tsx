@@ -48,10 +48,10 @@ const Chart: FC<BarChartProps> = ({
   }));
   const handleLegendChange = (filtered: string[]) => setSelectedData(filtered);
   const yAxisTick = useCallback(
-    ({ x, y, payload }) => {
+    ({ x, y, payload, tickFormatter }) => {
       return (
         <Text x={x} y={y} width={yAxisWidth} textAnchor="end" verticalAnchor="middle">
-          {payload.value}
+          {tickFormatter ? tickFormatter(payload.value) : payload.value}
         </Text>
       );
     },
