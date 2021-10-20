@@ -14,8 +14,8 @@ const About: React.FC<void> = (): JSX.Element => {
         <title>About page</title>
       </Head>
 
-      <Hero image={heroBackgroundImage} height="auto">
-        <div className="text-center container">
+      <Hero image={heroBackgroundImage}>
+        <div className="text-center container z-10">
           <h1 className="text-4xl md:text-5xl font-semibold md:mt-20 mb-3 leading-tight md:leading-tight">
             About the Initiative
           </h1>
