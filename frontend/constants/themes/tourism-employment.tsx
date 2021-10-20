@@ -364,6 +364,7 @@ const theme: ThemeType = {
       description: `To be defined.`,
       initialState: {
         year: 'all_years',
+        sector: 'Tourism',
       },
       display: (selectedRegion: Region) => {
         if (selectedRegion.parent) return false;
@@ -373,28 +374,37 @@ const theme: ThemeType = {
         return {
           slug: 'tourism_employment_by_job_status',
           region: state.selectedRegion.name,
-          category_1: 'Tourism',
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
-        const filtered = filterBySelectedYear(rawData, state.year).map((x) => ({
-          ...x,
-          category_2: startCase(x.category_2),
-        }));
+        const sectors = uniq(rawData.map((x) => x.category_1));
+        const filtered = filterBySelectedYear(rawData, state.year)
+          .filter((x) => x.category_1 === state.sector)
+          .map((x) => ({
+            ...x,
+            category_2: startCase(x.category_2),
+          }));
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
 
         return {
           type: 'charts/bar',
           data: chartData,
-          controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
+          controls: [
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+            { type: 'select', side: 'right', name: 'sector', options: getOptions(sectors, false) },
+          ],
           bars: getStackedBarsData(chartData, 'date'),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
+          yAxis: {
+            tickFormatter: (val) => `${val * 100}%`,
+          },
           tooltip: {
             cursor: false,
+            valueFormatter: (value) => `${(value * 100).toFixed(0)}%`,
           },
         };
       },
