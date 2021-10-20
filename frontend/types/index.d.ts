@@ -1,9 +1,5 @@
 import { ReactNode } from 'react';
 
-declare module '*.svg';
-declare module '*.png';
-declare module '*.jpg';
-
 export interface IndicatorValue {
   indicator?: string;
   category_1?: string;

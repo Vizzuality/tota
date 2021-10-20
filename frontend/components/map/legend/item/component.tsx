@@ -1,10 +1,9 @@
-import { FC, MouseEventHandler, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 /* import cx from 'classnames'; */
 import Icon from 'components/icon';
 import REMOVE_SVG from 'svgs/map/remove.svg?sprite';
 import VISIBLE_SVG from 'svgs/map/visible.svg?sprite';
 import INVISIBLE_SVG from 'svgs/map/invisible.svg?sprite';
-import OPACITY_SVG from 'svgs/map/opacity.svg?sprite';
 
 export interface LegendItemProps {
   id: string;
@@ -40,9 +39,6 @@ export const LegendItem: FC<LegendItemProps> = ({
       <div className="flex justify-between items-center bg-yellow-50 text-blue-800 font-heading py-2.5 px-5">
         {name && <span className="mr-10">{name}</span>}
         <div className="flex gap-3">
-          <button type="button">
-            <Icon icon={OPACITY_SVG} className="w-4 h-4" />
-          </button>
           <button type="button" onClick={handleVisibleClick}>
             <Icon icon={visibility ? VISIBLE_SVG : INVISIBLE_SVG} className="w-4 h-4" />
           </button>
