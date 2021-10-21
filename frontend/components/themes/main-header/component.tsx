@@ -83,7 +83,7 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
 
   return (
     <Hero image={headerBackgroundImage}>
-      <div className="container m-auto flex flex-col items-center justify-center text-white">
+      <div className="container m-auto flex flex-col items-center justify-center text-white z-10">
         <div className="mt-10">
           <Select
             id="themes-main-header-region"

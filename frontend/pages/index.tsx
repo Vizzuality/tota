@@ -5,7 +5,11 @@ import Button from 'components/button';
 import Hero from 'components/hero';
 import IndicatorLink from 'components/indicator-link';
 
-import heroBackgroundImage from 'images/home/hero-background.png';
+import heroBackgroundImage1 from 'images/home/hero-background-1.png';
+import heroBackgroundImage2 from 'images/home/hero-background-2.png';
+import heroBackgroundImage3 from 'images/home/hero-background-3.png';
+import heroBackgroundImage4 from 'images/home/hero-background-4.png';
+import heroBackgroundImage5 from 'images/home/hero-background-5.png';
 
 import { themesIndex as themes } from 'constants/themes';
 import ParticipatingRegions from 'components/static-pages/participating-regions';
@@ -20,7 +24,13 @@ const Home: React.FC<void> = (): JSX.Element => {
       </Head>
 
       <Hero
-        image={heroBackgroundImage}
+        images={[
+          heroBackgroundImage1,
+          heroBackgroundImage2,
+          heroBackgroundImage3,
+          heroBackgroundImage4,
+          heroBackgroundImage5,
+        ]}
         title={
           <>
             Welcome to the
