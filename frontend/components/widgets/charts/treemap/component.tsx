@@ -14,7 +14,7 @@ const Chart: FC<TreemapChartProps> = ({
   tooltip = { cursor: false },
 }: TreemapChartProps) => {
   return (
-    <ResponsiveContainer width={width} height={height}>
+    <ResponsiveContainer width={width} height={height} debounce={100}>
       <Treemap
         data={data}
         dataKey="value"
