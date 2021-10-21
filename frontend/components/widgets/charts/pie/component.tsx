@@ -35,7 +35,7 @@ const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { 
   const legendProps = legend || getLegend(chartWidth);
 
   return (
-    <ResponsiveContainer ref={containerRef} width="100%" height={400}>
+    <ResponsiveContainer ref={containerRef} width="100%" height={400} debounce={100}>
       <PieChart {...chartProps}>
         {legendProps && <Legend {...legendProps} />}
         {pies &&

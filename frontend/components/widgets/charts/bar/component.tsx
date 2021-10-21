@@ -59,7 +59,7 @@ const Chart: FC<BarChartProps> = ({
   );
 
   return (
-    <ResponsiveContainer ref={containerRef} width={width} height={height}>
+    <ResponsiveContainer ref={containerRef} width={width} height={height} debounce={100}>
       <BarChart data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
@@ -72,7 +72,6 @@ const Chart: FC<BarChartProps> = ({
         )}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis width={yAxisWidth} tick={yAxisTick} {...yAxis} />}
-        {/* @ts-expect-error: dunno why props erroring */}
         {bars && newBars.map((bar) => <Bar key={bar.dataKey as string} {...bar} />)}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </BarChart>

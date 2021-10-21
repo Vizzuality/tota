@@ -33,7 +33,7 @@ const Chart: FC<ComposedChartProps> = ({
   const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={400} debounce={100}>
       <ComposedChart data={data}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}

@@ -30,7 +30,7 @@ const Chart: FC<LineChartProps> = ({
   const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={400} debounce={100}>
       <LineChart data={data} {...chartProps}>
         {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
