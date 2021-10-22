@@ -3,8 +3,14 @@ import uniq from 'lodash/uniq';
 import groupBy from 'lodash/groupBy';
 import { parseISO, format } from 'date-fns';
 
-import { filterBySelectedYear, getAvailableYearsOptions, getOptions, mergeForChart, getYear } from 'utils/charts';
-import { previousYear } from './utils';
+import {
+  filterBySelectedYear,
+  getAvailableYearsOptions,
+  getColorsByRegionName,
+  getOptions,
+  mergeForChart,
+  getYear,
+} from 'utils/charts';
 
 import mountains3Image from 'images/home/image-mountains3.png';
 
@@ -28,6 +34,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
 
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
     const regions = uniq(rawData.map((x) => x.region));
+    const colorsByRegionName = getColorsByRegionName(rawData);
 
     if (state.type === 'weekly') {
       const weeks = uniq(rawData.map((x) => x.date))
@@ -67,7 +74,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
         { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
-      lines: regions.map((x) => ({ dataKey: x })),
+      lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
       xAxis: {
         dataKey: 'date',
       },

@@ -4,6 +4,7 @@ import {
   expandToFullYear,
   filterBySelectedYear,
   getAvailableYearsOptions,
+  getColorsByRegionName,
   getOptions,
   getPercentageTotalByLabel,
   getStackedBarsData,
@@ -117,10 +118,11 @@ const theme: ThemeType = {
         const data = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
         let areas = [];
+        const colorsByRegionName = getColorsByRegionName(rawData);
         const regions = uniq(rawData.map((x) => x.region));
         if (state.year !== 'all_years') {
           chartData = expandToFullYear(chartData);
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region', colorsByRegionName);
         }
         return {
           data: chartData,
@@ -133,7 +135,7 @@ const theme: ThemeType = {
             ...bottomLegend,
             payloadFilter: (y) => !y.value.includes('min-max'),
           },
-          lines: regions.map((x) => ({ dataKey: x })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           areas,
           xAxis: {
             dataKey: 'date',
@@ -357,10 +359,11 @@ const theme: ThemeType = {
         const data = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
         let areas = [];
+        const colorsByRegionName = getColorsByRegionName(rawData);
         const regions = uniq(rawData.map((x) => x.region));
         if (state.year !== 'all_years') {
           chartData = expandToFullYear(chartData);
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region', colorsByRegionName);
         }
 
         return {
@@ -372,7 +375,7 @@ const theme: ThemeType = {
             payloadFilter: (y) => !y.value.includes('min-max'),
           },
           areas,
-          lines: regions.map((x) => ({ dataKey: x })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
@@ -409,7 +412,8 @@ const theme: ThemeType = {
         const minDate = Math.min(...allDates);
         data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
         const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.region)).map((x) => ({ dataKey: x }));
+        const colorsByRegionName = getColorsByRegionName(rawData);
+        const regions = uniq(rawData.map((x) => x.region));
         return {
           type: 'charts/line',
           data: chartData,
@@ -422,7 +426,7 @@ const theme: ThemeType = {
               prefix: `${thisYear} Compared to: `,
             },
           ],
-          lines: regions,
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           xAxis: {
             dataKey: 'date',
             ticks: [minDate, ...months.slice(1)],

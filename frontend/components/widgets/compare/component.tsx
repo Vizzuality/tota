@@ -11,7 +11,7 @@ import type { IndicatorValue } from 'types';
 
 import BarChart from 'components/widgets/charts/bar';
 import { COLORS } from 'constants/charts';
-import { mergeForChart } from 'utils/charts';
+import { getColorsByRegionName, mergeForChart } from 'utils/charts';
 
 function changeValues(data: IndicatorValue[], changeData: IndicatorValue[], key: string): IndicatorValue[] {
   return data.map((d) => {
@@ -43,8 +43,15 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
     valueKey,
   });
   const labels = uniq(data.map((x) => x[labelKey]));
+  const bars = labels.map((x) => ({ dataKey: x }));
+  const colorsByRegionName = getColorsByRegionName(data);
+  if (labelKey === 'region') {
+    bars.forEach((b) => {
+      b['color'] = colorsByRegionName[b.dataKey];
+    });
+  }
   const chartProps = {
-    bars: labels.map((x) => ({ dataKey: x })),
+    bars,
     yAxis: {
       domain: [Math.min(0, minValue), Math.round(maxValue * 1.1)],
     },
@@ -53,7 +60,12 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
       tickFormatter: (text: any) => `${text} ${year}`,
     },
   };
-  const changeDataValues = labels.map((b) => changeData.find((x) => x[labelKey] === b)?.value);
+  const changeDataValueColor = labels.map((b, index) => {
+    return {
+      value: changeData.find((x) => x[labelKey] === b)?.value,
+      color: labelKey === 'region' ? colorsByRegionName[b] : COLORS[index],
+    };
+  });
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
@@ -85,14 +97,14 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
                 className={cx('absolute transition duration-300 ease-in-out transform flex flex-row justify-between', {
                   'translate-y-20 opacity-1': showCompare,
                   'opacity-0': !showCompare,
-                  'w-full': changeDataValues.length > 1,
+                  'w-full': changeDataValueColor.length > 1,
                 })}
               >
-                {changeDataValues.map((value, index) => (
+                {changeDataValueColor.map(({ value, color }, index) => (
                   <div
                     key={index}
                     className="px-4 py-3 text-lg text-white font-bold"
-                    style={{ backgroundColor: COLORS[index] }}
+                    style={{ backgroundColor: color }}
                   >
                     {value}%
                   </div>
