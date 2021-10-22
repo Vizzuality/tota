@@ -72,7 +72,7 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
       <div className="lg:w-1/2">
         <BarChart data={chartData} {...chartProps} />
       </div>
-      <div className="lg:w-1/2 p-20 lg:p-6 flex justify-center items-center relative">
+      <div className="lg:w-1/2 px-6 py-20 lg:p-6 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
           {(changeData || []).length > 0 !== null ? (
             <>
