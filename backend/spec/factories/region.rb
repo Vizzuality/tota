@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :region do
-    name { 'Thompson Okanagan' }
+    sequence(:name) { |n| "Region #{n}" }
+    region_type { 'tourism_region' }
   end
 end

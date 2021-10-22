@@ -1,13 +1,6 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import cx from 'classnames';
-
-export interface HamburgerProps {
-  isOpen: boolean;
-  color: 'white' | 'black';
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  className?: string;
-  children?: ReactNode;
-}
+import type { HamburgerProps } from './types';
 
 const COLOR = {
   white: 'text-white',

@@ -2,11 +2,25 @@ module API
   module V1
     class OrganizationsController < BaseController
       def index
-        render json: OrganizationBlueprint.render(
-          Organization.where(filters).includes(:region, :business_type),
-          root: :data,
-          fields: fields
-        )
+        organizations = Organization.where(filters).includes(:region, :business_type)
+
+        if params[:format] == 'geojson'
+          render json: {
+            type: 'FeatureCollection',
+            features: PointGeojsonBlueprint.render_as_hash(
+              organizations,
+              blueprint_options: {
+                fields: fields
+              }
+            )
+          }
+        else
+          render json: OrganizationBlueprint.render(
+            organizations,
+            root: :data,
+            fields: fields
+          )
+        end
       end
     end
   end

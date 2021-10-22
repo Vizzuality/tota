@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "id": 622,
+      "project_title": "Super project",
+      "project_description": null,
+      "region_id": 866,
+      "recipient": null,
+      "lead_organization": null,
+      "latitude": "50.2323",
+      "longitude": "34.2333",
+      "categories": [
+
+      ],
+      "scope": null,
+      "planning_area": null,
+      "second_planning_area": null,
+      "total_project_cost": null,
+      "key_funding_amount": null,
+      "key_funding_source": "Source",
+      "funding_subtype": "Subtype",
+      "funding_call_year": null,
+      "funding_call_month": null,
+      "project_status": null
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 593,
+        "region": "Thompson Okanagan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 594,
+        "region": "Thompson Okanagan"
+      }
+    }
+  ]
+}

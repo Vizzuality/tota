@@ -12,6 +12,7 @@ module Indicators
 
       generate_establishments_by_type('all')
       generate_establishments_by_type('biosphere')
+      generate_establishments_by_type('accessibility')
       generate_total_establishments_by_region
     end
 
@@ -22,19 +23,19 @@ module Indicators
           null as date,
           null as category_1,
           null as category_2,
-          region,
+          region_id,
           count(*) as value,
           NOW() as created_at,
           NOW() as updated_at
         from
           (select
-            coalesce(rp.name, r.name) as region
+            coalesce(rp.id, r.id) as region_id
           from
             organizations o
             inner join regions r on r.id = o.region_id
             left join regions rp on rp.id = r.parent_id
            ) as organizations
-        group by region
+        group by region_id
       SQL
 
       result = ActiveRecord::Base.connection.execute(sql)
@@ -46,6 +47,7 @@ module Indicators
     def generate_establishments_by_type(category)
       organization_where = '1 = 1'
       organization_where = 'o.biosphere_program_member = true' if category == 'biosphere'
+      organization_where = 'o.accessibility = true' if category == 'accessibility'
 
       sql = <<~SQL
         select
@@ -53,14 +55,14 @@ module Indicators
           null as date,
           business_type as category_1,
           '#{category}' as category_2,
-          region,
+          region_id,
           count(*) as value,
           NOW() as created_at,
           NOW() as updated_at
         from
           (select
             coalesce(btp.name, bt.name) as business_type,
-            coalesce(rp.name, r.name) as region
+            coalesce(rp.id, r.id) as region_id
           from
             organizations o
             inner join business_types bt on bt.id = o.business_type_id
@@ -69,7 +71,7 @@ module Indicators
             left join regions rp on rp.id = r.parent_id
             where #{organization_where}
            ) as organizations
-        group by region, business_type
+        group by region_id, business_type
       SQL
 
       result = ActiveRecord::Base.connection.execute(sql)

@@ -6,7 +6,7 @@ const News: React.FC<void> = (): JSX.Element => {
   const router = useRouter();
 
   if (typeof window !== 'undefined') {
-    router.push(`/themes/${themes[0].slug}`);
+    router.push(`/themes/british-columbia/${themes[0].slug}`);
   }
 
   return null;

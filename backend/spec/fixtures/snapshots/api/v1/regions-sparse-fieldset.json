@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": 862,
+      "slug": "british_columbia",
+      "name": "British Columbia"
+    },
+    {
+      "id": 863,
+      "slug": "thompson_okanagan",
+      "name": "Thompson Okanagan"
+    },
+    {
+      "id": 864,
+      "slug": "north_okanagan",
+      "name": "North Okanagan"
+    },
+    {
+      "id": 865,
+      "slug": "central_okanagan",
+      "name": "Central Okanagan"
+    }
+  ]
+}

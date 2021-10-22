@@ -16,6 +16,7 @@ module CSVImport
         organization.longitude = row[:longitude]
         organization.biosphere_program_member = row[:biosphere_program_member]
         organization.indigenous_tourism = row[:indigenous_tourism]
+        organization.accessibility = row[:accessibility]
 
         organization.validate!
         organizations << organization
@@ -35,6 +36,7 @@ module CSVImport
         :business_subtype,
         :indigenous_tourism,
         :biosphere_program_member,
+        :accessibility,
         :tourism_region,
         :tourism_subregion,
         :latitude,
@@ -68,10 +70,12 @@ module CSVImport
 
       return unless region_name.present?
 
-      region = @regions[region_name.downcase] ||= Region.create!(name: region_name)
+      region = @regions[region_name.downcase] ||= Region.create!(name: region_name, region_type: 'tourism_region')
 
       if sub_region_name.present?
-        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(name: sub_region_name, parent: region)
+        sub_region = @regions[sub_region_name.downcase] ||= Region.create!(
+          name: sub_region_name, region_type: 'tourism_subregion', parent: region
+        )
       end
 
       sub_region || region

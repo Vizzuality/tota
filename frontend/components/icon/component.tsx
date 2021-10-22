@@ -1,20 +1,19 @@
-import React, { FC } from 'react';
 import cx from 'classnames';
+import { FC } from 'react';
 
-type IconComponentType = React.ComponentType<React.SVGProps<SVGElement>>;
+import type { IconProps } from './types';
 
-interface IconProps {
-  icon: IconComponentType;
-  className?: string;
-  size?: 'md';
-}
-
-const SIZE = {
-  md: 'w-5 h-5',
-};
-
-const Icon: FC<IconProps> = ({ icon: Component, size = 'md', className }: IconProps) => (
-  <Component className={cx(className, { [SIZE[size]]: size }, 'fill-current')} />
+export const Icon: FC<IconProps> = ({ icon, className = 'w-5 h-5', style }: IconProps) => (
+  <svg
+    className={cx({
+      'fill-current': true,
+      [className]: className,
+    })}
+    viewBox={icon?.viewBox || '0 0 32 32'}
+    style={style}
+  >
+    <use xlinkHref={`#${icon?.id || icon}`} />
+  </svg>
 );
 
 export default Icon;

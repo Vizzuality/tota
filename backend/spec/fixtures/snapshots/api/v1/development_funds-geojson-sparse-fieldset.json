@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 616,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 617,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 618,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 619,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 620,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 621,
+        "project_title": "Project title"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "34.2333",
+          "50.2323"
+        ]
+      },
+      "properties": {
+        "id": 622,
+        "project_title": "Super project"
+      }
+    }
+  ]
+}

@@ -16,32 +16,49 @@ export default {
 };
 
 const Template: Story<LegendProps> = (args) => {
+  const [items, setItems] = useState(ITEMS);
   const [sortArray, setSortArray] = useState([]);
 
   // Sorted
   const sortedItems = useMemo(() => {
-    const itms = ITEMS.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
+    const itms = items.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
     return itms;
-  }, [sortArray]);
+  }, [sortArray, items]);
 
   // Callbacks
   const onChangeOrder = useCallback((ids) => {
     setSortArray(ids);
   }, []);
+  const onRemove = useCallback(
+    (id) => {
+      setItems(items.filter((x) => x.id !== id));
+    },
+    [items],
+  );
+  const onVisibilityChange = useCallback(
+    (id, visibility) => {
+      setItems(items.map((el) => (el.id === id ? { ...el, visibility } : el)));
+    },
+    [items],
+  );
 
   return (
-    <Legend {...args} onChangeOrder={onChangeOrder}>
-      {sortedItems.map((i) => {
-        const { type, items } = i;
-        return (
-          <LegendItem key={i.id} {...i}>
-            {type === 'basic' && <LegendTypeBasic className="text-sm text-gray-300" items={items} />}
-            {type === 'choropleth' && <LegendTypeChoropleth className="text-sm text-gray-300" items={items} />}
-            {type === 'gradient' && <LegendTypeGradient className="text-sm text-gray-300" items={items} />}
-          </LegendItem>
-        );
-      })}
-    </Legend>
+    <div className="bg-gray-50 p-10">
+      <div style={{ maxWidth: 500 }}>
+        <Legend {...args} onChangeOrder={onChangeOrder}>
+          {sortedItems.map((i) => {
+            const { type, items } = i;
+            return (
+              <LegendItem key={i.id} {...i} onRemove={onRemove} onVisibilityChange={onVisibilityChange}>
+                {type === 'basic' && <LegendTypeBasic items={items} />}
+                {type === 'choropleth' && <LegendTypeChoropleth items={items} />}
+                {type === 'gradient' && <LegendTypeGradient items={items} />}
+              </LegendItem>
+            );
+          })}
+        </Legend>
+      </div>
+    </div>
   );
 };
 

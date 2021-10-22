@@ -1,7 +1,7 @@
 class OrganizationBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :name, :latitude, :longitude
+  fields :name, :latitude, :longitude, :indigenous_tourism, :biosphere_program_member, :accessibility
 
   field :region do |org|
     if org.region.subregion?
@@ -27,5 +27,8 @@ class OrganizationBlueprint < Blueprinter::Base
     next if org.business_type.nil?
 
     org.business_type.name if org.business_type.subtype?
+  end
+  field :features_number do |org|
+    org.slice(:indigenous_tourism, :biosphere_program_member, :accessibility).values.count { |v| v == true }
   end
 end

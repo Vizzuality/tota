@@ -94,7 +94,7 @@ module CSVImport
     rescue ActiveRecord::RecordNotFound, ArgumentError => e
       handle_row_error(row_index, e)
     rescue StandardError => e
-      Appsignal.set_error(e)
+      report_exception(e)
       handle_row_error(row_index, e)
     end
 
@@ -106,6 +106,10 @@ module CSVImport
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
+    end
+
+    def report_exception(e)
+      # Appsignal.set_error(e)
     end
 
     def check_required_headers

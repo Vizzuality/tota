@@ -2,7 +2,7 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
 require 'test_prof/recipes/rspec/before_all'
@@ -21,6 +21,8 @@ end
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
+  config.request_snapshots_dynamic_attributes = %w(id created_at updated_at region_id parent_id)
+  config.request_snapshots_ignore_order = %w(indicator_values)
 
   config.include FactoryBot::Syntax::Methods
   config.include FixtureFileHelper

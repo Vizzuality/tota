@@ -1,50 +1,116 @@
-import { FC } from 'react';
+import React, { useState, useMemo, FC } from 'react';
+import cx from 'classnames';
 import dynamic from 'next/dynamic';
+import type { ThemeSectionType } from 'types';
+import Loading from 'components/loading';
+import Controls from './controls';
 
-interface Section {
-  title: string;
-  subTitle?: string;
-  description: string;
-  data: any;
-  widget: any;
-}
+import type { WidgetProps } from 'components/widgets/types';
 
-interface ChartProps {
-  data: any;
-  config: any;
-}
+import { useRouterSelectedRegion } from 'hooks/regions';
+import { useIndicatorValues } from 'hooks/indicators';
+import LinkButton from 'components/button/component';
 
 export interface ThemeSectionProps {
-  section: Section;
+  section: ThemeSectionType;
   index: number;
 }
 
 const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
-  const Loading = () => <div>Loading...</div>;
-  const chartType = section.widget?.type || 'pie';
-  const DynamicChart = dynamic<ChartProps>(() => import(`components/charts/${chartType}`), { loading: Loading });
-
-  const chartData = typeof section.widget?.data === 'function' && section.widget.data(section.data);
+  const [state, setState] = useState(section.initialState || {});
+  const selectedRegion = useRouterSelectedRegion();
+  const LoadingWidget = () => (
+    <div style={{ height: 400 }} className="flex items-center justify-center">
+      <Loading iconClassName="w-10 h-10" visible />
+    </div>
+  );
+  const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
+  const wholeState = useMemo(
+    () => ({
+      ...state,
+      selectedRegion,
+    }),
+    [state, selectedRegion],
+  );
+  const {
+    data: indicatorValues,
+    isFetched,
+    isFetching,
+    isLoading,
+  } = useIndicatorValues(section.fetchParams(wholeState));
+  const {
+    data,
+    widgetTypeOverride,
+    widgetWrapper: WidgetWrapper,
+    type: widgetType,
+    controls,
+    viewOnMap,
+    ...widgetConfig
+  } = useMemo(
+    () => section.fetchWidgetProps(indicatorValues, wholeState),
+    [section.fetchWidgetProps, indicatorValues, wholeState],
+  );
+  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
+    loading: LoadingWidget,
+  });
 
   return (
-    <div className="mb-10 p-5 bg-white flex">
-      <div className="w-2/5 pr-10 border-r-2">
+    <div className="p-5 bg-white flex flex-col lg:flex-row">
+      <div className="lg:w-2/6 lg:pr-5 lg:border-r-2 flex flex-col">
         <div className="relative">
           <div
-            className="absolute rounded-full bg-gray-300 text-gray-700 text-2xl h-50 w-50 flex items-center justify-center"
+            className="absolute rounded-full bg-yellow-50 text-blue-800 text-2xl h-50 w-50 flex items-center justify-center"
             style={{ width: 50, height: 50 }}
           >
             {index}
           </div>
-          <div className="" style={{ marginLeft: 70 }}>
-            <h2 className="text-3xl">{section.title}</h2>
+          <div className="flex flex-col justify-center" style={{ marginLeft: 70, minHeight: 50 }}>
+            <h2 className="text-lg font-bold">{section.title}</h2>
             <div>{section.subTitle}</div>
           </div>
         </div>
+        <div className="flex-1">
+          <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
+          {section.notes && (
+            <p className="mt-2 lg:mt-6 leading-6 text-sm" dangerouslySetInnerHTML={{ __html: section.notes }} />
+          )}
+        </div>
 
-        <p className="mt-10 leading-8">{section.description}</p>
+        {viewOnMap && (
+          <div className="mt-4">
+            <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
+              {viewOnMap.title}
+            </LinkButton>
+          </div>
+        )}
       </div>
-      <div className="w-3/5">{chartData && <DynamicChart data={chartData} config={section.widget.config} />}</div>
+
+      <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
+        {isFetched && (
+          <Controls
+            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+            controls={controls}
+            state={state}
+            onControlChange={handleControlChange}
+          />
+        )}
+        <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
+          {(isLoading || isFetching) && <LoadingWidget />}
+          {isFetched && data !== undefined && data !== null && (
+            <>
+              {((Array.isArray(data) && data.length > 0) || (!Array.isArray(data) && data !== '')) &&
+                (WidgetWrapper ? (
+                  <WidgetWrapper>
+                    <Widget data={data} {...widgetConfig} />
+                  </WidgetWrapper>
+                ) : (
+                  <Widget data={data} {...widgetConfig} />
+                ))}
+              {data.length === 0 && <span>No data available</span>}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

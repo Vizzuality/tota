@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 862,
+      "slug": "british_columbia",
+      "name": "British Columbia",
+      "parent_id": null,
+      "region_type": "tourism_region",
+      "active": true
+    }
+  ]
+}

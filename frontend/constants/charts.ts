@@ -1,1 +1,32 @@
-export const colors = ['#1B5183', '#1E6D86', '#2A8FAF', '#C9E6E8', '#929292', '#766964', '#F8981C', '#760015'];
+export const bottomLegend = {
+  iconType: 'square',
+  layout: 'horizontal',
+  verticalAlign: 'bottom',
+  align: 'left',
+};
+
+export const defaultGrid = {
+  height: '1px',
+  strokeDasharray: '0',
+};
+
+export const defaultTooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } };
+
+export const COLORS = [
+  '#00B6A1',
+  '#00A572',
+  '#008C60',
+  '#01796F',
+  '#115E59',
+  '#134E4A',
+  '#57A0D3',
+  '#4286BA',
+  '#3974A1',
+  '#0F52BA',
+  '#063898',
+  '#00376A',
+  '#9CA3AF',
+  '#6B7280',
+  '#4B5563',
+  '#353E4A',
+];

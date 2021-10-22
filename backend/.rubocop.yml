@@ -104,6 +104,10 @@ Style/HashTransformValues:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+  IgnoredMethods: [change]
+
 Lint/RaiseException:
   Enabled: true
 
