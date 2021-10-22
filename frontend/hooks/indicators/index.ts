@@ -6,5 +6,8 @@ export function useIndicatorValues(params: GetIndicatorsArgs) {
   return useQuery<IndicatorValue[], Error>(
     ['Fetch indicator values', params],
     !!params ? () => TotaAPI.getIndicatorValues(params) : () => Promise.resolve([]),
+    {
+      staleTime: Infinity,
+    },
   );
 }

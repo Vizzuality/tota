@@ -3,7 +3,7 @@ module API
     class RegionsController < BaseController
       def index
         render json: RegionBlueprint.render(
-          Region.where(filters).includes(:parent),
+          Region.active.where(filters).includes(:parent),
           root: :data,
           fields: fields
         )

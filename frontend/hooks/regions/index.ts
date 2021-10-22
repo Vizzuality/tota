@@ -1,20 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
 
-import type { UseRegionsResponse } from './types';
+import TotaAPI from 'services/api';
+
+import { UseRegionsResponse } from './types';
 import type { Region } from 'types';
 
-const fakeRegions: Region[] = [
-  { id: 0, name: 'British Columbia', slug: 'british_columbia', parent_id: null },
-  { id: 1, name: 'Cariboo Chilcotin Coast', slug: 'cariboo_chilcotin_coast', parent_id: 0 },
-  { id: 2, name: 'Kootenay Rockies', slug: 'kootenay_rockies', parent_id: 0 },
-  { id: 3, name: 'Northern BC', slug: 'northern_british_columbia', parent_id: 0 },
-  { id: 4, name: 'Vancouver Island', slug: 'vancouver_island', parent_id: 0 },
-  { id: 5, name: 'Thompson Okanagan', slug: 'thompson_okanagan', parent_id: 0 },
-];
-
 function applyParentsAndChildren(regions: Region[]): Region[] {
+  if (!regions) return [];
+
   return regions.map((r) => ({
     ...r,
     parent: regions.find((rp) => rp.id === r.parent_id),
@@ -23,16 +18,14 @@ function applyParentsAndChildren(regions: Region[]): Region[] {
 }
 
 export function useRegions(): UseRegionsResponse {
-  const [regions, setRegions] = useState<Region[]>(applyParentsAndChildren(fakeRegions)); // eslint-disable-line
+  const { data } = useQuery('regions', () => TotaAPI.get('/regions?filter[region_type]=province,tourism_region'), {
+    keepPreviousData: true,
+    staleTime: Infinity,
+  });
 
-  // Replace with react query
-  const [query, useQuery] = useState('https://such-query'); // eslint-disable-line
-
-  return useMemo(() => {
-    return {
-      regions,
-    };
-  }, [query]);
+  return {
+    regions: applyParentsAndChildren(data),
+  };
 }
 
 export function useRouterSelectedRegion(): Region {
