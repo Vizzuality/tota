@@ -42,11 +42,12 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const router = useRouter();
   const theme = useRouterSelectedTheme();
   const selectedRegion = useRouterSelectedRegion();
+  const { regions } = useRegions();
   const { isFetched, isFetching, data } = useIndicatorValues({
     slug: STATISTICS.map((x) => x.indicator),
     region: selectedRegion.name,
   });
-  const { regions } = useRegions();
+
   const handleRegionChange = (value: string) => {
     if (theme.slug === 'general-insights') {
       router.push(`/themes/${value}/tourism-industry-arrivals`, undefined, { scroll: false });

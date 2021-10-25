@@ -10,9 +10,11 @@ import ThemeSections from 'components/themes/sections';
 import ThemesNavbar from 'components/themes/navbar';
 
 import { useRouterSelectedTheme } from 'hooks/themes';
+import { useRegions } from 'hooks/regions';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const theme = useRouterSelectedTheme();
+  const { regions } = useRegions();
 
   return (
     <Layout className="w-full">
@@ -20,7 +22,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
         <title>Theme page</title>
       </Head>
 
-      {theme && (
+      {theme && regions.length && (
         <>
           <ThemeMainHeader />
           <ThemesNavbar />
