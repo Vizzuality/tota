@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
@@ -23,9 +24,12 @@ export function useRegions(): UseRegionsResponse {
     staleTime: Infinity,
   });
 
-  return {
-    regions: applyParentsAndChildren(data),
-  };
+  return useMemo(
+    () => ({
+      regions: applyParentsAndChildren(data),
+    }),
+    [data],
+  );
 }
 
 export function useRouterSelectedRegion(): Region {
