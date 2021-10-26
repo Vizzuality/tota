@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import type { ViewportProps } from 'react-map-gl';
 
@@ -12,6 +12,7 @@ const MapContext = createContext<MapContextProps>({
   layerSettings: {},
   viewport: {},
   selectedRegion: undefined,
+  regionChanged: false,
   changeLayerSettings: () => console.info('changeLayerSettings not implemented'),
   changeActiveLayers: () => console.info('changeActiveLayers not implemented'),
   selectRegion: () => console.info('selectRegion not implemented'),
@@ -70,6 +71,7 @@ export function MapProvider({ children }: MapProviderProps) {
     },
     layerSettings: getLayerSettings({}, ['tourism_regions']),
   });
+  const [regionChanged, setRegionChanged] = useState(false);
   const { layerSettings, viewport, selectedRegion: selectedRegionSlug } = mapSettings;
   const { regions } = useRegions();
   const selectedRegion = regions.find((r) => r.slug === selectedRegionSlug) || regions[0];
@@ -112,6 +114,7 @@ export function MapProvider({ children }: MapProviderProps) {
   );
   const selectRegion = useCallback(
     (region: string) => {
+      setRegionChanged(true);
       setMapSettings({
         ...mapSettings,
         selectedRegion: region,
@@ -134,6 +137,7 @@ export function MapProvider({ children }: MapProviderProps) {
         viewport,
         selectRegion,
         selectedRegion,
+        regionChanged,
         changeLayerSettings,
         changeActiveLayers,
         setViewport,

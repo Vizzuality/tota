@@ -56,6 +56,7 @@ export const MainMap: FC<MapProps> = ({
     changeLayerSettings,
     setViewport,
     selectedRegion,
+    regionChanged,
   } = useMap();
   const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
   const layers = useLayers(showSingleRegionSlug)
@@ -109,13 +110,13 @@ export const MainMap: FC<MapProps> = ({
   const interactiveLayerIds = layers.filter((layer) => SELECTABLE_FEATURES.includes(layer.id)).map((layer) => layer.id);
 
   useEffect(() => {
-    if (selectedRegion) {
+    if (selectedRegion && regionChanged) {
       setBounds({
         ...bounds,
         bbox: REGION_BBOX[selectedRegion.slug],
       });
     }
-  }, [selectedRegion]);
+  }, [selectedRegion, regionChanged]);
 
   return (
     <div className="relative w-full h-full">

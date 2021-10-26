@@ -17,6 +17,7 @@ export interface MapContextProps {
   selectedRegion?: Region;
   selectRegion: (slug: string) => void;
   setViewport: (viewport: Partial<ViewportProps>) => void;
+  regionChanged: boolean;
 }
 
 export interface MapProviderProps {

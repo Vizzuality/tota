@@ -182,6 +182,7 @@ export const Map: FC<MapProps> = ({
   }, [bounds, handleFitBounds]);
 
   useEffect(() => {
+    if (flying) return;
     setViewport((prevViewportState) => ({
       ...prevViewportState,
       ...viewport,
