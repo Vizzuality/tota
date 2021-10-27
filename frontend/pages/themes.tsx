@@ -1,8 +1,23 @@
+import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+
+import TotaAPI from 'services/api';
 
 import themes from 'constants/themes';
 
-const News: React.FC<void> = (): JSX.Element => {
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery('regions', () => TotaAPI.get('/regions?filter[region_type]=province,tourism_region'));
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
+
+const Themes: React.FC<void> = (): JSX.Element => {
   const router = useRouter();
 
   if (typeof window !== 'undefined') {
@@ -12,4 +27,4 @@ const News: React.FC<void> = (): JSX.Element => {
   return null;
 };
 
-export default News;
+export default Themes;
