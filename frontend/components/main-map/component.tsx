@@ -39,6 +39,7 @@ const SELECTABLE_FEATURES = [
   'first_nations_business',
   'trails',
   'fires',
+  'wildlife_habitats',
 ];
 
 export const MainMap: FC<MapProps> = ({

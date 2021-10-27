@@ -118,7 +118,7 @@ export const useTourismRegionsLayer = (
     return {
       id: 'tourism_regions',
       category: CATEGORY.ADMIN_BOUNDARIES,
-      name: 'Regions',
+      name: 'Tourism Regions',
       version: '0.0.1',
       type: 'vector',
       source: {
