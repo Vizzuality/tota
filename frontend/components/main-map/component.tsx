@@ -97,7 +97,18 @@ export const MainMap: FC<MapProps> = ({
   const [selectedFeature, setSelectedFeature] = useState(null);
 
   const handleClick = (evt: MapEvent) => {
-    setSelectedFeature(evt.features.find((f) => SELECTABLE_FEATURES.includes(f.source)));
+    const feature = evt.features.find((f) => SELECTABLE_FEATURES.includes(f.source));
+    if (feature) {
+      setSelectedFeature({
+        coordinates: {
+          longitude: evt.lngLat[0],
+          latitude: evt.lngLat[1],
+        },
+        feature,
+      });
+    } else {
+      setSelectedFeature(null);
+    }
   };
 
   const legendItems = layers.map((layer) => ({
@@ -149,14 +160,13 @@ export const MainMap: FC<MapProps> = ({
             {selectedFeature && (
               <Popup
                 className="mapbox-custom-popup"
-                latitude={selectedFeature.geometry.coordinates[1]}
-                longitude={selectedFeature.geometry.coordinates[0]}
+                latitude={selectedFeature.coordinates.latitude}
+                longitude={selectedFeature.coordinates.longitude}
                 closeButton={false}
                 closeOnClick={false}
                 dynamicPosition={false}
-                anchor="top"
               >
-                <BasicTooltip properties={selectedFeature.properties} />
+                <BasicTooltip properties={selectedFeature.feature.properties} />
               </Popup>
             )}
           </>

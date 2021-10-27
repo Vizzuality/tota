@@ -711,6 +711,17 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               type: 'line',
               paint: {
                 'line-color': '#000000',
+                'line-width': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  // zoom is 6 (or less) -> line width will be 1px
+                  6,
+                  1,
+                  // zoom is 10 (or greater) -> line width will be 3px
+                  10,
+                  3,
+                ],
                 'line-opacity': 0.4,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
