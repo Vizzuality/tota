@@ -72,6 +72,7 @@ const Chart: FC<BarChartProps> = ({
         )}
         {xAxis && <XAxis {...xAxis} />}
         {yAxis && <YAxis width={yAxisWidth} tick={yAxisTick} {...yAxis} />}
+        {/* @ts-expect-error: Dunno another type madness */}
         {bars && newBars.map((bar) => <Bar key={bar.dataKey as string} {...bar} />)}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </BarChart>

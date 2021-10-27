@@ -28,7 +28,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const { regions } = useRegions();
   const { activeLayers, changeActiveLayers, selectedRegion, selectRegion } = useMap();
-  const layers = useLayers(selectedRegion?.slug).filter((x) => x.id !== 'tourism_regions');
+  const layers = useLayers(selectedRegion?.slug);
   const layersByCategory = groupBy(
     sortBy(layers, (x) => Object.values(CATEGORY).indexOf(x.category)),
     'category',
