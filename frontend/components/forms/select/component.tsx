@@ -6,7 +6,11 @@ import MultipleSelect from 'components/forms/select/multi';
 import type { SelectProps } from './types';
 import useStatus from '../utils';
 
+const isServer = typeof window === 'undefined';
+
 export const Select: FC<SelectProps> = (props: SelectProps) => {
+  if (isServer) return null;
+
   const {
     theme = 'dark',
     size = 'base',
