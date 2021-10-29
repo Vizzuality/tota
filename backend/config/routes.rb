@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  devise_for :users, path: 'admin'
+
+  namespace :admin do
+    root to: 'admin/users#index'
+
+    resources :users
+  end
+
   namespace :api, format: 'json' do
     namespace :v1 do
       resources :development_funds, only: [:index], format: /(json|geojson)/

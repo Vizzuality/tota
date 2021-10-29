@@ -23,7 +23,8 @@ RSpec.describe Indicators::DevelopmentFundsVolumeBySource do
         create(:development_fund, region: r2, key_funding_source: 'Source 1', key_funding_amount: 100, funding_call_year: 2019)
         create(:development_fund, region: r2, key_funding_source: 'Source 2', key_funding_amount: 200, funding_call_year: 2019)
         create(:development_fund, region: r2, key_funding_source: 'Source 2', key_funding_amount: 200, funding_call_year: 2020)
-        create(:development_fund, region: province, key_funding_source: 'Source 2', key_funding_amount: 200, funding_call_year: 2020)
+        create(:development_fund, region: province, key_funding_source: 'Source 2', key_funding_amount: 200,
+                                  funding_call_year: 2020)
       end
 
       subject { Indicators::DevelopmentFundsVolumeBySource.generate }

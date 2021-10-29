@@ -1,0 +1,35 @@
+.badge {
+  background-color: $primary;
+}
+
+.badge-live {
+  background-color: $red;
+}
+
+.badge-proposal {
+  background-color: $yellow;
+}
+
+.badge-finished {
+  background-color: $green;
+}
+
+.badge-paid {
+  background-color: $green;
+}
+
+.badge-pending-to-issue {
+  background-color: $red;
+}
+
+.badge-waiting-for-payment {
+  background-color: $yellow;
+}
+
+.badge-yes {
+  background-color: $green;
+}
+
+.badge-no {
+  background-color: $red;
+}

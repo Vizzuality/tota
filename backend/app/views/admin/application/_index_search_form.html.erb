@@ -1,0 +1,12 @@
+<%= search_form_for [:admin, q], builder: SimpleForm::FormBuilder, class: 'd-inline-block' do |f| %>
+  <div class="d-inline-block">
+    <div class="input-group">
+      <%= f.search_field search_by, placeholder: 'Search...', class: 'form-control' %>
+      <%= button_tag type: :submit, class: 'btn' do %>
+        <i class="bi-search"></i>
+      <% end %>
+    </div>
+  </div>
+
+  <%= yield(f) if block_given? %>
+<% end %>
