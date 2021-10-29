@@ -6,6 +6,8 @@ module CSVImport
       prepare_cache
 
       import_each_csv_row(csv) do |row|
+        next if ActiveModel::Type::Boolean.new.cast(row[:show_on_platform]) == false
+
         organization = prepare_organization(row)
 
         organization.name = row[:name_of_businessorganization]
@@ -40,7 +42,8 @@ module CSVImport
         :tourism_region,
         :tourism_subregion,
         :latitude,
-        :longitude
+        :longitude,
+        :show_on_platform
       ]
     end
 
