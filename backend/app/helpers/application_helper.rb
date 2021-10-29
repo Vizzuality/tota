@@ -20,4 +20,14 @@ module ApplicationHelper
 
     link_to(name, options, html_options, &block)
   end
+
+  def select_collection(array, transform_func = :humanize)
+    return unless array.respond_to?(:map)
+
+    array.map do |s|
+      return [s, s] unless s.respond_to?(transform_func)
+
+      [s.send(transform_func), s]
+    end
+  end
 end

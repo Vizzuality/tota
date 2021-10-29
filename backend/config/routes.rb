@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     root to: 'admin/users#index'
 
     resources :users
+    resources :regions
   end
 
   namespace :api, format: 'json' do
