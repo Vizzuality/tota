@@ -16,10 +16,20 @@ import {
   getStackedBarsData,
   mergeForChart,
 } from 'utils/charts';
-import { shortMonthName, previousYear } from './utils';
+import { compactNumberTickFormatter, shortMonthName, previousYear } from './utils';
 import { defaultTooltip, bottomLegend } from 'constants/charts';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
+
+const ECONOMIC_REGION_COLORS = {
+  Cariboo: '#BB9075',
+  Kootenay: '#405E62',
+  'Thompson-Okanagan': '#76ACA9',
+  'Vancouver Island and Coast': '#4F91CD',
+  'British Columbia': '#314057',
+  Northeast: '#A9B937',
+  'North Coast and Nechako': '#00A572',
+};
 
 const theme: ThemeType = {
   title: 'Tourism Employment',
@@ -62,30 +72,32 @@ const theme: ThemeType = {
           : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
 
         return {
-          slug: 'total_employment_by_tourism_region_monthly',
+          slug: 'total_employment_by_economic_region',
           region,
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.region));
-        const colorsByRegionName = getColorsByRegionName(rawData);
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.category_2));
         let areas = [];
         if (state.year !== 'all_years') {
           chartData = expandToFullYear(chartData);
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region', colorsByRegionName);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
         }
 
         return {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
+          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
           areas,
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
           },
           legend: {
             ...bottomLegend,
@@ -119,24 +131,17 @@ const theme: ThemeType = {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
         const regions = uniq(rawData.map((x) => x.category_2));
-        const colors = {
-          Cariboo: '#BB9075',
-          Kootenay: '#405E62',
-          'Thompson-Okanagan': '#76ACA9',
-          'Vancouver Island and Coast': '#4F91CD',
-          'British Columbia': '#314057',
-        };
         let areas = [];
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
         if (state.year !== 'all_years' && state.selectedRegion.parent) {
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', colors);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
         }
 
         return {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: colors[x] })),
+          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
           areas,
           xAxis: {
             dataKey: 'date',
@@ -194,6 +199,9 @@ const theme: ThemeType = {
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
           },
           legend: {
             ...bottomLegend,

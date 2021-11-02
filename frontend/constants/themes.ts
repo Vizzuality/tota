@@ -9,10 +9,10 @@ import tourismEmployment from './themes/tourism-employment';
 const themes: ThemeType[] = [
   generalInsights,
   tourismIndustryArrivals,
+  tourismEmployment,
   airportInformation,
   accommodationInformation,
   tourismDevelopmentFounds,
-  tourismEmployment,
 ];
 
 export const themesIndex: ThemeBaseType[] = [
