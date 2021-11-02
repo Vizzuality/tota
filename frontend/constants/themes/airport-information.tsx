@@ -29,7 +29,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_arrivals_monthly',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -72,7 +72,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['airport_domestic_pax_monthly', 'airport_international_pax_monthly'],
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const airports = uniq(rawData.map((x) => x.category_2));
@@ -113,7 +113,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['airport_dom_arrivals_monthly', 'airport_int_arrivals_monthly'],
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const airports = uniq(rawData.map((x) => x.category_2));
@@ -160,7 +160,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_total_destinations',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -186,7 +186,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_top_average_connections_per_week',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -215,7 +215,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'airport_arrivals_by_origin_daily',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         let data = filterBySelectedYear(rawData, state.year);

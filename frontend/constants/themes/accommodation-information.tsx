@@ -98,7 +98,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['occupancy_weekday', 'occupancy_weekend', 'occupancy_change_week'],
-        region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy'),
     },
@@ -113,7 +113,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['adr_weekday', 'adr_weekend', 'adr_change_week'],
-        region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
       fetchWidgetProps: getFetchWidgetPropsFunction('adr'),
     },
@@ -128,7 +128,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: ['revpar_weekday', 'revpar_weekend', 'revpar_change_week'],
-        region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar'),
     },

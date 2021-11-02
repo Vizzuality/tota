@@ -68,8 +68,8 @@ const theme: ThemeType = {
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
         const region = anySubRegions
-          ? state.selectedRegion.children.map((x) => x.name)
-          : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
+          ? state.selectedRegion.children.map((x) => x.slug)
+          : [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x);
 
         return {
           slug: 'total_employment_by_economic_region',
@@ -119,8 +119,8 @@ const theme: ThemeType = {
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
         const region = anySubRegions
-          ? state.selectedRegion.children.map((x) => x.name)
-          : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
+          ? state.selectedRegion.children.map((x) => x.slug)
+          : [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x);
 
         return {
           slug: 'total_unemployment_rate_by_economic_region',
@@ -171,8 +171,8 @@ const theme: ThemeType = {
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
         const region = anySubRegions
-          ? state.selectedRegion.children.map((x) => x.name)
-          : [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x);
+          ? state.selectedRegion.children.map((x) => x.slug)
+          : [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x);
 
         return {
           slug: 'tourism_employment_by_tourism_region_monthly',
@@ -227,8 +227,8 @@ const theme: ThemeType = {
         return {
           slug: `tourism_to_total_employment_percentage_${state.frequency}`,
           region: [
-            state.selectedRegion.name,
-            ...(includeChildren ? state.selectedRegion.children?.map((x) => x.name) : []),
+            state.selectedRegion.slug,
+            ...(includeChildren ? state.selectedRegion.children?.map((x) => x.slug) : []),
           ].filter((x) => x),
         };
       },
@@ -285,7 +285,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'tourism_employment_by_sector_by_economic_region',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)].filter((x) => x),
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
@@ -324,9 +324,9 @@ const theme: ThemeType = {
         return {
           slug: 'tourism_employment_hourly_earnings_by_economic_region',
           region: [
-            state.selectedRegion.name,
-            state.selectedRegion.parent?.name,
-            ...state.selectedRegion.children.map((x) => x.name),
+            state.selectedRegion.slug,
+            state.selectedRegion.parent?.slug,
+            ...state.selectedRegion.children.map((x) => x.slug),
           ].filter((x) => x),
         };
       },
@@ -381,7 +381,7 @@ const theme: ThemeType = {
       fetchParams: (state: any) => {
         return {
           slug: 'tourism_employment_by_job_status',
-          region: state.selectedRegion.name,
+          region: state.selectedRegion.slug,
         };
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {

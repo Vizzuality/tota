@@ -38,7 +38,7 @@ const theme: ThemeType = {
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: 'all',
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)],
       }),
       fetchWidgetProps(rawData: IndicatorValue[], state): any {
         return {
@@ -68,7 +68,7 @@ const theme: ThemeType = {
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: state.type,
-        region: [state.selectedRegion.name, ...state.selectedRegion.children?.map((x) => x.name)],
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)],
       }),
       initialState: {
         type: 'biosphere',
@@ -108,9 +108,9 @@ const theme: ThemeType = {
       fetchParams: (state: any) => ({
         slug: `${state.group}_by_origin_country_monthly`,
         region: [
-          state.selectedRegion.name,
-          state.selectedRegion.parent?.name,
-          ...state.selectedRegion.children?.map((x) => x.name),
+          state.selectedRegion.slug,
+          state.selectedRegion.parent?.slug,
+          ...state.selectedRegion.children?.map((x) => x.slug),
         ].filter((x) => x),
         category_1: 'Canada',
       }),
@@ -161,7 +161,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: `domestic_visits_percentage_${state.frequency}`,
-        region: state.selectedRegion.name,
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const take = state.frequency === 'quarterly' ? 4 : 5;
@@ -190,7 +190,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'domestic_visits_peak_lowest_month_ratio',
-        region: state.selectedRegion.name,
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const ratio = filterBySelectedYear(rawData, state.year)[0];
@@ -223,7 +223,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: `visits_by_origin_province_${state.frequency}`,
-        region: state.selectedRegion.name,
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filteredByYear = filterBySelectedYear(rawData, state.year);
@@ -266,7 +266,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'visits_by_origin_city_quarterly',
-        region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filteredByYear = filterBySelectedYear(rawData, state.year);
@@ -308,7 +308,7 @@ const theme: ThemeType = {
       initialState: {
         year: previousYear,
       },
-      fetchParams: (state: any) => ({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.name }),
+      fetchParams: (state: any) => ({ slug: 'visits_by_prizm_monthly', region: state.selectedRegion.slug }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filteredByYear = filterBySelectedYear(rawData, state.year);
         const data = mergeForChart({
@@ -353,7 +353,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'nights_per_visitor_by_country_monthly',
-        region: [state.selectedRegion.name, state.selectedRegion.parent?.name].filter((x) => x),
+        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -396,9 +396,9 @@ const theme: ThemeType = {
       fetchParams: (state: any) => ({
         slug: 'visits_change_weekly',
         region: [
-          state.selectedRegion.name,
-          state.selectedRegion.parent?.name,
-          ...state.selectedRegion.children?.map((x) => x.name),
+          state.selectedRegion.slug,
+          state.selectedRegion.parent?.slug,
+          ...state.selectedRegion.children?.map((x) => x.slug),
         ].filter((x) => x),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
