@@ -17,7 +17,7 @@ module Admin::Resources
     authorize resource_class
 
     @q = resource_class.ransack(params[:q])
-    @pagy, @resources = pagy(policy_scope(scoped_collection(@q.result)))
+    @pagy, @resources = pagy(policy_scope(scoped_collection(@q.result)), pagy_defaults)
   end
 
   # GET /resources/1
@@ -138,5 +138,9 @@ module Admin::Resources
 
   def resource_name
     resource_class.to_s.humanize
+  end
+
+  def pagy_defaults
+    {}
   end
 end
