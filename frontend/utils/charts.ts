@@ -236,3 +236,11 @@ export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], gr
 export function getColorsByRegionName(indicatorValues: IndicatorValue[]) {
   return indicatorValues.reduce((acc, x) => ({ ...acc, [x.region]: REGION_COLORS[x.region_slug] }), {});
 }
+
+export function getUnitLabel(unit: string): any {
+  return {
+    value: unit,
+    position: 'top',
+    dy: -20,
+  };
+}
