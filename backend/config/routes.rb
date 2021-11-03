@@ -2,11 +2,13 @@ Rails.application.routes.draw do
   devise_for :users, path: 'admin'
 
   namespace :admin do
-    root to: 'admin/users#index'
+    root to: 'users#index'
 
     resources :users
     resources :regions
     resources :indicator_values, only: [:index]
+    resources :organizations, only: [:index]
+    resources :development_funds, only: [:index]
   end
 
   namespace :api, format: 'json' do
