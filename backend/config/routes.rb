@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, path: 'admin'
 
-  root to: 'admin/users#index'
+  root to: redirect('admin/dashboards')
 
   namespace :admin do
-    root to: 'users#index'
+    root to: 'dashboards#index'
 
+    resources :dashboards, only: [:index]
     resources :users
     resources :regions
     resources :indicator_values, only: [:index]

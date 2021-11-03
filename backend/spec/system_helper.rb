@@ -39,8 +39,25 @@ module CupriteHelpers
   end
 end
 
+module PageHelpers
+  def within_cell(row, column, &block)
+    within_row(row) do
+      within_column(column, &block)
+    end
+  end
+
+  def within_column(column, &block)
+    within(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[normalize-space()='#{column}']/preceding-sibling::th)+1]", &block)
+  end
+
+  def within_row(text, &block)
+    within(:xpath, ".//tr[contains(normalize-space(.), '#{text}')]", &block)
+  end
+end
+
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
+  config.include PageHelpers, type: :system
 
   config.around(:each, type: :system) do |ex|
     was_host = Rails.application.default_url_options[:host]
@@ -52,9 +69,7 @@ RSpec.configure do |config|
   config.prepend_before(:each, type: :system) do
     driven_by Capybara.javascript_driver
   end
-end
 
-RSpec.configure do |config|
   config.before(:suite) do
     Rails.application.load_tasks
     `yarn build`

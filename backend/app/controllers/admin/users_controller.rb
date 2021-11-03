@@ -1,7 +1,23 @@
 class Admin::UsersController < Admin::AdminController
   include Admin::Resources
 
+  def update
+    if update_user
+      redirect_to resources_url, notice: "#{resource_name} was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def update_user
+    if resource_params[:password].present?
+      @resource.update(resource_params)
+    else
+      @resource.update_without_password(resource_params)
+    end
+  end
 
   def resource_class
     User
@@ -14,7 +30,9 @@ class Admin::UsersController < Admin::AdminController
   def permitted_params
     [
       :email,
-      :name
+      :name,
+      :password,
+      :password_confirmation
     ]
   end
 end

@@ -2,9 +2,9 @@
   <div class="wrapper" data-controller="sidebar">
     <nav id="sidebar" class="sidebar" data-sidebar-target="sidebar">
       <div class="sidebar-content" data-sidebar-target="simpleBar">
-        <a class="sidebar-brand" href="index.html">
+        <%= link_to admin_dashboards_path, class: 'sidebar-brand' do %>
           <span class="align-middle">TOTA Back Office</span>
-        </a>
+        <% end %>
 
         <ul class="sidebar-nav">
           <li class="sidebar-header">
