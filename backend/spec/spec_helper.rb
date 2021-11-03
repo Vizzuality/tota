@@ -2,6 +2,8 @@ require 'simplecov'
 
 SimpleCov.start do
   add_filter '/spec/'
+  add_filter '/lib/tasks/'
+  add_filter '/lib/timed_logger.rb'
 end
 
 RSpec.configure do |config|
