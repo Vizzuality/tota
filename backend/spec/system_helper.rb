@@ -57,6 +57,8 @@ end
 RSpec.configure do |config|
   config.before(:suite) do
     Rails.application.load_tasks
+    `yarn build`
+    `yarn build:css`
     Rake::Task['assets:precompile'].execute
   end
 end
