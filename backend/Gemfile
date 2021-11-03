@@ -54,15 +54,14 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
+  gem 'cuprite'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rspec-request_snapshot'
   gem 'factory_bot_rails'
-  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'super_diff'
   gem 'test-prof'
-  gem 'webdrivers'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
