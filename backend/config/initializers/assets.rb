@@ -12,3 +12,15 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+class AssetUrlProcessor
+  def self.call(input)
+    context = input[:environment].context_class.new(input)
+    data = input[:data].gsub(/asset-url\(["']?(.+?)["']?\)/) do |_match|
+      "url(#{context.asset_path($1)})"
+    end
+    {data: data}
+  end
+end
+
+Sprockets.register_postprocessor "text/css", AssetUrlProcessor

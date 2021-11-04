@@ -47,4 +47,9 @@
 
 @import 'bootswatch/dist/cosmo/bootswatch';
 
-@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap-icons/font/bootstrap-icons.scss';
+@font-face {
+  font-family: "bootstrap-icons";
+  src: asset-url("bootstrap-icons/font/fonts/bootstrap-icons.woff2") format("woff2"),
+       asset-url("bootstrap-icons/font/fonts/bootstrap-icons.woff") format("woff");
+}
