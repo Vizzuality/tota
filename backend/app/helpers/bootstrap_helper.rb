@@ -1,6 +1,6 @@
 module BootstrapHelper
   BOOTSTRAP_FLASH_CLASSES = {
-    notice: 'alert-info',
+    notice: 'alert-success',
     success: 'alert-success',
     error: 'alert-danger',
     alert: 'alert-danger'
