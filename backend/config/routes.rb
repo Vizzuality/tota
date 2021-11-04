@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     resources :users
     resources :regions
     resources :indicator_values, only: [:index]
-    resources :organizations, only: [:index]
-    resources :development_funds, only: [:index]
+    resources :organizations, only: [:show, :index]
+    resources :development_funds, only: [:show, :index]
   end
 
   namespace :api, format: 'json' do

@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="fw-bold">Name: </td>
+          <td><%= @resource.name %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Region: </td>
+          <td><%= @resource.region_name %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Subregion: </td>
+          <td><%= @resource.subregion_name %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Business Type: </td>
+          <td><%= @resource.business_type_name %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Business Subtype: </td>
+          <td><%= @resource.business_subtype_name %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Latitude: </td>
+          <td><%= @resource.latitude %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Longitude: </td>
+          <td><%= @resource.longitude %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Website URL: </td>
+          <td><%= @resource.website_url %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">External Company Id: </td>
+          <td><%= @resource.external_company_id %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Indigenous Tourism: </td>
+          <td><%= status_tag @resource.indigenous_tourism %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Biosphere Program Member: </td>
+          <td><%= status_tag @resource.biosphere_program_member %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Accessibility: </td>
+          <td><%= status_tag @resource.accessibility %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Created At: </td>
+          <td><%= @resource.created_at %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Updated At: </td>
+          <td><%= @resource.updated_at %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

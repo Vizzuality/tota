@@ -2,11 +2,11 @@ module Admin::Resources
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_resource, only: [:edit, :update, :destroy]
-    before_action :authorize_resource, only: [:edit, :update, :destroy]
+    before_action :set_resource, only: [:edit, :show, :update, :destroy]
+    before_action :authorize_resource, only: [:edit, :show, :update, :destroy]
     before_action :set_breadcrumbs, except: [:index, :batch_delete]
 
-    after_action :verify_authorized, except: [:show, :index, :batch_delete]
+    after_action :verify_authorized, except: [:index, :batch_delete]
     after_action :verify_policy_scoped, only: [:index, :batch_delete]
 
     helper_method :redirect_params
@@ -22,7 +22,8 @@ module Admin::Resources
 
   # GET /resources/1
   def show
-    redirect_to edit_resource_url(params[:id])
+    title = @resource.try(:name) || @resource.try(:title) || @resource.to_s
+    add_breadcrumb(title)
   end
 
   # GET /resources/new
@@ -125,19 +126,19 @@ module Admin::Resources
   # end of to reimplement in controllers
 
   def resources_url(*args)
-    send("admin_#{resource_class.to_s.downcase.pluralize}_url", *args)
+    send("admin_#{resource_class.to_s.underscore.pluralize}_url", *args)
   end
 
   def edit_resource_url(*args)
-    send("edit_admin_#{resource_class.to_s.downcase}_url", *args)
+    send("edit_admin_#{resource_class.to_s.underscore}_url", *args)
   end
 
   def edit_resource_path(*args)
-    send("edit_admin_#{resource_class.to_s.downcase}_path", *args)
+    send("edit_admin_#{resource_class.to_s.underscore}_path", *args)
   end
 
   def resource_name
-    resource_class.to_s.humanize
+    resource_class.to_s.titleize
   end
 
   def pagy_defaults

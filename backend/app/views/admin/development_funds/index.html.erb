@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @resources.each do |value| %>
-      <tr>
+      <tr data-link="<%= admin_development_fund_path(value) %>">
         <td><%= value.region&.name %></td>
         <td><%= value.project_title %></td>
       </tr>

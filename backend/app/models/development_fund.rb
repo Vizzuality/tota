@@ -33,4 +33,8 @@ class DevelopmentFund < ApplicationRecord
   def blueprint
     DevelopmentFundBlueprint
   end
+
+  def to_s
+    project_title
+  end
 end

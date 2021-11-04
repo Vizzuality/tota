@@ -26,7 +26,7 @@ Copy CSV files with indicators and other entities data into `app/db/csvs` and ru
 
 ### Run the server
 
-`bin/rails s` and access the project on `http://localhost:4000`
+`bin/dev` and access the project on `http://localhost:4000`
 
 ### Run the tests
 
