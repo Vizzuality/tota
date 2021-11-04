@@ -53,4 +53,11 @@ class Organization < ApplicationRecord
 
     business_type.name if business_type.subtype?
   end
+
+  def website_url_link
+    return if website_url.nil?
+    return website_url if website_url.start_with?('http')
+
+    "http://#{website_url}"
+  end
 end
