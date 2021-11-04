@@ -50,6 +50,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-puma'
   gem 'capistrano-yarn'
+  gem 'capistrano-nvm'
 end
 
 group :test do
