@@ -13,6 +13,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
+# TODO: this is taken from this thread https://github.com/rails/cssbundling-rails/issues/22
 class AssetUrlProcessor
   def self.call(input)
     context = input[:environment].context_class.new(input)
