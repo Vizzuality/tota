@@ -42,10 +42,25 @@ RSpec.describe 'Users', type: :system do
 
       expect(page).to have_text('User was successfully created')
     end
+
+    context 'errors' do
+      it 'displays validation errors' do
+        click_on 'New User'
+
+        fill_in :user_email, with: 'wrongemail'
+
+        click_on 'Create User'
+
+        expect(page).to have_text('Please review the problems below')
+        expect(page).to have_text('Email is invalid')
+        expect(page).to have_text("Password can't be blank")
+      end
+    end
   end
 
   describe 'Edit' do
-    before { create(:user, email: 'user1@example.com', name: 'Tomasz') }
+    let!(:user) { create(:user, email: 'user1@example.com', name: 'Tomasz') }
+
     before { visit '/admin/users' }
 
     it 'updates details' do
@@ -88,6 +103,19 @@ RSpec.describe 'Users', type: :system do
       click_on 'Sign in'
 
       expect(page).to have_current_path(admin_dashboards_path)
+    end
+
+    context 'errors' do
+      before { visit edit_admin_user_path(user) }
+
+      it 'displays validation errors' do
+        fill_in :user_email, with: 'wrongemail'
+
+        click_on 'Update User'
+
+        expect(page).to have_text('Please review the problems below')
+        expect(page).to have_text('Email is invalid')
+      end
     end
   end
 end

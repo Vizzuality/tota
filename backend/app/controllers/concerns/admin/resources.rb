@@ -4,10 +4,10 @@ module Admin::Resources
   included do
     before_action :set_resource, only: [:edit, :show, :update, :destroy]
     before_action :authorize_resource, only: [:edit, :show, :update, :destroy]
-    before_action :set_breadcrumbs, except: [:index, :batch_delete]
+    before_action :set_breadcrumbs, except: [:index]
 
-    after_action :verify_authorized, except: [:index, :batch_delete]
-    after_action :verify_policy_scoped, only: [:index, :batch_delete]
+    after_action :verify_authorized, except: [:index]
+    after_action :verify_policy_scoped, only: [:index]
 
     helper_method :redirect_params
   end
@@ -67,19 +67,6 @@ module Admin::Resources
   def destroy
     @resource.destroy
     redirect_to resources_url(redirect_params), notice: "#{resource_name} was successfully destroyed."
-  end
-
-  def batch_delete
-    @resources = if params[:ids] == 'all'
-                   resource_class.all
-                 else
-                   resource_class.where(id: params[:ids].split(','))
-                 end
-    @resources = policy_scope(@resources)
-    @resources.destroy_all
-
-    redirect_to resources_url(redirect_params), notice: "#{resource_name.pluralize} were sucessfully destroyed",
-                                                status: :see_other
   end
 
   private
