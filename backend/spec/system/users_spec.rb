@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Users', type: :system do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'secret', name: 'Admin Example') }
+  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   before { sign_in admin }
 
@@ -35,8 +35,8 @@ RSpec.describe 'Users', type: :system do
 
       fill_in :user_email, with: 'user@example.com'
       fill_in :user_name, with: 'Bob Example'
-      fill_in :user_password, with: 'supersecret'
-      fill_in :user_password_confirmation, with: 'supersecret'
+      fill_in :user_password, with: 'GreatSuperSecret3'
+      fill_in :user_password_confirmation, with: 'GreatSuperSecret3'
 
       click_on 'Create User'
 
@@ -70,8 +70,8 @@ RSpec.describe 'Users', type: :system do
         click_on 'Edit'
       end
 
-      fill_in :user_password, with: 'newpassword'
-      fill_in :user_password_confirmation, with: 'newpassword'
+      fill_in :user_password, with: 'NewPassword666'
+      fill_in :user_password_confirmation, with: 'NewPassword666'
 
       click_on 'Update User'
 
@@ -83,7 +83,7 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_current_path(new_user_session_path)
 
       fill_in :user_email, with: 'user1@example.com'
-      fill_in :user_password, with: 'newpassword'
+      fill_in :user_password, with: 'NewPassword666'
 
       click_on 'Sign in'
 

@@ -1,14 +1,14 @@
 require 'system_helper'
 
 RSpec.describe 'Auth', type: :system do
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret') }
+  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   describe 'Login' do
     before { visit '/admin/users' }
 
     it 'authenticate user successfuly' do
       fill_in :user_email, with: 'admin@example.com'
-      fill_in :user_password, with: 'secret'
+      fill_in :user_password, with: 'SuperSecret6'
 
       click_on 'Sign in'
 
@@ -26,12 +26,12 @@ RSpec.describe 'Auth', type: :system do
   end
 
   describe 'Log out' do
-    before { sign_in user }
+    before { sign_in admin }
 
     it 'works well' do
       visit '/admin/users'
 
-      click_on user.email
+      click_on admin.email
       click_on 'Log out'
 
       expect(page).to have_current_path(new_user_session_path)

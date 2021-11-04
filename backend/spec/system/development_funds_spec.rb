@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Development Funds', type: :system do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'secret', name: 'Admin Example') }
+  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   before { sign_in admin }
 
