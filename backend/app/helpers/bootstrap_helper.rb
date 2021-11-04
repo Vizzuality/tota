@@ -50,11 +50,13 @@ module BootstrapHelper
       el << content_tag(:ul, class: 'dropdown-menu', 'aria-labelledby': id) do
         yield if block.present?
       end
-      el.join('').html_safe
+      el.join.html_safe
     end
   end
 
   def status_tag(text)
+    return if text.nil?
+
     key, display = if text.is_a? Array
                      text
                    elsif text == true

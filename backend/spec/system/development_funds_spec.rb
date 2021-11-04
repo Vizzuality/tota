@@ -17,4 +17,13 @@ RSpec.describe 'Development Funds', type: :system do
       expect(page).to have_text('Project Number 2')
     end
   end
+
+  describe 'Show' do
+    let(:development_fund) { create(:development_fund, project_title: 'Project Number 1') }
+    before { visit admin_development_fund_path(development_fund) }
+
+    it 'displays development fund' do
+      expect(page).to have_text('Project Number 1')
+    end
+  end
 end

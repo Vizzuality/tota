@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     resources :dashboards, only: [:index]
     resources :users
-    resources :regions
+    resources :regions, only: [:index, :edit, :update]
     resources :indicator_values, only: [:index]
     resources :organizations, only: [:show, :index]
     resources :development_funds, only: [:show, :index]

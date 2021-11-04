@@ -17,4 +17,13 @@ RSpec.describe 'Organizations', type: :system do
       expect(page).to have_text('Organization Number 2')
     end
   end
+
+  describe 'Show' do
+    let(:organization) { create(:organization, name: 'Organization Number 1') }
+    before { visit admin_organization_path(organization) }
+
+    it 'displays organization' do
+      expect(page).to have_text('Organization Number 1')
+    end
+  end
 end
