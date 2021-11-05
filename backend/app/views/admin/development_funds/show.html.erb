@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td class="fw-bold">Categories: </td>
-          <td><%= @resource.categories.join(', ') %></td>
+          <td><%= @resource.categories&.join(', ') %></td>
         </tr>
         <tr>
           <td class="fw-bold">Scope: </td>
