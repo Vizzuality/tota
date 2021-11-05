@@ -25,21 +25,31 @@ const Chart: FC<ComposedChartProps> = ({
   areas,
   xAxis,
   yAxis = {},
+  chartProps,
   legend = bottomLegend,
   lines,
   tooltip = defaultTooltip,
 }: ComposedChartProps) => {
   const yAxisWidth = 60;
-  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
+  const margin = { top: 20 };
+  const noLines = { axisLine: false, tickLine: false };
+  const tick = { tick: { style: { fill: '#314057', fontSize: 14 } } };
+  const legendProps = {
+    ...legend,
+    wrapperStyle: {
+      ...(legend.wrapperStyle || {}),
+      ...(!!yAxis ? { paddingLeft: yAxisWidth - 2 } : {}),
+    },
+  };
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
-      <ComposedChart data={data}>
+      <ComposedChart margin={margin} data={data} {...chartProps}>
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
-        {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
-        {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
+        {xAxis && <XAxis {...noLines} {...tick} {...xAxis} />}
+        {yAxis && <YAxis {...noLines} {...tick} width={yAxisWidth} {...yAxis} />}
+        {legend && <Legend {...legendProps} content={<CustomLegend {...legendProps} />} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line

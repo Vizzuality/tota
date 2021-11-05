@@ -3,11 +3,16 @@ export const bottomLegend = {
   layout: 'horizontal',
   verticalAlign: 'bottom',
   align: 'left',
+  wrapperStyle: {
+    color: '#314057',
+    fontSize: 14,
+  },
 };
 
 export const defaultGrid = {
   height: '1px',
   strokeDasharray: '0',
+  stroke: '#E9EBF1',
 };
 
 export const defaultTooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } };

@@ -16,8 +16,6 @@ import { REGION_COLORS } from 'constants/regions';
 const theme: ThemeType = {
   title: 'General Insights',
   slug: 'general-insights',
-  summary:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
   sections: [
     {
       title: 'Size of region (km2)',
@@ -39,9 +37,6 @@ const theme: ThemeType = {
             color: REGION_COLORS[d.region_slug],
             value: d.value,
           })),
-          chartProps: {
-            isAnimationActive: false,
-          },
           tooltip: {
             valueFormatter: (v) => `${Number(v).toLocaleString()} km2`,
           },

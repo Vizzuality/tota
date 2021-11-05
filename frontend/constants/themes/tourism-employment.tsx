@@ -14,6 +14,7 @@ import {
   getColorsByRegionName,
   getOptions,
   getStackedBarsData,
+  getUnitLabel,
   mergeForChart,
 } from 'utils/charts';
 import { compactNumberTickFormatter, shortMonthName, previousYear } from './utils';
@@ -91,6 +92,12 @@ const theme: ThemeType = {
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
           lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
+          chartProps: {
+            margin: {
+              top: 35,
+              left: 10,
+            },
+          },
           areas,
           xAxis: {
             dataKey: 'date',
@@ -98,6 +105,7 @@ const theme: ThemeType = {
           },
           yAxis: {
             tickFormatter: compactNumberTickFormatter,
+            label: getUnitLabel('Nr. of people'),
           },
           legend: {
             ...bottomLegend,

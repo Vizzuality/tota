@@ -27,17 +27,25 @@ const Chart: FC<LineChartProps> = ({
   tooltip = defaultTooltip,
 }: LineChartProps) => {
   const yAxisWidth = 60;
-  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
   const margin = { top: 20 };
+  const noLines = { axisLine: false, tickLine: false };
+  const tick = { tick: { style: { fill: '#314057', fontSize: 14 } } };
+  const legendProps = {
+    ...legend,
+    wrapperStyle: {
+      ...(legend.wrapperStyle || {}),
+      ...(!!yAxis ? { paddingLeft: yAxisWidth - 2 } : {}),
+    },
+  };
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
       <LineChart data={data} margin={margin} {...chartProps}>
-        {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
+        {legend && <Legend {...legendProps} content={<CustomLegend {...legendProps} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
-        {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
+        {xAxis && <XAxis {...tick} {...noLines} {...xAxis} />}
+        {yAxis && <YAxis {...tick} {...noLines} width={yAxisWidth} {...yAxis} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line
