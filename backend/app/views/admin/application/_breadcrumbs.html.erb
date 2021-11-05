@@ -1,0 +1,17 @@
+<% if breadcrumbs.any? %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% breadcrumbs.each do |crumb| %>
+        <% last_one = crumb == breadcrumbs.last %>
+
+        <li class="breadcrumb-item" <%= last_one ? "aria-current='page'" : "" %>>
+          <% if crumb.link? %>
+            <%= link_to crumb.title, crumb.path %>
+          <% else %>
+            <%= crumb.title %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

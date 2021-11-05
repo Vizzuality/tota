@@ -1,0 +1,90 @@
+<% content_for :content do %>
+  <div class="wrapper" data-controller="sidebar">
+    <nav id="sidebar" class="sidebar" data-sidebar-target="sidebar">
+      <div class="sidebar-content" data-sidebar-target="simpleBar">
+        <%= link_to admin_dashboards_path, class: 'sidebar-brand' do %>
+          <span class="align-middle">TOTA Back Office</span>
+        <% end %>
+
+        <ul class="sidebar-nav">
+          <li class="sidebar-header">
+            Data
+          </li>
+
+          <%= sidebar_link_to admin_regions_path do %>
+            <i class="bi-pin-map"></i> Regions
+          <% end %>
+
+          <%= sidebar_link_to admin_organizations_path do %>
+            <i class="bi-building"></i> TOTA Members
+          <% end %>
+
+          <%= sidebar_link_to admin_development_funds_path do %>
+            <i class="bi-cash"></i> Development Funds
+          <% end %>
+
+          <%= sidebar_link_to admin_indicator_values_path do %>
+            <i class="bi-graph-up"></i> Indicators
+          <% end %>
+
+          <li class="sidebar-header">
+            Admin
+          </li>
+
+          <%= sidebar_link_to admin_users_path do %>
+            <i class="bi-person-lines-fill"></i> Users
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="main">
+      <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="d-flex h-100" data-action="click->sidebar#toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+        <div class="navbar-collapse collapse">
+          <ul class="navbar-nav navbar-align">
+            <li class="nav-item dropdown">
+              <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="bi-settings"></i>
+              </a>
+
+              <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                <span class="text-dark"><%= current_user.email %></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <%= link_to admin_user_path(current_user), class: "dropdown-item" do %>
+                  <i class="bi-person"></i> Profile</a>
+                <% end %>
+                <div class="dropdown-divider"></div>
+                <%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="content">
+        <%= render "application/flash_messages" %>
+
+        <%= render "breadcrumbs" %>
+
+        <div class="container-fluid p-0">
+          <%= yield %>
+        </div>
+      </main>
+
+      <% if content_for?(:content_footer) %>
+        <footer class="footer">
+          <div class="container-fluid text-muted">
+            <%= content_for :content_footer %>
+          </div>
+        </footer>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>

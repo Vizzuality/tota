@@ -1,0 +1,35 @@
+<div class="text-center mt-4">
+  <p class="lead">
+    Sign in to your account to continue
+  </p>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="m-sm-4">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+        <div class="mb-3">
+          <%= f.label :email, class: 'form-label' %><br />
+          <%= f.email_field :email, class: 'form-control form-control-lg', placeholder: 'Enter your email', autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :password, class: 'form-label' %><br />
+          <%= f.password_field :password, class: 'form-control form-control-lg', placeholder: 'Enter your password', autocomplete: "current-password" %>
+        </div>
+        <% if devise_mapping.rememberable? %>
+          <div>
+            <label class="form-check">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <span class="form-check-label">
+                Remember me next time
+              </span>
+            </label>
+          </div>
+        <% end %>
+        <div class="text-center mt-3">
+          <%= f.submit "Sign in", class: 'btn btn-lg btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

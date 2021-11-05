@@ -6,14 +6,25 @@ ruby '3.0.1'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
-gem 'sass-rails', '>= 6'
-gem 'webpacker', '~> 5.0'
 
 gem 'activerecord-import'
 
 # API
 gem 'blueprinter'
 gem 'rack-cors'
+
+# Backoffice
+gem 'jsbundling-rails'
+gem 'cssbundling-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
+
+gem 'pagy'
+
+gem 'devise'
+gem 'simple_form'
+gem 'ransack'
+gem 'pundit'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -39,19 +50,22 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-puma'
   gem 'capistrano-yarn'
+  gem 'capistrano-nvm'
 end
 
 group :test do
   gem 'capybara', '>= 3.26'
+  gem 'cuprite'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rspec-request_snapshot'
   gem 'factory_bot_rails'
-  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'super_diff'
   gem 'test-prof'
-  gem 'webdrivers'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Use Redis for Action Cable
+gem 'redis', '~> 4.0'

@@ -1,0 +1,35 @@
+// Variables
+@import 'theme';
+
+@import 'components/avatar';
+@import 'components/breadcrumb';
+@import 'components/content';
+@import 'components/footer';
+@import 'components/forms';
+@import 'components/hamburger';
+@import 'components/list-group';
+@import 'components/main';
+@import 'components/navbar';
+@import 'components/sidebar';
+@import 'components/tables';
+@import 'components/type';
+@import 'components/wrapper';
+@import 'components/pagination';
+@import 'components/badge';
+
+body,
+html,
+#root {
+  height: 100%;
+}
+
+body {
+  overflow-y: scroll;
+  opacity: 1 !important;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  html {
+    overflow-x: hidden;
+  }
+}

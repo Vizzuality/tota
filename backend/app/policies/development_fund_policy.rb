@@ -1,0 +1,2 @@
+class DevelopmentFundPolicy < ApplicationPolicy
+end

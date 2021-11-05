@@ -25,4 +25,39 @@ class Organization < ApplicationRecord
   def blueprint
     OrganizationBlueprint
   end
+
+  def region_name
+    if region.subregion?
+      region.parent.name
+    else
+      region.name
+    end
+  end
+
+  def subregion_name
+    region.name if region.subregion?
+  end
+
+  def business_type_name
+    return if business_type.nil?
+
+    if business_type.subtype?
+      business_type.parent.name
+    else
+      business_type.name
+    end
+  end
+
+  def business_subtype_name
+    return if business_type.nil?
+
+    business_type.name if business_type.subtype?
+  end
+
+  def website_url_link
+    return if website_url.nil?
+    return website_url if website_url.start_with?('http')
+
+    "http://#{website_url}"
+  end
 end

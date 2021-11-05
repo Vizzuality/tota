@@ -1,0 +1,2 @@
+class IndicatorValuePolicy < ApplicationPolicy
+end
