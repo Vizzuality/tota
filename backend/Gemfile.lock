@@ -305,7 +305,7 @@ GEM
       patience_diff
     test-prof (1.0.7)
     thor (1.1.0)
-    turbo-rails (7.1.1)
+    turbo-rails (0.8.2)
       rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
