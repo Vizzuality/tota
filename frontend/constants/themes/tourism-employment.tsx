@@ -226,7 +226,7 @@ const theme: ThemeType = {
       title: 'Percentage of tourism employment to total employment',
       description: `To be defined.`,
       initialState: {
-        frequency: 'annually',
+        frequency: 'monthly',
         year: previousYear,
       },
       fetchParams: (state: any) => {
@@ -243,7 +243,7 @@ const theme: ThemeType = {
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
         const controls = [
-          { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Annually', 'Monthly']) },
+          { type: 'tabs', side: 'left', name: 'frequency', options: getOptions(['Monthly', 'Annually']) },
           { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) },
         ];
         if (state.frequency === 'annually') {
