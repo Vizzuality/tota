@@ -83,7 +83,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
                 <p className={cx('leading-6 text-sm', { 'mt-2': !!section.note })}>
                   <strong>Source: </strong>
                   {section.sources.map((source, index) => (
-                    <>
+                    <React.Fragment key={index}>
                       {index > 0 && ', '}
                       {source.link ? (
                         <a className="text-blue-500 underline" href={source.link}>
@@ -93,7 +93,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
                         source.text
                       )}
                       {source.note && ` (${source.note})`}
-                    </>
+                    </React.Fragment>
                   ))}
                 </p>
               )}
