@@ -52,7 +52,7 @@ const Chart: FC<LineChartProps> = ({
               key={`line_${index}`}
               strokeWidth={3}
               dot={false}
-              activeDot
+              activeDot={{ strokeWidth: 0, r: 3 }}
               stroke={lines[line].color || COLORS[index]}
               {...lines[line]}
             />
