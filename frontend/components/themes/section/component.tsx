@@ -71,13 +71,34 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         </div>
         <div className="flex-1">
           <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
-          {section.notes && (
-            <p className="mt-2 lg:mt-6 leading-6 text-sm" dangerouslySetInnerHTML={{ __html: section.notes }} />
+          {(section.note || section.sources) && (
+            <div className="mt-2 lg:mt-6">
+              {section.note && (
+                <p className="leading-6 text-sm">
+                  <strong>Note: </strong>
+                  <span dangerouslySetInnerHTML={{ __html: section.note }} />
+                </p>
+              )}
+              {section.sources && (
+                <p className={cx('leading-6 text-sm', { 'mt-2': !!section.note })}>
+                  <strong>Source: </strong>
+                  {section.sources.map((source, index) => (
+                    <>
+                      {index > 0 && ', '}
+                      <a className="text-blue-500 underline" href={source.link}>
+                        {source.text}
+                      </a>
+                      {source.note && ` (${source.note})`}
+                    </>
+                  ))}
+                </p>
+              )}
+            </div>
           )}
         </div>
 
         {viewOnMap && (
-          <div className="mt-4">
+          <div className="mt-4 lg:mt-10">
             <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
               {viewOnMap.title}
             </LinkButton>

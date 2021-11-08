@@ -23,11 +23,18 @@ export interface Region {
   parent?: Region;
 }
 
+interface Source {
+  text: string;
+  link: string;
+  note?: string;
+}
+
 export interface ThemeSectionType {
   title: string;
   subTitle?: string;
   description: string;
-  notes?: string;
+  note?: string;
+  sources?: Source[];
   initialState?: any;
   display?: (selectedRegion: Region) => boolean;
   fetchParams: (state: any) => any;

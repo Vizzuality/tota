@@ -32,7 +32,7 @@ const theme: ThemeType = {
       title: 'Tourism establishments',
       subTitle: '(by type)',
       description: `Total number of tourism businesses in the province/regions (by type of business).`,
-      notes: `Aggregated number. Includes Hubspot entries, as well as additional businesses of the tourism supply side (e.g. campgrounds, visitor information centres, etc.).`,
+      note: `Aggregated number. Includes Hubspot entries, as well as additional businesses of the tourism supply side (e.g. campgrounds, visitor information centres, etc.).`,
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: 'all',
@@ -94,7 +94,7 @@ const theme: ThemeType = {
       description: `
         Total amount of domestic (Canadian) overnight arrivals to the province/regions by month.
       `,
-      notes: `
+      note: `
         <strong class='font-bold'>Visits:</strong> count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.<br/>
         <strong class='font-bold'>Trips:</strong> count of domestic traveler trips which involved spending one or more nights over a certain time period as part of a continuous visit to the destination. includes unique visitors i.e. visitors that came twice in e.g. one month are counted as two trips.<br/>
         <strong class='font-bold'>Stays:</strong> count of unique nights a domestic visitor was observed in the destination over a certain time period, i.e. overnights.
