@@ -85,9 +85,13 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
                   {section.sources.map((source, index) => (
                     <>
                       {index > 0 && ', '}
-                      <a className="text-blue-500 underline" href={source.link}>
-                        {source.text}
-                      </a>
+                      {source.link ? (
+                        <a className="text-blue-500 underline" href={source.link}>
+                          {source.text}
+                        </a>
+                      ) : (
+                        source.text
+                      )}
                       {source.note && ` (${source.note})`}
                     </>
                   ))}

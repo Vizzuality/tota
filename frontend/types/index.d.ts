@@ -25,7 +25,7 @@ export interface Region {
 
 interface Source {
   text: string;
-  link: string;
+  link?: string;
   note?: string;
 }
 
