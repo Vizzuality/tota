@@ -417,7 +417,7 @@ const theme: ThemeType = {
           },
           tooltip: {
             ...defaultTooltip,
-            valueFormatter: (value) => `${value} CAD/h`,
+            valueFormatter: (value) => `${value}$/h`,
             payloadFilter: (y) => !y.name.includes('min-max'),
           },
         };

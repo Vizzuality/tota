@@ -8,4 +8,5 @@ export interface CompareProps {
   mergeBy: string;
   labelKey: string;
   valueKey: string;
+  unit: string;
 }

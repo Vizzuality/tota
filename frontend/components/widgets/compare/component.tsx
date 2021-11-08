@@ -24,7 +24,15 @@ function changeValues(data: IndicatorValue[], changeData: IndicatorValue[], key:
   });
 }
 
-const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, labelKey, valueKey }: CompareProps) => {
+const Compare: FC<CompareProps> = ({
+  data,
+  changeData,
+  currentYear,
+  unit,
+  mergeBy,
+  labelKey,
+  valueKey,
+}: CompareProps) => {
   const [showCompare, setShowCompare] = useState(false);
   const theme = showCompare ? 'dark-gray-alt' : 'dark-gray';
   const year = showCompare ? currentYear - 1 : currentYear;
@@ -54,10 +62,15 @@ const Compare: FC<CompareProps> = ({ data, changeData, currentYear, mergeBy, lab
     bars,
     yAxis: {
       domain: [Math.min(0, minValue), Math.round(maxValue * 1.1)],
+      tickFormatter: (val) => `${val}${unit}`,
     },
     xAxis: {
       dataKey: mergeBy,
       tickFormatter: (text: any) => `${text} ${year}`,
+    },
+    tooltip: {
+      cursor: false,
+      valueFormatter: (val) => `${val}${unit}`,
     },
   };
   const changeDataValueColor = labels.map((b, index) => {
