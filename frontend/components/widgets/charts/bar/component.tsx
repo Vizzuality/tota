@@ -17,7 +17,7 @@ import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
 import { useChartWidth } from 'hooks/charts';
 
-import { bottomLegend, COLORS, defaultGrid } from 'constants/charts';
+import { bottomLegend, getColorPalette, defaultGrid } from 'constants/charts';
 
 const Chart: FC<BarChartProps> = ({
   data,
@@ -32,6 +32,7 @@ const Chart: FC<BarChartProps> = ({
   height = 500,
   tooltip = { cursor: false },
 }: BarChartProps) => {
+  const colors = getColorPalette(bars.length);
   const [selectedData, setSelectedData] = useState(null);
   const { chartWidth, containerRef } = useChartWidth();
   const { layout } = chartProps;
@@ -41,7 +42,7 @@ const Chart: FC<BarChartProps> = ({
   }
   const newBars = bars.map((bar, index) => ({
     ...bar,
-    fill: bar.color || COLORS[index],
+    fill: bar.color || colors[index],
     hide: selectedData && !selectedData.includes(bar.dataKey),
   }));
   const handleLegendChange = (filtered: string[]) => setSelectedData(filtered);

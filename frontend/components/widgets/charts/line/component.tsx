@@ -10,7 +10,7 @@ import {
   LineChart,
   Legend,
 } from 'recharts';
-import { COLORS, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
+import { getColorPalette, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
 import { LineChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
@@ -37,6 +37,7 @@ const Chart: FC<LineChartProps> = ({
       ...(!!yAxis ? { paddingLeft: yAxisWidth - 2 } : {}),
     },
   };
+  const colors = getColorPalette(Object.keys(lines || {}).length);
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
@@ -53,7 +54,7 @@ const Chart: FC<LineChartProps> = ({
               strokeWidth={3}
               dot={false}
               activeDot={{ strokeWidth: 0, r: 3 }}
-              stroke={lines[line].color || COLORS[index]}
+              stroke={lines[line].color || colors[index]}
               {...lines[line]}
             />
           ))}

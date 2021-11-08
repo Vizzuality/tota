@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
-import { COLORS, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
+import { getColorPalette, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
 import { ComposedChartProps } from './types';
 
 const Chart: FC<ComposedChartProps> = ({
@@ -41,6 +41,12 @@ const Chart: FC<ComposedChartProps> = ({
       ...(!!yAxis ? { paddingLeft: yAxisWidth - 2 } : {}),
     },
   };
+  const dataLength = Math.max(
+    Object.keys(lines || {}).length,
+    Object.keys(bars || {}).length,
+    Object.keys(areas || {}).length,
+  );
+  const colors = getColorPalette(dataLength);
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
@@ -57,15 +63,15 @@ const Chart: FC<ComposedChartProps> = ({
               strokeWidth={3}
               dot={false}
               activeDot={{ strokeWidth: 0, r: 3 }}
-              stroke={lines[line].color || COLORS[index]}
+              stroke={lines[line].color || colors[index]}
               {...lines[line]}
             />
           ))}
         {bars &&
-          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={COLORS[index]} {...bars[bar]} />)}
+          Object.keys(bars).map((bar, index) => <Bar key={`bar_${index}`} fill={colors[index]} {...bars[bar]} />)}
         {areas &&
           Object.keys(areas).map((area, index) => (
-            <Area activeDot={false} key={`area_${index}`} fill={COLORS[index]} {...areas[area]} />
+            <Area activeDot={false} key={`area_${index}`} fill={colors[index]} {...areas[area]} />
           ))}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
       </ComposedChart>
