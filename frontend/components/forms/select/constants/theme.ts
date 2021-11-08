@@ -62,7 +62,8 @@ export default {
     valid: 'ring-green-500',
   },
   sizes: {
-    base: 'pl-4 pr-4 py-6 text-lg',
+    lg: 'pl-4 pr-4 py-6 text-lg',
+    base: 'pl-4 pr-4 py-4 text-lg',
     s: 'pl-4 pr-4 py-4 text-base',
   },
 };

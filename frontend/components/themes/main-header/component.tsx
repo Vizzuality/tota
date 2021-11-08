@@ -89,7 +89,7 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
           <Select
             id="themes-main-header-region"
             theme="transparent"
-            size="base"
+            size="lg"
             maxHeight={400}
             options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
             selected={kebabCase(selectedRegion.slug)}
