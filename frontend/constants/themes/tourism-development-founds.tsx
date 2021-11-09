@@ -12,7 +12,7 @@ import { moneyTickFormatter } from './utils';
 
 import mountains2Image from 'images/home/image-mountains2.png';
 
-import { COLORS } from 'constants/charts';
+import { getColorPalette } from 'constants/charts';
 
 const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => {
   if (!fundSources) return null;
@@ -25,7 +25,8 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
   const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
 
-  const fundColors = flatten(zip(fundSources, COLORS).filter((s) => s[0]));
+  const colors = getColorPalette(fundSources.length);
+  const fundColors = flatten(zip(fundSources, colors).filter((s) => s[0]));
 
   return {
     id: 'development_funds',
@@ -71,9 +72,9 @@ const theme: ThemeType = {
   image: mountains2Image,
   sections: [
     {
-      title: 'Total volume and projects awarded',
-      description: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Total funding and projects',
+      description: `Total number of funding amounts (CAD$) per funding stream and total number of funded projects per year, per stream.`,
+      note: 'Open funding calls can be found here (TRTD / Stronger BC)',
       initialState: {
         year: 'all_years',
       },
@@ -94,7 +95,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
           labelKey: 'category_1',
           valueKey: 'value',
         });
-        const sources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
+        const sources = uniq(rawData.map((x) => x.category_1))
+          .filter((x) => x)
+          .sort();
+        const colors = getColorPalette(sources.length);
 
         return {
           type: 'charts/bar',
@@ -125,7 +129,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
                     <div className="font-bold text-lg text-blue-800">Projects</div>
                     <div className="font-bold text-lg text-white flex gap-3 mt-5">
                       {sources.map((source, index) => (
-                        <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: COLORS[index] }}>
+                        <div key={source} className="w-28 p-4 text-center" style={{ backgroundColor: colors[index] }}>
                           {filteredCount.find((x) => x.category_1 === source)?.value || 0}
                         </div>
                       ))}
@@ -139,9 +143,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       },
     },
     {
-      title: 'Volume and projects by region',
-      description: `
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet. Sed elementum scelerisque ipsum, at rhoncus eros venenatis at. Donec mattis quis massa ut viverra. In ullamcorper, magna non convallis ultricies. `,
+      title: 'Funded project details',
+      description: 'Click below to see on the map page.',
       initialState: {
         year: 'all_years',
       },
@@ -151,13 +154,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filteredByYear = filterBySelectedYear(rawData, state.year, true);
-        const fundSources = uniq(rawData.map((x) => x.category_1)).filter((x) => x);
+        const fundSources = uniq(rawData.map((x) => x.category_1))
+          .filter((x) => x)
+          .sort();
         const selectedRegion = state.selectedRegion.slug === 'british_columbia' ? null : state.selectedRegion.slug;
         const allYears = uniq(rawData.filter((x) => x.date).map((x) => parseInt(getYear(x.date), 10)));
         const tooltipYears =
           state.year === 'all_years'
             ? [Math.min(...allYears).toString(), Math.max(...allYears).toString()]
             : [state.year];
+        const colors = getColorPalette(fundSources.length);
 
         return {
           viewOnMap: {
@@ -177,7 +183,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sol
             const counts = regionData.filter((x) => x.indicator === 'development_funds_by_source');
             const funds = fundSources.map((source, index) => ({
               name: source,
-              color: COLORS[index],
+              color: colors[index],
               count: counts.find((x) => x.category_1 === source)?.value || 0,
               volume: volumes.find((x) => x.category_1 === source)?.value || 0,
             }));
