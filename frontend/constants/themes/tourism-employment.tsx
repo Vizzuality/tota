@@ -365,7 +365,7 @@ const theme: ThemeType = {
     {
       title: 'Average tourism related wages',
       description: `Average hourly earning (CAD$) by month in the selected region compared to the provincial average.`,
-      note: 'Figures include full and part time employment. Data is presented for tourism regions, not econoic regions (see map for the difference in administrative boundaries).',
+      note: 'Figures include full and part time employment. Data is presented for tourism regions, not economic regions (see map for the difference in administrative boundaries).',
       sources: [
         {
           text: 'Go2HR Employment Tracker',
