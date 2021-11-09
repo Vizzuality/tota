@@ -13,7 +13,7 @@ class DataUpload < ApplicationRecord
   validates :uploader, presence: true
   validates :uploader, inclusion: {in: UPLOADERS.values, unless: -> { uploader.blank? }}
 
-  before_create :set_uploaded_by
+  before_validation :set_uploaded_by
 
   def uploaded_at
     created_at

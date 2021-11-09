@@ -13,13 +13,24 @@
         Name
       </th>
       <th>
+        File
       </th>
+      <th>
+        <%= sort_link @q, :uploaded_by %>
+      </th>
+      <th>
+        <%= sort_link @q, :created_by, 'Uploaded At' %>
+      </th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @resources.each do |data_upload| %>
       <tr data-link="<%= admin_data_upload_path(data_upload) %>">
         <td><%= data_upload.to_s %></td>
+        <td><%= link_to 'Uploaded file', rails_blob_path(data_upload.file, disposition: 'attachment') %></td>
+        <td><%= data_upload.uploaded_by %></td>
+        <td><%= data_upload.uploaded_at %></td>
         <td class="d-flex justify-content-end">
           <%= dropdown "Actions" do %>
             <li>

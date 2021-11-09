@@ -47,14 +47,14 @@ module CSVImport
 
     def import_data
       imported = import_service.call
-      self.details = import_service.import_results
+      # self.details = import_service.import_results
       promote_errors(import_service.errors) unless imported
 
       imported
     end
 
     def import_service
-      @import_service ||= CSVImport.const_get(importer_name).new(uploaded_csv_file, rollback_on_error: true)
+      @import_service ||= CSVImport.const_get(importer_name).new(uploaded_csv_file)
     rescue NameError
       raise "Can't find 'CSVImport::#{importer_name}' importer service class!"
     end
