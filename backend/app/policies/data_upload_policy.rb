@@ -1,0 +1,2 @@
+class DataUploadPolicy < ApplicationPolicy
+end

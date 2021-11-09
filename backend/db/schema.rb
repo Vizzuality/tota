@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_153641) do
+ActiveRecord::Schema.define(version: 2021_11_09_152309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 2021_10_26_153641) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_id"], name: "index_business_types_on_parent_id"
+  end
+
+  create_table "data_uploads", force: :cascade do |t|
+    t.bigint "uploaded_by_id"
+    t.string "uploader", null: false
+    t.jsonb "details", default: {}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uploaded_by_id"], name: "index_data_uploads_on_uploaded_by_id"
   end
 
   create_table "development_funds", force: :cascade do |t|
@@ -111,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_153641) do
   end
 
   add_foreign_key "business_types", "business_types", column: "parent_id"
+  add_foreign_key "data_uploads", "users", column: "uploaded_by_id", on_delete: :nullify
   add_foreign_key "development_funds", "regions", on_delete: :cascade
   add_foreign_key "indicator_values", "indicators"
   add_foreign_key "indicator_values", "regions", on_delete: :cascade

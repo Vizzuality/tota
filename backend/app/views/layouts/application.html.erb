@@ -13,7 +13,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
+  <body data-turbo="false">
     <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
 </html>
