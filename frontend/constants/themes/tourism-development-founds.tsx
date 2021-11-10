@@ -74,9 +74,10 @@ const theme: ThemeType = {
     {
       title: 'Total funding and projects',
       description: `Total number of funding amounts (CAD$) per funding stream and total number of funded projects per year, per stream.`,
+      note: `Open funding calls can be found <a href="https://strongerbc.gov.bc.ca/supporting-bc-businesses" target="_blank" rel="noopener noreferrer">here (TRTD / Stronger BC)</a>`,
       sources: [
         {
-          text: 'BC Government (TRTD/StrongerBC)',
+          text: 'BC Government (TRTD / StrongerBC)',
           link: 'https://strongerbc.gov.bc.ca/supporting-bc-businesses',
         },
       ],
@@ -149,7 +150,7 @@ const theme: ThemeType = {
     },
     {
       title: 'Funded project details',
-      description: 'Click below to see on the map page.',
+      description: 'Click below to see projects on the map page.',
       initialState: {
         year: 'all_years',
       },

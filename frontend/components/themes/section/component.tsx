@@ -69,7 +69,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             <div>{section.subTitle}</div>
           </div>
         </div>
-        <div className="flex-1">
+        <div className="section-details flex-1">
           <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
           {(section.note || section.sources) && (
             <div className="mt-2 lg:mt-6">
@@ -86,7 +86,7 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
                     <React.Fragment key={index}>
                       {index > 0 && ', '}
                       {source.link ? (
-                        <a className="text-blue-500 underline" href={source.link}>
+                        <a href={source.link} target="_blank" rel="noopener noreferrer">
                           {source.text}
                         </a>
                       ) : (
