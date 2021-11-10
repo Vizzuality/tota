@@ -11,6 +11,8 @@ import heroBackgroundImage3 from 'images/home/hero-background-3.png';
 import heroBackgroundImage4 from 'images/home/hero-background-4.png';
 import heroBackgroundImage5 from 'images/home/hero-background-5.png';
 
+import boxComingSoonImage from 'images/home/box-more-coming-soon.png';
+
 import { themesIndex as themes } from 'constants/themes';
 import ParticipatingRegions from 'components/static-pages/participating-regions';
 import GetInvolved from 'components/static-pages/get-involved';
@@ -20,7 +22,7 @@ const Home: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Welcome to Tota</title>
+        <title>Welcome to TOTA</title>
       </Head>
 
       <Hero
@@ -34,8 +36,6 @@ const Home: React.FC<void> = (): JSX.Element => {
         title={
           <>
             Welcome to the
-            <br />
-            British Columbia
             <br />
             Tourism Impact Portal
           </>
@@ -64,8 +64,10 @@ const Home: React.FC<void> = (): JSX.Element => {
             </Button>
           </div>
         </div>
+      </div>
 
-        <div className="text-blue-800 text-center py-10 mx-auto">
+      <div className="bg-white text-blue-800 text-center py-24 mx-auto">
+        <div className="container mx-auto">
           <h3 className="font-bold text-4xl leading-normal">Explore the data</h3>
           <p className="mt-10 mx-auto leading-7" style={{ maxWidth: 800 }}>
             This platform includes a variety of tourism-relevant information gathered from different sources across BC.
@@ -84,18 +86,20 @@ const Home: React.FC<void> = (): JSX.Element => {
               />
             ))}
             <div
-              className="relative w-full border-2 border-blue-800 text-blue-800 text-2xl font-bold"
-              style={{ paddingBottom: '100%' }}
+              className="relative w-full text-white text-2xl font-bold bg-cover"
+              style={{ backgroundImage: `url(${boxComingSoonImage})`, paddingBottom: '100%' }}
             >
               <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
             </div>
           </div>
         </div>
-
-        <ParticipatingRegions className="border-b border-gray-300" />
-        <GetInvolved className="border-b border-gray-300" />
-        <NewsletterSignUp />
       </div>
+
+      <ParticipatingRegions className="container mx-auto" />
+      <div className="bg-white">
+        <GetInvolved className="container mx-auto" />
+      </div>
+      <NewsletterSignUp className="container mx-auto" />
     </Layout>
   );
 };

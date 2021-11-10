@@ -20,13 +20,13 @@ import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
 
-import mountainsImage from 'images/home/image-mountains.png';
+import BoxImage from 'images/home/box-tourism-industry.png';
 import { getMapUrl } from 'hooks/map';
 
 const theme: ThemeType = {
   title: 'Tourism Industry & Arrivals',
   slug: 'tourism-industry-arrivals',
-  image: mountainsImage,
+  image: BoxImage,
   summary:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
   sections: [

@@ -47,8 +47,8 @@ const About: React.FC<void> = (): JSX.Element => {
         <h3 className="text-4xl font-bold">Background</h3>
 
         <p className="mt-10 leading-7">
-          The BC Tourism Impact Portal is a result of the ongoing efforts by the participating regions to ensure and
-          foster sustainable tourism development in the province. Understanding the responsibility that tourism holds in
+          The Tourism Impact Portal is a result of the ongoing efforts by the participating regions to ensure and foster
+          sustainable tourism development in the province. Understanding the responsibility that tourism holds in
           safeguarding and strengthening healthy spaces for communities and visitors alike, the participating regions
           are committed to increase and improve the information landscape by facilitating access for all stakeholders to
           economic, environmental and social insights and creating more transparency overall.
@@ -92,16 +92,16 @@ const About: React.FC<void> = (): JSX.Element => {
           <h3 className="text-4xl font-bold">Objectives behind the data portal</h3>
 
           <p className="mt-10 leading-7">
-            The BC Tourism Impact Portal seeks to contribute to an open, data-driven culture within the tourism sector
-            in BC, where businesses and other stakeholders responsible for the planning and development of destinations
-            can use more reliable evidence for their decision-making. Its purpose is to foster a transparent information
+            The Tourism Impact Portal seeks to contribute to an open, data-driven culture within the tourism sector in
+            BC, where businesses and other stakeholders responsible for the planning and development of destinations can
+            use more reliable evidence for their decision-making. Its purpose is to foster a transparent information
             landscape with a wide variety of data beyond the traditional economic insights, as well as encourage more
             open data sharing and initiate dialogues about data that empower stakeholders to make decisions for a
             sustainable future.
           </p>
 
           <div className="inline-block text-left">
-            <p className="mt-10 leading-7">In detail, the BC Impact Portal aims to:</p>
+            <p className="mt-10 leading-7">In detail, the Impact Portal aims to:</p>
 
             <ul className="mt-2 list-disc list-inside">
               <li>Make it easier and faster to find information</li>
@@ -124,7 +124,7 @@ const About: React.FC<void> = (): JSX.Element => {
             <div className="p-10 bg-white text-2xl">
               <h4>Who is the portal for?</h4>
               <p className="text-lg mt-10 leading-7">
-                The BC Tourism Impact Portal has been designed for all stakeholders in the province that are responsible
+                The Tourism Impact Portal has been designed for all stakeholders in the province that are responsible
                 for, or simply interested in, the development of tourism in the regions. This includes private
                 businesses, government and other public entities, industry associations, educational institutions, local
                 communities, and others.
