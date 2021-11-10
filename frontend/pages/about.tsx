@@ -20,39 +20,39 @@ const About: React.FC<void> = (): JSX.Element => {
             About the Initiative
           </h1>
 
-          <div className="text-lg leading-7 mt-14 mx-auto" style={{ maxWidth: 1200 }}>
-            <p>
-              With the continuously growing tourism numbers of the past decade, as well as the crisis derived from
-              COVID-19, the tourism industry is now, more than ever before, in need of more precise and timely insights.
-            </p>
-            <p className="mt-4">
-              At the same time, additional challenges such as the increasingly negative impacts of climate change and
-              other threats to societies and the environment are increasingly impacting destinations, requiring even
-              more reliable data to move away from intuition-based decision making towards more evidence-based
-              decision-making that fosters a healthy and resilient environment for both host and guest.
-            </p>
-            <p className="mt-4">
-              The purpose of this initiative is to provide tourism stakeholders a one-stop shop for all available data
-              insights that is easily accessible and facilitates understanding of different tourism-related trends and
-              dynamics in the regions. In addition, bringing all available data together in one central place will allow
-              tourism operators and those responsible for planning and development to identify research gaps, better
-              articulate data needs and make more powerful and responsible data-driven decisions that are key for a
-              sustainable future of the province and its regions.
-            </p>
-          </div>
+          <p className="text-lg mt-10 leading-7 mx-auto" style={{ maxWidth: 1200 }}>
+            The Tourism Impact Portal is a result of the ongoing efforts by the participating regions to ensure and
+            foster sustainable tourism development in the province. Understanding the responsibility that tourism holds
+            in safeguarding and strengthening healthy spaces for communities and visitors alike, the participating
+            regions are committed to increase and improve the information landscape by facilitating access for all
+            stakeholders to economic, environmental and social insights and creating more transparency overall.
+          </p>
         </div>
       </Hero>
 
       <div className="container mx-auto lg:px-16 text-blue-800 py-24 text-center">
         <h3 className="text-4xl font-bold">Background</h3>
 
-        <p className="mt-10 leading-7">
-          The Tourism Impact Portal is a result of the ongoing efforts by the participating regions to ensure and foster
-          sustainable tourism development in the province. Understanding the responsibility that tourism holds in
-          safeguarding and strengthening healthy spaces for communities and visitors alike, the participating regions
-          are committed to increase and improve the information landscape by facilitating access for all stakeholders to
-          economic, environmental and social insights and creating more transparency overall.
-        </p>
+        <div className="leading-7 mt-14 mx-auto" style={{ maxWidth: 1200 }}>
+          <p>
+            With the continuously growing tourism numbers of the past decade, as well as the crisis derived from
+            COVID-19, the tourism industry is now, more than ever before, in need of more precise and timely insights.
+          </p>
+          <p className="mt-4">
+            At the same time, additional challenges such as the increasingly negative impacts of climate change and
+            other threats to societies and the environment are increasingly impacting destinations, requiring even more
+            reliable data to move away from intuition-based decision making towards more evidence-based decision-making
+            that fosters a healthy and resilient environment for both host and guest.
+          </p>
+          <p className="mt-4">
+            The purpose of this initiative is to provide tourism stakeholders a one-stop shop for all available data
+            insights that is easily accessible and facilitates understanding of different tourism-related trends and
+            dynamics in the regions. In addition, bringing all available data together in one central place will allow
+            tourism operators and those responsible for planning and development to identify research gaps, better
+            articulate data needs and make more powerful and responsible data-driven decisions that are key for a
+            sustainable future of the province and its regions.
+          </p>
+        </div>
       </div>
 
       <div className="text-blue-800 py-24 text-center bg-yellow-50">
@@ -105,6 +105,7 @@ const About: React.FC<void> = (): JSX.Element => {
 
             <ul className="mt-2 list-disc list-inside">
               <li>Make it easier and faster to find information</li>
+              <li>Provide more information for the regional, destination level</li>
               <li>Facilitate better understanding of data and complex tourism dynamics</li>
               <li>Reduce silos between departments/organizations & (sub)sectors</li>
               <li>Support efforts to reduce data gaps and improve the quality of available data</li>
@@ -133,12 +134,12 @@ const About: React.FC<void> = (): JSX.Element => {
             <div className="p-10 bg-white text-2xl">
               <h4>Data for a sustainable future </h4>
               <p className="text-lg mt-10 leading-7">
-                For sustainable development, it is not only important to understand current and past dynamics, but it is
-                also imperative to understand the process undertaken so far, to set development objectives for the
-                future. By facilitating access to information and improving the availability and quality of information,
-                the tourism stakeholders of the regions also contribute to the achievement of sustainability goals set
-                by the global community such as the UN Sustainable Development Goals and the climate ambitions of the
-                Paris Agreement.
+                For sustainable development, it is important to understand current and past dynamics, as well as
+                processes undertaken so far, in order to set responsible development objectives for the future. By
+                facilitating access to information and improving the availability and quality of information, the
+                tourism stakeholders of the regions also contribute to the achievement of sustainability goals set by
+                the global community such as the UN Sustainable Development Goals and the climate ambitions of the Paris
+                Agreement.
               </p>
             </div>
           </div>
