@@ -333,7 +333,7 @@ const theme: ThemeType = {
       },
       fetchParams: (state: any) => ({
         slug: 'tourism_employment_by_sector_by_economic_region',
-        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
