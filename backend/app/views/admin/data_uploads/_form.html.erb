@@ -2,13 +2,15 @@
   <% if data_upload.errors.any? %>
     <div class="alert alert-danger">
       Please review the problems below:
+      <% extra_errors = data_upload.errors.reject { |e| e.attribute.in?([:file, :uploader]) }  %>
 
-      <ul>
-        <% data_upload.errors.each do |error| %>
-          <% next if error.attribute.in?([:file, :uploader]) %>
-          <li><%= error.message %></li>
-        <% end %>
-      </ul>
+      <% if extra_errors.any? %>
+        <ul>
+          <% extra_errors.each do |error| %>
+            <li><%= error.message %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   <% end %>
 
