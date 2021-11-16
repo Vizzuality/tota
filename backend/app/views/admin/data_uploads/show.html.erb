@@ -9,7 +9,7 @@
         </tr>
         <tr>
           <td class="fw-bold">File: </td>
-          <td><%= link_to 'Uploaded file', rails_blob_path(@resource.file, disposition: 'attachment') %></td>
+          <td><%= link_to @resource.file.filename, rails_blob_path(@resource.file, disposition: 'attachment') %></td>
         </tr>
         <tr>
           <td class="fw-bold">Uploaded By: </td>
