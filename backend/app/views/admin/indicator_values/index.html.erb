@@ -1,6 +1,23 @@
 <h1 class="h3 mb-3 me-2 d-inline-block">Indicators</h1>
 
-<%= render "index_search_form", q: @q, search_by: :category_1_or_category_2_cont %>
+<%= render "index_search_form", q: @q, search_by: :category_1_or_category_2_cont do |f| %>
+  <div class="d-inline-block" data-controller="filters">
+    <button type="button" class="btn btn-primary-outline m1-n1" data-filters-target="button">
+      <i class="bi bi-filter"></i>
+      Filters
+      <% if @q.conditions.any? %>
+        <span class="badge bg-info"><%= @q.conditions.count %></span>
+      <% end %>
+    </button>
+    <template data-filters-target="popup">
+      <%= f.input :region_id_eq, as: :select, label: 'Region', collection: Region.province.or(Region.tourism_region) %>
+      <%= f.input :indicator_slug_eq, as: :select, label: 'Indicator', collection: Indicator.pluck(:slug).sort %>
+
+      <%= button_tag 'Apply', class: 'btn btn-primary', type: :submit %>
+      <%= link_to 'Reset', admin_indicator_values_url(redirect_params), class: 'btn btn-link' %>
+    </template>
+  </div>
+<% end %>
 
 <table class="table table-hover" data-controller="table">
   <thead>
