@@ -9,7 +9,7 @@ class DataUpload < ApplicationRecord
 
   belongs_to :uploaded_by, class_name: 'User'
 
-  validates :file, attached: true, content_type: {in: ['text/csv', 'application/vnd.ms-excel']}
+  validates :file, attached: true, content_type: {in: ['text/csv', 'text/plain', 'application/vnd.ms-excel']}
   validates :uploader, presence: true
   validates :uploader, inclusion: {in: UPLOADERS.values, unless: -> { uploader.blank? }}
 

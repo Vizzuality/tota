@@ -59,7 +59,7 @@
                 <span class="text-dark"><%= current_user.email %></span>
               </a>
               <div class="dropdown-menu dropdown-menu-end">
-                <%= link_to admin_user_path(current_user), class: "dropdown-item" do %>
+                <%= link_to edit_admin_user_path(current_user), class: "dropdown-item" do %>
                   <i class="bi-person"></i> Profile</a>
                 <% end %>
                 <div class="dropdown-divider"></div>
