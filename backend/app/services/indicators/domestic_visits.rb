@@ -1,9 +1,14 @@
 module Indicators
-  class DomesticVisits
-    include Singleton
+  class DomesticVisits < DynamicIndicator
+    DEPENDS_ON = %w[
+      visits_by_origin_country_monthly
+      visits_by_origin_country_quarterly
+    ].freeze
 
-    class << self
-      delegate :generate, to: :instance
+    def regenerate
+      Indicator.find_by(slug: 'domestic_visits_percentage_monthly')&.destroy
+      Indicator.find_by(slug: 'domestic_visits_percentage_quarterly')&.destroy
+      Indicator.find_by(slug: 'domestic_visits_peak_lowest_month_ratio')&.destroy
     end
 
     def generate

@@ -4,7 +4,7 @@ class DataUpload < ApplicationRecord
   UPLOADERS = {
     'TOTA Members' => 'Organizations',
     'Development Funds' => 'DevelopmentFunds',
-    'Indicators' => 'Indicators'
+    'Indicators' => 'IndicatorValues'
   }.freeze
 
   belongs_to :uploaded_by, class_name: 'User'

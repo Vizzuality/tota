@@ -1,9 +1,11 @@
 module Indicators
-  class EstablishmentsByType
-    include Singleton
+  class EstablishmentsByType < DynamicIndicator
+    DEPENDS_ON = [].freeze
 
-    class << self
-      delegate :generate, to: :instance
+    def regenerate
+      Indicator.find_by(slug: 'establishments_by_type')&.destroy
+      Indicator.find_by(slug: 'total_establishments')&.destroy
+      generate
     end
 
     def generate

@@ -1,10 +1,6 @@
 module Indicators
-  class AirportTopAverageConnectionsPerWeek
-    include Singleton
-
-    class << self
-      delegate :generate, :regenerate, to: :instance
-    end
+  class AirportTopAverageConnectionsPerWeek < DynamicIndicator
+    DEPENDS_ON = %w[airport_arrivals_by_origin_weekly].freeze
 
     def regenerate
       Indicator.find_by(slug: 'airport_top_average_connections_per_week')&.destroy

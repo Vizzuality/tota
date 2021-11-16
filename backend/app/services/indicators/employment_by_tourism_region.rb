@@ -1,10 +1,9 @@
 module Indicators
-  class EmploymentByTourismRegion
-    include Singleton
-
-    class << self
-      delegate :generate, :regenerate, to: :instance
-    end
+  class EmploymentByTourismRegion < DynamicIndicator
+    DEPENDS_ON = %w[
+      tourism_employment_by_economic_region
+      total_employment_by_economic_region
+    ].freeze
 
     def regenerate
       Indicator.find_by(slug: 'tourism_employment_by_tourism_region_annually')&.destroy
