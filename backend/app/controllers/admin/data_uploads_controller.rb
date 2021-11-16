@@ -10,7 +10,7 @@ class Admin::DataUploadsController < Admin::AdminController
     if @process.call
       redirect_to admin_data_uploads_path, notice: 'File was successfully imported'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
