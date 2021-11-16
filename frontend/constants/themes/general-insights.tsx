@@ -289,7 +289,7 @@ const theme: ThemeType = {
     {
       title: 'Employment',
       description: `Total number of people employed in the tourism industry in the province (& share of total employment).`,
-      note: 'Figures include full and part time employment. Data is presented for economic regions, not tourism regions (see map for the difference in administrative boundaries). See the header for BC totals.',
+      note: 'Figures include full and part time employment. Data is presented for tourism regions, not economic regions (see map for the difference in administrative boundaries). See the header for BC totals.',
       sources: [
         {
           text: 'Statistics Canada - Labour Force Survey',
@@ -304,11 +304,28 @@ const theme: ThemeType = {
         region: state.selectedRegion.children?.map((x) => x.slug),
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const tourismIndicator = rawData.filter((x) => x.indicator === 'tourism_employment_by_tourism_region_annually');
+        const totalIndicator = rawData.filter((x) => x.indicator === 'total_employment_by_tourism_region_annually');
+        const otherIndicator = tourismIndicator
+          .map((tourismValue) => {
+            const totalValue = totalIndicator.find(
+              (x) => x.region_slug === tourismValue.region_slug && x.date === tourismValue.date,
+            );
+            if (!totalValue) return null;
+            if (!totalValue.value) return null;
+            return {
+              ...tourismValue,
+              indicator: 'other_employment_by_tourism_region_annually',
+              value: totalValue.value - tourismValue.value,
+            };
+          })
+          .filter((x) => x);
+        const chartData = [...tourismIndicator, ...otherIndicator];
         const indicatorsMap = {
+          other_employment_by_tourism_region_annually: 'Other',
           tourism_employment_by_tourism_region_annually: 'Tourism',
-          total_employment_by_tourism_region_annually: 'Total',
         };
-        const changed = filterBySelectedYear(rawData, state.year).map((x) => ({
+        const changed = filterBySelectedYear(chartData, state.year).map((x) => ({
           ...x,
           indicator: indicatorsMap[x.indicator],
         }));
@@ -324,12 +341,17 @@ const theme: ThemeType = {
           type: 'charts/bar',
           data,
           controls: [
-            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(chartData, false) },
           ],
           chartProps: {
             layout: 'vertical',
           },
           bars,
+          tooltip: {
+            cursor: false,
+            showTotalRow: true,
+            showPercentageOfTotal: true,
+          },
           xAxis: {
             hide: true,
             type: 'number',
