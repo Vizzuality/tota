@@ -2,7 +2,7 @@ class DataUpload < ApplicationRecord
   has_one_attached :file
 
   UPLOADERS = {
-    'TOTA Members' => 'Organizations',
+    'Organizations' => 'Organizations',
     'Development Funds' => 'DevelopmentFunds',
     'Indicators' => 'IndicatorValues'
   }.freeze
