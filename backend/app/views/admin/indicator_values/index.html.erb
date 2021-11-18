@@ -14,9 +14,17 @@
       <%= f.input :indicator_slug_eq, as: :select, label: 'Indicator', collection: Indicator.pluck(:slug).sort %>
 
       <%= button_tag 'Apply', class: 'btn btn-primary', type: :submit %>
-      <%= link_to 'Reset', admin_indicator_values_url(redirect_params), class: 'btn btn-link' %>
+      <%= link_to 'Reset', admin_indicator_values_url, class: 'btn btn-link' %>
     </template>
   </div>
+<% end %>
+
+<%= dropdown "Actions", class: "float-end mt-n1 me-2", toggle: {class: "btn btn-primary"} do %>
+  <li>
+    <%= link_to admin_indicator_values_path(format: 'csv', **redirect_params), class: "dropdown-item" do %>
+      <i class="bi-download me-2"></i>Export CSV
+    <% end %>
+  </li>
 <% end %>
 
 <table class="table table-hover" data-controller="table">

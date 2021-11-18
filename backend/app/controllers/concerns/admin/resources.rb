@@ -17,7 +17,17 @@ module Admin::Resources
     authorize resource_class
 
     @q = resource_class.ransack(params[:q])
-    @pagy, @resources = pagy(policy_scope(scoped_collection(@q.result)), pagy_defaults)
+    collection = policy_scope(scoped_collection(@q.result))
+
+    respond_to do |format|
+      format.html do
+        @pagy, @resources = pagy(collection, pagy_defaults)
+      end
+      format.csv do
+        render csv: csv_exporter.export(collection),
+               filename: resource_name.pluralize.parameterize.underscore
+      end
+    end
   end
 
   # GET /resources/1
@@ -93,7 +103,7 @@ module Admin::Resources
 
   # to keep on the same page with the same filters
   def redirect_params
-    params.permit(:q, :page).to_h
+    params.slice(:q, :page).to_unsafe_h
   end
 
   # to reimplement in controllers
@@ -130,5 +140,12 @@ module Admin::Resources
 
   def pagy_defaults
     {}
+  end
+
+  def csv_exporter
+    exporter_name = resource_class.name.pluralize
+    CSVExport.const_get(exporter_name).new
+  rescue NameError
+    raise "Can't find 'CSVExport::#{exporter_name}' exporter service class!"
   end
 end
