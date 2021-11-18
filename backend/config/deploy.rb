@@ -27,8 +27,6 @@ set :nvm_node, File.read('.nvmrc').strip
 set :nvm_map_bins, %w{node npm yarn}
 set :nvm_roles, :web
 
-set :yarn_flags, '--production --silent --no-progress --frozen-lockfile --no-cache'
-
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do

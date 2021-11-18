@@ -88,7 +88,7 @@ module Admin::Resources
   # end of actions
 
   def resource_params
-    params.require(resource_class.to_s.downcase.to_sym).permit(*permitted_params)
+    params.require(resource_class.to_s.underscore.to_sym).permit(*permitted_params)
   end
 
   # to keep on the same page with the same filters

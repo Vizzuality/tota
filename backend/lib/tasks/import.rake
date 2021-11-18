@@ -31,21 +31,14 @@ class ImportTasks
       task organizations: :environment do
         next if Rails.env.production? && !ENV['FORCE'].present?
 
-        unless ENV['KEEP_OLD'].present?
-          Organization.delete_all
-          BusinessType.delete_all
-        end
-
         TimedLogger.log('Import Organizations with Regions and Business Types') do
           run_importer CSVImport::Organizations, csv_file('organizations.csv')
         end
       end
 
-      desc 'Reimport Organizations'
+      desc 'Reimport Development Funds'
       task development_funds: :environment do
         next if Rails.env.production? && !ENV['FORCE'].present?
-
-        DevelopmentFund.delete_all unless ENV['KEEP_OLD'].present?
 
         TimedLogger.log('Import Development Funds') do
           run_importer CSVImport::DevelopmentFunds, csv_file('Block3_Development_Funds - EXPORT_CSV.csv')
@@ -79,16 +72,6 @@ class ImportTasks
 
           TimedLogger.log('Import Indicator Values for Block 6 Headers and General Insights') do
             run_importer CSVImport::IndicatorValues, csv_file('Block6_Headers_and_General_insights - EXPORT_CSV.csv')
-          end
-
-          TimedLogger.log('Create dynamic indicators') do
-            Indicators::EstablishmentsByType.generate
-            Indicators::DomesticVisits.generate
-            Indicators::AirportTotalDestinations.generate
-            Indicators::AirportTopAverageConnectionsPerWeek.generate
-            Indicators::DevelopmentFundsBySource.generate
-            Indicators::DevelopmentFundsVolumeBySource.generate
-            Indicators::EmploymentByTourismRegion.generate
           end
         end
       end

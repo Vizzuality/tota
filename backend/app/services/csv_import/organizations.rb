@@ -3,6 +3,7 @@ module CSVImport
     def import
       organizations = []
 
+      cleanup
       prepare_cache
 
       import_each_csv_row(csv) do |row|
@@ -25,9 +26,19 @@ module CSVImport
       end
 
       Organization.import! organizations, all_or_none: true
+      regenerate_dynamic_indicators
     end
 
     private
+
+    def cleanup
+      Organization.delete_all
+      BusinessType.delete_all
+    end
+
+    def regenerate_dynamic_indicators
+      Indicators::EstablishmentsByType.regenerate
+    end
 
     def required_headers
       [
@@ -85,8 +96,7 @@ module CSVImport
     end
 
     def prepare_organization(row)
-      Organization.find_by(external_company_id: row[:company_id]) ||
-        Organization.new
+      Organization.new
     end
   end
 end

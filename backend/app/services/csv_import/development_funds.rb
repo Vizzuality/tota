@@ -3,6 +3,8 @@ module CSVImport
     def import
       funds = []
 
+      cleanup
+
       prepare_cache
 
       import_each_csv_row(csv) do |row|
@@ -33,9 +35,19 @@ module CSVImport
       end
 
       DevelopmentFund.import! funds, all_or_none: true
+      regenerate_dynamic_indicators
     end
 
     private
+
+    def cleanup
+      DevelopmentFund.delete_all
+    end
+
+    def regenerate_dynamic_indicators
+      Indicators::DevelopmentFundsBySource.regenerate
+      Indicators::DevelopmentFundsVolumeBySource.regenerate
+    end
 
     def required_headers
       [

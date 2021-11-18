@@ -1,6 +1,7 @@
 module CSVImport
   class IndicatorValues < BaseImporter
     def import
+      cleanup
       prepare_cache
 
       values = []
@@ -12,7 +13,7 @@ module CSVImport
         next if row[:value].blank?
         next if row[:region] == 'not defined'
 
-        value.indicator = Indicator.find_or_create_by(slug: row[:indicator_code])
+        value.indicator = find_or_create_indicator(row[:indicator_code])
         value.region = find_region(row[:region])
         value.date = row[:date]
         value.category_1 = row[:category_1]
@@ -25,9 +26,22 @@ module CSVImport
       end
 
       IndicatorValue.import! values, all_or_none: true
+      regenerate_dynamic_indicators
     end
 
     private
+
+    def cleanup
+      Indicator.where(slug: changed_indicators).delete_all
+    end
+
+    def changed_indicators
+      @changed_indicators ||= csv.map { |r| r[:indicator_code] }.uniq
+    end
+
+    def regenerate_dynamic_indicators
+      Indicators.regenerate(changed_indicators)
+    end
 
     def required_headers
       [
@@ -42,12 +56,19 @@ module CSVImport
 
     def prepare_cache
       @regions = Region.all.map { |r| [r.slug, r] }.to_h
+      @indicators = Indicator.all.map { |i| [i.slug, i] }.to_h
     end
 
     def find_region(region_name)
       return if region_name.blank?
 
-      @regions[Slug.create(region_name)] or raise ActiveRecord::NotFound, "Cannot find region with name #{region_name}"
+      @regions[Slug.create(region_name)] or raise ActiveRecord::RecordNotFound, "Cannot find region with name #{region_name}"
+    end
+
+    def find_or_create_indicator(slug)
+      return if slug.blank?
+
+      @indicators[slug] ||= Indicator.create!(slug: slug)
     end
   end
 end

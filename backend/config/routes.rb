@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     root to: 'dashboards#index'
 
     resources :dashboards, only: [:index]
+    resources :data_uploads, only: [:index, :new, :create, :show]
     resources :users
     resources :regions, only: [:index, :edit, :update]
     resources :indicator_values, only: [:index]
