@@ -7,6 +7,14 @@
   Upload Funds
 <% end %>
 
+<%= dropdown "Actions", class: "float-end mt-n1 me-2" do %>
+  <li>
+    <%= link_to admin_development_funds_path(format: 'csv', **redirect_params), class: "dropdown-item" do %>
+      <i class="bi-download me-2"></i>Export CSV
+    <% end %>
+  </li>
+<% end %>
+
 <table class="table table-hover" data-controller="table">
   <thead>
     <tr>
