@@ -28,6 +28,9 @@ Copy CSV files with indicators and other entities data into `app/db/csvs` and ru
 
 `bin/dev` and access the project on `http://localhost:4000`
 
+If you want to debug rails app, running it through foreman could be not the best idea. In that case you can run css and js bundling
+using foreman `bin/watch` and the server in the standard way in a separate terminal tab.
+
 ### Run the tests
 
 `bundle exec rspec`
