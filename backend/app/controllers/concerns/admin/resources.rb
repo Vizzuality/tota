@@ -38,7 +38,7 @@ module Admin::Resources
 
   # GET /resources/new
   def new
-    @resource = resource_class.new
+    @resource = resource_class.new(resource_params)
 
     authorize @resource
 

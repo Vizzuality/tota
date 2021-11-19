@@ -15,7 +15,7 @@
   <% end %>
 
   <div class="form-inputs">
-    <%= f.input :uploader, collection: DataUpload::UPLOADERS %>
+    <%= f.input :uploader, value: params[:uploader], collection: DataUpload::UPLOADERS %>
     <%= f.input :file, as: :file %>
   </div>
 
