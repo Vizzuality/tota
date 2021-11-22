@@ -3,8 +3,8 @@ module Indicators
     DEPENDS_ON = [].freeze
 
     def regenerate
-      Indicator.find_by(slug: 'establishments_by_type')&.destroy
-      Indicator.find_by(slug: 'total_establishments')&.destroy
+      Indicator.find_by(slug: 'establishments_by_type')&.delete
+      Indicator.find_by(slug: 'total_establishments')&.delete
       generate
     end
 

@@ -3,7 +3,7 @@ module Indicators
     DEPENDS_ON = %w[airport_arrivals_by_origin_weekly].freeze
 
     def regenerate
-      Indicator.find_by(slug: 'airport_top_average_connections_per_week')&.destroy
+      Indicator.find_by(slug: 'airport_top_average_connections_per_week')&.delete
       generate
     end
 

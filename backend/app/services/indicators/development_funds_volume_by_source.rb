@@ -5,7 +5,7 @@ module Indicators
     attr_accessor :indicator
 
     def regenerate
-      Indicator.find_by(slug: 'development_funds_volume_by_source')&.destroy
+      Indicator.find_by(slug: 'development_funds_volume_by_source')&.delete
       generate
     end
 

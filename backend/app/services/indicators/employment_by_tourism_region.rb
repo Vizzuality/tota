@@ -6,12 +6,12 @@ module Indicators
     ].freeze
 
     def regenerate
-      Indicator.find_by(slug: 'tourism_employment_by_tourism_region_annually')&.destroy
-      Indicator.find_by(slug: 'tourism_employment_by_tourism_region_monthly')&.destroy
-      Indicator.find_by(slug: 'total_employment_by_tourism_region_annually')&.destroy
-      Indicator.find_by(slug: 'total_employment_by_tourism_region_monthly')&.destroy
-      Indicator.find_by(slug: 'tourism_to_total_employment_percentage_annually')&.destroy
-      Indicator.find_by(slug: 'tourism_to_total_employment_percentage_monthly')&.destroy
+      Indicator.find_by(slug: 'tourism_employment_by_tourism_region_annually')&.delete
+      Indicator.find_by(slug: 'tourism_employment_by_tourism_region_monthly')&.delete
+      Indicator.find_by(slug: 'total_employment_by_tourism_region_annually')&.delete
+      Indicator.find_by(slug: 'total_employment_by_tourism_region_monthly')&.delete
+      Indicator.find_by(slug: 'tourism_to_total_employment_percentage_annually')&.delete
+      Indicator.find_by(slug: 'tourism_to_total_employment_percentage_monthly')&.delete
       generate
     end
 
