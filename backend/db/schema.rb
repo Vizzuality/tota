@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_120914) do
     t.string "slug", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "dynamic", default: false
+    t.boolean "dynamic", default: false, null: false
     t.index ["slug"], name: "index_indicators_on_slug", unique: true
   end
 
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_120914) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "accessibility"
-    t.boolean "show_on_platform", default: true
+    t.boolean "show_on_platform", default: true, null: false
     t.index ["business_type_id"], name: "index_organizations_on_business_type_id"
     t.index ["region_id"], name: "index_organizations_on_region_id"
   end
