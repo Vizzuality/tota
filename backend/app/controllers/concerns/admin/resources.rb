@@ -98,7 +98,10 @@ module Admin::Resources
   # end of actions
 
   def resource_params
-    params.require(resource_class.to_s.underscore.to_sym).permit(*permitted_params)
+    resource_param = resource_class.to_s.underscore.to_sym
+    return {} if params[resource_param].blank?
+
+    params.require(resource_param).permit(*permitted_params)
   end
 
   # to keep on the same page with the same filters
