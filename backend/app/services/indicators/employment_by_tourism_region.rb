@@ -24,8 +24,8 @@ module Indicators
     private
 
     def generate_tourism_employment_data
-      employment_by_region_monthly = Indicator.create(slug: 'tourism_employment_by_tourism_region_monthly')
-      employment_by_region_annually = Indicator.create(slug: 'tourism_employment_by_tourism_region_annually')
+      employment_by_region_monthly = create_indicator('tourism_employment_by_tourism_region_monthly')
+      employment_by_region_annually = create_indicator('tourism_employment_by_tourism_region_annually')
       employment_by_region = Indicator.find_by(slug: 'tourism_employment_by_economic_region')
 
       generate_tourism_region_indicator_values(employment_by_region_monthly, employment_by_region)
@@ -33,8 +33,8 @@ module Indicators
     end
 
     def generate_total_employment_data
-      employment_by_region_monthly = Indicator.create(slug: 'total_employment_by_tourism_region_monthly')
-      employment_by_region_annually = Indicator.create(slug: 'total_employment_by_tourism_region_annually')
+      employment_by_region_monthly = create_indicator('total_employment_by_tourism_region_monthly')
+      employment_by_region_annually = create_indicator('total_employment_by_tourism_region_annually')
       employment_by_region = Indicator.find_by(slug: 'total_employment_by_economic_region')
 
       generate_tourism_region_indicator_values(employment_by_region_monthly, employment_by_region)
@@ -42,8 +42,8 @@ module Indicators
     end
 
     def generate_tourism_to_total_percentage_data
-      monthly = Indicator.create(slug: 'tourism_to_total_employment_percentage_monthly')
-      annually = Indicator.create(slug: 'tourism_to_total_employment_percentage_annually')
+      monthly = create_indicator('tourism_to_total_employment_percentage_monthly')
+      annually = create_indicator('tourism_to_total_employment_percentage_annually')
 
       total_monthly = Indicator.find_by(slug: 'total_employment_by_tourism_region_monthly')
       tourism_monthly = Indicator.find_by(slug: 'tourism_employment_by_tourism_region_monthly')

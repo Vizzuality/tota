@@ -10,7 +10,7 @@ module Indicators
     end
 
     def generate
-      @indicator = Indicator.create(slug: 'development_funds_by_source')
+      @indicator = create_indicator('development_funds_by_source')
       values = []
 
       values.push(*append_by_source_year_region)

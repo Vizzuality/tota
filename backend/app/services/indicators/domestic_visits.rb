@@ -12,9 +12,9 @@ module Indicators
     end
 
     def generate
-      domestic_visits_percentage_monthly = Indicator.create(slug: 'domestic_visits_percentage_monthly')
-      domestic_visits_percentage_quarterly = Indicator.create(slug: 'domestic_visits_percentage_quarterly')
-      domestic_visits_peak_lowest_month_ratio = Indicator.create(slug: 'domestic_visits_peak_lowest_month_ratio')
+      domestic_visits_percentage_monthly = create_indicator('domestic_visits_percentage_monthly')
+      domestic_visits_percentage_quarterly = create_indicator('domestic_visits_percentage_quarterly')
+      domestic_visits_peak_lowest_month_ratio = create_indicator('domestic_visits_peak_lowest_month_ratio')
 
       visits_monthly = Indicator
         .find_by(slug: 'visits_by_origin_country_monthly')

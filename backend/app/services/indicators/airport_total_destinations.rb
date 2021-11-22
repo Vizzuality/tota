@@ -8,7 +8,7 @@ module Indicators
     end
 
     def generate
-      airport_total_destinations = Indicator.create(slug: 'airport_total_destinations')
+      airport_total_destinations = create_indicator('airport_total_destinations')
       airport_arrivals_by_origin = Indicator.find_by(slug: 'airport_arrivals_by_origin_weekly')
 
       return unless airport_arrivals_by_origin.present?

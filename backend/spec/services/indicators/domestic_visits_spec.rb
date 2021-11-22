@@ -58,6 +58,7 @@ RSpec.describe Indicators::DomesticVisits do
         region2_2020_total = visits.select { |v| v.region == @r2 && v.year == 2020 }.sum(&:value)
         region2_2021_total = visits.select { |v| v.region == @r2 && v.year == 2021 }.sum(&:value)
 
+        expect(indicator.dynamic).to be(true)
         expect(values).to include({region: @r1, date: '2020-01', value: (100 / region1_2020_total).round(6)})
         expect(values).to include({region: @r1, date: '2021-01', value: (100 / region1_2021_total).round(6)})
         expect(values).to include({region: @r2, date: '2020-06', value: (600 / region2_2020_total).round(6)})
@@ -74,6 +75,7 @@ RSpec.describe Indicators::DomesticVisits do
         region1_2021_total = visits.select { |v| v.region == @r1 && v.year == 2021 }.sum(&:value)
         region2_2020_total = visits.select { |v| v.region == @r2 && v.year == 2020 }.sum(&:value)
 
+        expect(indicator.dynamic).to be(true)
         expect(values).to include({region: @r1, date: '2020-Q1', value: (100 / region1_2020_total).round(6)})
         expect(values).to include({region: @r1, date: '2021-Q2', value: (200 / region1_2021_total).round(6)})
         expect(values).to include({region: @r2, date: '2020-Q3', value: (50 / region2_2020_total).round(6)})
@@ -85,6 +87,7 @@ RSpec.describe Indicators::DomesticVisits do
         indicator = Indicator.find_by(slug: 'domestic_visits_peak_lowest_month_ratio')
         values = indicator.indicator_values.map { |v| v.slice(:region, :date, :category_1, :category_2, :value).symbolize_keys }
 
+        expect(indicator.dynamic).to be(true)
         expect(values).to include(
           {region: @r1, date: '2020', category_1: '2020-04', category_2: '2020-03', value: 400 / 50.to_f}
         )
