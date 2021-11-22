@@ -15,6 +15,7 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  accessibility            :boolean
+#  show_on_platform         :boolean          default(TRUE), not null
 #
 class Organization < ApplicationRecord
   belongs_to :region
