@@ -20,6 +20,8 @@ class Organization < ApplicationRecord
   belongs_to :region
   belongs_to :business_type, optional: true
 
+  scope :visible, -> { where(show_on_platform: true) }
+
   validates_presence_of :name
 
   def blueprint

@@ -34,7 +34,7 @@ module CSVExport
             o.subregion_name,
             o.latitude,
             o.longitude,
-            true
+            o.show_on_platform
           ]
         end
       end

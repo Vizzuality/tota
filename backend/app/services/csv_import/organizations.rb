@@ -7,8 +7,6 @@ module CSVImport
       prepare_cache
 
       import_each_csv_row(csv) do |row|
-        next if ActiveModel::Type::Boolean.new.cast(row[:show_on_platform]) == false
-
         organization = prepare_organization(row)
 
         organization.name = row[:name_of_businessorganization]
@@ -20,6 +18,7 @@ module CSVImport
         organization.biosphere_program_member = row[:biosphere_program_member]
         organization.indigenous_tourism = row[:indigenous_tourism]
         organization.accessibility = row[:accessibility]
+        organization.show_on_platform = row[:show_on_platform]
 
         organization.validate!
         organizations << organization
@@ -95,7 +94,7 @@ module CSVImport
       sub_region || region
     end
 
-    def prepare_organization(row)
+    def prepare_organization(_row)
       Organization.new
     end
   end
