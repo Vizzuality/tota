@@ -12,26 +12,27 @@
       },
       "properties": {
         "project_title": "Super project",
-        "key_funding_amount": null,
+        "key_funding_amount": 3453.0,
         "key_funding_source": "Source",
         "id": 703,
-        "project_description": null,
+        "project_description": "Description",
         "region_id": 965,
-        "recipient": null,
-        "lead_organization": null,
+        "recipient": "Recipient",
+        "lead_organization": "Lead organization",
         "latitude": "50.2323",
         "longitude": "34.2333",
         "categories": [
-
+          "category1",
+          "category2"
         ],
-        "scope": null,
-        "planning_area": null,
-        "second_planning_area": null,
-        "total_project_cost": null,
+        "scope": "Scope",
+        "planning_area": "Planning Area",
+        "second_planning_area": "Second Planning Area",
+        "total_project_cost": 23243.0,
         "funding_subtype": "Subtype",
-        "funding_call_year": null,
-        "funding_call_month": null,
-        "project_status": null
+        "funding_call_year": 2020,
+        "funding_call_month": "January",
+        "project_status": "In Progress"
       }
     }
   ]
