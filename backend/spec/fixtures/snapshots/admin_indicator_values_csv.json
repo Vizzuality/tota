@@ -1,0 +1,34 @@
+[
+  {
+    "indicator_code": "visits_by_origin",
+    "date": "2020-01",
+    "region": "Region 1",
+    "category_1": "Canada",
+    "category_2": null,
+    "value": "33434.0"
+  },
+  {
+    "indicator_code": "visits_by_origin",
+    "date": "2020-01",
+    "region": "Region 1",
+    "category_1": "Germany",
+    "category_2": null,
+    "value": "33333.0"
+  },
+  {
+    "indicator_code": "visits_by_origin",
+    "date": "2020-02",
+    "region": "Region 1",
+    "category_1": "Canada",
+    "category_2": null,
+    "value": "2222.0"
+  },
+  {
+    "indicator_code": "visits_by_origin",
+    "date": "2020-02",
+    "region": "Region 1",
+    "category_1": "Germany",
+    "category_2": null,
+    "value": "2222.0"
+  }
+]

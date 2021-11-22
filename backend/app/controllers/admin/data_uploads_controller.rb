@@ -21,7 +21,7 @@ class Admin::DataUploadsController < Admin::AdminController
   end
 
   def scoped_collection(collection)
-    collection.includes(:uploaded_by)
+    collection.includes(:uploaded_by).order(created_at: :desc)
   end
 
   def permitted_params
