@@ -12,12 +12,14 @@ interface LayoutProps {
   children: ReactNode;
   navbarTheme?: NavbarTheme;
   navbarPosition?: NavbarPosition;
+  navbarHeader?: string;
 }
 
 const Layout: FC<LayoutProps> = ({
   className = 'container',
   navbarTheme = 'transparent',
   navbarPosition = 'fixed',
+  navbarHeader,
   hideFooter = false,
   children,
 }: LayoutProps) => {
@@ -28,7 +30,7 @@ const Layout: FC<LayoutProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar theme={navbarTheme} position={navbarPosition} />
+      <Navbar theme={navbarTheme} position={navbarPosition} header={navbarHeader} />
 
       <main className={cx(className, 'mx-auto flex-1 bg-gray-50')}>{children}</main>
 

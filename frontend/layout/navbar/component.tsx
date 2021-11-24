@@ -28,7 +28,7 @@ const THEMES = {
   },
 };
 
-const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position = 'fixed' }: NavbarProps) => {
+const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', position = 'fixed' }: NavbarProps) => {
   const [isOpen, setOpen] = useState(false);
   const [theme, setTheme] = useState(initialTheme);
 
@@ -67,10 +67,11 @@ const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position
         })}
       >
         <Link href="/">
-          <a className="relative z-20">
-            <img src={THEMES[theme].logo} className="max-h-10 lg:max-h-20" />
+          <a className="relative z-20 h-full">
+            <img src={THEMES[theme].logo} className="max-h-8 lg:max-h-10" />
           </a>
         </Link>
+        {header && <h1 className="hidden md:block text-xl lg:text-2xl font-bold whitespace-nowrap">{header}</h1>}
         <Hamburger
           className="lg:hidden relative z-20"
           color={THEMES[theme].hamburger as HamburgerColor}
@@ -80,7 +81,7 @@ const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position
         <div
           className={cx(
             'fixed lg:static z-10 top-0 left-0',
-            'bg-gray-200 lg:bg-transparent w-screen h-screen lg:h-auto flex flex-col lg:flex-row',
+            'bg-gray-200 lg:bg-transparent w-screen h-screen lg:w-auto lg:h-auto flex flex-col lg:flex-row',
             offScreenSlide,
             {
               [THEMES[theme].mobile]: true,
