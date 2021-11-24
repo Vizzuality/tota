@@ -1,6 +1,6 @@
 export default {
   dark: {
-    container: 'text-white bg-transparent bg-blue-800',
+    container: 'text-white bg-blue-800',
     open: 'bg-blue-800 text-white',
     closed: 'text-white',
     menu: 'border-t border-gray-50',

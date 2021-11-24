@@ -60,7 +60,8 @@ const Navbar: FC<NavbarProps> = ({ theme: initialTheme = 'transparent', position
     >
       <nav
         aria-label="Main Navigation"
-        className={cx('flex justify-between items-center text-lg px-4 py-6', {
+        className={cx('flex justify-between items-center text-lg', {
+          'px-4 py-6': position === 'relative',
           'container mx-auto p-6': position !== 'relative', // not full width
           [THEMES[theme].nav]: theme,
         })}

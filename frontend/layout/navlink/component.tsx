@@ -25,7 +25,8 @@ const NavLink: FC<NavLinkProps> = ({ children, href, theme, ...rest }: NavLinkPr
   return (
     <Link href={href} {...rest}>
       <a
-        className={cx('p-2 font-bold tracking-tight border-b-4 border-transparent', {
+        className={cx('p-2 font-bold tracking-tight border-b-4', {
+          'border-transparent': !active,
           [THEMES[theme].base]: true,
           [THEMES[theme].active]: active,
         })}
