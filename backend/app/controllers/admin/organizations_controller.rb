@@ -7,10 +7,6 @@ class Admin::OrganizationsController < Admin::AdminController
     Organization
   end
 
-  def resource_name
-    'TOTA Member'
-  end
-
   def scoped_collection(collection)
     collection.includes(:region, :business_type)
   end

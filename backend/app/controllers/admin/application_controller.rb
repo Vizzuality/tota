@@ -1,5 +1,6 @@
 class Admin::ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :set_current_user
 
   layout :layout_by_resource
 
@@ -11,5 +12,9 @@ class Admin::ApplicationController < ActionController::Base
     else
       'application'
     end
+  end
+
+  def set_current_user
+    ::Current.user = current_user
   end
 end

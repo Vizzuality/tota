@@ -16,7 +16,7 @@
           <% end %>
 
           <%= sidebar_link_to admin_organizations_path do %>
-            <i class="bi-building"></i> TOTA Members
+            <i class="bi-building"></i> Organizations
           <% end %>
 
           <%= sidebar_link_to admin_development_funds_path do %>
@@ -25,6 +25,10 @@
 
           <%= sidebar_link_to admin_indicator_values_path do %>
             <i class="bi-graph-up"></i> Indicators
+          <% end %>
+
+          <%= sidebar_link_to admin_data_uploads_path do %>
+            <i class="bi-file-arrow-up"></i> Data Uploads
           <% end %>
 
           <li class="sidebar-header">
@@ -55,7 +59,7 @@
                 <span class="text-dark"><%= current_user.email %></span>
               </a>
               <div class="dropdown-menu dropdown-menu-end">
-                <%= link_to admin_user_path(current_user), class: "dropdown-item" do %>
+                <%= link_to edit_admin_user_path(current_user), class: "dropdown-item" do %>
                   <i class="bi-person"></i> Profile</a>
                 <% end %>
                 <div class="dropdown-divider"></div>

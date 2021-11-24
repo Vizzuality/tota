@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy';
 import meanBy from 'lodash/meanBy';
 import { IndicatorValue, Region, ThemeType } from 'types';
 
-import forestImage from 'images/home/image-forest.png';
+import BoxImage from 'images/home/box-employment.png';
 
 import {
   expandToFullYear,
@@ -35,7 +35,7 @@ const ECONOMIC_REGION_COLORS = {
 const theme: ThemeType = {
   title: 'Tourism Employment',
   slug: 'tourism-employment',
-  image: forestImage,
+  image: BoxImage,
   sections: [
     {
       title: 'Economic region vs Tourism region',

@@ -1,11 +1,12 @@
 module Indicators
-  class DevelopmentFundsBySource
-    include Singleton
+  class DevelopmentFundsBySource < DynamicIndicator
+    DEPENDS_ON = [].freeze
 
     attr_accessor :indicator
 
-    class << self
-      delegate :generate, to: :instance
+    def regenerate
+      Indicator.find_by(slug: 'development_funds_by_source')&.destroy
+      generate
     end
 
     def generate
