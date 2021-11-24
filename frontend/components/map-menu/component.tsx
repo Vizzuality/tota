@@ -48,7 +48,7 @@ const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
             <Select
               id="map-select-region"
               theme="dark"
-              size="base"
+              size="lg"
               maxHeight={400}
               options={regions.map((r) => ({ label: r.name, value: r.slug })) as unknown as SelectOptionProps[]}
               selected={selectedRegion ? selectedRegion.slug : ''}

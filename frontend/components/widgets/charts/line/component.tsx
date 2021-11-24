@@ -10,7 +10,7 @@ import {
   LineChart,
   Legend,
 } from 'recharts';
-import { COLORS, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
+import { getColorPalette, defaultGrid, defaultTooltip, bottomLegend } from 'constants/charts';
 import { LineChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import CustomLegend from 'components/widgets/charts/common/legend';
@@ -27,25 +27,34 @@ const Chart: FC<LineChartProps> = ({
   tooltip = defaultTooltip,
 }: LineChartProps) => {
   const yAxisWidth = 60;
-  const legendStyle = !!yAxis ? { paddingLeft: yAxisWidth - 2 } : {};
   const margin = { top: 20 };
+  const noLines = { axisLine: false, tickLine: false };
+  const tick = { tick: { style: { fill: '#314057', fontSize: 14 } } };
+  const legendProps = {
+    ...legend,
+    wrapperStyle: {
+      ...(legend.wrapperStyle || {}),
+      ...(!!yAxis ? { paddingLeft: yAxisWidth - 2 } : {}),
+    },
+  };
+  const colors = getColorPalette(Object.keys(lines || {}).length);
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
       <LineChart data={data} margin={margin} {...chartProps}>
-        {legend && <Legend wrapperStyle={legendStyle} {...legend} content={<CustomLegend {...legend} />} />}
+        {legend && <Legend {...legendProps} content={<CustomLegend {...legendProps} />} />}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
-        {xAxis && <XAxis {...xAxis} />}
-        {yAxis && <YAxis width={yAxisWidth} {...yAxis} />}
+        {xAxis && <XAxis {...tick} {...noLines} {...xAxis} />}
+        {yAxis && <YAxis {...tick} {...noLines} width={yAxisWidth} {...yAxis} />}
         {lines &&
           Object.keys(lines).map((line, index) => (
             <Line
               key={`line_${index}`}
               strokeWidth={3}
               dot={false}
-              activeDot
-              stroke={lines[line].color || COLORS[index]}
+              activeDot={{ strokeWidth: 0, r: 3 }}
+              stroke={lines[line].color || colors[index]}
               {...lines[line]}
             />
           ))}

@@ -237,10 +237,15 @@ export function getColorsByRegionName(indicatorValues: IndicatorValue[]) {
   return indicatorValues.reduce((acc, x) => ({ ...acc, [x.region]: REGION_COLORS[x.region_slug] }), {});
 }
 
-export function getUnitLabel(unit: string): any {
+export function getUnitLabel(unit: string, opt: any = {}): any {
   return {
     value: unit,
     position: 'top',
     dy: -20,
+    style: {
+      fontSize: 14,
+      fill: '#314057',
+    },
+    ...opt,
   };
 }

@@ -69,15 +69,40 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             <div>{section.subTitle}</div>
           </div>
         </div>
-        <div className="flex-1">
+        <div className="section-details flex-1">
           <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
-          {section.notes && (
-            <p className="mt-2 lg:mt-6 leading-6 text-sm" dangerouslySetInnerHTML={{ __html: section.notes }} />
+          {(section.note || section.sources) && (
+            <div className="mt-2 lg:mt-6">
+              {section.note && (
+                <p className="leading-6 text-sm">
+                  <strong>Note: </strong>
+                  <span dangerouslySetInnerHTML={{ __html: section.note }} />
+                </p>
+              )}
+              {section.sources && (
+                <p className={cx('leading-6 text-sm', { 'mt-2': !!section.note })}>
+                  <strong>Source: </strong>
+                  {section.sources.map((source, index) => (
+                    <React.Fragment key={index}>
+                      {index > 0 && ', '}
+                      {source.link ? (
+                        <a href={source.link} target="_blank" rel="noopener noreferrer">
+                          {source.text}
+                        </a>
+                      ) : (
+                        source.text
+                      )}
+                      {source.note && ` (${source.note})`}
+                    </React.Fragment>
+                  ))}
+                </p>
+              )}
+            </div>
           )}
         </div>
 
         {viewOnMap && (
-          <div className="mt-4">
+          <div className="mt-4 lg:mt-10">
             <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
               {viewOnMap.title}
             </LinkButton>
