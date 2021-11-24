@@ -33,9 +33,9 @@
   }
 }
 
-.mapbox-custom-popup .mapboxgl-popup-tip {
-  display: none !important;
-}
+/* .mapbox-custom-popup .mapboxgl-popup-tip { */
+/*   display: none !important; */
+/* } */
 
 .mapbox-custom-popup .mapboxgl-popup-content {
   padding: 0 !important;
