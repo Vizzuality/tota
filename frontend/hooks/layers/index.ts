@@ -4,7 +4,7 @@ import { Layer } from '@vizzuality/layer-manager-react';
 import ACCESSIBLE_BUSINESSES_SVG from 'svgs/map/markers/accessible-businesses.svg?url';
 import BC_AIRPORTS_SVG from 'svgs/map/markers/bc-airports.svg?url';
 import BC_INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/bc-indigenous-businesses.svg?url';
-import BC_TOURISM_CENTERS_SVG from 'svgs/map/markers/bc-tourism-centers.svg?url';
+import VISITORS_CENTERS_SVG from 'svgs/map/markers/visitors-centers.svg?url';
 import BIOSPHERE_PROGRAM_SVG from 'svgs/map/markers/biosphere-program.svg?url';
 import CAMPSITES_SVG from 'svgs/map/markers/campsites.svg?url';
 import DEVELOPMENT_FUNDS_SVG from 'svgs/map/markers/development-funds.svg?url';
@@ -29,8 +29,8 @@ import { REGION_COLORS } from 'constants/regions';
 import { useRegions } from 'hooks/regions';
 
 export const CATEGORY = {
-  ADMIN_BOUNDARIES: 'Admin boundaries',
-  TOURISM_BUSINESSES: 'Tourism businesses',
+  ADMIN_BOUNDARIES: 'Admin Boundaries',
+  TOURISM_SUPPLY_SIDE: 'Tourism Supply Side',
   ENVIRONMENT: 'Environment',
   INFRASTRUCTURES: 'Infrastructures',
 };
@@ -220,8 +220,8 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
 
   return {
     id: 'organizations',
-    category: CATEGORY.TOURISM_BUSINESSES,
-    name: 'TOTA members',
+    category: CATEGORY.TOURISM_SUPPLY_SIDE,
+    name: 'Tourism Businesses',
     type: 'geojson',
     source: {
       type: 'geojson',
@@ -238,9 +238,9 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
     legendConfig: {
       type: 'basic',
       items: [
-        { value: 'TOTA Member', icon: ORGANIZATIONS_SVG },
+        { value: 'Tourism business', icon: ORGANIZATIONS_SVG },
         { value: 'Biosphere program', icon: BIOSPHERE_PROGRAM_SVG },
-        { value: 'Indigenous businesses', icon: INDIGENOUS_BUSINESSES_SVG },
+        { value: 'Indigenous ownership', icon: INDIGENOUS_BUSINESSES_SVG },
         { value: 'Accessible businesses', icon: ACCESSIBLE_BUSINESSES_SVG },
       ],
     },
@@ -283,7 +283,7 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
 
   return {
     id: 'development_funds',
-    category: CATEGORY.TOURISM_BUSINESSES,
+    category: CATEGORY.TOURISM_SUPPLY_SIDE,
     name: 'Development Funds',
     type: 'geojson',
     source: {
@@ -323,16 +323,16 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       developmentFunds,
       {
         id: 'visitor_centers',
-        name: 'BC Tourism Centers',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        name: 'Visitor Centres',
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.a7fetiq7',
         },
-        images: [{ id: 'bc_tourism_centers_marker', src: BC_TOURISM_CENTERS_SVG }],
+        images: [{ id: 'visitors_centers_marker', src: VISITORS_CENTERS_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'BC Tourism Centers', icon: BC_TOURISM_CENTERS_SVG }],
+          items: [{ value: 'Visitor Centers', icon: VISITORS_CENTERS_SVG }],
         },
         render: {
           layers: [
@@ -341,7 +341,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               'source-layer': 'visitor_centres',
               type: 'symbol',
               layout: {
-                'icon-image': 'bc_tourism_centers_marker',
+                'icon-image': 'visitors_centers_marker',
                 'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
@@ -351,8 +351,8 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'ski_resorts',
-        name: 'BC Ski Resorts',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        name: 'Ski Resorts',
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         version: '0.0.1',
         type: 'vector',
         source: {
@@ -361,7 +361,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         images: [{ id: 'ski_resorts_marker', src: SKI_RESORTS_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'BC Ski Resorts', icon: SKI_RESORTS_SVG }],
+          items: [{ value: 'Ski Resorts', icon: SKI_RESORTS_SVG }],
         },
         render: {
           layers: [
@@ -381,7 +381,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       {
         id: 'accommodations',
         name: 'Hello BC Accommodations Listing',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.4y0iosdv',
@@ -409,7 +409,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       {
         id: 'campgrounds',
         name: 'Campsites',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         version: '0.0.1',
         type: 'vector',
         source: {
@@ -438,7 +438,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       {
         id: 'first_nations_communities',
         name: 'First Nation Community Locations',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.7q627o47',
@@ -466,7 +466,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       {
         id: 'first_nations_business',
         name: 'BC Indigenous Business Listings',
-        category: CATEGORY.TOURISM_BUSINESSES,
+        category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.3pqlvqwr',
