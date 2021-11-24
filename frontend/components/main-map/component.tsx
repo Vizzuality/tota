@@ -162,8 +162,8 @@ export const MainMap: FC<MapProps> = ({
                 className="mapbox-custom-popup"
                 latitude={selectedFeature.coordinates.latitude}
                 longitude={selectedFeature.coordinates.longitude}
-                closeButton={false}
                 closeOnClick={false}
+                onClose={() => setSelectedFeature(null)}
                 captureScroll
                 capturePointerMove
               >
