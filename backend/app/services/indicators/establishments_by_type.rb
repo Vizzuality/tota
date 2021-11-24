@@ -57,7 +57,7 @@ module Indicators
       organization_where = '1 = 1'
       organization_where = 'o.biosphere_program_member = true' if category == 'biosphere'
       organization_where = 'o.accessibility = true' if category == 'accessibility'
-      organization_where = 'o.indigenous_tourism = true' if category == 'indigenous'
+      organization_where = 'o.indigenous_ownership = true' if category == 'indigenous'
 
       sql = <<~SQL
         with searched_regions as (select id from regions where region_type = '#{region_type}')

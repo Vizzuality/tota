@@ -13,6 +13,30 @@
         },
         {
           "date": null,
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "value": 2.0,
+          "region": "region 1",
+          "region_slug": "region_1"
+        },
+        {
+          "date": null,
+          "category_1": "Accommodation",
+          "category_2": "all",
+          "value": 2.0,
+          "region": "region 2",
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
+          "category_1": "Activity / Attraction",
+          "category_2": "all",
+          "value": 1.0,
+          "region": "region 2",
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
           "category_1": "Transportation",
           "category_2": "all",
           "value": 1.0,
@@ -21,33 +45,17 @@
         },
         {
           "date": null,
-          "category_1": "Activity / Attraction",
-          "category_2": "all",
+          "category_1": "Accommodation",
+          "category_2": "biosphere",
           "value": 2.0,
           "region": "region 1",
           "region_slug": "region_1"
         },
         {
           "date": null,
-          "category_1": "Accommodation",
-          "category_2": "all",
-          "value": 2.0,
-          "region": "region 2",
-          "region_slug": "region_2"
-        },
-        {
-          "date": null,
           "category_1": "Activity / Attraction",
-          "category_2": "all",
-          "value": 1.0,
-          "region": "region 2",
-          "region_slug": "region_2"
-        },
-        {
-          "date": null,
-          "category_1": "Accommodation",
           "category_2": "biosphere",
-          "value": 2.0,
+          "value": 1.0,
           "region": "region 1",
           "region_slug": "region_1"
         },
@@ -66,14 +74,6 @@
           "value": 1.0,
           "region": "region 2",
           "region_slug": "region_2"
-        },
-        {
-          "date": null,
-          "category_1": "Activity / Attraction",
-          "category_2": "biosphere",
-          "value": 1.0,
-          "region": "region 1",
-          "region_slug": "region_1"
         }
       ]
     },

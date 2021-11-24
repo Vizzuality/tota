@@ -19,10 +19,10 @@
         "subregion": "Central Okanagan",
         "business_type": "Accommodation",
         "business_subtype": "Motel",
-        "indigenous_tourism": null,
         "biosphere_program_member": null,
         "accessibility": null,
-        "features_number": 0
+        "features_number": 0,
+        "indigenous_ownership": null
       }
     }
   ]

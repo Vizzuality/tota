@@ -18,7 +18,7 @@ module CSVImport
         organization.latitude = row[:latitude]
         organization.longitude = row[:longitude]
         organization.biosphere_program_member = row[:biosphere_program_member]
-        organization.indigenous_tourism = row[:indigenous_tourism]
+        organization.indigenous_ownership = row[:indigenous_tourism]
         organization.accessibility = row[:accessibility]
 
         organization.validate!

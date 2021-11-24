@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_182534) do
+ActiveRecord::Schema.define(version: 2021_11_24_125900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_182534) do
     t.string "slug", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "dynamic", default: false, null: false
     t.index ["slug"], name: "index_indicators_on_slug", unique: true
   end
 
@@ -110,7 +111,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_182534) do
     t.bigint "region_id", null: false
     t.bigint "business_type_id"
     t.integer "external_company_id"
-    t.boolean "indigenous_tourism"
+    t.boolean "indigenous_ownership"
     t.boolean "biosphere_program_member"
     t.text "website_url"
     t.decimal "latitude", precision: 10, scale: 6
@@ -118,6 +119,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_182534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "accessibility"
+    t.boolean "show_on_platform", default: true, null: false
     t.index ["business_type_id"], name: "index_organizations_on_business_type_id"
     t.index ["region_id"], name: "index_organizations_on_region_id"
   end
