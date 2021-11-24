@@ -12,7 +12,7 @@ import {
   getYear,
 } from 'utils/charts';
 
-import mountains3Image from 'images/home/image-mountains3.png';
+import BoxImage from 'images/home/box-accommodation-information.png';
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
@@ -85,7 +85,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
 const theme: ThemeType = {
   title: 'Accommodation Information',
   slug: 'accommodation-information',
-  image: mountains3Image,
+  image: BoxImage,
   sections: [
     {
       title: 'Occupancy rates',

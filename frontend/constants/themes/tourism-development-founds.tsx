@@ -10,7 +10,7 @@ import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart 
 import { getMapUrl } from 'hooks/map';
 import { moneyTickFormatter } from './utils';
 
-import mountains2Image from 'images/home/image-mountains2.png';
+import BoxImage from 'images/home/box-tourism-development-funds.png';
 
 import { COLORS } from 'constants/charts';
 
@@ -68,7 +68,7 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
 const theme: ThemeType = {
   title: 'Tourism Development Funds',
   slug: 'tourism-development-funds',
-  image: mountains2Image,
+  image: BoxImage,
   sections: [
     {
       title: 'Total volume and projects awarded',

@@ -12,27 +12,27 @@ const participatingRegions = [
   {
     title: 'Cariboo Chilcotin Coast',
     logo: ccctaLogo,
-    link: '#',
+    link: 'https://landwithoutlimits.com',
   },
   {
     title: 'Kooteney Rockies Tourism',
     logo: krtLogo,
-    link: '#',
+    link: 'https://www.krtourism.ca',
   },
   {
     title: 'Northern British Columbia Tourism',
     logo: nbctaLogo,
-    link: '#',
+    link: 'https://www.travelnbc.com',
   },
   {
     title: 'Thompson Okanagan Tourism Association',
     logo: totaLogo,
-    link: '#',
+    link: 'https://www.totabc.org',
   },
   {
     title: 'Tourism Vancouver Island',
     logo: tviLogo,
-    link: '#',
+    link: 'https://vancouverisland.travel',
   },
 ];
 
@@ -44,7 +44,7 @@ const ParticipatingRegions: FC<ParticipatingRegionsProps> = ({ className }: Part
   <div className={cx('text-blue-800 py-24 text-center', { [className]: !!className })}>
     <h3 className="text-4xl font-bold">Participating Regions</h3>
 
-    <div className="mt-20 px-10 md:px-24 flex flex-row flex-wrap gap-24 justify-center">
+    <div className="mt-20 px-10 md:px-24 flex flex-row flex-wrap gap-24 justify-center items-center">
       {participatingRegions.map((region) => (
         <Link key={region.title} href={region.link}>
           <a className="relative z-20">

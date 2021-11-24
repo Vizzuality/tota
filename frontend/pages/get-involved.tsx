@@ -12,7 +12,7 @@ import ParticipatingRegions from 'components/static-pages/participating-regions'
 
 const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
-    <Layout className="w-full bg-blue-50">
+    <Layout className="w-full">
       <Head>
         <title>Get involved</title>
       </Head>
@@ -20,31 +20,37 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
       <Hero
         image={heroBackgroundImage}
         title="Get involved"
-        subtitle="Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus
-      auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+        subtitle="With the BC Tourism Impact Portal, the participating regions want to strengthen an open data culture, where information sharing and joint data efforts form the basis for better decision making and thus tourism planning overall. To ensure sustainable tourism development in the future, this is our collective responsibility, so join the ride by contributing through the following ways:"
       />
 
       <div className="container mx-auto lg:px-16">
         <div className="grid md:grid-cols-2 gap-10 xl:gap-20 mt-20 text-center">
-          <div className="p-10 xl:p-20 bg-cover text-white" style={{ backgroundImage: `url(${background1Image})` }}>
+          <div className="p-10 xl:p-16 bg-cover text-white" style={{ backgroundImage: `url(${background1Image})` }}>
             <h2 className="text-2xl">Suggest a story</h2>
             <p className="leading-7 mt-10">
-              Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non
-              metus.
+              See a connection or insight in the data worth exploring? Let us know about it. We might craft a story
+              around the lead you sent in the future and extend insights thanks to those suggestions.
             </p>
-            <Button theme="primary" className="mt-16 px-10" href="/">
+            <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
               Suggest a Story
             </Button>
           </div>
-          <div className="p-10 xl:p-20 bg-cover text-white" style={{ backgroundImage: `url(${background2Image})` }}>
+          <div className="p-10 xl:p-16 bg-cover text-white" style={{ backgroundImage: `url(${background2Image})` }}>
             <h2 className="text-2xl">Contribute data</h2>
             <p className="leading-7 mt-10">
-              Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non
-              metus.
+              Join the open data revolution. We’re committed to making data freely accessible to everyone. If you want
+              to help us on this journey and have data you can share (data you collected, or a data set you know of on
+              another platform), we want to hear from you*.
             </p>
-            <Button theme="primary" className="mt-16 px-10" href="/">
-              Contribute data
+
+            <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
+              Submit/Propose a data set
             </Button>
+            <p className="text-xs mt-6">
+              *Note: The proposed data will be reviewed carefully. Its inclusion will depend on several factors such as
+              the overall quality, completeness, reliability, relevance and timeliness, among others. Based on these
+              factors, the participating regions will decide if the information will be included on the portal or not.
+            </p>
           </div>
         </div>
 
@@ -52,7 +58,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
           <h2 className="text-4xl">Feedback & Questions</h2>
 
           <p className="mt-10 leading-7">
-            Lorem ipsum sit amet. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus.
+            Would you like to share some feedback or do you have any questions for us? Write us:
           </p>
 
           <div className="mt-10 flex flex-col gap-10 justify-center items-center">
