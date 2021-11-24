@@ -164,7 +164,8 @@ export const MainMap: FC<MapProps> = ({
                 longitude={selectedFeature.coordinates.longitude}
                 closeButton={false}
                 closeOnClick={false}
-                dynamicPosition={false}
+                captureScroll
+                capturePointerMove
               >
                 <BasicTooltip properties={selectedFeature.feature.properties} />
               </Popup>
