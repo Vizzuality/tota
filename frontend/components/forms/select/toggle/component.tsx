@@ -48,7 +48,7 @@ export const SelectToggle: FC<SelectToggleProps> = ({
       {prefix && (
         <span
           className={cx({
-            'mr-2 text-xs font-heading': true,
+            'mr-2 font-heading': true,
             [THEME[theme].prefix.base]: true,
           })}
         >
@@ -58,7 +58,7 @@ export const SelectToggle: FC<SelectToggleProps> = ({
 
       <span
         className={cx({
-          'text-sm leading-none': true,
+          'leading-none': true,
           [THEME[theme].prefix.base]: selectedItems.length,
         })}
       >
