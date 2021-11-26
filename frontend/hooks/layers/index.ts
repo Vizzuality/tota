@@ -16,7 +16,7 @@ import FIRES_5_SVG from 'svgs/map/markers/fires-5.svg?url';
 import FIRES_6_SVG from 'svgs/map/markers/fires-6.svg?url';
 import FIRES_7_SVG from 'svgs/map/markers/fires-7.svg?url';
 import FIRST_NATION_COMMUNITY_SVG from 'svgs/map/markers/first-nation-community.svg?url';
-import HELLO_BC_ACCOMMODATIONS_SVG from 'svgs/map/markers/hello-bc-accommodations.svg?url';
+import ACCOMMODATIONS_SVG from 'svgs/map/markers/accommodations.svg?url';
 import INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/indigenous-businesses.svg?url';
 import ORGANIZATIONS_2_SVG from 'svgs/map/markers/organizations-2.svg?url';
 import ORGANIZATIONS_3_SVG from 'svgs/map/markers/organizations-3.svg?url';
@@ -385,16 +385,16 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'accommodations',
-        name: 'Hello BC Accommodations Listing',
+        name: 'Accommodation Listing',
         category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.4y0iosdv',
         },
-        images: [{ id: 'hello_bc_accommodations_marker', src: HELLO_BC_ACCOMMODATIONS_SVG }],
+        images: [{ id: 'accommodations_marker', src: ACCOMMODATIONS_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'Hello BC Accommodations Listing', icon: HELLO_BC_ACCOMMODATIONS_SVG }],
+          items: [{ value: 'Accommodation Listing', icon: ACCOMMODATIONS_SVG }],
         },
         render: {
           layers: [
@@ -403,7 +403,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               'source-layer': 'accommodations',
               type: 'symbol',
               layout: {
-                'icon-image': 'hello_bc_accommodations_marker',
+                'icon-image': 'accommodations_marker',
                 'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),

@@ -12,12 +12,29 @@ export interface TooltipProps {
 }
 
 const PROPERTIES_NEW_NAMES = {
+  accommodations: {
+    custodianOrgDescription: 'source',
+  },
   ski_resorts: {
     custodianOrgDescription: 'source',
   },
 };
 
 const PROPERTIES_TO_PICK = {
+  accommodations: [
+    'occupantName',
+    'description',
+    'businessCategoryDescription',
+    'keywords',
+    'longitude',
+    'latitude',
+    'physicalAddress',
+    'postalCode',
+    'tourismArea',
+    'facebookAccount',
+    'twitterAccount',
+    'source',
+  ],
   visitor_centers: [
     'name',
     'businessType',
@@ -52,6 +69,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
   const pickedProperties = propertiesToPick ? pick(properties, propertiesToPick) : properties;
   const DisplayTooltip = useMemo(() => {
     switch (feature.source) {
+      case 'accommodations':
+        return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
       case 'organizations':
         return <OrganizationsTooltip feature={feature} />;
       case 'visitor_centers':

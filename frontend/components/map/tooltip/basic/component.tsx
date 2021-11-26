@@ -8,16 +8,22 @@ function formatValue(value: any) {
     return value ? 'Yes' : 'No';
   }
 
-  if (value === 'null' || value === null || value === undefined) {
+  if (value === '' || value === 'null' || value === null || value === undefined) {
     return 'n/a';
   }
 
-  if (typeof value === 'string' && (value as string).startsWith('http')) {
-    return (
-      <a className="text-blue-500 underline" href={value} rel="noopener noreferrer" target="_blank">
-        {value}
-      </a>
-    );
+  if (typeof value === 'string') {
+    if ((value as string).startsWith('http')) {
+      return (
+        <a className="text-blue-500 underline" href={value} rel="noopener noreferrer" target="_blank">
+          {value}
+        </a>
+      );
+    }
+
+    if ((value as string).trim() === '') {
+      return 'n/a';
+    }
   }
 
   return value;
