@@ -19,6 +19,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
     name: organization.name,
     business_type: organization.business_type,
     business_subtype: organization.business_subtype,
+    longitude: organization.longitude,
+    latitude: organization.latitude,
     region: organization.region,
     subregion: organization.subregion,
     indigenous_ownership: organization.indigenous_ownership,
