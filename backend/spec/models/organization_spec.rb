@@ -16,6 +16,7 @@
 #  updated_at               :datetime         not null
 #  accessibility            :boolean
 #  show_on_platform         :boolean          default(TRUE), not null
+#  source                   :string
 #
 require 'rails_helper'
 

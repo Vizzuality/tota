@@ -4,6 +4,8 @@ FactoryBot.define do
     latitude { 50.2323 }
     longitude { 34.2333 }
 
+    source { 'TOTA members' }
+
     region
   end
 end

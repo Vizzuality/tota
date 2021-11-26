@@ -1,7 +1,8 @@
 class OrganizationBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :name, :latitude, :longitude, :indigenous_ownership, :biosphere_program_member, :accessibility
+  fields :name, :latitude, :longitude, :source,
+         :indigenous_ownership, :biosphere_program_member, :accessibility
 
   field :website_url_link, name: :website_url
   field :region_name, name: :region

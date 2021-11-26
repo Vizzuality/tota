@@ -4,9 +4,9 @@ describe CSVImport::Organizations do
   describe 'errors' do
     it 'should return error if required column not provided' do
       csv_content = <<-CSV
-        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE
-        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE
+        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
       CSV
 
       service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))
@@ -19,9 +19,9 @@ describe CSVImport::Organizations do
       allow_any_instance_of(Kernel).to receive(:warn) # suppress warning message
 
       csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE
-        121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE
+        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE,TOTA members
       CSV
 
       service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))
@@ -34,10 +34,10 @@ describe CSVImport::Organizations do
   describe 'proper import' do
     it 'should import data' do
       csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE
-        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE
-        1212332,DO NOT IMPORT,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,FALSE
+        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
+        1212332,DO NOT IMPORT,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,FALSE, TOTA members
       CSV
 
       service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))
