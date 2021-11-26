@@ -15,6 +15,10 @@ const PROPERTIES_NEW_NAMES = {
   accommodations: {
     custodianOrgDescription: 'source',
   },
+  campgrounds: {
+    sites: 'nrOfSites',
+    units: 'nrOfUnits',
+  },
   first_nations_communities: {
     alternativeName1: 'alternativeName',
     urlToFirstNationWebsite: 'website',
@@ -39,6 +43,7 @@ const PROPERTIES_TO_PICK = {
     'twitterAccount',
     'source',
   ],
+  campgrounds: ['name', 'longitude', 'latitude', 'address', 'city', 'postalCode', 'nrOfSites', 'nrOfUnits'],
   first_nations_communities: [
     'firstNationBcName',
     'firstNationFederalName',
@@ -95,6 +100,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
     switch (feature.source) {
       case 'accommodations':
         return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
+      case 'campgrounds':
+        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
       case 'first_nations_communities':
         return <BasicTooltip title={properties.firstNationBcName} properties={pickedProperties} />;
       case 'organizations':
