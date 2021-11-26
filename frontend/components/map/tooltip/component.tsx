@@ -11,9 +11,11 @@ export interface TooltipProps {
   feature: any;
 }
 
-function formatProperties(properties) {
-  return mapKeys(properties, (_v, key) => camelCase(key));
-}
+const PROPERTIES_NEW_NAMES = {
+  ski_resorts: {
+    custodianOrgDescription: 'source',
+  },
+};
 
 const PROPERTIES_TO_PICK = {
   visitor_centers: [
@@ -26,10 +28,26 @@ const PROPERTIES_TO_PICK = {
     'tourismRegion',
     'tourismSubRegion',
   ],
+  ski_resorts: [
+    'facilityName',
+    'businessCategoryDescription',
+    'keywords',
+    'longitude',
+    'latitude',
+    'physicalAddress',
+    'source',
+  ],
 };
 
+function formatProperties(source, properties) {
+  return mapKeys(properties, (_v, key) => {
+    const newKey = camelCase(key);
+    return (PROPERTIES_NEW_NAMES[source] && PROPERTIES_NEW_NAMES[source][newKey]) || newKey;
+  });
+}
+
 export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
-  const properties = formatProperties(feature.properties);
+  const properties = formatProperties(feature.source, feature.properties);
   const propertiesToPick = PROPERTIES_TO_PICK[feature.source];
   const pickedProperties = propertiesToPick ? pick(properties, propertiesToPick) : properties;
   const DisplayTooltip = useMemo(() => {
@@ -38,6 +56,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         return <OrganizationsTooltip feature={feature} />;
       case 'visitor_centers':
         return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+      case 'ski_resorts':
+        return <BasicTooltip title={properties.facilityName} properties={pickedProperties} />;
     }
     return <BasicTooltip title="Feature" properties={properties} />;
   }, [feature]);
