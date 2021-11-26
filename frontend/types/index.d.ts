@@ -23,6 +23,21 @@ export interface Region {
   parent?: Region;
 }
 
+export interface Organization {
+  name: string;
+  website_url: string;
+  latitude: string;
+  longitude: string;
+  indigenous_ownership: boolean;
+  biosphere_program_member: boolean;
+  accessibility: boolean;
+  region: string;
+  subregion?: string;
+  business_type: string;
+  business_subtype?: string;
+  features_number: number;
+}
+
 interface Source {
   text: string;
   link?: string;

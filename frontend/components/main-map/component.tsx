@@ -12,7 +12,7 @@ import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
 import LegendTypeChoropleth from 'components/map/legend/types/choropleth';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
-import BasicTooltip from 'components/map/tooltips/basic';
+import Tooltip from 'components/map/tooltip';
 
 import { REGION_BBOX } from 'constants/regions';
 import { useMap } from 'hooks/map';
@@ -167,7 +167,7 @@ export const MainMap: FC<MapProps> = ({
                 captureScroll
                 capturePointerMove
               >
-                <BasicTooltip properties={selectedFeature.feature.properties} />
+                <Tooltip feature={selectedFeature} />
               </Popup>
             )}
           </>
