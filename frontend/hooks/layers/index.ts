@@ -43,13 +43,13 @@ const TRAFFIC_COLORS = {
 };
 
 const FIRE_COLORS = {
-  days1: '#FFFF55',
-  days2: '#F9DB4A',
-  days3: '#F4B53F',
+  days1: '#D72D20',
+  days2: '#EB4025',
+  days3: '#ED702E',
   days4: '#F09236',
-  days5: '#ED702E',
-  days6: '#EB4025',
-  days7: '#D72D20',
+  days5: '#F4B53F',
+  days6: '#F9DB4A',
+  days7: '#FFFF55',
 };
 
 export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {

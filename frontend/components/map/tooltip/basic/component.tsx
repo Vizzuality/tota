@@ -26,6 +26,16 @@ function formatValue(value: any) {
     }
   }
 
+  if (typeof value === 'object') {
+    if (value.type === 'link') {
+      return (
+        <a className="text-blue-500 underline" href={value.link} rel="noopener noreferrer" target="_blank">
+          {value.text}
+        </a>
+      );
+    }
+  }
+
   return value;
 }
 
