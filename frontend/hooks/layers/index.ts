@@ -345,7 +345,11 @@ export const useLayers = (selectedRegion: string): Layer[] => {
                 'icon-image': 'visitors_centers_marker',
                 'icon-size': 1,
               },
-              ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
+              filter: [
+                'all',
+                ['==', ['get', 'Show_on_map'], true],
+                selectedRegion ? ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] : [true],
+              ],
             },
           ],
         },

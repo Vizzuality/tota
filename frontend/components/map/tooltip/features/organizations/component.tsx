@@ -10,7 +10,7 @@ export interface TooltipProps {
 }
 
 export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
-  const { data: organization, isLoading, isFetching } = useOrganization(feature.feature.properties.id);
+  const { data: organization, isLoading, isFetching } = useOrganization(feature.properties.id);
 
   if (isLoading || isFetching) return <LoadingTooltip />;
   if (!organization) return <div>No data</div>;

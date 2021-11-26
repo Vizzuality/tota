@@ -167,7 +167,7 @@ export const MainMap: FC<MapProps> = ({
                 captureScroll
                 capturePointerMove
               >
-                <Tooltip feature={selectedFeature} />
+                <Tooltip feature={selectedFeature.feature} />
               </Popup>
             )}
           </>

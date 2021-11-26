@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import startCase from 'lodash/startCase';
+import snakeCase from 'lodash/snakeCase';
 import type { TooltipProps } from './types';
 
 function formatValue(value: any) {
@@ -11,7 +12,7 @@ function formatValue(value: any) {
     return 'n/a';
   }
 
-  if ((value as string).startsWith('http')) {
+  if (typeof value === 'string' && (value as string).startsWith('http')) {
     return (
       <a className="text-blue-500 underline" href={value} rel="noopener noreferrer" target="_blank">
         {value}
@@ -28,7 +29,7 @@ const Tooltip: FC<TooltipProps> = ({ properties, title }: TooltipProps) => (
     <div className="px-4 py-2 text-blue-800 overflow-y-auto" style={{ maxHeight: 400 }}>
       {Object.keys(properties).map((key) => (
         <div key={key} className="flex justify-between mt-1">
-          <div>{startCase(key.toLowerCase())}</div>
+          <div>{startCase(snakeCase(key))}</div>
           <div className="font-bold text-right ml-10" style={{ maxWidth: 500 }}>
             {formatValue(properties[key])}
           </div>
