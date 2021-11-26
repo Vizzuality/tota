@@ -442,7 +442,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'first_nations_communities',
-        name: 'First Nation Community Locations',
+        name: 'First Nation Communities',
         category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
@@ -451,7 +451,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         images: [{ id: 'first_nation_community_marker', src: FIRST_NATION_COMMUNITY_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'First Nation Community Locations', icon: FIRST_NATION_COMMUNITY_SVG }],
+          items: [{ value: 'First Nation Communities', icon: FIRST_NATION_COMMUNITY_SVG }],
         },
         render: {
           layers: [
