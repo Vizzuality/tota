@@ -25,6 +25,7 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
     biosphere_program_member: organization.biosphere_program_member,
     accessibility: organization.accessibility,
     website: organization.website_url,
+    source: organization.source,
   };
 
   return <BasicTooltip title={organization.name} properties={properties} />;

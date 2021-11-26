@@ -36,6 +36,7 @@ export interface Organization {
   business_type: string;
   business_subtype?: string;
   features_number: number;
+  source: string;
 }
 
 interface Source {
