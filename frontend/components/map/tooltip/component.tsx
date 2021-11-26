@@ -64,6 +64,16 @@ const PROPERTIES_TO_PICK = {
     'comments',
     'website',
   ],
+  ski_resorts: [
+    'facilityName',
+    'businessCategoryDescription',
+    'keywords',
+    'longitude',
+    'latitude',
+    'physicalAddress',
+    'source',
+  ],
+  stops: ['signName', 'currentText', 'longitude', 'latitude', 'specificLocation'],
   visitor_centers: [
     'name',
     'businessType',
@@ -73,15 +83,6 @@ const PROPERTIES_TO_PICK = {
     'postalCode',
     'tourismRegion',
     'tourismSubRegion',
-  ],
-  ski_resorts: [
-    'facilityName',
-    'businessCategoryDescription',
-    'keywords',
-    'longitude',
-    'latitude',
-    'physicalAddress',
-    'source',
   ],
 };
 
@@ -106,10 +107,12 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         return <BasicTooltip title={properties.firstNationBcName} properties={pickedProperties} />;
       case 'organizations':
         return <OrganizationsTooltip feature={feature} />;
-      case 'visitor_centers':
-        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
       case 'ski_resorts':
         return <BasicTooltip title={properties.facilityName} properties={pickedProperties} />;
+      case 'stops':
+        return <BasicTooltip title={properties.signName} properties={pickedProperties} />;
+      case 'visitor_centers':
+        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
     }
     return <BasicTooltip title="Feature" properties={properties} />;
   }, [feature]);
