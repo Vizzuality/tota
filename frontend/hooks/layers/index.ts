@@ -28,6 +28,8 @@ import WILDLIFE_HABITATS_SVG from 'svgs/map/markers/wildlife-habitats.svg?url';
 import { REGION_COLORS } from 'constants/regions';
 import { useRegions } from 'hooks/regions';
 
+const MARKER_ALLOW_OVERLAP = true;
+
 export const CATEGORY = {
   ADMIN_BOUNDARIES: 'Admin Boundaries',
   TOURISM_SUPPLY_SIDE: 'Tourism Supply Side',
@@ -269,6 +271,7 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
               ],
             ],
             'icon-size': 1,
+            'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
           },
         },
       ],
@@ -304,6 +307,7 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
           layout: {
             'icon-image': 'development_funds_marker',
             'icon-size': 1,
+            'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
           },
         },
       ],
@@ -344,6 +348,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'visitors_centers_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -373,6 +378,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'ski_resorts_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -401,6 +407,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'accommodations_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -430,6 +437,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'campsites_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -458,6 +466,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'first_nation_community_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -486,6 +495,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'bc_indigenous_businesses_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -588,6 +598,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
                   'fires_marker_7',
                 ],
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               filter: ['all'],
             },
@@ -656,6 +667,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'stops_of_interest_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
@@ -685,6 +697,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               layout: {
                 'icon-image': 'airports_marker',
                 'icon-size': 1,
+                'icon-allow-overlap': MARKER_ALLOW_OVERLAP,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
             },
