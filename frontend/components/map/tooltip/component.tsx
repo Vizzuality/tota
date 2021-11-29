@@ -117,8 +117,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
   const pickedProperties = propertiesToPick ? pick(properties, propertiesToPick) : properties;
   const DisplayTooltip = useMemo(() => {
     switch (feature.source) {
-      // case 'airports':
-      //   return <BasicTooltip title={properties.airportName} properties={pickedProperties} />;
+      case 'airports':
+        return <BasicTooltip title={properties.airportName} properties={pickedProperties} />;
       case 'accommodations':
         return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
       case 'campgrounds':
