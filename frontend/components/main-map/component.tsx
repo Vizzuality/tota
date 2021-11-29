@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, useEffect } from 'react';
+import React, { FC, useState, useCallback, useEffect, useRef } from 'react';
 import { MapEvent, Popup } from 'react-map-gl';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
@@ -17,6 +17,7 @@ import Tooltip from 'components/map/tooltip';
 import { REGION_BBOX } from 'constants/regions';
 import { useMap } from 'hooks/map';
 import { useLayers } from 'hooks/layers';
+import useOnClickOutside from 'hooks/use-on-click-outside';
 
 const cartoProvider = new CartoProvider();
 
@@ -59,6 +60,7 @@ export const MainMap: FC<MapProps> = ({
     selectedRegion,
     regionChanged,
   } = useMap();
+  const popupRef = useRef(null);
   const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
   const layers = useLayers(showSingleRegionSlug)
     .filter((x) => activeLayers.includes(x.id))
@@ -129,6 +131,8 @@ export const MainMap: FC<MapProps> = ({
       });
     }
   }, [selectedRegion, regionChanged]);
+  const closePopup = useCallback(() => setSelectedFeature(null), []);
+  useOnClickOutside(popupRef, closePopup);
 
   return (
     <div className="relative w-full h-full">
@@ -163,11 +167,13 @@ export const MainMap: FC<MapProps> = ({
                 latitude={selectedFeature.coordinates.latitude}
                 longitude={selectedFeature.coordinates.longitude}
                 closeOnClick={false}
-                onClose={() => setSelectedFeature(null)}
+                onClose={closePopup}
                 captureScroll
                 capturePointerMove
               >
-                <Tooltip feature={selectedFeature.feature} />
+                <div ref={popupRef}>
+                  <Tooltip feature={selectedFeature.feature} />
+                </div>
               </Popup>
             )}
           </>
