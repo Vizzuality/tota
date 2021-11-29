@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Layer } from '@vizzuality/layer-manager-react';
 
 import ACCESSIBLE_BUSINESSES_SVG from 'svgs/map/markers/accessible-businesses.svg?url';
-import BC_AIRPORTS_SVG from 'svgs/map/markers/bc-airports.svg?url';
+import AIRPORTS_SVG from 'svgs/map/markers/airports.svg?url';
 import BC_INDIGENOUS_BUSINESSES_SVG from 'svgs/map/markers/bc-indigenous-businesses.svg?url';
 import VISITORS_CENTERS_SVG from 'svgs/map/markers/visitors-centers.svg?url';
 import BIOSPHERE_PROGRAM_SVG from 'svgs/map/markers/biosphere-program.svg?url';
@@ -664,17 +664,17 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'airports',
-        name: 'BC Airports',
+        name: 'Airports',
         category: CATEGORY.INFRASTRUCTURES,
         version: '0.0.1',
         type: 'vector',
         source: {
           url: 'mapbox://totadata.1oumvy1n',
         },
-        images: [{ id: 'bc_airports_marker', src: BC_AIRPORTS_SVG }],
+        images: [{ id: 'airports_marker', src: AIRPORTS_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'BC Airports', icon: BC_AIRPORTS_SVG }],
+          items: [{ value: 'Airports', icon: AIRPORTS_SVG }],
         },
         render: {
           layers: [
@@ -683,7 +683,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               'source-layer': 'airports',
               type: 'symbol',
               layout: {
-                'icon-image': 'bc_airports_marker',
+                'icon-image': 'airports_marker',
                 'icon-size': 1,
               },
               ...(selectedRegion && { filter: ['match', ['get', 'TOURISM_REGION_NAME'], selectedRegion, true, false] }),
