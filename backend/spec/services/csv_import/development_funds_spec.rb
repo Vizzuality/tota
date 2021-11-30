@@ -32,12 +32,7 @@ describe CSVImport::DevelopmentFunds do
 
   describe 'proper import' do
     it 'should import data' do
-      csv_content = <<-CSV
-        Project Title,Project Description,Recipient,Lead Organization,Tourism region,Location,Latitude,Longitude,Categories / Tags,Scope,Planning Area,Second Planning Area,Total Project Cost,Key Funding Amount,Key Funding Source,Funding Subtype,Funding call (year),Funding call (month),Project Status
-        Some title,Some Description,Recipient,Organization,Thompson Okanagan,Location,49.0463827,-119.4914925,"Cat1, Cat2, Cat3","Test scope","Test planning area","Test planning area2",22223,3333,Source,Funding Subtype,2020,May,Status
-      CSV
-
-      service = CSVImport::DevelopmentFunds.new(fixture_file('development_funds.csv', content: csv_content))
+      service = CSVImport::DevelopmentFunds.new(fixture_file('csv/development_funds_proper.csv'))
 
       service.call
 
