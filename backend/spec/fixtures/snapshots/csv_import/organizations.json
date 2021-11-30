@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Planet Bee Honey Farm & Meadery",
+    "external_company_id": 324323,
+    "indigenous_ownership": false,
+    "biosphere_program_member": false,
+    "website_url": "http://example.com",
+    "latitude": "50.263229",
+    "longitude": "-119.306363",
+    "accessibility": false,
+    "show_on_platform": true,
+    "source": "TOTA members",
+    "region_name": "Thompson Okanagan",
+    "subregion_name": "North Okanagan",
+    "business_type_name": "Activity / Attraction",
+    "business_subtype_name": null
+  },
+  {
+    "name": "La Maison Osoyoos Larose B&B",
+    "external_company_id": 121222,
+    "indigenous_ownership": true,
+    "biosphere_program_member": true,
+    "website_url": "http://example2.com",
+    "latitude": "49.046383",
+    "longitude": "-119.491493",
+    "accessibility": true,
+    "show_on_platform": true,
+    "source": "TOTA members",
+    "region_name": "Thompson Okanagan",
+    "subregion_name": "South Okanagan",
+    "business_type_name": "Accommodation",
+    "business_subtype_name": "Bed & Breakfast"
+  },
+  {
+    "name": "Another Organization",
+    "external_company_id": 1212332,
+    "indigenous_ownership": true,
+    "biosphere_program_member": true,
+    "website_url": "http://example2.com",
+    "latitude": "49.046383",
+    "longitude": "-119.491493",
+    "accessibility": true,
+    "show_on_platform": false,
+    "source": "TOTA members",
+    "region_name": "Thompson Okanagan",
+    "subregion_name": "South Okanagan",
+    "business_type_name": "Accommodation",
+    "business_subtype_name": "Bed & Breakfast"
+  }
+]

@@ -10,6 +10,7 @@ module CSVImport
         organization = prepare_organization(row)
 
         organization.name = row[:name_of_businessorganization]
+        organization.external_company_id = row[:company_id]
         organization.website_url = row[:website]
         organization.region = find_or_create_region(row)
         organization.business_type = find_or_create_business_type(row)
