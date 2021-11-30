@@ -46,8 +46,8 @@
           <td><%= @resource.external_company_id %></td>
         </tr>
         <tr>
-          <td class="fw-bold">Indigenous Tourism: </td>
-          <td><%= status_tag @resource.indigenous_tourism %></td>
+          <td class="fw-bold">Indigenous Ownership: </td>
+          <td><%= status_tag @resource.indigenous_ownership %></td>
         </tr>
         <tr>
           <td class="fw-bold">Biosphere Program Member: </td>
@@ -56,6 +56,10 @@
         <tr>
           <td class="fw-bold">Accessibility: </td>
           <td><%= status_tag @resource.accessibility %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Source: </td>
+          <td><%= @resource.source %></td>
         </tr>
         <tr>
           <td class="fw-bold">Created At: </td>

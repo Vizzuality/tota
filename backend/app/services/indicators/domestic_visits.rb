@@ -9,6 +9,7 @@ module Indicators
       Indicator.find_by(slug: 'domestic_visits_percentage_monthly')&.delete
       Indicator.find_by(slug: 'domestic_visits_percentage_quarterly')&.delete
       Indicator.find_by(slug: 'domestic_visits_peak_lowest_month_ratio')&.delete
+      generate
     end
 
     def generate

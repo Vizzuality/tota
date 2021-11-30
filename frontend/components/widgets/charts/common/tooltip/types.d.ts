@@ -6,4 +6,6 @@ export interface TooltipProps {
   labelFormatter?: (label: string) => string;
   valueFormatter?: (value: string) => string;
   payloadFilter?: (payloadDatum?: any) => any;
+  showTotalRow?: boolean;
+  showPercentageOfTotal?: boolean;
 }

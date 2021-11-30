@@ -2,6 +2,7 @@ import { AreaProps, BarProps, LineProps, XAxisProps, YAxisProps } from 'recharts
 
 export interface ComposedChartProps {
   data: any[];
+  chartProps: any;
   areas: AreaProps;
   lines: LineProps;
   bars: BarProps;

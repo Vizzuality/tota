@@ -7,7 +7,7 @@
 #  region_id                :bigint           not null
 #  business_type_id         :bigint
 #  external_company_id      :integer
-#  indigenous_tourism       :boolean
+#  indigenous_ownership     :boolean
 #  biosphere_program_member :boolean
 #  website_url              :text
 #  latitude                 :decimal(10, 6)
@@ -16,6 +16,7 @@
 #  updated_at               :datetime         not null
 #  accessibility            :boolean
 #  show_on_platform         :boolean          default(TRUE), not null
+#  source                   :string
 #
 require 'rails_helper'
 

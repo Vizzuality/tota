@@ -10,6 +10,8 @@ FactoryBot.define do
     website_url { 'www.example.com' }
     show_on_platform { true }
 
+    source { 'TOTA members' }
+
     region
   end
 end

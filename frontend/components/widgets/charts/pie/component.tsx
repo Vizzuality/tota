@@ -5,7 +5,7 @@ import type { PieChartProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import { useChartWidth } from 'hooks/charts';
 
-import { COLORS } from 'constants/charts';
+import { getColorPalette } from 'constants/charts';
 
 function getLegend(pieChartWidth?: number) {
   if (pieChartWidth < 600) {
@@ -33,6 +33,7 @@ function getLegend(pieChartWidth?: number) {
 const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { cursor: false } }: PieChartProps) => {
   const { chartWidth, containerRef } = useChartWidth();
   const legendProps = legend || getLegend(chartWidth);
+  const colors = getColorPalette(data.length);
 
   return (
     <ResponsiveContainer ref={containerRef} width="100%" height={400} debounce={100}>
@@ -42,7 +43,7 @@ const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { 
           Object.keys(pies).map((pie, index) => (
             <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data}>
               {data.map((d, i) => (
-                <Cell key={`cell-${d}`} fill={d.color || COLORS[i % COLORS.length]} />
+                <Cell key={`cell-${d}`} fill={d.color || colors[i % colors.length]} />
               ))}
             </Pie>
           ))}

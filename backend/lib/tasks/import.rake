@@ -48,11 +48,6 @@ class ImportTasks
       task indicators: :environment do
         next if Rails.env.production? && !ENV['FORCE'].present?
 
-        unless ENV['KEEP_OLD'].present?
-          IndicatorValue.delete_all
-          Indicator.delete_all
-        end
-
         ActiveRecord::Base.connection.cache do
           TimedLogger.log('Import Indicator Values for Block 1 Tourism Industry') do
             run_importer CSVImport::IndicatorValues, csv_file('Block1_Tourism_Industry_and_Arrivals - EXPORT_CSV.csv')

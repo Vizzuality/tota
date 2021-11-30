@@ -19,10 +19,12 @@
         "subregion": "North Okanagan",
         "business_type": "Accommodation",
         "business_subtype": null,
-        "indigenous_tourism": false,
         "biosphere_program_member": false,
         "accessibility": false,
-        "features_number": 0
+        "features_number": 0,
+        "indigenous_ownership": false,
+        "website_url": null,
+        "source": "TOTA members"
       }
     },
     {
@@ -43,10 +45,12 @@
         "subregion": "Central Okanagan",
         "business_type": "Accommodation",
         "business_subtype": "Motel",
-        "indigenous_tourism": false,
         "biosphere_program_member": false,
         "accessibility": false,
-        "features_number": 0
+        "features_number": 0,
+        "indigenous_ownership": false,
+        "website_url": null,
+        "source": "TOTA members"
       }
     }
   ]

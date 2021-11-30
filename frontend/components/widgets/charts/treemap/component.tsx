@@ -20,6 +20,7 @@ const Chart: FC<TreemapChartProps> = ({
         dataKey="value"
         ratio={4 / 3}
         fill="#fff"
+        isAnimationActive={false}
         {...chartProps}
         content={
           /* @ts-expect-error: Disable type errors for CustomizedContent props missing */

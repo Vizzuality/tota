@@ -11,8 +11,9 @@ import {
   mergeForChart,
   getYear,
 } from 'utils/charts';
+import { defaultTooltip } from 'constants/charts';
 
-import mountains3Image from 'images/home/image-mountains3.png';
+import BoxImage from 'images/home/box-accommodation-information.png';
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
@@ -25,7 +26,7 @@ function getWeekOptions(weeks: string[]) {
   });
 }
 
-function getFetchWidgetPropsFunction(indicatorPrefix: string) {
+function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   const changeIndicator = `${indicatorPrefix}_change_week`;
   const indicatorsMap = {
     [`${indicatorPrefix}_weekday`]: 'Weekday',
@@ -58,6 +59,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
         mergeBy: 'indicator',
         labelKey: 'region',
         valueKey: 'value',
+        unit,
       };
     }
     const withoutChange = rawData.filter((x) => x.indicator !== changeIndicator);
@@ -78,6 +80,13 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
       xAxis: {
         dataKey: 'date',
       },
+      yAxis: {
+        tickFormatter: (val) => `${val}${unit}`,
+      },
+      tooltip: {
+        ...defaultTooltip,
+        valueFormatter: (val) => `${val}${unit}`,
+      },
     };
   };
 }
@@ -85,12 +94,17 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string) {
 const theme: ThemeType = {
   title: 'Accommodation Information',
   slug: 'accommodation-information',
-  image: mountains3Image,
+  image: BoxImage,
   sections: [
     {
       title: 'Occupancy rates',
-      description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      description: `Occupancy rate of hotels in the selected region. Shown are the average rates during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
+      note: 'Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
+      sources: [
+        {
+          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
+        },
+      ],
       initialState: {
         year: 'all_years',
         week: undefined,
@@ -100,12 +114,17 @@ const theme: ThemeType = {
         slug: ['occupancy_weekday', 'occupancy_weekend', 'occupancy_change_week'],
         region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
-      fetchWidgetProps: getFetchWidgetPropsFunction('occupancy'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
     },
     {
       title: 'Average daily hotel rate (ADR)',
-      description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      description: `Average daily hotel rate (ADRs) of hotels in the selected region during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
+      note: ' Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
+      sources: [
+        {
+          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
+        },
+      ],
       initialState: {
         year: 'all_years',
         week: undefined,
@@ -115,12 +134,17 @@ const theme: ThemeType = {
         slug: ['adr_weekday', 'adr_weekend', 'adr_change_week'],
         region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
-      fetchWidgetProps: getFetchWidgetPropsFunction('adr'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
     },
     {
-      title: 'Hotel revenue per available room',
-      description: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula.Sed sodales aliquam nisl eget mollis.Quisque mollis nisi felis, eu convallis purus sagittis sit amet.Sed elementum scelerisque ipsum, at rhoncus eros venenatis at.Donec mattis quis massa ut viverra.In ullamcorper, magna non convallis ultricies. `,
+      title: 'Revenue per available room (RevPAR)',
+      description: `Revenue per available room (RevPAR) of hotels in the selected region during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
+      note: ' Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
+      sources: [
+        {
+          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
+        },
+      ],
       initialState: {
         year: 'all_years',
         week: undefined,
@@ -130,7 +154,7 @@ const theme: ThemeType = {
         slug: ['revpar_weekday', 'revpar_weekend', 'revpar_change_week'],
         region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
       }),
-      fetchWidgetProps: getFetchWidgetPropsFunction('revpar'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
     },
   ],
 };

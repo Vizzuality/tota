@@ -1,6 +1,6 @@
 export default {
   dark: {
-    container: 'text-white bg-transparent bg-blue-800',
+    container: 'text-white bg-blue-800',
     open: 'bg-blue-800 text-white',
     closed: 'text-white',
     menu: 'border-t border-gray-50',
@@ -62,7 +62,8 @@ export default {
     valid: 'ring-green-500',
   },
   sizes: {
-    base: 'pl-4 pr-4 py-6 text-lg',
+    lg: 'pl-4 pr-4 py-6 text-lg',
+    base: 'pl-4 pr-4 py-4 text-lg',
     s: 'pl-4 pr-4 py-4 text-base',
   },
 };

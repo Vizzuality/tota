@@ -30,7 +30,6 @@ const Control: FC<ControlProps> = ({ type, side, name, value, options, onControl
         <Select
           id={`select-section-${componentId}`}
           theme="light"
-          size="s"
           selected={value}
           initialSelected={value || options[0].value}
           onChange={(selectedValue) => onControlChange(name, selectedValue as string)}

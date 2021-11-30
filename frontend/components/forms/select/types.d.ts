@@ -2,7 +2,7 @@ import { ReactNode, FocusEventHandler } from 'react';
 
 interface SelectThemeProps {
   theme: 'dark' | 'light' | 'transparent';
-  size: 'base' | 's';
+  size: 'base' | 's' | 'lg';
   status?: 'none' | 'error' | 'valid' | 'disabled';
   maxHeight?: number | string;
 }

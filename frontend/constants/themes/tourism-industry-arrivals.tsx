@@ -1,4 +1,5 @@
 import uniq from 'lodash/uniq';
+import orderBy from 'lodash/orderBy';
 import {
   allMonths,
   expandToFullYear,
@@ -13,6 +14,7 @@ import {
   getTopN,
   getWithMinMaxAreas,
   getYear,
+  getUnitLabel,
   mergeForChart,
 } from 'utils/charts';
 import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
@@ -20,25 +22,27 @@ import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { IndicatorValue, ThemeType } from 'types';
 import { format, parseISO } from 'date-fns';
 
-import mountainsImage from 'images/home/image-mountains.png';
+import BoxImage from 'images/home/box-tourism-industry.png';
 import { getMapUrl } from 'hooks/map';
 
 const theme: ThemeType = {
   title: 'Tourism Industry & Arrivals',
   slug: 'tourism-industry-arrivals',
-  image: mountainsImage,
-  summary:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus sollicitudin, ullamcorper nunc eu, auctor ligula. Sed sodales aliquam nisl eget mollis. Quisque mollis nisi felis, eu convallis purus sagittis sit amet.',
+  image: BoxImage,
   sections: [
     {
-      title: 'Tourism establishments',
+      title: 'Tourism businesses',
       subTitle: '(by type)',
-      description: `Total number of tourism businesses in the province/regions (by type of business).`,
-      notes: `Aggregated number. Includes Hubspot entries, as well as additional businesses of the tourism supply side (e.g. campgrounds, visitor information centres, etc.).`,
+      description: `Total number of tourism businesses in the selected region, by type of business.`,
+      sources: [
+        {
+          text: `Aggregated figures. Includes information directly from the regional DMOs, as well as additional business information of the tourism supply side from third party sources (e.g. campgrounds, visitor information centres, etc.).`,
+        },
+      ],
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: 'all',
-        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)],
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[], state): any {
         return {
@@ -58,17 +62,20 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Biosphere committed & accessible businesses',
-      subTitle: '(by type)',
+      title: 'Tourism businesses: specific characteristics',
       description: `
-        Total number of tourism businesses in the province/regions with official commitments to the Biosphere program (by type of businesses).<br/>
-        Total number of tourism businesses with accessible features.<br/>
-        Total number of tourism businesses with at least half of their staff being Indigenous (50%+)
+        Total number of tourism businesses in the selected region that are: (1) members of the Biosphere program; (2) accessible businesses; (3) businesses that have indigenous ownership (51% and more).
       `,
+      note: 'The accessibility indication is not based on any official certifications or audits and should only be seen as indicative information. The highlighted businesses include a wide range of accessibility features. Please contact the individual business for detailed and specific accessibility information.',
+      sources: [
+        {
+          text: 'Regional DMOs and other relevant third party sources (e.g. Indigenous Tourism BC)',
+        },
+      ],
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: state.type,
-        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)],
+        region: state.selectedRegion.slug,
       }),
       initialState: {
         type: 'biosphere',
@@ -81,7 +88,27 @@ const theme: ThemeType = {
           },
           type: 'charts/pie',
           data: getTop10AndOthers(rawData, 'category_1'),
-          controls: [{ type: 'tabs', side: 'left', name: 'type', options: getOptions(['Biosphere', 'Accessibility']) }],
+          controls: [
+            {
+              type: 'tabs',
+              side: 'left',
+              name: 'type',
+              options: [
+                {
+                  value: 'biosphere',
+                  label: 'Biosphere Member',
+                },
+                {
+                  value: 'accessibility',
+                  label: 'Accessible',
+                },
+                {
+                  value: 'indigenous',
+                  label: 'Indigenous',
+                },
+              ],
+            },
+          ],
           pies: [
             {
               nameKey: 'category_1',
@@ -94,13 +121,19 @@ const theme: ThemeType = {
     {
       title: 'Domestic arrivals',
       description: `
-        Total amount of domestic (Canadian) overnight arrivals to the province/regions by month.
+        Total amount of domestic overnight arrivals to the province/regions by month.
       `,
-      notes: `
-        <strong class='font-bold'>Visits:</strong> count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.<br/>
-        <strong class='font-bold'>Trips:</strong> count of domestic traveler trips which involved spending one or more nights over a certain time period as part of a continuous visit to the destination. includes unique visitors i.e. visitors that came twice in e.g. one month are counted as two trips.<br/>
-        <strong class='font-bold'>Stays:</strong> count of unique nights a domestic visitor was observed in the destination over a certain time period, i.e. overnights.
+      note: `
+        <br/>
+        Visits: count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.
+        Trips: count of domestic traveler trips which involved spending one or more nights over a certain time period as part of a continuous visit to the destination. includes unique visitors i.e. visitors that came twice in e.g. one month are counted as two trips.
+        Stays: count of unique nights a domestic visitor was observed in the destination over a certain time period, i.e. overnights.
       `,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         group: 'visits',
         year: 'all_years',
@@ -154,7 +187,12 @@ const theme: ThemeType = {
     },
     {
       title: 'Seasonality',
-      description: `Share of annual domestic overnight visitors occurring in peak month & quarter`,
+      description: `Share of annual domestic overnight visitors occurring in peak month and quarter.`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         year: previousYear,
         frequency: 'monthly',
@@ -167,10 +205,12 @@ const theme: ThemeType = {
         const take = state.frequency === 'quarterly' ? 4 : 5;
         const formatDate = state.frequency === 'quarterly' ? (d) => d : shortMonthName;
         const filteredByYear = (rawData || []).filter((x: any) => getYear(x.date) === state.year);
-        const data = getTopN(filteredByYear, take, 'value').map((x) => ({
+        const topN = getTopN(filteredByYear, take, 'value').map((x) => ({
           text: `${formatDate(x.date)}: {value} of visitors`,
           value: formatPercentage(x.value),
+          date: x.date,
         }));
+        const data = orderBy(topN, 'date');
 
         return {
           type: 'rank',
@@ -183,8 +223,13 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Seasonality - ratio peak month vs. lowest month',
-      description: `Ratio of domestic visitors in peak month to lowest month`,
+      title: 'Seasonality: peak month vs. lowest month',
+      description: `Ratio of domestic visitors in peak month to lowest month.`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -215,8 +260,13 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Domestic (canadian) visitors by origin province',
-      description: `Total amount of domestic (Canadian) overnight visitors by their respective origin provinces`,
+      title: 'Domestic visitors by province of origin',
+      description: `Total domestic overnight visitors by their respective province of origin.`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         frequency: 'monthly',
         year: previousYear,
@@ -258,9 +308,14 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Origins of domestic visitors (by cities)',
+      title: 'Domestic overnight visitors by city of origin',
       subTitle: '(top 10)',
-      description: `Total amount of domestic (Canadian) overnight visitors by their respective origin cities`,
+      description: `Total domestic overnight visitors by their respective city of origin and by quarter.`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -302,9 +357,12 @@ const theme: ThemeType = {
     {
       title: 'Market Segmentation Insights',
       subTitle: '(top 10)',
-      description: `
-      Top 10 PRIZM clusters showing the largest lifestyle groups/top markets of potential domestic (Canadian) visitors per month for the province/regions
-      `,
+      description: `Top 10 PRIZM clusters showing the largest lifestyle groups/top markets of potential domestic visitors per month for the selected region (total numbers).`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -347,7 +405,12 @@ const theme: ThemeType = {
     },
     {
       title: 'Length of stay',
-      description: `Average length of stay of domestic (Canadian) overnight visitors in the province/regions`,
+      description: `Average length of stay of domestic overnight visitors in the seleted region (by days).`,
+      sources: [
+        {
+          text: 'Environics Analytics - VisitorView',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -370,15 +433,23 @@ const theme: ThemeType = {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) }],
-          legend: {
-            ...bottomLegend,
-            payloadFilter: (y) => !y.value.includes('min-max'),
-          },
           areas,
           lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
+          chartProps: {
+            margin: {
+              top: 35,
+            },
+          },
+          yAxis: {
+            label: getUnitLabel('days'),
+          },
           xAxis: {
             dataKey: 'date',
             tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          legend: {
+            ...bottomLegend,
+            payloadFilter: (y) => !y.value.includes('min-max'),
           },
           tooltip: {
             ...defaultTooltip,
@@ -388,8 +459,14 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Domestic overnight visitors',
-      description: `Weekly travel patterns of domestic (Canadian) overnight visitors showing the variation in volumes between the current year and the selected year`,
+      title: 'Travel patterns of domestic overnight visitors',
+      description: `Weekly travel patterns of domestic overnight visitors showing the variation in volumes between the current year and the selected year.`,
+      note: 'this information has been collected since 2020 due to the COVID-19 pandemic.',
+      sources: [
+        {
+          text: 'Environics Analytics - Measuring Canadian Travel Patterns',
+        },
+      ],
       initialState: {
         year: `compared_to_${previousYear}`,
       },

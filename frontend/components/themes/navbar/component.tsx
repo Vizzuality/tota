@@ -52,7 +52,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
             <Select
               id="map-select-region"
               theme="dark"
-              size="base"
+              size="lg"
               maxHeight={400}
               options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
               selected={region}

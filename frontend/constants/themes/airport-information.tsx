@@ -12,18 +12,22 @@ import {
 import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { shortMonthName, compactNumberTickFormatter, previousYear } from './utils';
 
-import airportImage from 'images/home/image-airport.png';
+import BoxImage from 'images/home/box-airport-information.png';
 
 const theme: ThemeType = {
   title: 'Airport Information',
   slug: 'airport-information',
-  image: airportImage,
+  image: BoxImage,
   sections: [
     {
       title: 'Number of arriving flights',
-      description: `
-      Total number of arriving flights in the top 3 airports per region. Flights per destination include all airlines serving that route
-       `,
+      description: `Total number of flights arriving to the top 3 airports per selected region.`,
+      note: 'Flights per destination include all airlines serving that route.',
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -65,7 +69,12 @@ const theme: ThemeType = {
     },
     {
       title: 'Total passenger volume',
-      description: `Total air passenger traffic (arrivals) to the top 3 airports per region.`,
+      description: `Total air passenger arrivals to the top 3 airports per selected region.`,
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
         airport: undefined,
@@ -106,7 +115,13 @@ const theme: ThemeType = {
     },
     {
       title: 'International vs. domestic arrivals',
-      description: `Share of international and domestic air (Canadian) passenger traffic (arrivals) to the top 3 airport per region. The passenger splits are based on O/D data.`,
+      description: `Share of international and domestic air passenger arrivals to the top 3 airport per selected region.`,
+      note: 'Passenger splits are based on O/D data.',
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
         airport: undefined,
@@ -154,7 +169,12 @@ const theme: ThemeType = {
     },
     {
       title: 'Airport connections',
-      description: `Total number of destinations the selected airport is directly connected with (per year)`,
+      description: `Total number of destinations the airport is directly connected with (per year).`,
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -179,8 +199,13 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Top average connections per week',
-      description: `Most frequent flight activity (per week) between the selected airport and its available destinations.`,
+      title: 'Top connections per week',
+      description: `Most frequent flight activity per week between the selected airport and its available destinations (based on averages).`,
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
       },
@@ -208,7 +233,12 @@ const theme: ThemeType = {
     },
     {
       title: 'Daily arrivals by origin airport',
-      description: `Average daily number of arriving flights to the selected airport by origin airport (per month).`,
+      description: `Average daily number of flights arriving to the selected airport by origin airport (per month).`,
+      sources: [
+        {
+          text: 'Individual airports',
+        },
+      ],
       initialState: {
         year: previousYear,
         airport: undefined,
