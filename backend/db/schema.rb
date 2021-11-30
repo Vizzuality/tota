@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_131019) do
+ActiveRecord::Schema.define(version: 2021_11_30_114130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 2021_11_26_131019) do
     t.string "name", null: false
     t.bigint "region_id", null: false
     t.bigint "business_type_id"
-    t.integer "external_company_id"
+    t.bigint "external_company_id"
     t.boolean "indigenous_ownership"
     t.boolean "biosphere_program_member"
     t.text "website_url"
