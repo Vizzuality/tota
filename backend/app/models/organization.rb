@@ -6,7 +6,7 @@
 #  name                     :string           not null
 #  region_id                :bigint           not null
 #  business_type_id         :bigint
-#  external_company_id      :integer
+#  external_company_id      :bigint
 #  indigenous_ownership     :boolean
 #  biosphere_program_member :boolean
 #  website_url              :text
