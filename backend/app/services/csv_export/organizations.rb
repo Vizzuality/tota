@@ -15,6 +15,7 @@ module CSVExport
         latitude
         longitude
         show_on_platform
+        source
       ]
 
       CSV.generate do |csv|
@@ -27,14 +28,15 @@ module CSVExport
             o.website_url,
             o.business_type_name,
             o.business_subtype_name,
-            o.indigenous_tourism,
+            o.indigenous_ownership,
             o.biosphere_program_member,
             o.accessibility,
             o.region_name,
             o.subregion_name,
             o.latitude,
             o.longitude,
-            o.show_on_platform
+            o.show_on_platform,
+            o.source
           ]
         end
       end

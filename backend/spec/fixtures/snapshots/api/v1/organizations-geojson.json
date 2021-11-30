@@ -23,7 +23,7 @@
         "accessibility": false,
         "features_number": 0,
         "indigenous_ownership": false,
-        "website_url": null,
+        "website_url": "http://www.example.com",
         "source": "TOTA members"
       }
     },
@@ -49,7 +49,7 @@
         "accessibility": false,
         "features_number": 0,
         "indigenous_ownership": false,
-        "website_url": null,
+        "website_url": "http://www.example.com",
         "source": "TOTA members"
       }
     }

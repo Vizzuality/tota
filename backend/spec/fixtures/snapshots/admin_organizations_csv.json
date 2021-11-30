@@ -12,7 +12,8 @@
     "tourism_subregion": "North Okanagan",
     "latitude": "50.2323",
     "longitude": "34.2333",
-    "show_on_platform": "true"
+    "show_on_platform": "true",
+    "source": "TOTA members"
   },
   {
     "name_of_businessorganization": "Double E Sportsman Camp",
@@ -27,6 +28,7 @@
     "tourism_subregion": "Central Okanagan",
     "latitude": "50.2323",
     "longitude": "34.2333",
-    "show_on_platform": "true"
+    "show_on_platform": "true",
+    "source": "TOTA members"
   }
 ]
