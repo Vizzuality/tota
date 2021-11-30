@@ -69,4 +69,52 @@ describe CSVImport::IndicatorValues do
       )
     end
   end
+
+  describe 'import exported' do
+    before do
+      r1 = create(:region, name: 'Thompson')
+      create(
+        :indicator,
+        slug: 'visits_by_origin',
+        indicator_values: [
+          build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: r1),
+          build(:indicator_value, date: '2020-01', category_1: 'Germany', value: '33333', region: r1)
+        ]
+      )
+      create(
+        :indicator,
+        slug: 'stays_by_origin',
+        indicator_values: [
+          build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '11111', region: r1),
+          build(:indicator_value, date: '2020-01', category_1: 'Germany', value: '33333', region: r1)
+        ]
+      )
+    end
+
+    it 'should work' do
+      # we will export and import only 1 indicator stays_by_origin
+      indicator = Indicator.find_by(slug: 'stays_by_origin')
+      values = IndicatorValue.where(indicator: indicator)
+      exported_csv = CSVExport::IndicatorValues.new.export(values)
+      exported = indicator_values_hash(values)
+
+      service = CSVImport::IndicatorValues.new(fixture_file('indicator_values.csv', content: exported_csv))
+      service.call
+
+      indicator = Indicator.find_by(slug: 'stays_by_origin')
+      values = IndicatorValue.where(indicator: indicator)
+      imported = indicator_values_hash(values)
+
+      expect(service.errors.messages).to eq({})
+      expect(IndicatorValue.count).to eq(4)
+      expect(exported).to eq(imported)
+    end
+  end
+
+  def indicator_values_hash(values)
+    values.as_json(
+      except: [:id, :created_at, :updated_at, :indicator_id],
+      include: {indicator: {only: [:slug]}}
+    )
+  end
 end

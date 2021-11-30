@@ -37,12 +37,7 @@ describe CSVImport::Organizations do
 
       service.call
 
-      imported_json = Organization.all.map do |o|
-        o.as_json(
-          except: [:id, :created_at, :updated_at, :region_id, :business_type_id],
-          methods: [:region_name, :subregion_name, :business_type_name, :business_subtype_name]
-        )
-      end.to_json
+      imported_json = organizations_hash(Organization.all).to_json
 
       expect(service.errors.messages).to eq({})
       expect(Organization.count).to eq(3)
@@ -53,5 +48,30 @@ describe CSVImport::Organizations do
       expect(Region.find_by(name: 'North Okanagan').parent).to eq(Region.find_by(name: 'Thompson Okanagan'))
       expect(BusinessType.find_by(name: 'Bed & Breakfast').parent).to eq(BusinessType.find_by(name: 'Accommodation'))
     end
+  end
+
+  describe 'import exported' do
+    let(:organizations) { create_list(:organization, 2) }
+
+    it 'should work' do
+      exported_csv = CSVExport::Organizations.new.export(organizations)
+      exported = organizations_hash(Organization.all)
+
+      service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: exported_csv))
+      service.call
+
+      imported = organizations_hash(Organization.all)
+
+      expect(service.errors.messages).to eq({})
+      expect(Organization.count).to eq(2)
+      expect(exported).to eq(imported)
+    end
+  end
+
+  def organizations_hash(organizations)
+    organizations.as_json(
+      except: [:id, :created_at, :updated_at, :region_id, :business_type_id],
+      methods: [:region_name, :subregion_name, :business_type_name, :business_subtype_name]
+    )
   end
 end

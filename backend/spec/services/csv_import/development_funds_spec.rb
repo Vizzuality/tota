@@ -66,4 +66,26 @@ describe CSVImport::DevelopmentFunds do
       )
     end
   end
+
+  describe 'import exported' do
+    let(:development_funds) { create_list(:development_fund, 2) }
+
+    it 'should work' do
+      exported_csv = CSVExport::DevelopmentFunds.new.export(development_funds)
+      exported = development_funds_hash(DevelopmentFund.all)
+
+      service = CSVImport::DevelopmentFunds.new(fixture_file('development_funds.csv', content: exported_csv))
+      service.call
+
+      imported = development_funds_hash(DevelopmentFund.all)
+
+      expect(service.errors.messages).to eq({})
+      expect(DevelopmentFund.count).to eq(2)
+      expect(exported).to eq(imported)
+    end
+  end
+
+  def development_funds_hash(funds)
+    funds.as_json(except: [:id, :updated_at, :created_at])
+  end
 end

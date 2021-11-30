@@ -3,7 +3,7 @@ FactoryBot.define do
     name { 'Organization name' }
     latitude { 50.2323 }
     longitude { 34.2333 }
-    external_company_id { 'ID434534' }
+    external_company_id { 33_344 }
     indigenous_ownership { false }
     accessibility { false }
     biosphere_program_member { false }
