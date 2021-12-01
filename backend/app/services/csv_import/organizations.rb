@@ -7,11 +7,10 @@ module CSVImport
       prepare_cache
 
       import_each_csv_row(csv) do |row|
-        next if ActiveModel::Type::Boolean.new.cast(row[:show_on_platform]) == false
-
         organization = prepare_organization(row)
 
         organization.name = row[:name_of_businessorganization]
+        organization.external_company_id = row[:company_id]
         organization.website_url = row[:website]
         organization.region = find_or_create_region(row)
         organization.business_type = find_or_create_business_type(row)
@@ -20,6 +19,7 @@ module CSVImport
         organization.biosphere_program_member = row[:biosphere_program_member]
         organization.indigenous_ownership = row[:indigenous_tourism]
         organization.accessibility = row[:accessibility]
+        organization.show_on_platform = row[:show_on_platform]
         organization.source = row[:source]
 
         organization.validate!
@@ -97,7 +97,7 @@ module CSVImport
       sub_region || region
     end
 
-    def prepare_organization(row)
+    def prepare_organization(_row)
       Organization.new
     end
   end

@@ -13,5 +13,9 @@ module Indicators
     def regenerate
       raise NotImplementedError
     end
+
+    def create_indicator(slug)
+      Indicator.create(slug: slug, dynamic: true)
+    end
   end
 end

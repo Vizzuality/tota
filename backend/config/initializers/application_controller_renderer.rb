@@ -1,8 +1,5 @@
-# Be sure to restart your server when you modify this file.
+ActionController::Renderers.add :csv do |obj, options|
+  filename = options[:filename] || controller_name
 
-# ActiveSupport::Reloader.to_prepare do
-#   ApplicationController.renderer.defaults.merge!(
-#     http_host: 'example.org',
-#     https: false
-#   )
-# end
+  send_data obj, type: Mime[:csv], disposition: "attachment", filename: "#{filename}.csv"
+end

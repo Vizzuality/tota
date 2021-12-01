@@ -43,9 +43,11 @@ RSpec.describe Indicators::AirportTopAverageConnectionsPerWeek do
 
       it 'returns correct values' do
         expect { subject }.to change { IndicatorValue.count }
-        values = Indicator.find_by(slug: 'airport_top_average_connections_per_week').indicator_values.includes(:region).where(region: {name: 'Region 1'})
+        indicator = Indicator.find_by(slug: 'airport_top_average_connections_per_week')
+        values = indicator.indicator_values.includes(:region).where(region: {name: 'Region 1'})
         values_json = values.map { |v| v.slice(:date, :category_1, :category_2, :value).symbolize_keys }
 
+        expect(indicator.dynamic).to be(true)
         expect(values_json).to contain_exactly(
           {
             date: '2020',

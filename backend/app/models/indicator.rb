@@ -11,6 +11,9 @@
 class Indicator < ApplicationRecord
   has_many :indicator_values, dependent: :destroy
 
+  scope :dynamic, -> { where(dynamic: true) }
+  scope :imported, -> { where(dynamic: [nil, false]) }
+
   validates_presence_of :slug
   validates_uniqueness_of :slug
 end

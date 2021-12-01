@@ -1,0 +1,34 @@
+[
+  {
+    "name_of_businessorganization": "Summit River Lodge And Campsites",
+    "company_id": "33344",
+    "website": "www.example.com",
+    "business_type": "Accommodation",
+    "business_subtype": null,
+    "indigenous_tourism": "false",
+    "biosphere_program_member": "false",
+    "accessibility": "false",
+    "tourism_region": "Thompson Okanagan",
+    "tourism_subregion": "North Okanagan",
+    "latitude": "50.2323",
+    "longitude": "34.2333",
+    "show_on_platform": "true",
+    "source": "TOTA members"
+  },
+  {
+    "name_of_businessorganization": "Double E Sportsman Camp",
+    "company_id": "33344",
+    "website": "www.example.com",
+    "business_type": "Accommodation",
+    "business_subtype": "Motel",
+    "indigenous_tourism": "false",
+    "biosphere_program_member": "false",
+    "accessibility": "false",
+    "tourism_region": "Thompson Okanagan",
+    "tourism_subregion": "Central Okanagan",
+    "latitude": "50.2323",
+    "longitude": "34.2333",
+    "show_on_platform": "true",
+    "source": "TOTA members"
+  }
+]

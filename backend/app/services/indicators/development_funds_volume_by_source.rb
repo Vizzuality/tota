@@ -5,12 +5,12 @@ module Indicators
     attr_accessor :indicator
 
     def regenerate
-      Indicator.find_by(slug: 'development_funds_volume_by_source')&.destroy
+      Indicator.find_by(slug: 'development_funds_volume_by_source')&.delete
       generate
     end
 
     def generate
-      @indicator = Indicator.create(slug: 'development_funds_volume_by_source')
+      @indicator = create_indicator('development_funds_volume_by_source')
       values = []
 
       values.push(*append_by_source_year_region)

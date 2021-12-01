@@ -3,14 +3,14 @@ module Indicators
     DEPENDS_ON = [].freeze
 
     def regenerate
-      Indicator.find_by(slug: 'establishments_by_type')&.destroy
-      Indicator.find_by(slug: 'total_establishments')&.destroy
+      Indicator.find_by(slug: 'establishments_by_type')&.delete
+      Indicator.find_by(slug: 'total_establishments')&.delete
       generate
     end
 
     def generate
-      Indicator.create(slug: 'establishments_by_type')
-      Indicator.create(slug: 'total_establishments')
+      create_indicator('establishments_by_type')
+      create_indicator('total_establishments')
 
       %w(tourism_region province).each do |region_type|
         generate_establishments_by_type('all', region_type)

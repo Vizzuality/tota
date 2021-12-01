@@ -5,7 +5,7 @@ describe CSVImport::Organizations do
     it 'should return error if required column not provided' do
       csv_content = <<-CSV
         Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
         121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
       CSV
 
@@ -20,7 +20,7 @@ describe CSVImport::Organizations do
 
       csv_content = <<-CSV
         Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
         121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE,TOTA members
       CSV
 
@@ -33,23 +33,45 @@ describe CSVImport::Organizations do
 
   describe 'proper import' do
     it 'should import data' do
-      csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
-        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
-        1212332,DO NOT IMPORT,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,FALSE, TOTA members
-      CSV
-
-      service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))
+      service = CSVImport::Organizations.new(fixture_file('csv/organizations_proper.csv'))
 
       service.call
 
+      imported_json = organizations_hash(Organization.all).to_json
+
       expect(service.errors.messages).to eq({})
-      expect(Organization.count).to eq(2)
+      expect(Organization.count).to eq(3)
+      expect(Organization.visible.count).to eq(2)
       expect(Region.count).to eq(3)
-      expect(BusinessType.count).to eq(4)
+      expect(BusinessType.count).to eq(3)
+      expect(imported_json).to match_snapshot('csv_import/organizations')
       expect(Region.find_by(name: 'North Okanagan').parent).to eq(Region.find_by(name: 'Thompson Okanagan'))
       expect(BusinessType.find_by(name: 'Bed & Breakfast').parent).to eq(BusinessType.find_by(name: 'Accommodation'))
     end
+  end
+
+  describe 'import exported' do
+    let(:organizations) { create_list(:organization, 2) }
+
+    it 'should work' do
+      exported_csv = CSVExport::Organizations.new.export(organizations)
+      exported = organizations_hash(Organization.all)
+
+      service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: exported_csv))
+      service.call
+
+      imported = organizations_hash(Organization.all)
+
+      expect(service.errors.messages).to eq({})
+      expect(Organization.count).to eq(2)
+      expect(exported).to eq(imported)
+    end
+  end
+
+  def organizations_hash(organizations)
+    organizations.as_json(
+      except: [:id, :created_at, :updated_at, :region_id, :business_type_id],
+      methods: [:region_name, :subregion_name, :business_type_name, :business_subtype_name]
+    )
   end
 end

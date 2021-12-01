@@ -2,7 +2,7 @@ module API
   module V1
     class OrganizationsController < BaseController
       def index
-        organizations = Organization.where(filters).includes(:region, :business_type)
+        organizations = Organization.visible.where(filters).includes(:region, :business_type)
 
         if params[:format] == 'geojson'
           render json: {

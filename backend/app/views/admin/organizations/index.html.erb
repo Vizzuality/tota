@@ -2,6 +2,19 @@
 
 <%= render "index_search_form", q: @q, search_by: :name_cont %>
 
+<%= link_to new_admin_data_upload_path(data_upload: {uploader: 'Organizations'}), class: "btn btn-primary float-end mt-n1" do %>
+  <i class="bi-upload me-2"></i>
+  Upload Organizations
+<% end %>
+
+<%= dropdown "Actions", class: "float-end mt-n1 me-2" do %>
+  <li>
+    <%= link_to admin_organizations_path(format: 'csv', **redirect_params), class: "dropdown-item" do %>
+      <i class="bi-download me-2"></i>Export CSV
+    <% end %>
+  </li>
+<% end %>
+
 <table class="table table-hover" data-controller="table">
   <thead>
     <tr>

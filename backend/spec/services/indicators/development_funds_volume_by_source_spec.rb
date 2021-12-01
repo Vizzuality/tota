@@ -31,9 +31,11 @@ RSpec.describe Indicators::DevelopmentFundsVolumeBySource do
 
       it 'returns correct values' do
         expect { subject }.to change { IndicatorValue.count }
-        values = Indicator.find_by(slug: 'development_funds_volume_by_source').indicator_values
+        indicator = Indicator.find_by(slug: 'development_funds_volume_by_source')
+        values = indicator.indicator_values
         values_json = values.map { |v| v.slice(:date, :category_1, :value, :region_id).symbolize_keys }
 
+        expect(indicator.dynamic).to be(true)
         expect(values_json).to contain_exactly(
           {
             date: '2019',

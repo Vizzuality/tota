@@ -33,6 +33,7 @@ RSpec.describe Indicators::EstablishmentsByType do
         r2_values = values.where(region: @r2)
         pr_values = values.where(region: @pr)
 
+        expect(indicator.dynamic).to be(true)
         expect(values.count).to eq(8)
         expect(r1_values.count).to eq(2)
         expect(r2_values.count).to eq(3)
@@ -57,6 +58,7 @@ RSpec.describe Indicators::EstablishmentsByType do
         r2_values = values.where(region: @r2)
         pr_values = values.where(region: @pr)
 
+        expect(indicator.dynamic).to be(true)
         expect(values.count).to eq(6)
         expect(r1_values.count).to eq(2)
         expect(r2_values.count).to eq(2)
@@ -78,6 +80,7 @@ RSpec.describe Indicators::EstablishmentsByType do
         indicator = Indicator.find_by(slug: 'total_establishments')
         values = indicator.indicator_values
 
+        expect(indicator.dynamic).to be(true)
         expect(values.count).to eq(3)
         expect(values.find_by(region: @r1).value).to eq(5.0)
         expect(values.find_by(region: @r2).value).to eq(4.0)

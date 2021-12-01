@@ -7,7 +7,7 @@ module FixtureFileHelper
                   end
                   file_path
                 else
-                  "#{Rails.root}/text/fixtures/files/#{filename}"
+                  "#{Rails.root}/spec/fixtures/files/#{filename}"
                 end
 
     Rack::Test::UploadedFile.new(file_path, content_type)
