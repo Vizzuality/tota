@@ -33,12 +33,19 @@
   }
 }
 
-.mapbox-custom-popup .mapboxgl-popup-tip {
+.mapbox-custom-popup.no-tip .mapboxgl-popup-tip {
   display: none !important;
 }
 
 .mapbox-custom-popup .mapboxgl-popup-content {
   padding: 0 !important;
+}
+
+.mapboxgl-popup-close-button {
+  right: 10px !important;
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
 }
 
 .mapbox-overlays-no-overflow .overlays {

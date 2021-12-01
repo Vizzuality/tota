@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, useEffect } from 'react';
+import React, { FC, useState, useCallback, useEffect, useRef } from 'react';
 import { MapEvent, Popup } from 'react-map-gl';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
@@ -12,11 +12,12 @@ import LegendItem from 'components/map/legend/item';
 import LegendTypeBasic from 'components/map/legend/types/basic';
 import LegendTypeChoropleth from 'components/map/legend/types/choropleth';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
-import BasicTooltip from 'components/map/tooltips/basic';
+import Tooltip from 'components/map/tooltip';
 
 import { REGION_BBOX } from 'constants/regions';
 import { useMap } from 'hooks/map';
 import { useLayers } from 'hooks/layers';
+import useOnClickOutside from 'hooks/use-on-click-outside';
 
 const cartoProvider = new CartoProvider();
 
@@ -59,6 +60,7 @@ export const MainMap: FC<MapProps> = ({
     selectedRegion,
     regionChanged,
   } = useMap();
+  const popupRef = useRef(null);
   const showSingleRegionSlug = selectedRegion?.slug === 'british_columbia' ? null : selectedRegion?.slug;
   const layers = useLayers(showSingleRegionSlug)
     .filter((x) => activeLayers.includes(x.id))
@@ -129,6 +131,8 @@ export const MainMap: FC<MapProps> = ({
       });
     }
   }, [selectedRegion, regionChanged]);
+  const closePopup = useCallback(() => setSelectedFeature(null), []);
+  useOnClickOutside(popupRef, closePopup);
 
   return (
     <div className="relative w-full h-full">
@@ -162,11 +166,14 @@ export const MainMap: FC<MapProps> = ({
                 className="mapbox-custom-popup"
                 latitude={selectedFeature.coordinates.latitude}
                 longitude={selectedFeature.coordinates.longitude}
-                closeButton={false}
                 closeOnClick={false}
-                dynamicPosition={false}
+                onClose={closePopup}
+                captureScroll
+                capturePointerMove
               >
-                <BasicTooltip properties={selectedFeature.feature.properties} />
+                <div ref={popupRef}>
+                  <Tooltip feature={selectedFeature.feature} />
+                </div>
               </Popup>
             )}
           </>

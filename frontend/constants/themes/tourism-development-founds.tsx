@@ -55,6 +55,7 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
           layout: {
             'icon-image': 'marker',
             'icon-size': 1,
+            'icon-anchor': 'bottom',
           },
           // It will put the layer on the top
           metadata: {

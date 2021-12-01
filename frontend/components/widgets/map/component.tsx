@@ -134,7 +134,7 @@ const MapWidget: FC<MapWidgetProps> = ({
 
               {highlightedFeature && featureTooltip && (
                 <Popup
-                  className="mapbox-custom-popup"
+                  className="mapbox-custom-popup no-tip"
                   latitude={highlightedFeature.geometry.coordinates[1]}
                   longitude={highlightedFeature.geometry.coordinates[0]}
                   closeButton={false}
