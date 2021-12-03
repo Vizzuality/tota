@@ -482,16 +482,16 @@ export const useLayers = (selectedRegion: string): Layer[] => {
       },
       {
         id: 'first_nations_business',
-        name: 'BC Indigenous Business Listings',
+        name: 'Indigenous Businesses',
         category: CATEGORY.TOURISM_SUPPLY_SIDE,
         type: 'vector',
         source: {
           url: 'mapbox://totadata.3pqlvqwr',
         },
-        images: [{ id: 'bc_indigenous_businesses_marker', src: BC_INDIGENOUS_BUSINESSES_SVG }],
+        images: [{ id: 'indigenous_businesses_marker', src: BC_INDIGENOUS_BUSINESSES_SVG }],
         legendConfig: {
           type: 'basic',
-          items: [{ value: 'BC Indigenous Business Listings', icon: BC_INDIGENOUS_BUSINESSES_SVG }],
+          items: [{ value: 'Indigenous Businesses', icon: BC_INDIGENOUS_BUSINESSES_SVG }],
         },
         render: {
           layers: [
@@ -500,7 +500,7 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               'source-layer': 'first_nations_business',
               type: 'symbol',
               layout: {
-                'icon-image': 'bc_indigenous_businesses_marker',
+                'icon-image': 'indigenous_businesses_marker',
                 'icon-size': 1,
                 'icon-anchor': 'bottom',
                 'icon-allow-overlap': MARKER_ALLOW_OVERLAP,

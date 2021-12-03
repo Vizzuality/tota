@@ -46,6 +46,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
           },
         };
         return <BasicTooltip title="Fire" properties={fireProps} />;
+      case 'first_nations_business':
+        return <BasicTooltip title={properties.businessName} properties={pickedProperties} />;
       case 'first_nations_communities':
         return <BasicTooltip title={properties.firstNationBcName} properties={pickedProperties} />;
       case 'organizations':

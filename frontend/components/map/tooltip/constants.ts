@@ -10,6 +10,9 @@ export const PROPERTIES_NEW_NAMES = {
     cartodbId: 'id',
     dateStr: 'date',
   },
+  first_nations_business: {
+    custodianOrgDescription: 'source',
+  },
   first_nations_communities: {
     alternativeName1: 'alternativeName',
     urlToFirstNationWebsite: 'website',
@@ -49,6 +52,19 @@ export const PROPERTIES_TO_PICK = {
   ],
   campgrounds: ['name', 'longitude', 'latitude', 'address', 'city', 'postalCode', 'nrOfSites', 'nrOfUnits'],
   fires: ['id', 'date', 'longitude', 'latitude', 'daysAgo'],
+  first_nations_business: [
+    'businessName',
+    'occupantTypeDescription',
+    'companyType',
+    'streetAddress',
+    'postalCode',
+    'locality',
+    'longitude',
+    'latitude',
+    'yearFormed',
+    'description',
+    'source',
+  ],
   first_nations_communities: [
     'firstNationBcName',
     'firstNationFederalName',
