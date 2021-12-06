@@ -8,16 +8,20 @@ class ThemesLoader
   end
 
   def call
-    content = YAML.safe_load(@path.read)
-    content['themes'].each do |theme_conf|
-      theme = Theme
-        .create_with(title: theme_conf['title'])
-        .find_or_create_by!(slug: theme_conf['slug'])
+    ActiveRecord::Base.transaction do
+      Theme.delete_all
 
-      theme_conf['widgets'].each do |widget_conf|
-        Widget
-          .create_with(widget_conf.merge(theme: theme))
-          .find_or_create_by!(slug: widget_conf['slug'])
+      content = YAML.safe_load(@path.read)
+      content['themes'].each do |theme_conf|
+        theme = Theme
+          .create_with(title: theme_conf['title'])
+          .find_or_create_by!(slug: theme_conf['slug'])
+
+        theme_conf['widgets'].each do |widget_conf|
+          Widget
+            .create_with(widget_conf.merge(theme: theme))
+            .find_or_create_by!(slug: widget_conf['slug'])
+        end
       end
     end
   end
