@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :indicator_values, only: [:index]
     resources :organizations, only: [:show, :index]
     resources :development_funds, only: [:show, :index]
+    resources :widgets, only: [:index, :edit, :update]
   end
 
   namespace :api, format: 'json' do
