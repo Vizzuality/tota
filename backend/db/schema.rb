@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_122542) do
   create_table "themes", force: :cascade do |t|
     t.string "slug", null: false
     t.string "title", null: false
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
