@@ -81,7 +81,14 @@
       <main class="content">
         <%= render "application/flash_messages" %>
 
-        <%= render "breadcrumbs" %>
+        <div class="d-flex justify-content-between">
+          <%= render "breadcrumbs" %>
+          <% if content_for?(:actions) %>
+            <div class="ms-4">
+              <%= content_for :actions %>
+            </div>
+          <% end %>
+        </div>
 
         <div class="container-fluid p-0">
           <%= yield %>
