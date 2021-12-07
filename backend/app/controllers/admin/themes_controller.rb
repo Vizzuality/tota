@@ -7,6 +7,10 @@ class Admin::ThemesController < Admin::AdminController
     Theme
   end
 
+  def scoped_collection(collection)
+    collection.order(:created_at)
+  end
+
   def permitted_params
     [
       :title,

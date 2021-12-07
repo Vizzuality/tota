@@ -12,13 +12,9 @@ class Admin::WidgetsController < Admin::AdminController
     Widget
   end
 
-  # this controls submit successful route redirect
+  # this is route for successful update path
   def resources_url
     admin_theme_url(@resource.theme)
-  end
-
-  def scoped_collection(collection)
-    collection.includes(:theme)
   end
 
   def permitted_params
