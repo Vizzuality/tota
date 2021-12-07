@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="fw-bold">Title: </td>
+          <td><%= @resource.title %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Description: </td>
+          <td><%= @resource.description %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">Widgets</div>
+  <div class="card-body">
+    <table class="table table-hover" data-controller="table">
+      <thead>
+        <tr>
+          <th>
+            Title
+          </th>
+          <th>
+            Description
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @resource.widgets.each do |widget| %>
+          <tr data-link="<%= edit_admin_widget_path(widget) %>">
+            <td><%= widget.title %></td>
+            <td><%= widget.description %></td>
+            <td class="d-flex justify-content-end">
+              <%= dropdown "Actions" do %>
+                <li>
+                  <%= link_to 'Edit', edit_admin_widget_path(widget), class: "dropdown-item" %>
+                </li>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

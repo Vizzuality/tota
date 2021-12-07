@@ -1,7 +1,7 @@
 <% content_for :content do %>
   <div class="wrapper" data-controller="sidebar">
     <nav id="sidebar" class="sidebar" data-sidebar-target="sidebar">
-      <div class="sidebar-content" data-sidebar-target="simpleBar">
+      <div class="sidebar-content">
         <%= link_to admin_dashboards_path, class: 'sidebar-brand' do %>
           <span class="align-middle">TOTA Back Office</span>
         <% end %>
@@ -35,8 +35,8 @@
             Content
           </li>
 
-          <%= sidebar_link_to admin_widgets_path do %>
-            <i class="bi-file-bar-graph"></i> Widgets
+          <%= sidebar_link_to admin_themes_path do %>
+            <i class="bi-file-bar-graph"></i> Themes & Widgets
           <% end %>
 
           <li class="sidebar-header">

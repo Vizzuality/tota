@@ -18,7 +18,6 @@
     "esbuild": "^0.13.10",
     "esbuild-rails": "^1.0.3",
     "sass": "^1.43.4",
-    "simplebar": "^5.3.3",
     "stimulus-checkbox-select-all": "^5.0.0"
   },
   "version": "0.1.0"

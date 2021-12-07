@@ -3,7 +3,7 @@ class Widget < ApplicationRecord
   attribute :sources, Source.to_array_type
 
   validates_presence_of :slug, :title
-  validates :sources, store_model: true
+  validates :sources, store_model: true, allow_nil: true
 
   def sources_attributes=(attr)
     self.sources = attr.values
