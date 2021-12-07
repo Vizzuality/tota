@@ -1,0 +1,9 @@
+<% if rows.any? %>
+  <table class="table">
+    <tbody>
+      <% rows.each do |row| %>
+        <%= row %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,75 +1,23 @@
 <div class="card">
   <div class="card-header">Details</div>
   <div class="card-body">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td class="fw-bold">Show on Platform: </td>
-          <td><%= status_tag @resource.show_on_platform %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Name: </td>
-          <td><%= @resource.name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Region: </td>
-          <td><%= @resource.region_name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Subregion: </td>
-          <td><%= @resource.subregion_name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Business Type: </td>
-          <td><%= @resource.business_type_name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Business Subtype: </td>
-          <td><%= @resource.business_subtype_name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Latitude: </td>
-          <td><%= @resource.latitude %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Longitude: </td>
-          <td><%= @resource.longitude %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Website URL: </td>
-          <td>
-            <%= link_to @resource.website_url, @resource.website_url_link, target: '_blank', rel: 'noopener noreferrer' %>
-          </td>
-        </tr>
-        <tr>
-          <td class="fw-bold">External Company Id: </td>
-          <td><%= @resource.external_company_id %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Indigenous Ownership: </td>
-          <td><%= status_tag @resource.indigenous_ownership %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Biosphere Program Member: </td>
-          <td><%= status_tag @resource.biosphere_program_member %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Accessibility: </td>
-          <td><%= status_tag @resource.accessibility %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Source: </td>
-          <td><%= @resource.source %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Created At: </td>
-          <td><%= @resource.created_at %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Updated At: </td>
-          <td><%= @resource.updated_at %></td>
-        </tr>
-      </tbody>
-    </table>
+    <%= render(AttributesTableComponent.new(resource: @resource)) do |c|
+      c.row :show_on_platform
+      c.row :name
+      c.row :region_name
+      c.row :subregion_name
+      c.row :business_type_name
+      c.row :business_subtype_name
+      c.row :longitude
+      c.row :latitude
+      c.row :website_url_link
+      c.row :external_company_id
+      c.row :indigenous_ownership
+      c.row :biosphere_program_member
+      c.row :accessibility
+      c.row :source
+      c.row :created_at
+      c.row :updated_at
+    end %>
   </div>
 </div>

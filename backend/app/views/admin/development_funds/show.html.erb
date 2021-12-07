@@ -1,89 +1,27 @@
 <div class="card">
   <div class="card-header">Details</div>
   <div class="card-body">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td class="fw-bold">Project Title: </td>
-          <td><%= @resource.project_title %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Project Description: </td>
-          <td><%= @resource.project_description %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Recipient: </td>
-          <td><%= @resource.recipient %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Lead Organization: </td>
-          <td><%= @resource.lead_organization %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Region: </td>
-          <td><%= @resource.region&.name %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Location: </td>
-          <td><%= @resource.location %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Latitude: </td>
-          <td><%= @resource.latitude %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Longitude: </td>
-          <td><%= @resource.longitude %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Categories: </td>
-          <td><%= @resource.categories&.join(', ') %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Scope: </td>
-          <td><%= @resource.scope %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Planning Area: </td>
-          <td><%= @resource.planning_area %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Second Planning Area: </td>
-          <td><%= @resource.second_planning_area %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Total Project Cost: </td>
-          <td><%= @resource.total_project_cost %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Key Funding Amount: </td>
-          <td><%= @resource.key_funding_amount %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Key Funding Source: </td>
-          <td><%= @resource.key_funding_source %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Funding Subtype: </td>
-          <td><%= @resource.funding_subtype %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Funding call date: </td>
-          <td><%= [@resource.funding_call_month, @resource.funding_call_year].compact.join('/') %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Project status: </td>
-          <td><%= status_tag @resource.project_status %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Created At: </td>
-          <td><%= @resource.created_at %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Updated At: </td>
-          <td><%= @resource.updated_at %></td>
-        </tr>
-      </tbody>
-    </table>
+    <%= render(AttributesTableComponent.new(resource: @resource)) do |c|
+      c.row :project_title
+      c.row :project_description
+      c.row :recipient
+      c.row :lead_organization
+      c.row(:region) { |r| r.region&.name }
+      c.row :location
+      c.row :longitude
+      c.row :latitude
+      c.row(:categories) { |r| r.categories&.join(', ') }
+      c.row :scope
+      c.row :planning_area
+      c.row :second_planning_area
+      c.row :total_project_cost
+      c.row :key_funding_amount
+      c.row :key_funding_source
+      c.row :funding_subtype
+      c.row(:funding_call_date) { |r|  [r.funding_call_month, r.funding_call_year].compact.join('/') }
+      c.row(:project_status) { |r| status_tag(r.project_status) }
+      c.row :created_at
+      c.row :updated_at
+    end %>
   </div>
 </div>

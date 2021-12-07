@@ -1,25 +1,11 @@
 <div class="card">
   <div class="card-header">Details</div>
   <div class="card-body">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td class="fw-bold">Name: </td>
-          <td><%= @resource.to_s %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">File: </td>
-          <td><%= link_to @resource.file.filename, rails_blob_path(@resource.file, disposition: 'attachment') %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Uploaded By: </td>
-          <td><%= @resource.uploaded_by %></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Uploaded At: </td>
-          <td><%= @resource.uploaded_at %></td>
-        </tr>
-      </tbody>
-    </table>
+    <%= render(AttributesTableComponent.new(resource: @resource)) do |c|
+      c.row 'Name', &:to_s
+      c.row :file
+      c.row :uploaded_by
+      c.row :uploaded_at
+    end %>
   </div>
 </div>
