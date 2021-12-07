@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       resources :organizations, only: [:index], format: /(json|geojson)/
       resources :indicators, only: [:index]
       resources :regions, only: [:index]
+      resources :themes, only: [:index]
+      resources :widgets, only: [:index]
     end
   end
 end
