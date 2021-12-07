@@ -20,7 +20,7 @@
       <tr data-link="<%= admin_theme_path(theme) %>">
         <td><%= theme.title %></td>
         <td><%= theme.description %></td>
-        <td class="d-flex justify-content-end">
+        <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>
               <%= link_to 'Show', admin_theme_path(theme), class: "dropdown-item" %>

@@ -43,7 +43,7 @@
           <tr data-link="<%= edit_admin_widget_path(widget) %>">
             <td><%= widget.title %></td>
             <td><%= widget.description %></td>
-            <td class="d-flex justify-content-end">
+            <td class="text-end">
               <%= dropdown "Actions" do %>
                 <li>
                   <%= link_to 'Edit', edit_admin_widget_path(widget), class: "dropdown-item" %>
