@@ -1,0 +1,10 @@
+<% is_new_record = form.object == {} %>
+
+<%= content_tag :div, class: "d-flex gap-3 align-items-center nested-fields", data: { new_record: is_new_record } do %>
+  <%= form.input :text, wrapper_html: {class: "flex-fill"} %>
+  <%= form.input :link, wrapper_html: {class: "flex-fill"} %>
+  <%= form.input :note, wrapper_html: {class: "flex-fill"} %>
+
+  <%= button_tag "Remove", type: "button", class: "btn btn-danger", data: { action: "click->nested-list#removeRecord" } %>
+  <%= form.hidden_field :_destroy if form.object.respond_to?(:_destroy) %>
+<% end %>

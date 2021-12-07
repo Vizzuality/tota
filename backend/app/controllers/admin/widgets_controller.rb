@@ -17,7 +17,7 @@ class Admin::WidgetsController < Admin::AdminController
       :sub_title,
       :description,
       :note,
-      :sources
+      sources_attributes: [:link, :text, :note]
     ]
   end
 end

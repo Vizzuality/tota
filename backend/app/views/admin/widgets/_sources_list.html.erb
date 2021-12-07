@@ -1,0 +1,18 @@
+<div data-controller="nested-list">
+  <template>
+    <%= form.simple_fields_for :sources, Source.new, child_index: 'NEW_RECORD' do |f| %>
+      <%= render "source_fields", form: f %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :sources do |f| %>
+    <%= render "source_fields", form: f %>
+  <% end %>
+
+  <div class="nested-list__actions" data-target="nested-list.links">
+    <%= button_tag type: 'button', class: 'btn btn-primary', data: { action: "click->nested-list#addRecord" } do %>
+      <i class="bi bi-plus"></i>
+      Add Source
+    <% end %>
+  </div>
+</div>
