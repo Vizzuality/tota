@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :theme do
-    slug { 'accommodation_information' }
+    sequence(:slug) { |n| "theme_#{n}" }
     title { 'Accommodation Information' }
     description { 'Theme Description' }
 

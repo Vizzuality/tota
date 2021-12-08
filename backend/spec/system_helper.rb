@@ -53,6 +53,14 @@ module PageHelpers
   def within_row(text, &block)
     within(:xpath, ".//tr[contains(normalize-space(.), '#{text}')]", &block)
   end
+
+  def within_card(text, &block)
+    within(:xpath, "(.//div[contains(concat(' ', normalize-space(@class), ' '), ' card-header ') and contains(., '#{text}')]/..)[1]", &block)
+  end
+
+  def find_row(text)
+    find(:xpath, ".//tr[contains(normalize-space(.), '#{text}')]")
+  end
 end
 
 RSpec.configure do |config|
