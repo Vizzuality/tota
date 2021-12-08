@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @resource.widgets.each do |widget| %>
+        <% @resource.widgets.order(:created_at).each do |widget| %>
           <tr data-link="<%= edit_admin_widget_path(widget) %>">
             <td><%= widget.title %></td>
             <td><%= widget.description %></td>
