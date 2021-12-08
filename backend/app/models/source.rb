@@ -6,4 +6,5 @@ class Source
   attribute :note, :string
 
   validates_presence_of :text
+  validates :link, url: true
 end

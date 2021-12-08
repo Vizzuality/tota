@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "slug": "theme_1_widget_1",
+      "title": "Widget title"
+    },
+    {
+      "slug": "theme_1_widget_2",
+      "title": "Widget title"
+    },
+    {
+      "slug": "theme_2_widget_1",
+      "title": "Widget title"
+    },
+    {
+      "slug": "theme_2_widget_2",
+      "title": "Widget title"
+    }
+  ]
+}

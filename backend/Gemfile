@@ -52,6 +52,10 @@ group :development do
   gem 'capistrano3-puma'
   gem 'capistrano-yarn'
   gem 'capistrano-nvm'
+
+  # required for emacs robe mode
+  gem 'pry-doc', require: false
+  gem 'webrick', require: false
 end
 
 group :test do
