@@ -7,6 +7,6 @@ class Widget < ApplicationRecord
   validates :sources, store_model: true, allow_nil: true
 
   def sources_attributes=(attr)
-    self.sources = attr.values
+    self.sources = attr.values.reject { |a| ActiveModel::Type::Boolean.new.cast(a[:_destroy]) }
   end
 end

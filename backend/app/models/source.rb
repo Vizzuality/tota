@@ -1,6 +1,8 @@
 class Source
   include StoreModel::Model
 
+  attr_accessor :_destroy
+
   attribute :text, :string
   attribute :link, :string
   attribute :note, :string
