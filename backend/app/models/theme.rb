@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: themes
+#
+#  id          :bigint           not null, primary key
+#  slug        :string           not null
+#  title       :string           not null
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Theme < ApplicationRecord
   has_many :widgets
 

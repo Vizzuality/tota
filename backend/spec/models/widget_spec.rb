@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: widgets
+#
+#  id          :bigint           not null, primary key
+#  theme_id    :bigint           not null
+#  slug        :string           not null
+#  title       :string           not null
+#  sub_title   :string
+#  description :text
+#  note        :text
+#  sources     :jsonb
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe Widget, type: :model do
