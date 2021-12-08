@@ -8,5 +8,21 @@
     </div>
   </div>
 
-  <%= yield(f) if block_given? %>
+  <% if block_given? %>
+    <div class="d-inline-block" data-controller="filters">
+      <button type="button" class="btn btn-primary-outline m1-n1" data-filters-target="button">
+        <i class="bi bi-filter"></i>
+        Filters
+        <% if q.conditions.any? %>
+          <span class="badge bg-info"><%= q.conditions.count %></span>
+        <% end %>
+      </button>
+      <template data-filters-target="popup">
+        <%= yield(f) %>
+
+        <%= button_tag 'Apply', class: 'btn btn-primary', type: :submit %>
+        <%= link_to 'Reset', resources_url, class: 'btn btn-link' %>
+      </template>
+    </div>
+  <% end %>
 <% end %>

@@ -9,7 +9,7 @@ module Admin::Resources
     after_action :verify_authorized, except: [:index]
     after_action :verify_policy_scoped, only: [:index]
 
-    helper_method :redirect_params
+    helper_method :redirect_params, :resources_url
   end
 
   # GET /resources
