@@ -29,6 +29,8 @@
       <thead>
         <tr>
           <th>
+          </th>
+          <th>
             Title
           </th>
           <th>
@@ -38,9 +40,13 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <% @resource.widgets.order(:created_at).each do |widget| %>
-          <tr data-link="<%= edit_admin_widget_path(widget) %>">
+      <tbody data-controller="sortable">
+        <% @resource.widgets.order(:position).each do |widget| %>
+          <tr data-link="<%= edit_admin_widget_path(widget) %>" data-sortable-url="<%= sort_admin_widget_path(widget) %>">
+            <td class="sortable-handle">
+              <!-- <i class="bi-list"></i> -->
+              <i class="bi-arrow-down-up"></i>
+            </td>
             <td><%= widget.title %></td>
             <td><%= widget.description %></td>
             <td class="text-end">

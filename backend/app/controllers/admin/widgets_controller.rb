@@ -1,9 +1,18 @@
 class Admin::WidgetsController < Admin::AdminController
   include Admin::Resources
 
+  before_action :set_breadcrumbs, except: [:index, :sort]
+
   def index
     skip_policy_scope
     redirect_to admin_themes_url
+  end
+
+  def sort
+    set_resource
+    authorize_resource
+
+    @resource.insert_at params[:position].to_i
   end
 
   private

@@ -9,6 +9,7 @@ class CreateWidgets < ActiveRecord::Migration[6.1]
       t.text :description
       t.text :note
       t.jsonb :sources
+      t.integer :position
 
       t.timestamps
     end

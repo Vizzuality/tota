@@ -10,11 +10,15 @@
 #  description :text
 #  note        :text
 #  sources     :jsonb
+#  position    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 class Widget < ApplicationRecord
   belongs_to :theme
+
+  acts_as_list scope: :theme, top_of_list: 0
+
   attribute :sources, Source.to_array_type
 
   validates_presence_of :slug, :title

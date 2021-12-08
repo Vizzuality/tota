@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_122542) do
     t.text "description"
     t.text "note"
     t.jsonb "sources"
+    t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["theme_id"], name: "index_widgets_on_theme_id"

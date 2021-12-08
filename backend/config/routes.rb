@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     resources :organizations, only: [:show, :index]
     resources :development_funds, only: [:show, :index]
     resources :themes, except: [:destroy]
-    resources :widgets, only: [:index, :edit, :update]
+    resources :widgets, only: [:index, :edit, :update] do
+      member do
+        post 'sort'
+      end
+    end
   end
 
   namespace :api, format: 'json' do

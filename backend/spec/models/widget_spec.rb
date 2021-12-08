@@ -10,6 +10,7 @@
 #  description :text
 #  note        :text
 #  sources     :jsonb
+#  position    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
