@@ -16,8 +16,8 @@ class Theme < ApplicationRecord
   validates_uniqueness_of :slug
 
   class << self
-    def load_config
-      ThemesLoader.new(Rails.root.join('config/themes.yml')).call
+    def load_config(cleanup: false)
+      ThemesLoader.new(path: Rails.root.join('config/themes.yml'), cleanup: cleanup).call
     end
   end
 end
