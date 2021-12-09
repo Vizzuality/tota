@@ -1,5 +1,5 @@
 class WidgetPolicy < ApplicationPolicy
-  def sort?
+  def update_position?
     true
   end
 end

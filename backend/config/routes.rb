@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :themes, except: [:destroy]
     resources :widgets, only: [:index, :edit, :update] do
       member do
-        post 'sort'
+        post :update_position
       end
     end
   end

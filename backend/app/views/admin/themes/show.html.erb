@@ -42,7 +42,7 @@
       </thead>
       <tbody data-controller="sortable">
         <% @resource.widgets.order(:position).each do |widget| %>
-          <tr data-link="<%= edit_admin_widget_path(widget) %>" data-sortable-url="<%= sort_admin_widget_path(widget) %>">
+          <tr data-link="<%= edit_admin_widget_path(widget) %>" data-sortable-url="<%= update_position_admin_widget_path(widget) %>">
             <td class="sortable-handle">
               <!-- <i class="bi-list"></i> -->
               <i class="bi-arrow-down-up"></i>

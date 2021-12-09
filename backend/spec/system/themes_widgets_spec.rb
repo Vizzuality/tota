@@ -19,7 +19,14 @@ RSpec.describe 'Themes & Widgets', type: :system do
       title: 'Accommodation',
       description: 'Accommodation description',
       widgets: [
-        build(:widget, title: 'Occupancy rates'),
+        build(
+          :widget,
+          title: 'Occupancy rates',
+          sources: [
+            build(:source, text: 'Source 1'),
+            build(:source, text: 'Source 2')
+          ]
+        ),
         build(:widget, title: 'Average daily hotel rate')
       ]
     )
@@ -89,12 +96,32 @@ RSpec.describe 'Themes & Widgets', type: :system do
 
       fill_in :widget_title, with: 'Changed Occupancy rates'
 
+      expect(page).to have_selector("input[value='Source 1']")
+      # Remove Source 1
+      within(first('div.nested-fields')) do
+        click_on 'Remove'
+      end
+      # Change text for Source 2
+      within(first('div.nested-fields')) do
+        first('div.widget_sources_text input').fill_in with: 'Source Changes'
+      end
+      # Add new Source
+      click_on 'Add Source'
+      within(last('div.nested-fields')) do
+        first('div.widget_sources_text input').fill_in with: 'New Source'
+      end
+
       click_on 'Update Widget'
       expect(page).to have_text('Widget was successfully updated')
 
       within_card('Widgets') do
-        expect(page).to have_text('Changed Occupancy rates')
+        find_row('Changed Occupancy rates').click
       end
+
+      expect(page).to have_selector("input[value='Source Changes']")
+      expect(page).to have_selector("input[value='New Source']")
+      expect(page).not_to have_selector("input[value='Source 1']")
+      expect(page).not_to have_selector("input[value='Source 2']")
     end
   end
 end
