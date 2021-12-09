@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <% if block_given? %>
+  <% if (block = yield(f)).present? %>
     <div class="d-inline-block" data-controller="filters">
       <button type="button" class="btn btn-primary-outline m1-n1" data-filters-target="button">
         <i class="bi bi-filter"></i>
@@ -18,7 +18,7 @@
         <% end %>
       </button>
       <template data-filters-target="popup">
-        <%= yield(f) %>
+        <%= block %>
 
         <%= button_tag 'Apply', class: 'btn btn-primary', type: :submit %>
         <%= link_to 'Reset', resources_url, class: 'btn btn-link' %>
