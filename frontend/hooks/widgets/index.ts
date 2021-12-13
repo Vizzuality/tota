@@ -18,17 +18,25 @@ function mergeWithFrontendDefinitions(themeSlug: string, data: WidgetAPI[]): Wid
 }
 
 export function useWidgets(themeSlug: string, selectedRegion?: Region) {
-  return useQuery(['widgets', { themeSlug }], () => TotaAPI.get(`widgets?filter[theme.slug]=${themeSlug}`), {
-    keepPreviousData: true,
-    staleTime: Infinity,
-    placeholderData: [],
-    select: useCallback(
-      (data: WidgetAPI[]) => {
-        return mergeWithFrontendDefinitions(themeSlug, data).filter((w) =>
-          w.display ? w.display(selectedRegion) : true,
-        );
-      },
-      [themeSlug, selectedRegion],
-    ),
-  });
+  const result = useQuery<WidgetAPI[], Error, Widget[]>(
+    ['widgets', { themeSlug }],
+    () => TotaAPI.get(`widgets?filter[theme.slug]=${themeSlug}`),
+    {
+      keepPreviousData: true,
+      staleTime: Infinity,
+      placeholderData: [],
+      select: useCallback(
+        (data: WidgetAPI[]) => {
+          return mergeWithFrontendDefinitions(themeSlug, data).filter((w) =>
+            w.display ? w.display(selectedRegion) : true,
+          );
+        },
+        [themeSlug, selectedRegion],
+      ),
+    },
+  );
+  return {
+    ...result,
+    data: result.data || [],
+  };
 }

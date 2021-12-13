@@ -28,10 +28,14 @@ export function useRouterSelectedTheme(): Theme {
 }
 
 export function useThemes() {
-  return useQuery<ThemeAPI[], Error, Theme[]>('themes', () => TotaAPI.get('themes'), {
+  const result = useQuery<ThemeAPI[], Error, Theme[]>('themes', () => TotaAPI.get('themes'), {
     keepPreviousData: true,
     staleTime: Infinity,
     placeholderData: [],
     select: useCallback(mergeWithFrontendDefinitions, []),
   });
+  return {
+    ...result,
+    data: result.data || [],
+  };
 }

@@ -20,7 +20,9 @@ import GetInvolved from 'components/static-pages/get-involved';
 import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
 const Home: React.FC<void> = (): JSX.Element => {
-  const { data: themes, isFetched: themesFetched } = useThemes();
+  const themesResult = useThemes();
+  const themes = themesResult.data;
+  const themesFetchedWithSuccess = themesResult.isFetched && themesResult.isSuccess;
 
   return (
     <Layout className="w-full">
@@ -78,7 +80,7 @@ const Home: React.FC<void> = (): JSX.Element => {
             environmental and social insights and improve their spatial and temporal quality.
           </p>
 
-          {themesFetched && (
+          {themesFetchedWithSuccess && (
             <div className="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
               {themes.map((theme) => (
                 <IndicatorLink

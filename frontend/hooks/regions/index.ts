@@ -19,7 +19,7 @@ function applyParentsAndChildren(regions: Region[]): Region[] {
 }
 
 export function useRegions() {
-  return useQuery<Region[], Error>(
+  const result = useQuery<Region[], Error>(
     'regions',
     () => TotaAPI.get('/regions?filter[region_type]=province,tourism_region'),
     {
@@ -29,6 +29,10 @@ export function useRegions() {
       select: useCallback(applyParentsAndChildren, []),
     },
   );
+  return {
+    ...result,
+    data: result.data || [],
+  };
 }
 
 export function useRouterSelectedRegion(): Region {

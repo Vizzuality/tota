@@ -20,7 +20,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
   const { data: themes } = useThemes();
   // TODO: refactor this
   const filteredThemes = themes.filter(
-    (t) => region === 'british-columbia' || (region !== 'british-columbia' && t.slug !== 'general-insights'),
+    (t) => region === 'british-columbia' || (region !== 'british-columbia' && t.slug !== 'general_insights'),
   );
   const handleRegionChange = (regionSlug: string) => {
     if (themeSlug === 'general-insights') {
@@ -66,7 +66,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
                 className={cx({
                   'px-4 py-2 text-sm h-16 hover:bg-blue-900': true,
                   'flex-1 flex items-center justify-center text-center': true,
-                  'font-bold bg-blue-900': t.slug === themeSlug,
+                  'font-bold bg-blue-900': kebabCase(t.slug) === themeSlug,
                 })}
               >
                 {t.title}
