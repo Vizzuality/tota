@@ -21,7 +21,7 @@ import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
 const Home: React.FC<void> = (): JSX.Element => {
   const themesResult = useThemes();
-  const themes = themesResult.data;
+  const themes = themesResult.data?.filter((t) => t.slug !== 'general_insights');
   const themesFetchedWithSuccess = themesResult.isFetched && themesResult.isSuccess;
 
   return (

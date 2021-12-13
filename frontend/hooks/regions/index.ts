@@ -1,11 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
 
 import TotaAPI from 'services/api';
 
-import { UseRegionsResponse } from './types';
 import type { Region } from 'types';
 
 function applyParentsAndChildren(regions: Region[]): Region[] {

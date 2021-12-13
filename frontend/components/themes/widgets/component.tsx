@@ -11,11 +11,12 @@ interface WidgetsProps {}
 const Widgets: FC<WidgetsProps> = () => {
   const theme = useRouterSelectedTheme();
   const selectedRegion = useRouterSelectedRegion();
-  const { data: widgets, isFetched } = useWidgets(theme.slug, selectedRegion);
+  const { data: widgets, isFetched, isSuccess } = useWidgets(theme.slug, selectedRegion);
 
   return (
     <div className="flex flex-col gap-10 mb-10">
       {isFetched &&
+        isSuccess &&
         widgets.map((widget, index) => (
           <ThemeWidget key={`${theme.slug} - ${widget.title}`} index={index + 1} widget={widget} />
         ))}
