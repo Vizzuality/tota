@@ -16,14 +16,21 @@ export interface ThemeWidgetProps {
   index: number;
 }
 
+const LoadingWidget = () => (
+  <div style={{ height: 400 }} className="flex items-center justify-center">
+    <Loading iconClassName="w-10 h-10" visible />
+  </div>
+);
+const ErrorWidget = () => (
+  <div style={{ height: 400 }} className="flex items-center justify-center">
+    An unexpected error has occurred while loading this widget
+  </div>
+);
+
 const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) => {
-  const [state, setState] = useState(widget.initialState || {});
   const selectedRegion = useRouterSelectedRegion();
-  const LoadingWidget = () => (
-    <div style={{ height: 400 }} className="flex items-center justify-center">
-      <Loading iconClassName="w-10 h-10" visible />
-    </div>
-  );
+
+  const [state, setState] = useState(widget.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
@@ -32,11 +39,14 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     }),
     [state, selectedRegion],
   );
+
   const {
     data: indicatorValues,
     isFetched,
     isFetching,
     isLoading,
+    isError,
+    isSuccess,
   } = useIndicatorValues(widget.fetchParams(wholeState));
   const {
     data,
@@ -50,9 +60,14 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     () => widget.fetchWidgetProps(indicatorValues, wholeState),
     [widget.fetchWidgetProps, indicatorValues, wholeState],
   );
+
   const WidgetComponent = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
+  const isDataFetched = isFetched && isSuccess;
+  const noData = isDataFetched && data.length === 0;
+
+  if (noData) return null;
 
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">
@@ -121,7 +136,8 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
         )}
         <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched && data !== undefined && data !== null && (
+          {!isLoading && !isFetching && isError && <ErrorWidget />}
+          {isDataFetched && (
             <>
               {((Array.isArray(data) && data.length > 0) || (!Array.isArray(data) && data !== '')) &&
                 (WidgetWrapper ? (
@@ -131,7 +147,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
                 ) : (
                   <WidgetComponent data={data} {...widgetConfig} />
                 ))}
-              {data.length === 0 && <span>No data available</span>}
+              {noData && <span>No data available</span>}
             </>
           )}
         </div>
