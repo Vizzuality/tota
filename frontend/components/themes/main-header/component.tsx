@@ -42,7 +42,7 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const router = useRouter();
   const theme = useRouterSelectedTheme();
   const selectedRegion = useRouterSelectedRegion();
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
   const { isFetched, isFetching, data } = useIndicatorValues({
     slug: STATISTICS.map((x) => x.indicator),
     region: selectedRegion.slug,

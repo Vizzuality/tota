@@ -5,6 +5,8 @@ import Button from 'components/button';
 import Hero from 'components/hero';
 import IndicatorLink from 'components/indicator-link';
 
+import { useThemes } from 'hooks/themes';
+
 import heroBackgroundImage1 from 'images/home/hero-background-1.png';
 import heroBackgroundImage2 from 'images/home/hero-background-2.png';
 import heroBackgroundImage3 from 'images/home/hero-background-3.png';
@@ -13,12 +15,13 @@ import heroBackgroundImage5 from 'images/home/hero-background-5.png';
 
 import boxComingSoonImage from 'images/home/box-more-coming-soon.png';
 
-import { themesIndex as themes } from 'constants/themes';
 import ParticipatingRegions from 'components/static-pages/participating-regions';
 import GetInvolved from 'components/static-pages/get-involved';
 import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
 const Home: React.FC<void> = (): JSX.Element => {
+  const { data: themes, isFetched: themesFetched } = useThemes();
+
   return (
     <Layout className="w-full">
       <Head>
@@ -75,23 +78,25 @@ const Home: React.FC<void> = (): JSX.Element => {
             environmental and social insights and improve their spatial and temporal quality.
           </p>
 
-          <div className="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {themes.map((theme) => (
-              <IndicatorLink
-                key={theme.slug}
-                className="w-full"
-                name={theme.title}
-                url={`/themes/british-columbia/${theme.slug}`}
-                image={theme.image}
-              />
-            ))}
-            <div
-              className="relative w-full text-white text-2xl font-bold bg-cover"
-              style={{ backgroundImage: `url(${boxComingSoonImage})`, paddingBottom: '100%' }}
-            >
-              <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
+          {themesFetched && (
+            <div className="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+              {themes.map((theme) => (
+                <IndicatorLink
+                  key={theme.slug}
+                  className="w-full"
+                  name={theme.title}
+                  url={`/themes/british-columbia/${theme.slug}`}
+                  image={theme.image}
+                />
+              ))}
+              <div
+                className="relative w-full text-white text-2xl font-bold bg-cover"
+                style={{ backgroundImage: `url(${boxComingSoonImage})`, paddingBottom: '100%' }}
+              >
+                <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

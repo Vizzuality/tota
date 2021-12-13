@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 
-import { useRouterSelectedTheme } from 'hooks/themes';
+import { useRouterSelectedTheme, useThemes } from 'hooks/themes';
 
 import Drawer from 'components/drawer';
 import Button from 'components/button';
 import Icon from 'components/icon';
 
-import themes from 'constants/themes';
 import Link from 'next/link';
 
 import ChevronIcon from 'svgs/chevron-down.svg?sprite';
@@ -17,6 +16,7 @@ export interface ThemeMobileFooterProps {}
 const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
   const [isOpen, setOpen] = useState(false);
   const theme = useRouterSelectedTheme();
+  const { data: themes } = useThemes();
 
   return (
     <div className="lg:hidden">

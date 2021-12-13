@@ -45,28 +45,37 @@ interface Source {
   note?: string;
 }
 
-export interface ThemeSectionType {
-  title: string;
-  subTitle?: string;
-  description: string;
-  note?: string;
-  sources?: Source[];
+export interface ThemeFrontendDefinition {
+  slug: string;
+  image?: string;
+  widgets?: WidgetFrontendDefinition[];
+}
+
+export interface WidgetFrontendDefinition {
+  slug: string;
   initialState?: any;
   display?: (selectedRegion: Region) => boolean;
   fetchParams: (state: any) => any;
   fetchWidgetProps: (indicatorValues: IndicatorValue[], state: any) => any;
 }
 
-export interface ThemeBaseType {
-  title: string;
+export interface WidgetAPI {
   slug: string;
-  image?: string;
+  title: string;
+  sub_title?: string;
+  description: string;
+  note?: string;
+  sources?: Source[];
 }
 
-export interface ThemeType extends ThemeBaseType {
-  summary?: string;
-  sections: ThemeSectionType[];
+export interface ThemeAPI {
+  slug: string;
+  title: string;
+  description?: string;
 }
+
+export type Widget = WidgetAPI & WidgetFrontendDefinition;
+export type Theme = ThemeAPI & ThemeFrontendDefinition;
 
 export interface OptionType {
   label: string;

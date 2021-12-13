@@ -4,12 +4,11 @@ import { useRouter } from 'next/router';
 import cx from 'classnames';
 import kebabCase from 'lodash/kebabCase';
 
-import themes from 'constants/themes';
-
 import type { SelectOptionProps } from 'components/forms/select/types';
 import Select from 'components/forms/select';
 
 import { useRegions } from 'hooks/regions';
+import { useThemes } from 'hooks/themes';
 
 export interface ThemeNavbarProps {}
 
@@ -17,16 +16,17 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
   const [fixed, setFixed] = useState(false);
   const router = useRouter();
   const { theme: themeSlug, region } = router.query;
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
+  const { data: themes } = useThemes();
   // TODO: refactor this
   const filteredThemes = themes.filter(
     (t) => region === 'british-columbia' || (region !== 'british-columbia' && t.slug !== 'general-insights'),
   );
-  const handleRegionChange = (value: string) => {
+  const handleRegionChange = (regionSlug: string) => {
     if (themeSlug === 'general-insights') {
-      router.push(`/themes/${value}/tourism-industry-arrivals`, undefined, { scroll: false });
+      router.push(`/themes/${regionSlug}/tourism-industry-arrivals`, undefined, { scroll: false });
     } else {
-      router.push(`/themes/${value}/${themeSlug}`, undefined, { scroll: false });
+      router.push(`/themes/${regionSlug}/${kebabCase(themeSlug as string)}`, undefined, { scroll: false });
     }
   };
 
@@ -61,7 +61,7 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
           </div>
           <div className="w-0 border-r-2 h-16"></div>
           {filteredThemes.map((t) => (
-            <Link key={t.slug} href={`/themes/${region}/${t.slug}`}>
+            <Link key={t.slug} href={`/themes/${region}/${kebabCase(t.slug as string)}`}>
               <a
                 className={cx({
                   'px-4 py-2 text-sm h-16 hover:bg-blue-900': true,

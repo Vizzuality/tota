@@ -20,7 +20,7 @@ const MapWidget: FC<MapWidgetProps> = ({
   prependExtraLayers = false,
   includeTourismRegionLabels = true,
 }: MapWidgetProps) => {
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 54.123389,
