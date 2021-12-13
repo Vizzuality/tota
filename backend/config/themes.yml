@@ -79,6 +79,7 @@ themes:
 
       - slug: domestic_arrivals
         title: Domestic arrivals
+        description: Total amount of domestic overnight arrivals to the province/regions by month.
         note: |
           <br/>
           Visits: count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.
