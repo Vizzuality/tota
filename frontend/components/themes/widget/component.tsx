@@ -67,8 +67,6 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
   const isDataFetched = isFetched && isSuccess;
   const noData = isDataFetched && data.length === 0;
 
-  if (noData) return null;
-
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">
       <div className="lg:w-2/6 lg:pr-5 lg:border-r-2 flex flex-col">
