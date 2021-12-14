@@ -19,7 +19,7 @@
     <% @resources.each do |theme| %>
       <tr data-link="<%= admin_theme_path(theme) %>">
         <td><%= theme.title %></td>
-        <td><%= theme.description %></td>
+        <td><%= theme.description&.html_safe %></td>
         <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>

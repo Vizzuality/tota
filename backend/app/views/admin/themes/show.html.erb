@@ -15,7 +15,7 @@
         </tr>
         <tr>
           <td class="fw-bold">Description: </td>
-          <td><%= @resource.description %></td>
+          <td><%= @resource.description&.html_safe %></td>
         </tr>
       </tbody>
     </table>
@@ -48,7 +48,7 @@
               <i class="bi-arrow-down-up"></i>
             </td>
             <td><%= widget.title %></td>
-            <td><%= widget.description %></td>
+            <td><%= widget.description&.html_safe %></td>
             <td class="text-end">
               <%= dropdown "Actions" do %>
                 <li>
