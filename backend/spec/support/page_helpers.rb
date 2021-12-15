@@ -34,7 +34,7 @@ module PageHelpers
   def click_on(locator = nil, **options)
     link_or_button = find(:link_or_button, locator, **options)
     page.scroll_to(link_or_button, align: :center)
-    sleep 0.1 # dunno why have to wait on CI
+    sleep 0.2 # dunno why have to wait on CI
     link_or_button.click
   end
 end
