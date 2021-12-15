@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
+import orderBy from 'lodash/orderBy';
 
 import themes from 'constants/themes';
 import { Region, Widget, WidgetAPI } from 'types';
@@ -27,8 +28,9 @@ export function useWidgets(themeSlug: string, selectedRegion?: Region) {
       placeholderData: [],
       select: useCallback(
         (data: WidgetAPI[]) => {
-          return mergeWithFrontendDefinitions(themeSlug, data).filter((w) =>
-            w.display ? w.display(selectedRegion) : true,
+          return orderBy(
+            mergeWithFrontendDefinitions(themeSlug, data).filter((w) => (w.display ? w.display(selectedRegion) : true)),
+            'position',
           );
         },
         [themeSlug, selectedRegion],
