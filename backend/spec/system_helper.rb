@@ -7,8 +7,10 @@ Capybara.default_normalize_ws = true
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
-    window_size: [1200, 2000],
-    browser_options: {},
+    window_size: [1200, 800],
+    browser_options: {
+      'no-sandbox': nil
+    },
     # Increase Chrome startup wait time (required for stable CI builds)
     process_timeout: 10,
     inspector: true,

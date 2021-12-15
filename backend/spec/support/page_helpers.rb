@@ -29,11 +29,12 @@ module PageHelpers
     find(:xpath, ".//tr[contains(normalize-space(.), '#{text}')]")
   end
 
-  def screenshot
-    timestamp = Time.zone.now.strftime('%Y_%m_%d-%H_%M_%S')
-    filename = "#{method_name}-#{timestamp}.png"
-    screenshot_path = Rails.root.join('tmp', 'screenshots', filename)
-
-    page.save_screenshot(screenshot_path)
+  # override because cuprite at least on CI has problem with clicking on
+  # elements outside window view
+  def click_on(locator = nil, **options)
+    link_or_button = find(:link_or_button, locator, **options)
+    page.scroll_to(link_or_button, align: :center)
+    sleep 0.1 # dunno why have to wait on CI
+    link_or_button.click
   end
 end
