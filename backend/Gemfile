@@ -21,10 +21,12 @@ gem 'stimulus-rails'
 
 gem 'pagy'
 
+gem 'acts_as_list'
 gem 'devise'
-gem 'simple_form'
-gem 'ransack'
 gem 'pundit'
+gem 'ransack'
+gem 'simple_form'
+gem 'store_model'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -51,6 +53,10 @@ group :development do
   gem 'capistrano3-puma'
   gem 'capistrano-yarn'
   gem 'capistrano-nvm'
+
+  # required for emacs robe mode
+  gem 'pry-doc', require: false
+  gem 'webrick', require: false
 end
 
 group :test do

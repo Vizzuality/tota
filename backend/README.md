@@ -45,9 +45,26 @@ To annotate models run
 
 `bundle exec annotate --models`
 
+## Themes and Widgets configuration
+
+Themes and widgets configuration is held in both frontend and backend application.
+
+Frontend keeps widget, indicators and data transformation configuration and Backend keeps all texts like titles, descriptions, notes, sources.
+
+Backend initial configration is stored in `config/themes.yml`. After loading that to the database, the admin can manage those fields.
+
+To sync themes&widgets with `themes.yml` definition file (add new, remove obsolete) run `bundle exec rails themes:update`. This task runs
+after every deploy to sync production database. The sync will not update titles, description and any properties of already existing
+themes and widgets. It will only add non-existing and remove those that were removed from configration file.
+
+To sync ALL properties of ALL themes and widgets you need to run `bundle exec rails themes:reimport`. That will remove all Themes
+from database and re-add from configuration file.
+
+To run `reimport` task on production you need to append `FORCE=true` ENV variable (`bundle exec rails themes:reimport FORCE=true`)
+
 ## API docs
 
-All API endpoints are prefixed by /api/v1.
+All API endpoints are prefixed by `/api/v1`.
 
 Query parameters:
 
@@ -83,3 +100,19 @@ Return as geojson FeatureCollection
 ### Indicators
 
 ### `GET /indicators`
+
+### Themes
+
+### `GET /themes`
+
+Returns all themes
+
+### Widgets
+
+### `GET /widgets`
+
+Returns all widgets
+
+### `GET /widgets?filter[theme.slug]=general_insights`
+
+Returns all widgets for ex. `general_insights` theme

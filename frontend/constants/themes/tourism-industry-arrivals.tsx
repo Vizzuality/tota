@@ -19,26 +19,18 @@ import {
 } from 'utils/charts';
 import { shortMonthName, compactNumberTickFormatter, thisYear, previousYear, formatPercentage } from './utils';
 import { bottomLegend, defaultTooltip } from 'constants/charts';
-import { IndicatorValue, ThemeType } from 'types';
+import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 import { format, parseISO } from 'date-fns';
 
 import BoxImage from 'images/home/box-tourism-industry.png';
 import { getMapUrl } from 'hooks/map';
 
-const theme: ThemeType = {
-  title: 'Tourism Industry & Arrivals',
-  slug: 'tourism-industry-arrivals',
+const theme: ThemeFrontendDefinition = {
+  slug: 'tourism_industry_arrivals',
   image: BoxImage,
-  sections: [
+  widgets: [
     {
-      title: 'Tourism businesses',
-      subTitle: '(by type)',
-      description: `Total number of tourism businesses in the selected region, by type of business.`,
-      sources: [
-        {
-          text: `Aggregated figures. Includes information directly from the regional DMOs, as well as additional business information of the tourism supply side from third party sources (e.g. campgrounds, visitor information centres, etc.).`,
-        },
-      ],
+      slug: 'tourism_businesses',
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: 'all',
@@ -62,16 +54,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Tourism businesses: specific characteristics',
-      description: `
-        Total number of tourism businesses in the selected region that are: (1) members of the Biosphere program; (2) accessible businesses; (3) businesses that have indigenous ownership (51% and more).
-      `,
-      note: 'The accessibility indication is not based on any official certifications or audits and should only be seen as indicative information. The highlighted businesses include a wide range of accessibility features. Please contact the individual business for detailed and specific accessibility information.',
-      sources: [
-        {
-          text: 'Regional DMOs and other relevant third party sources (e.g. Indigenous Tourism BC)',
-        },
-      ],
+      slug: 'tourism_businesses_by_characteristic',
       fetchParams: (state: any) => ({
         slug: 'establishments_by_type',
         category_2: state.type,
@@ -119,21 +102,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Domestic arrivals',
-      description: `
-        Total amount of domestic overnight arrivals to the province/regions by month.
-      `,
-      note: `
-        <br/>
-        Visits: count of domestic travelers who spent one or more nights in the destination. Includes repeat visitation e.i. visitors are counted 1x on one month although came twice.
-        Trips: count of domestic traveler trips which involved spending one or more nights over a certain time period as part of a continuous visit to the destination. includes unique visitors i.e. visitors that came twice in e.g. one month are counted as two trips.
-        Stays: count of unique nights a domestic visitor was observed in the destination over a certain time period, i.e. overnights.
-      `,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'domestic_arrivals',
       initialState: {
         group: 'visits',
         year: 'all_years',
@@ -186,13 +155,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Seasonality',
-      description: `Share of annual domestic overnight visitors occurring in peak month and quarter.`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'seasonality',
       initialState: {
         year: previousYear,
         frequency: 'monthly',
@@ -223,13 +186,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Seasonality: peak month vs. lowest month',
-      description: `Ratio of domestic visitors in peak month to lowest month.`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'seasonality_peak_vs_lowest',
       initialState: {
         year: previousYear,
       },
@@ -260,13 +217,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Domestic visitors by province of origin',
-      description: `Total domestic overnight visitors by their respective province of origin.`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'domestic_visitors_by_province',
       initialState: {
         frequency: 'monthly',
         year: previousYear,
@@ -308,14 +259,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Domestic overnight visitors by city of origin',
-      subTitle: '(top 10)',
-      description: `Total domestic overnight visitors by their respective city of origin and by quarter.`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'domestic_overnight_visitors_by_city',
       initialState: {
         year: previousYear,
       },
@@ -355,14 +299,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Market Segmentation Insights',
-      subTitle: '(top 10)',
-      description: `Top 10 PRIZM clusters showing the largest lifestyle groups/top markets of potential domestic visitors per month for the selected region (total numbers).`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'market_segmentation',
       initialState: {
         year: previousYear,
       },
@@ -404,13 +341,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Length of stay',
-      description: `Average length of stay of domestic overnight visitors in the seleted region (by days).`,
-      sources: [
-        {
-          text: 'Environics Analytics - VisitorView',
-        },
-      ],
+      slug: 'length_of_stay',
       initialState: {
         year: previousYear,
       },
@@ -459,14 +390,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Travel patterns of domestic overnight visitors',
-      description: `Weekly travel patterns of domestic overnight visitors showing the variation in volumes between the current year and the selected year.`,
-      note: 'this information has been collected since 2020 due to the COVID-19 pandemic.',
-      sources: [
-        {
-          text: 'Environics Analytics - Measuring Canadian Travel Patterns',
-        },
-      ],
+      slug: 'travel_patterns',
       initialState: {
         year: `compared_to_${previousYear}`,
       },

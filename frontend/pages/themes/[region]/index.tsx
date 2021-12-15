@@ -1,3 +1,4 @@
+import kebabCase from 'lodash/kebabCase';
 import { useRouter } from 'next/router';
 
 import themes from 'constants/themes';
@@ -7,7 +8,8 @@ const ThemesRegionIndex: React.FC<void> = (): JSX.Element => {
   const { region } = router.query;
 
   if (typeof window !== 'undefined' && region) {
-    router.push(`/themes/${region}/${themes[0].slug}`);
+    const theme = themes.filter((t) => (region !== 'british-columbia' ? t.slug !== 'general_insights' : true))[0];
+    router.push(`/themes/${region}/${kebabCase(theme.slug)}`);
   }
 
   return null;

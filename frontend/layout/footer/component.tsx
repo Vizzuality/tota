@@ -1,50 +1,53 @@
 import React, { FC } from 'react';
+import kebabCase from 'lodash/kebabCase';
 import Link from 'next/link';
 
-import themes from 'constants/themes';
+import { useThemes } from 'hooks/themes';
 
 import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
-
-const links = [
-  {
-    title: 'About',
-    href: '/about',
-  },
-  {
-    title: 'Themes + Indicators',
-    href: '/themes',
-    children: themes.map((theme) => ({
-      title: theme.title,
-      href: `/themes/british-columbia/${theme.slug}`,
-    })),
-  },
-  {
-    title: 'Map',
-    href: '/map',
-  },
-  {
-    title: 'Get Involved',
-    href: '/get-involved',
-    children: [
-      {
-        title: 'Suggest a Story',
-        href: '/get-involved',
-      },
-      {
-        title: 'Contribute Data',
-        href: '/get-involved',
-      },
-      {
-        title: 'Feedback & Questions',
-        href: '/get-involved',
-      },
-    ],
-  },
-];
 
 interface FooterProps {}
 
 const Footer: FC<FooterProps> = () => {
+  const { data: themes } = useThemes();
+
+  const links = [
+    {
+      title: 'About',
+      href: '/about',
+    },
+    {
+      title: 'Themes + Indicators',
+      href: '/themes',
+      children: themes.map((theme) => ({
+        title: theme.title,
+        href: `/themes/british-columbia/${kebabCase(theme.slug)}`,
+      })),
+    },
+    {
+      title: 'Map',
+      href: '/map',
+    },
+    {
+      title: 'Get Involved',
+      href: '/get-involved',
+      children: [
+        {
+          title: 'Suggest a Story',
+          href: '/get-involved',
+        },
+        {
+          title: 'Contribute Data',
+          href: '/get-involved',
+        },
+        {
+          title: 'Feedback & Questions',
+          href: '/get-involved',
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="bg-blue-800">
       <div className="container px-10 pt-14 pb-8 mx-auto text-white flex flex-row flex-wrap justify-between">

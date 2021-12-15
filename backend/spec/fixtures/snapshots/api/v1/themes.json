@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "slug": "theme_1",
+      "title": "Theme 1",
+      "description": "Theme Description"
+    },
+    {
+      "slug": "theme_2",
+      "title": "Theme 2",
+      "description": "Theme Description"
+    },
+    {
+      "slug": "theme_3",
+      "title": "Theme 3",
+      "description": "Theme Description"
+    }
+  ]
+}

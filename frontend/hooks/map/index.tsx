@@ -73,7 +73,7 @@ export function MapProvider({ children }: MapProviderProps) {
   });
   const [regionChanged, setRegionChanged] = useState(false);
   const { layerSettings, viewport, selectedRegion: selectedRegionSlug } = mapSettings;
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
   const selectedRegion = regions.find((r) => r.slug === selectedRegionSlug) || regions[0];
   const activeLayers = Object.keys(layerSettings);
 

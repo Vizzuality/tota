@@ -28,8 +28,16 @@
 }
 
 @layer components {
-  .section-details a {
+  .widget-details a {
     @apply text-blue-500 underline;
+  }
+
+  .widget-details ul {
+    @apply list-disc list-inside;
+  }
+
+  .widget-details ol {
+    @apply list-decimal list-inside;
   }
 }
 

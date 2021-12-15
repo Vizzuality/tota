@@ -1,0 +1,18 @@
+@import 'trix/dist/trix';
+
+trix-editor {
+  min-height: 130px;
+}
+
+trix-toolbar {
+
+  [data-trix-button-group="file-tools"],
+  [data-trix-attribute="code"],
+  [data-trix-attribute="heading1"],
+  [data-trix-attribute="quote"],
+  [data-trix-action="decreaseNestingLevel"],
+  [data-trix-action="increaseNestingLevel"]
+  {
+    display: none;
+  }
+}

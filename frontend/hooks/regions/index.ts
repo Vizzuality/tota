@@ -1,15 +1,14 @@
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
 
 import TotaAPI from 'services/api';
 
-import { UseRegionsResponse } from './types';
 import type { Region } from 'types';
 
 function applyParentsAndChildren(regions: Region[]): Region[] {
-  if (!regions) return [];
+  if (!regions?.length) return [];
 
   return regions.map((r) => ({
     ...r,
@@ -18,24 +17,27 @@ function applyParentsAndChildren(regions: Region[]): Region[] {
   }));
 }
 
-export function useRegions(): UseRegionsResponse {
-  const { data } = useQuery('regions', () => TotaAPI.get('/regions?filter[region_type]=province,tourism_region'), {
-    keepPreviousData: true,
-    staleTime: Infinity,
-  });
-
-  return useMemo(
-    () => ({
-      regions: applyParentsAndChildren(data),
-    }),
-    [data],
+export function useRegions() {
+  const result = useQuery<Region[], Error>(
+    'regions',
+    () => TotaAPI.get('/regions?filter[region_type]=province,tourism_region'),
+    {
+      keepPreviousData: true,
+      staleTime: Infinity,
+      placeholderData: [],
+      select: useCallback(applyParentsAndChildren, []),
+    },
   );
+  return {
+    ...result,
+    data: result.data || [],
+  };
 }
 
 export function useRouterSelectedRegion(): Region {
   const router = useRouter();
   const { region } = router.query;
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
 
   if (!region) return null;
 

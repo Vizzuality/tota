@@ -1,0 +1,64 @@
+<% content_for(:actions) do %>
+  <%= link_to edit_admin_theme_path, class: "btn btn-primary float-end mt-n1" do %>
+    Edit
+  <% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="fw-bold">Title: </td>
+          <td><%= @resource.title %></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Description: </td>
+          <td><%= @resource.description&.html_safe %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">Widgets</div>
+  <div class="card-body">
+    <table class="table table-hover" data-controller="table">
+      <thead>
+        <tr>
+          <th>
+          </th>
+          <th>
+            Title
+          </th>
+          <th>
+            Description
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-controller="sortable">
+        <% @resource.widgets.order(:position).each do |widget| %>
+          <tr data-link="<%= edit_admin_widget_path(widget) %>" data-sortable-url="<%= update_position_admin_widget_path(widget) %>">
+            <td class="sortable-handle">
+              <!-- <i class="bi-list"></i> -->
+              <i class="bi-arrow-down-up"></i>
+            </td>
+            <td><%= widget.title %></td>
+            <td><%= widget.description&.html_safe %></td>
+            <td class="text-end">
+              <%= dropdown "Actions" do %>
+                <li>
+                  <%= link_to 'Edit', edit_admin_widget_path(widget), class: "dropdown-item" %>
+                </li>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -62,6 +62,11 @@ jobs:
           PGUSER: ${{ env.POSTGRES_USER }}
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
         run: bundle exec rspec spec
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: screenshots
+          path: backend/tmp/screenshots
   deploy:
     name: Deploy
     needs: tests

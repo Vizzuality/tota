@@ -6,7 +6,7 @@ import Layout from 'layout';
 import ThemeMainHeader from 'components/themes/main-header';
 import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
-import ThemeSections from 'components/themes/sections';
+import ThemeWidgets from 'components/themes/widgets';
 import ThemesNavbar from 'components/themes/navbar';
 
 import { useRouterSelectedTheme } from 'hooks/themes';
@@ -14,7 +14,7 @@ import { useRegions } from 'hooks/regions';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const theme = useRouterSelectedTheme();
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
 
   return (
     <Layout className="w-full">
@@ -28,7 +28,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
           <ThemesNavbar />
           <div className="container mx-auto">
             <ThemeHeader />
-            <ThemeSections />
+            <ThemeWidgets />
             <ThemeMobileFooter />
           </div>
         </>

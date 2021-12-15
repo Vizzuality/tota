@@ -1,7 +1,7 @@
 import React, { useState, useMemo, FC } from 'react';
 import cx from 'classnames';
 import dynamic from 'next/dynamic';
-import type { ThemeSectionType } from 'types';
+import type { Widget } from 'types';
 import Loading from 'components/loading';
 import Controls from './controls';
 
@@ -11,19 +11,26 @@ import { useRouterSelectedRegion } from 'hooks/regions';
 import { useIndicatorValues } from 'hooks/indicators';
 import LinkButton from 'components/button/component';
 
-export interface ThemeSectionProps {
-  section: ThemeSectionType;
+export interface ThemeWidgetProps {
+  widget: Widget;
   index: number;
 }
 
-const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionProps) => {
-  const [state, setState] = useState(section.initialState || {});
+const LoadingWidget = () => (
+  <div style={{ height: 400 }} className="flex items-center justify-center">
+    <Loading iconClassName="w-10 h-10" visible />
+  </div>
+);
+const ErrorWidget = () => (
+  <div style={{ height: 400 }} className="flex items-center justify-center">
+    An unexpected error has occurred while loading this widget
+  </div>
+);
+
+const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) => {
   const selectedRegion = useRouterSelectedRegion();
-  const LoadingWidget = () => (
-    <div style={{ height: 400 }} className="flex items-center justify-center">
-      <Loading iconClassName="w-10 h-10" visible />
-    </div>
-  );
+
+  const [state, setState] = useState(widget.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
   const wholeState = useMemo(
     () => ({
@@ -32,12 +39,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     }),
     [state, selectedRegion],
   );
+
   const {
     data: indicatorValues,
     isFetched,
     isFetching,
     isLoading,
-  } = useIndicatorValues(section.fetchParams(wholeState));
+    isError,
+    isSuccess,
+  } = useIndicatorValues(widget.fetchParams(wholeState));
   const {
     data,
     widgetTypeOverride,
@@ -47,12 +57,15 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
     viewOnMap,
     ...widgetConfig
   } = useMemo(
-    () => section.fetchWidgetProps(indicatorValues, wholeState),
-    [section.fetchWidgetProps, indicatorValues, wholeState],
+    () => widget.fetchWidgetProps(indicatorValues, wholeState),
+    [widget.fetchWidgetProps, indicatorValues, wholeState],
   );
-  const Widget = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
+
+  const WidgetComponent = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
+  const isDataFetched = isFetched && isSuccess;
+  const noData = isDataFetched && data.length === 0;
 
   return (
     <div className="p-5 bg-white flex flex-col lg:flex-row">
@@ -65,24 +78,24 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
             {index}
           </div>
           <div className="flex flex-col justify-center" style={{ marginLeft: 70, minHeight: 50 }}>
-            <h2 className="text-lg font-bold">{section.title}</h2>
-            <div>{section.subTitle}</div>
+            <h2 className="text-lg font-bold">{widget.title}</h2>
+            <div>{widget.sub_title}</div>
           </div>
         </div>
-        <div className="section-details flex-1">
-          <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: section.description }} />
-          {(section.note || section.sources) && (
+        <div className="widget-details flex-1">
+          <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: widget.description }} />
+          {(widget.note || widget.sources) && (
             <div className="mt-2 lg:mt-6">
-              {section.note && (
+              {widget.note && (
                 <p className="leading-6 text-sm">
                   <strong>Note: </strong>
-                  <span dangerouslySetInnerHTML={{ __html: section.note }} />
+                  <span dangerouslySetInnerHTML={{ __html: widget.note }} />
                 </p>
               )}
-              {section.sources && (
-                <p className={cx('leading-6 text-sm', { 'mt-2': !!section.note })}>
+              {widget.sources && (
+                <p className={cx('leading-6 text-sm', { 'mt-2': !!widget.note })}>
                   <strong>Source: </strong>
-                  {section.sources.map((source, index) => (
+                  {widget.sources.map((source, index) => (
                     <React.Fragment key={index}>
                       {index > 0 && ', '}
                       {source.link ? (
@@ -121,17 +134,18 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
         )}
         <div className="flex flex-1 justify-center items-center" style={{ minHeight: 300 }}>
           {(isLoading || isFetching) && <LoadingWidget />}
-          {isFetched && data !== undefined && data !== null && (
+          {!isLoading && !isFetching && isError && <ErrorWidget />}
+          {isDataFetched && (
             <>
               {((Array.isArray(data) && data.length > 0) || (!Array.isArray(data) && data !== '')) &&
                 (WidgetWrapper ? (
                   <WidgetWrapper>
-                    <Widget data={data} {...widgetConfig} />
+                    <WidgetComponent data={data} {...widgetConfig} />
                   </WidgetWrapper>
                 ) : (
-                  <Widget data={data} {...widgetConfig} />
+                  <WidgetComponent data={data} {...widgetConfig} />
                 ))}
-              {data.length === 0 && <span>No data available</span>}
+              {noData && <span>No data available</span>}
             </>
           )}
         </div>
@@ -140,4 +154,4 @@ const ThemeSection: FC<ThemeSectionProps> = ({ section, index }: ThemeSectionPro
   );
 };
 
-export default ThemeSection;
+export default ThemeWidget;

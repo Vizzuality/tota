@@ -31,7 +31,7 @@
         <td><%= link_to data_upload.file.filename, rails_blob_path(data_upload.file, disposition: 'attachment') %></td>
         <td><%= data_upload.uploaded_by %></td>
         <td><%= data_upload.uploaded_at %></td>
-        <td class="d-flex justify-content-end">
+        <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>
               <%= link_to 'Show', admin_data_upload_path(data_upload), class: "dropdown-item" %>

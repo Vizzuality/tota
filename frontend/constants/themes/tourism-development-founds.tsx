@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 
 import DevelopmentFundsTooltip from 'components/widgets/map/tooltips/development-funds';
 
-import type { ThemeType, IndicatorValue, WidgetWrapperProps } from 'types';
+import type { ThemeFrontendDefinition, IndicatorValue, WidgetWrapperProps } from 'types';
 
 import { filterBySelectedYear, getAvailableYearsOptions, getYear, mergeForChart } from 'utils/charts';
 import { getMapUrl } from 'hooks/map';
@@ -67,21 +67,12 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
   };
 };
 
-const theme: ThemeType = {
-  title: 'Tourism Development Funds',
-  slug: 'tourism-development-funds',
+const theme: ThemeFrontendDefinition = {
+  slug: 'tourism_development_funds',
   image: BoxImage,
-  sections: [
+  widgets: [
     {
-      title: 'Total funding and projects',
-      description: `Total number of funding amounts (CAD$) per funding stream and total number of funded projects per year, per stream.`,
-      note: `Open funding calls can be found <a href="https://strongerbc.gov.bc.ca/supporting-bc-businesses" target="_blank" rel="noopener noreferrer">here (TRTD / Stronger BC)</a>`,
-      sources: [
-        {
-          text: 'BC Government (TRTD / StrongerBC)',
-          link: 'https://strongerbc.gov.bc.ca/supporting-bc-businesses',
-        },
-      ],
+      slug: 'total_funding_and_projects',
       initialState: {
         year: 'all_years',
       },
@@ -150,11 +141,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Funded project details',
-      description: 'Click below to see projects on the map page.',
-      initialState: {
-        year: 'all_years',
-      },
+      slug: 'funded_project_details',
       fetchParams: (state: any) => ({
         slug: ['development_funds_by_source', 'development_funds_volume_by_source'],
         region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),

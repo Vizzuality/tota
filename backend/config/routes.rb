@@ -13,6 +13,12 @@ Rails.application.routes.draw do
     resources :indicator_values, only: [:index]
     resources :organizations, only: [:show, :index]
     resources :development_funds, only: [:show, :index]
+    resources :themes, except: [:destroy]
+    resources :widgets, only: [:index, :edit, :update] do
+      member do
+        post :update_position
+      end
+    end
   end
 
   namespace :api, format: 'json' do
@@ -21,6 +27,8 @@ Rails.application.routes.draw do
       resources :organizations, only: [:index], format: /(json|geojson)/
       resources :indicators, only: [:index]
       resources :regions, only: [:index]
+      resources :themes, only: [:index]
+      resources :widgets, only: [:index]
     end
   end
 end

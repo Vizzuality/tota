@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "slug": "theme_2_widget_1",
+      "title": "Widget title",
+      "sub_title": "Widget subtitle",
+      "description": "Widget description",
+      "note": "Widget note",
+      "sources": [
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        },
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        },
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        }
+      ],
+      "theme_slug": "theme_2",
+      "position": 0
+    },
+    {
+      "slug": "theme_2_widget_2",
+      "title": "Widget title",
+      "sub_title": "Widget subtitle",
+      "description": "Widget description",
+      "note": "Widget note",
+      "sources": [
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        },
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        },
+        {
+          "text": "Source text",
+          "link": "https://example.com",
+          "note": "Source note"
+        }
+      ],
+      "theme_slug": "theme_2",
+      "position": 1
+    }
+  ]
+}

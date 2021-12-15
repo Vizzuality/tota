@@ -134,7 +134,7 @@ export const useTourismRegionsLayer = (
   includeLabels = true,
 ): Layer => {
   const includeOutlineLayer = Boolean(selectedRegion);
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
 
   const regionHoverOpacity = selectedRegion ? 0.8 : 1;
   const regionOpacity = selectedRegion ? selectedRegionOpacity : 0.8;

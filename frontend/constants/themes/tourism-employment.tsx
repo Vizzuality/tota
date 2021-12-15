@@ -2,7 +2,7 @@ import uniq from 'lodash/uniq';
 import startCase from 'lodash/startCase';
 import groupBy from 'lodash/groupBy';
 import meanBy from 'lodash/meanBy';
-import { IndicatorValue, Region, ThemeType } from 'types';
+import { IndicatorValue, Region, ThemeFrontendDefinition } from 'types';
 
 import BoxImage from 'images/home/box-employment.png';
 
@@ -32,14 +32,12 @@ const ECONOMIC_REGION_COLORS = {
   'North Coast and Nechako': '#00A572',
 };
 
-const theme: ThemeType = {
-  title: 'Tourism Employment',
-  slug: 'tourism-employment',
+const theme: ThemeFrontendDefinition = {
+  slug: 'tourism_employment',
   image: BoxImage,
-  sections: [
+  widgets: [
     {
-      title: 'Economic region vs Tourism region',
-      description: `Due to different sources and their varying monitoring approaches, the information presented in this section is related to different regional administrative boundaries (either economic regions or tourism regions). To see the different boundaries, please go to the map.`,
+      slug: 'economic_vs_tourism_region',
       fetchParams: () => false,
       fetchWidgetProps(_rawData: IndicatorValue[] = [], state: any): any {
         const selectedRegion = state.selectedRegion.slug === 'british_columbia' ? null : state.selectedRegion.slug;
@@ -60,15 +58,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Total employment',
-      description: `Total number of people employed in the selected region (see the header for totals).`,
-      note: 'Figures include full and part time employment. Data is presented for economic regions.',
-      sources: [
-        {
-          text: 'Statistics Canada - Labour Force Surver',
-          link: 'https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410038702',
-        },
-      ],
+      slug: 'total_employment',
       initialState: {
         year: 'all_years',
       },
@@ -125,15 +115,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Unemployment rate',
-      description: `Unemployment rates for the selected regions by month.`,
-      note: 'Figures include full and part time employment. Data is presented for economic regions.',
-      sources: [
-        {
-          text: 'Statistics Canada - Labour Force Surver',
-          link: 'https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410038702',
-        },
-      ],
+      slug: 'unemployment_rate',
       initialState: {
         year: 'all_years',
       },
@@ -184,16 +166,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Total tourism employment',
-      description: `Total tourism employment in the selected regions per month.`,
-      note: 'Figures include full and part time employment. Data is presented for tourism regions.',
-      sources: [
-        {
-          text: 'Go2HR Employment Tracker',
-          link: 'https://www.go2hr.ca/bc-tourism-and-hospitality-labour-market-information-employment-tracker',
-          note: 'based on Labour Force Survey information, but data is selected and transformed, focusing on specific tourism and hospitality occupations and presenting it for specifically for the tourism regions',
-        },
-      ],
+      slug: 'total_tourism_employment',
       initialState: {
         year: 'all_years',
       },
@@ -244,19 +217,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Percentage of tourism employment to total employment',
-      description: `Monthly and annual percentage share of tourism employment to total employment in the selected region.`,
-      note: 'These figures should only be seen as inficative as they have two different regional boundaries as the basis for their presentation (economic region for total employment and tourism region for tourism employment).',
-      sources: [
-        {
-          text: 'Statistics Canada - Labour Force Surver',
-          link: 'https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410038702',
-        },
-        {
-          text: 'Go2HR Employment Tracker',
-          link: 'https://www.go2hr.ca/bc-tourism-and-hospitality-labour-market-information-employment-tracker',
-        },
-      ],
+      slug: 'tourism_to_total_employment',
       initialState: {
         frequency: 'monthly',
         year: previousYear,
@@ -318,16 +279,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Tourism employment by subsector',
-      description: `Share of monthly tourism employment by different sub-sectors in the selected region.`,
-      note: 'Figures include full and part time employment. Data is presented for tourism regions.',
-      sources: [
-        {
-          text: 'Go2HR Employment Tracker',
-          link: 'https://www.go2hr.ca/bc-tourism-and-hospitality-labour-market-information-employment-tracker',
-          note: 'based on Labour Force Survey information, but data is selected and transformed, focusing on specific tourism and hospitality occupations and presenting it for specifically for the tourism regions',
-        },
-      ],
+      slug: 'tourism_employment_by_sector',
       initialState: {
         year: previousYear,
       },
@@ -363,16 +315,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Average tourism related wages',
-      description: `Average hourly earning (CAD$) by month in the selected region compared to the provincial average.`,
-      note: 'Figures include full and part time employment. Data is presented for tourism regions, not economic regions (see map for the difference in administrative boundaries).',
-      sources: [
-        {
-          text: 'Go2HR Employment Tracker',
-          link: 'https://www.go2hr.ca/bc-tourism-and-hospitality-labour-market-information-employment-tracker',
-          note: 'based on Labour Force Survey information, but data is selected and transformed, focusing on specific tourism and hospitality occupations and presenting it for specifically for the tourism regions',
-        },
-      ],
+      slug: 'average_tourism_wages',
       initialState: {
         year: 'all_years',
       },
@@ -424,15 +367,7 @@ const theme: ThemeType = {
       },
     },
     {
-      title: 'Employment by job status',
-      description: `Shares of full time and part time empployment in tourism and its sub-sectors for the seclected regions.`,
-      sources: [
-        {
-          text: 'Go2HR Employment Tracker',
-          link: 'https://www.go2hr.ca/bc-tourism-and-hospitality-labour-market-information-employment-tracker',
-          note: 'based on Labour Force Survey information, but data is selected and transformed, focusing on specific tourism and hospitality occupations and presenting it for specifically for the tourism regions',
-        },
-      ],
+      slug: 'employment_by_job_status',
       initialState: {
         year: 'all_years',
         sector: 'Tourism',

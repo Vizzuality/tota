@@ -11,6 +11,7 @@
       <th>
         <%= sort_link @q, :active %>
       </th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +19,7 @@
       <tr data-link="<%= edit_admin_region_path(region) %>">
         <td><%= region.name %></td>
         <td><%= status_tag(region.active) %></td>
-        <td class="d-flex justify-content-end">
+        <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>
               <%= link_to 'Edit', edit_admin_region_path(region), class: "dropdown-item" %>

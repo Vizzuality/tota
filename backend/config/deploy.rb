@@ -40,6 +40,8 @@ namespace :puma do
 end
 
 namespace :deploy do
+  after 'deploy:migrate', 'deploy:themes:update'
+
   desc "Make sure local git is in sync with remote."
   task :check_revision do
     on roles(:app) do
@@ -62,10 +64,22 @@ namespace :deploy do
   end
 
   desc 'Restart application'
-    task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-        invoke 'puma:restart'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'puma:restart'
+    end
+  end
+
+  namespace :themes do
+    task :update do
+      on roles(:db) do
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            execute :rake, 'themes:update'
+          end
+        end
       end
+    end
   end
 
   #before :starting,     :check_revision

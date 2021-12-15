@@ -26,7 +26,7 @@ const isServer = typeof window === 'undefined';
 
 const MapMenu: FC<MapMenuProps> = ({ children }: MapMenuProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const { regions } = useRegions();
+  const { data: regions } = useRegions();
   const { activeLayers, changeActiveLayers, selectedRegion, selectRegion } = useMap();
   const layers = useLayers(selectedRegion?.slug);
   const layersByCategory = groupBy(

@@ -1,4 +1,4 @@
-import { IndicatorValue, ThemeType } from 'types';
+import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 import uniq from 'lodash/uniq';
 import groupBy from 'lodash/groupBy';
 import { parseISO, format } from 'date-fns';
@@ -91,20 +91,12 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   };
 }
 
-const theme: ThemeType = {
-  title: 'Accommodation Information',
-  slug: 'accommodation-information',
+const theme: ThemeFrontendDefinition = {
+  slug: 'accommodation_information',
   image: BoxImage,
-  sections: [
+  widgets: [
     {
-      title: 'Occupancy rates',
-      description: `Occupancy rate of hotels in the selected region. Shown are the average rates during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
-      note: 'Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
-      sources: [
-        {
-          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
-        },
-      ],
+      slug: 'occupancy_rates',
       initialState: {
         year: 'all_years',
         week: undefined,
@@ -117,14 +109,7 @@ const theme: ThemeType = {
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
     },
     {
-      title: 'Average daily hotel rate (ADR)',
-      description: `Average daily hotel rate (ADRs) of hotels in the selected region during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
-      note: ' Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
-      sources: [
-        {
-          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
-        },
-      ],
+      slug: 'average_daily_hotel_rate',
       initialState: {
         year: 'all_years',
         week: undefined,
@@ -137,14 +122,7 @@ const theme: ThemeType = {
       fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
     },
     {
-      title: 'Revenue per available room (RevPAR)',
-      description: `Revenue per available room (RevPAR) of hotels in the selected region during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.`,
-      note: ' Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.',
-      sources: [
-        {
-          text: 'STR/NCHA/BCRTS Destination Weekly Reports',
-        },
-      ],
+      slug: 'revenue_per_available_room',
       initialState: {
         year: 'all_years',
         week: undefined,

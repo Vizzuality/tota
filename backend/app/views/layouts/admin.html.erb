@@ -1,7 +1,7 @@
 <% content_for :content do %>
   <div class="wrapper" data-controller="sidebar">
     <nav id="sidebar" class="sidebar" data-sidebar-target="sidebar">
-      <div class="sidebar-content" data-sidebar-target="simpleBar">
+      <div class="sidebar-content">
         <%= link_to admin_dashboards_path, class: 'sidebar-brand' do %>
           <span class="align-middle">TOTA Back Office</span>
         <% end %>
@@ -29,6 +29,14 @@
 
           <%= sidebar_link_to admin_data_uploads_path do %>
             <i class="bi-upload"></i> Data Uploads
+          <% end %>
+
+          <li class="sidebar-header">
+            Content
+          </li>
+
+          <%= sidebar_link_to admin_themes_path do %>
+            <i class="bi-file-bar-graph"></i> Themes & Widgets
           <% end %>
 
           <li class="sidebar-header">
@@ -73,7 +81,14 @@
       <main class="content">
         <%= render "application/flash_messages" %>
 
-        <%= render "breadcrumbs" %>
+        <div class="d-flex justify-content-between">
+          <%= render "breadcrumbs" %>
+          <% if content_for?(:actions) %>
+            <div class="ms-4">
+              <%= content_for :actions %>
+            </div>
+          <% end %>
+        </div>
 
         <div class="container-fluid p-0">
           <%= yield %>

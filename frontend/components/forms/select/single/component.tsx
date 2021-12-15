@@ -82,12 +82,8 @@ export const SingleSelect: FC<SelectProps> = ({
   const { isOpen, selectedItem, highlightedIndex, getToggleButtonProps, getMenuProps, getItemProps, closeMenu, reset } =
     useSelect<SelectOptionProps>({
       items: getOptions,
-      ...(typeof values !== 'undefined' && {
-        selectedItem: getSelected,
-      }),
-      ...(typeof initialValues !== 'undefined' && {
-        initialSelectedItem: getInitialSelected,
-      }),
+      selectedItem: getSelected,
+      initialSelectedItem: getInitialSelected,
       itemToString: (item) => item.label, // How the selected options is announced to screen readers
       stateReducer: (st, actionAndChanges) => {
         const { changes, type } = actionAndChanges;
@@ -141,9 +137,13 @@ export const SingleSelect: FC<SelectProps> = ({
   // workaround for popper to be placed in top 0 left 0 without transform
   // TODO: find different solution
   const [_forceUpdate, forceUpdate] = useState(null);
-  if (!update && !styles?.popper?.transform) {
-    setTimeout(forceUpdate, 0);
-  }
+  useEffect(() => {
+    let timeout;
+    if (!update && !styles?.popper?.transform) {
+      timeout = setTimeout(forceUpdate, 0);
+    }
+    return () => clearTimeout(timeout);
+  }, [update, styles]);
 
   return (
     <div

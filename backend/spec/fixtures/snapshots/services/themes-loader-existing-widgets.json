@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Airport arrivals old",
+    "sub_title": "Widget subtitle",
+    "description": "Widget description",
+    "note": "Widget note",
+    "sources": [
+
+    ]
+  },
+  {
+    "title": "Passenger volume",
+    "sub_title": "Widget subtitle",
+    "description": "Widget description",
+    "note": "Widget note",
+    "sources": [
+
+    ]
+  },
+  {
+    "title": "Size of regions (km2)",
+    "sub_title": null,
+    "description": "Total size of all BC regions, based on the administritive boundaries of tourism regions. Overall, BC has a territory of 922,000 km².\n",
+    "note": null,
+    "sources": [
+      {
+        "text": "DestinationBC - Regional Profiles",
+        "link": "https://www.destinationbc.ca/research-insights/type/regional-research/regional-profiles/",
+        "note": null
+      }
+    ]
+  },
+  {
+    "title": "Population",
+    "sub_title": null,
+    "description": "Total population per participating region. The most populated regions are Vancouver Island and Thompson Okanagan. The total population of BC is 4,892,084 people.\n",
+    "note": "New census data for 2021 coming soon.",
+    "sources": [
+      {
+        "text": "Statistics Canada - Census Data",
+        "link": "https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/index-eng.cfm",
+        "note": null
+      }
+    ]
+  },
+  {
+    "title": "International vs. domestic arrivals",
+    "sub_title": null,
+    "description": "Share of international and domestic air passenger arrivals to the top 3 airport per selected region.",
+    "note": "Passenger splits are based on O/D data.",
+    "sources": [
+      {
+        "text": "Individual airports",
+        "link": null,
+        "note": null
+      }
+    ]
+  },
+  {
+    "title": "Occupancy rates",
+    "sub_title": null,
+    "description": "Occupancy rate of hotels in the selected region. Shown are the average rates during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.\n",
+    "note": "Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR \"STAR\" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.\n",
+    "sources": [
+      {
+        "text": "STR/NCHA/BCRTS Destination Weekly Reports",
+        "link": null,
+        "note": null
+      }
+    ]
+  }
+]
