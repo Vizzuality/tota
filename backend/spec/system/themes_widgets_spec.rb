@@ -94,6 +94,8 @@ RSpec.describe 'Themes & Widgets', type: :system do
         find_row('Occupancy rates').click
       end
 
+      sleep 0.5
+
       fill_in :widget_title, with: 'Changed Occupancy rates'
 
       expect(page).to have_selector("input[value='Source 1']")
@@ -117,6 +119,8 @@ RSpec.describe 'Themes & Widgets', type: :system do
       within_card('Widgets') do
         find_row('Changed Occupancy rates').click
       end
+
+      sleep 0.5
 
       expect(page).to have_selector("input[value='Source Changes']")
       expect(page).to have_selector("input[value='New Source']")
