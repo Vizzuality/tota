@@ -10,13 +10,13 @@
 
   <% if (block = yield(f)).present? %>
     <div class="d-inline-block" data-controller="filters">
-      <button type="button" class="btn btn-primary-outline m1-n1" data-filters-target="button">
+      <% conditions_except_search = q.conditions.reject { |c| c.key == search_by.to_s } %>
 
-        <% conditions_except_search = q.conditions.reject { |c| c.key == search_by.to_s } %>
+      <button type="button" class="btn btn-primary-outline m1-n1 <%= conditions_except_search.any? && 'bg-info' %>" data-filters-target="button">
         <% if conditions_except_search.any? %>
-          <i class="bi bi-filter text-info"></i>
-          <span class="text-info">Active Filters</span>
-          <span class="badge bg-info"><%= conditions_except_search.count %></span>
+          <i class="bi bi-filter text-white"></i>
+          <span class="text-white">Active Filters</span>
+          <span class="badge bg-white text-info"><%= conditions_except_search.count %></span>
         <% else %>
           <i class="bi bi-filter"></i>
           Filters
