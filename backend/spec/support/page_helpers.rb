@@ -33,8 +33,21 @@ module PageHelpers
   # elements outside window view
   def click_on(locator = nil, **options)
     link_or_button = find(:link_or_button, locator, **options)
-    page.scroll_to(link_or_button, align: :center)
-    sleep 0.2 # dunno why have to wait on CI
+    unless in_viewport?(link_or_button)
+      page.scroll_to(link_or_button, align: :center)
+      sleep 0.3 # dunno why have to wait on CI
+    end
     link_or_button.click
+  end
+
+  def in_viewport?(element)
+    evaluate_script("(function(el) {
+      var rect = el.getBoundingClientRect();
+      return (
+        rect.top >= 0 && rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      )
+    })(arguments[0]);", element)
   end
 end
