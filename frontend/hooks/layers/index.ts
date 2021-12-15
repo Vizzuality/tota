@@ -23,7 +23,6 @@ import ORGANIZATIONS_3_SVG from 'svgs/map/markers/organizations-3.svg?url';
 import ORGANIZATIONS_SVG from 'svgs/map/markers/organizations.svg?url';
 import SKI_RESORTS_SVG from 'svgs/map/markers/ski-resorts.svg?url';
 import STOPS_OF_INTEREST_SVG from 'svgs/map/markers/stops-of-interest.svg?url';
-import WILDLIFE_HABITATS_SVG from 'svgs/map/markers/wildlife-habitats.svg?url';
 
 import { REGION_COLORS } from 'constants/regions';
 import { useRegions } from 'hooks/regions';
@@ -52,6 +51,30 @@ const FIRE_COLORS = {
   days5: '#F4B53F',
   days6: '#F9DB4A',
   days7: '#FFFF55',
+};
+
+const BC_FIRES_POLYGON_GEOJSON = {
+  type: 'Polygon',
+  coordinates: [
+    [
+      [-139.39453125, 60.08676274626006],
+      [-137.5048828125, 58.74540696858028],
+      [-135.6591796875, 59.489726035537075],
+      [-132.275390625, 56.65622649350222],
+      [-130.60546875, 55.801280971180454],
+      [-131.7041015625, 54.54657953840501],
+      [-134.0771484375, 54.213861000644926],
+      [-131.4404296875, 51.6180165487737],
+      [-124.1015625, 47.989921667414194],
+      [-121.9921875, 48.42920055556841],
+      [-121.06933593749999, 48.8936153614802],
+      [-113.3349609375, 48.8936153614802],
+      [-115.4443359375, 51.17934297928927],
+      [-119.61914062499999, 53.9560855309879],
+      [-119.70703125, 60.174306261926034],
+      [-139.39453125, 60.08676274626006],
+    ],
+  ],
 };
 
 export const getEconomicRegionsLayer = (selectedRegion: string): Layer => {
@@ -563,9 +586,28 @@ export const useLayers = (selectedRegion: string): Layer[] => {
               {
                 type: 'cartodb',
                 options: {
-                  sql: "SELECT cartodb_id, the_geom, acq_date, acq_time, acq_date::text as date_str, acq_time::text as time_str, frp, latitude, longitude, the_geom_webmercator, CASE WHEN acq_date>= (CURRENT_DATE - interval '7 day') AND acq_date< (CURRENT_DATE - interval '6 day') THEN 7 WHEN acq_date>= (CURRENT_DATE - interval '6 day') AND acq_date< (CURRENT_DATE - interval '5 day') THEN 6 WHEN acq_date>= (CURRENT_DATE - interval '5 day') AND acq_date< (CURRENT_DATE - interval '4 day') THEN 5 WHEN acq_date>= (CURRENT_DATE - interval '4 day') AND acq_date< (CURRENT_DATE - interval '3 day') THEN 4 WHEN acq_date>= (CURRENT_DATE - interval '3 day') AND acq_date< (CURRENT_DATE - interval '2 day') THEN 3 WHEN acq_date>= (CURRENT_DATE - interval '2 day') AND acq_date< (CURRENT_DATE - interval '1 day') THEN 2 WHEN acq_date>= (CURRENT_DATE - interval '1 day') THEN 1 ELSE -1 END AS days_ago FROM suomi_viirs_c2_global_7d where (acq_date> (CURRENT_DATE - interval '7 day')) ORDER BY acq_date asc, frp asc",
-                  cartocss:
-                    '#layer { marker-width: 4; marker-fill-opacity: 1; marker-line-color: #FFF; marker-line-width: 0; marker-line-opacity: 1; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }[days_ago=7]{marker-fill: #EA0000;}[days_ago=6]{marker-fill: #FF2600;}[days_ago=5]{marker-fill: #FF6600;}[days_ago=4]{marker-fill: #FF8C00;}[days_ago=3]{marker-fill: #FFB200;}[days_ago=2]{marker-fill: #FFD900;}[days_ago=1]{marker-fill: #FFFF00;}',
+                  sql: `
+                    SELECT cartodb_id, the_geom, acq_date, acq_time,
+                      acq_date:: text as date_str, acq_time:: text as time_str, frp, latitude, longitude, the_geom_webmercator,
+                      CASE
+                        WHEN acq_date >= (CURRENT_DATE - interval '7 day') AND acq_date < (CURRENT_DATE - interval '6 day') THEN 7
+                        WHEN acq_date >= (CURRENT_DATE - interval '6 day') AND acq_date < (CURRENT_DATE - interval '5 day') THEN 6
+                        WHEN acq_date >= (CURRENT_DATE - interval '5 day') AND acq_date < (CURRENT_DATE - interval '4 day') THEN 5
+                        WHEN acq_date >= (CURRENT_DATE - interval '4 day') AND acq_date < (CURRENT_DATE - interval '3 day') THEN 4
+                        WHEN acq_date >= (CURRENT_DATE - interval '3 day') AND acq_date < (CURRENT_DATE - interval '2 day') THEN 3
+                        WHEN acq_date >= (CURRENT_DATE - interval '2 day') AND acq_date < (CURRENT_DATE - interval '1 day') THEN 2
+                        WHEN acq_date >= (CURRENT_DATE - interval '1 day') THEN 1
+                        ELSE - 1
+                      END AS days_ago
+                    FROM suomi_viirs_c2_global_7d
+                    WHERE
+                      acq_date > (CURRENT_DATE - interval '7 day')
+                      AND ST_CONTAINS(
+                        ST_GeomFromGeoJSON('${JSON.stringify(BC_FIRES_POLYGON_GEOJSON)}'),
+                        the_geom
+                      )
+                    ORDER BY acq_date asc, frp asc`,
+                  cartocss: `#layer {}`, // not sure why this is needed as colors are set below, I removed all of existing styles - check git blame for this line
                   cartocss_version: '2.3.0',
                 },
               },
