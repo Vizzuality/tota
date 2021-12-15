@@ -11,18 +11,24 @@
   <% if (block = yield(f)).present? %>
     <div class="d-inline-block" data-controller="filters">
       <button type="button" class="btn btn-primary-outline m1-n1" data-filters-target="button">
-        <i class="bi bi-filter"></i>
-        Filters
-        <% if q.conditions.any? %>
-          <span class="badge bg-info"><%= q.conditions.count %></span>
+
+        <% conditions_except_search = q.conditions.reject { |c| c.key == search_by.to_s } %>
+        <% if conditions_except_search.any? %>
+          <i class="bi bi-filter text-info"></i>
+          <span class="text-info">Active Filters</span>
+          <span class="badge bg-info"><%= conditions_except_search.count %></span>
+        <% else %>
+          <i class="bi bi-filter"></i>
+          Filters
         <% end %>
       </button>
-      <template data-filters-target="popup">
+
+      <div data-filters-target="popup" class="d-none">
         <%= block %>
 
         <%= button_tag 'Apply', class: 'btn btn-primary', type: :submit %>
         <%= link_to 'Reset', resources_url, class: 'btn btn-link' %>
-      </template>
+      </div>
     </div>
   <% end %>
 <% end %>
