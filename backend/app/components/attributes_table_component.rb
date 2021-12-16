@@ -3,8 +3,8 @@
 class AttributesTableComponent < ViewComponent::Base
   attr_reader :resource
 
-  renders_many :rows, ->(attribute, &block) do
-    RowComponent.new(resource: resource, attribute: attribute, &block)
+  renders_many :rows, ->(attribute, options = {}, &block) do
+    RowComponent.new(resource, attribute, options, &block)
   end
 
   def initialize(resource:)
@@ -13,15 +13,16 @@ class AttributesTableComponent < ViewComponent::Base
   end
 
   class RowComponent < ViewComponent::Base
-    attr_reader :resource, :attribute, :block
+    attr_reader :resource, :attribute, :options, :block
 
     delegate :status_tag, to: :helpers
 
-    def initialize(resource:, attribute:, &block)
+    def initialize(resource, attribute, options = {}, &block)
       super
       @resource = resource
       @attribute = attribute
       @block = block
+      @options = options
     end
 
     def call
@@ -45,6 +46,7 @@ class AttributesTableComponent < ViewComponent::Base
       return block.call(@resource) if block.present?
 
       val = @resource.send(attribute)
+      return val&.html_safe if options[:as] == :html
       return status_tag val if val.is_a?(TrueClass) || val.is_a?(FalseClass)
       return render_blob_link(val) if val.respond_to?(:attached?) && val.attached?
       return render_external_link(val) if val.to_s.start_with?('http')

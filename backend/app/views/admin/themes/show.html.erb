@@ -9,7 +9,7 @@
   <div class="card-body">
     <%= render(AttributesTableComponent.new(resource: @resource)) do |c|
       c.row :title
-      c.row :description
+      c.row :description, as: :html
     end %>
   </div>
 </div>
