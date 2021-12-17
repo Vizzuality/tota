@@ -32,6 +32,9 @@ Naming/HeredocDelimiterNaming:
 Naming/VariableNumber:
   Enabled: false
 
+Naming/MethodParameterName:
+  Enabled: false
+
 Style/AccessorGrouping:
   Enabled: false
 
