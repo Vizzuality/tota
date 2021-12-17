@@ -61,8 +61,7 @@ module Indicators
       values_to_add = indicator
         .indicator_values
         .group_by { |v| [v.region_id, v.date] }
-        .map do |region_date, values|
-          region_id, date = region_date
+        .map do |(region_id, date), values|
           IndicatorValue.new(
             indicator: monthly_indicator,
             region_id: region_id,
@@ -80,8 +79,7 @@ module Indicators
       values_to_add = indicator
         .indicator_values
         .group_by { |v| [v.region_id, v.year] }
-        .map do |region_year, values|
-          region_id, year = region_year
+        .map do |(region_id, year), values|
           IndicatorValue.new(
             indicator: annual_indicator,
             region_id: region_id,

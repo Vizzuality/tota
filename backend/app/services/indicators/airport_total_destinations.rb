@@ -15,18 +15,19 @@ module Indicators
 
       # category_1 is origin port
       # category_2 is destination port
-      airport_arrivals_by_origin
+      values = airport_arrivals_by_origin
         .indicator_values
         .group_by { |v| [v.category_2, v.year] }
-        .each do |airport_year, arrivals|
-          airport, year = airport_year
-          airport_total_destinations.indicator_values << IndicatorValue.new(
+        .map do |(airport, year), arrivals|
+          airport_total_destinations.indicator_values.build(
             region: arrivals.first.region,
             date: year.to_s,
             category_2: airport,
             value: arrivals.map(&:category_1).uniq.count
           )
         end
+
+      IndicatorValue.import! values, all_or_none: true
     end
   end
 end
