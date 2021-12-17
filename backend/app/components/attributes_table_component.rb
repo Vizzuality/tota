@@ -1,24 +1,18 @@
 # frozen_string_literal: true
 
 class AttributesTableComponent < ViewComponent::Base
-  attr_reader :resource
-
-  renders_many :rows, ->(attribute, options = {}, &block) do
-    RowComponent.new(resource, attribute, options, &block)
+  renders_many :rows, ->(attribute, **options, &block) do
+    RowComponent.new(@resource, attribute, **options, &block)
   end
 
   def initialize(resource:)
-    super
     @resource = resource
   end
 
   class RowComponent < ViewComponent::Base
-    attr_reader :resource, :attribute, :options, :block
-
     delegate :status_tag, to: :helpers
 
-    def initialize(resource, attribute, options = {}, &block)
-      super
+    def initialize(resource, attribute, **options, &block)
       @resource = resource
       @attribute = attribute
       @block = block
@@ -37,16 +31,16 @@ class AttributesTableComponent < ViewComponent::Base
     private
 
     def label
-      return attribute if attribute.is_a?(String)
+      return @attribute if @attribute.is_a?(String)
 
-      attribute.to_s.humanize
+      @attribute.to_s.humanize
     end
 
     def value
-      return block.call(@resource) if block.present?
+      return @block.call(@resource) if @block.present?
 
-      val = @resource.send(attribute)
-      return val&.html_safe if options[:as] == :html
+      val = @resource.send(@attribute)
+      return val&.html_safe if @options[:as] == :html
       return status_tag val if val.is_a?(TrueClass) || val.is_a?(FalseClass)
       return render_blob_link(val) if val.respond_to?(:attached?) && val.attached?
       return render_external_link(val) if val.to_s.start_with?('http')
