@@ -11,7 +11,12 @@
     <%= f.input :admin %>
 
     <% if !user.admin? %>
-      <%= f.association :regions, label: 'Read access to regions', as: :check_boxes, collection: Region.province.or(Region.tourism_region) %>
+      <%= f.association :regions,
+         label: 'Read access to regions',
+         as: :check_boxes,
+         wrapper_html: {data: {controller: 'select-all'}},
+         collection: Region.province.or(Region.tourism_region)
+      %>
     <% end %>
   </div>
 
