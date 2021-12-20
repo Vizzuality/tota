@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Organizations', type: :system do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
+  let_it_be(:admin) { create(:admin, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   before { sign_in admin }
 

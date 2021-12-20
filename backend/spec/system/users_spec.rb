@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Users', type: :system do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
+  let_it_be(:admin) { create(:admin, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   before { sign_in admin }
 
@@ -59,7 +59,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'Edit' do
-    let!(:user) { create(:user, email: 'user1@example.com', name: 'Tomasz') }
+    let!(:user) { create(:admin, email: 'user1@example.com', name: 'Tomasz') }
 
     before { visit '/admin/users' }
 
