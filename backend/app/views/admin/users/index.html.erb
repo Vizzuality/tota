@@ -4,7 +4,9 @@
 
 <h1 class="h3 mb-3 me-2 d-inline-block">Users</h1>
 
-<%= render "index_search_form", q: @q, search_by: :email_cont %>
+<%= render "index_search_form", q: @q, search_by: :email_cont do |f| %>
+  <%= f.input :admin_eq, as: :select, label: 'Admin User?', collection: [['Yes', true], ['No', false]] %>
+<% end %>
 
 <table class="table table-hover" data-controller="table">
   <thead>
