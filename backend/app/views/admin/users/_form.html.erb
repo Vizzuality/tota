@@ -7,6 +7,12 @@
     <%= f.input :name %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
+
+    <%= f.input :admin %>
+
+    <% if !user.admin? %>
+      <%= f.association :regions, label: 'Read access to regions', as: :check_boxes, collection: Region.province.or(Region.tourism_region) %>
+    <% end %>
   </div>
 
   <div class="form-actions mt-3">

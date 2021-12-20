@@ -15,8 +15,13 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
+  has_many :region_permissions
+  has_many :regions, through: :region_permissions
+
+  scope :admins, -> { where(admin: true) }
+  scope :non_admins, -> { where(admin: false) }
 
   validates :password,
             length: {minimum: 12, message: 'must be at least 12 characters long'},

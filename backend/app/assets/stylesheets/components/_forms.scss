@@ -18,3 +18,8 @@
     color: $gray-600;
   }
 }
+
+// fix issue with checkbox not being cleared
+.form-check {
+  clear: both;
+}

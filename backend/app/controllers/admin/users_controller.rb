@@ -32,7 +32,9 @@ class Admin::UsersController < Admin::AdminController
       :email,
       :name,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :admin,
+      region_ids: []
     ]
   end
 end
