@@ -38,14 +38,28 @@ const data = [
     region: 'British Columbia',
     value: 70,
   },
-];
-const changeData = [
   {
+    category_1: 'Weekend Change',
     region: 'British Columbia',
+    date: '2020-W38',
     value: 20.3,
   },
   {
+    category_1: 'Weekend Change',
     region: 'Thompson Okanagan',
+    date: '2020-W38',
+    value: 20.3,
+  },
+  {
+    category_1: 'Weekday Change',
+    region: 'Thompson Okanagan',
+    date: '2020-W38',
+    value: 20.3,
+  },
+  {
+    category_1: 'Weekday Change',
+    region: 'British Columbia',
+    date: '2020-W38',
     value: -34.5,
   },
 ];
@@ -55,8 +69,12 @@ const Template: Story<CompareProps> = ({ ...restProps }: CompareProps) => <Compa
 export const Default = Template.bind({});
 Default.args = {
   data,
-  changeData,
   currentYear: 2020,
+  changeMap: {
+    'Weekday Change': 'Weekday',
+    'Weekend Change': 'Weekend',
+  },
+  unit: '$',
   mergeBy: 'category_1',
   labelKey: 'region',
   valueKey: 'value',
