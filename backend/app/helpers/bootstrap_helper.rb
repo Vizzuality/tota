@@ -69,4 +69,19 @@ module BootstrapHelper
 
     content_tag :span, display, class: "badge badge-#{key}"
   end
+
+  def card(header_text, options = {}, &block)
+    return if header_text.nil?
+
+    css_class = options.fetch(:class, '')
+
+    content_tag :div, class: "card #{css_class}" do
+      ''.tap do |c|
+        c << content_tag(:div, header_text, class: 'card-header')
+        c << content_tag(:div, class: 'card-body') do
+          yield if block.present?
+        end
+      end.html_safe
+    end
+  end
 end

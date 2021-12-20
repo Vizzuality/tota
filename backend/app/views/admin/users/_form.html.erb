@@ -4,20 +4,26 @@
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
     <div class="form-inputs">
-      <%= f.input :email %>
-      <%= f.input :name %>
-      <%= f.input :password %>
-      <%= f.input :password_confirmation %>
+      <%= card 'Details' do %>
+        <%= f.input :email %>
+        <%= f.input :name %>
+      <% end %>
+      <%= card user.new_record? ? 'Set Password' : 'Change Password', class: 'mt-3' do %>
+        <%= f.input :password %>
+        <%= f.input :password_confirmation %>
+      <% end %>
 
-      <%= f.input :admin, input_html: {'data-action' => 'change->refresh-form#update'} %>
+      <%= card 'Permissions', class: 'mt-3' do %>
+        <%= f.input :admin, input_html: {'data-action' => 'change->refresh-form#update'} %>
 
-      <% if !user.admin? %>
-        <%= f.association :regions,
-            label: 'Read access to regions',
-            as: :check_boxes,
-            wrapper_html: {data: {controller: 'select-all'}},
-           collection: Region.province.or(Region.tourism_region)
-        %>
+        <% if !user.admin? %>
+          <%= f.association :regions,
+              label: 'Read access to regions',
+              as: :check_boxes,
+              wrapper_html: {data: {controller: 'select-all'}},
+             collection: Region.province.or(Region.tourism_region)
+          %>
+        <% end %>
       <% end %>
     </div>
 

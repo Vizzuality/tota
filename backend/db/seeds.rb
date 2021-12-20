@@ -11,4 +11,6 @@ if Rails.env.development?
 
   puts 'Executing import all rake task'
   Rake::Task['import:all'].invoke
+  puts 'Adding themes and widgets'
+  Rake::Task['themes:reimport'].invoke
 end
