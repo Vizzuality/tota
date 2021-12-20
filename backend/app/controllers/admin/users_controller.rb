@@ -2,7 +2,10 @@ class Admin::UsersController < Admin::AdminController
   include Admin::Resources
 
   def update
-    if update_user
+    if params[:refresh_form_action] == 'update'
+      @resource.assign_attributes(resource_params)
+      render :edit
+    elsif update_user
       redirect_to resources_url, notice: "#{resource_name} was successfully updated."
     else
       render :edit, status: :unprocessable_entity

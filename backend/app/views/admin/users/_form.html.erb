@@ -1,26 +1,28 @@
-<%= simple_form_for [:admin, user] do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= turbo_frame_tag "user_form" do %>
+  <%= simple_form_for [:admin, user], html: {'data-controller' => 'refresh-form', 'data-refresh-form-frame-value' => 'user_form'} do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :email %>
-    <%= f.input :name %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
+    <div class="form-inputs">
+      <%= f.input :email %>
+      <%= f.input :name %>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
 
-    <%= f.input :admin %>
+      <%= f.input :admin, input_html: {'data-action' => 'change->refresh-form#update'} %>
 
-    <% if !user.admin? %>
-      <%= f.association :regions,
-         label: 'Read access to regions',
-         as: :check_boxes,
-         wrapper_html: {data: {controller: 'select-all'}},
-         collection: Region.province.or(Region.tourism_region)
-      %>
-    <% end %>
-  </div>
+      <% if !user.admin? %>
+        <%= f.association :regions,
+            label: 'Read access to regions',
+            as: :check_boxes,
+            wrapper_html: {data: {controller: 'select-all'}},
+           collection: Region.province.or(Region.tourism_region)
+        %>
+      <% end %>
+    </div>
 
-  <div class="form-actions mt-3">
-    <%= f.button :submit, class: 'btn btn-primary' %> or <%= link_to 'Back', :back %>
-  </div>
+    <div class="form-actions mt-3">
+      <%= f.button :submit, class: 'btn btn-primary' %> or <%= link_to 'Back', :back %>
+    </div>
+  <% end %>
 <% end %>

@@ -57,7 +57,9 @@ module Admin::Resources
 
     authorize @resource
 
-    if @resource.save
+    if params[:refresh_form_action] == 'update'
+      render :new
+    elsif @resource.save
       redirect_to resources_url, notice: "#{resource_name} was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -66,7 +68,10 @@ module Admin::Resources
 
   # PATCH/PUT /resources/1
   def update
-    if @resource.update(resource_params)
+    if params[:refresh_form_action] == 'update'
+      @resource.assign_attributes(resource_params)
+      render :edit
+    elsif @resource.update(resource_params)
       redirect_to resources_url, notice: "#{resource_name} was successfully updated."
     else
       render :edit, status: :unprocessable_entity
