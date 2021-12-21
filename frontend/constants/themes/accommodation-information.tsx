@@ -64,11 +64,9 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         [`${indicatorPrefix}_change_weekend`]: 'Weekend',
         [`${indicatorPrefix}_change_month`]: selectedMonth,
       };
-      console.log('selected month', selectedMonth);
-      const data = rawData.filter((x) => x.date === selectedPeriod);
-      data.forEach((d) => {
-        d.indicator = indicatorsMap[d.indicator] || d.indicator;
-      });
+      const data = rawData
+        .filter((x) => x.date === selectedPeriod)
+        .map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] || x.indicator }));
       return {
         type: 'compare',
         data,
@@ -128,26 +126,26 @@ const theme: ThemeFrontendDefinition = {
       fetchParams: getFetchParamsFunction('occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
     },
-    {
-      slug: 'average_daily_hotel_rate',
-      initialState: {
-        year: 'all_years',
-        period: undefined,
-        type: 'weekly',
-      },
-      fetchParams: getFetchParamsFunction('adr'),
-      fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
-    },
-    {
-      slug: 'revenue_per_available_room',
-      initialState: {
-        year: 'all_years',
-        period: undefined,
-        type: 'weekly',
-      },
-      fetchParams: getFetchParamsFunction('revpar'),
-      fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
-    },
+    /* {
+     *   slug: 'average_daily_hotel_rate',
+     *   initialState: {
+     *     year: 'all_years',
+     *     period: undefined,
+     *     type: 'weekly',
+     *   },
+     *   fetchParams: getFetchParamsFunction('adr'),
+     *   fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
+     * },
+     * {
+     *   slug: 'revenue_per_available_room',
+     *   initialState: {
+     *     year: 'all_years',
+     *     period: undefined,
+     *     type: 'weekly',
+     *   },
+     *   fetchParams: getFetchParamsFunction('revpar'),
+     *   fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
+     * }, */
   ],
 };
 
