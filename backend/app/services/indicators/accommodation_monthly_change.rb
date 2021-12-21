@@ -22,10 +22,10 @@ module Indicators
     private
 
     def create_change_indicator(indicator_slug, change_indicator_slug)
+      change_indicator = create_indicator(change_indicator_slug)
       indicator = Indicator.find_by(slug: indicator_slug)
       return unless indicator.present?
 
-      change_indicator = create_indicator(change_indicator_slug)
       values = indicator.indicator_values.order(:region_id, :date).to_a
       values_to_add = []
 

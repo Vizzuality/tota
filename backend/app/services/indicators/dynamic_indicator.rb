@@ -15,7 +15,6 @@ module Indicators
     end
 
     def create_indicator(slug)
-      puts "Creating indicator #{slug}"
       Indicator.create!(slug: slug, dynamic: true)
     end
   end
