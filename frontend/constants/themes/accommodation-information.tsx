@@ -1,6 +1,5 @@
 import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 import uniq from 'lodash/uniq';
-import groupBy from 'lodash/groupBy';
 import { parseISO, format } from 'date-fns';
 
 import {
@@ -10,6 +9,8 @@ import {
   getOptions,
   mergeForChart,
   getYear,
+  getMonth,
+  allMonths,
 } from 'utils/charts';
 import { defaultTooltip } from 'constants/charts';
 
@@ -26,35 +27,60 @@ function getWeekOptions(weeks: string[]) {
   });
 }
 
-function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
-  const changeIndicator = `${indicatorPrefix}_change_week`;
-  const indicatorsMap = {
-    [`${indicatorPrefix}_weekday`]: 'Weekday',
-    [`${indicatorPrefix}_weekend`]: 'Weekend',
-  };
+function getFetchParamsFunction(prefix: string) {
+  return (state: any) => {
+    const indicators = {
+      weekly: [`${prefix}_weekday`, `${prefix}_weekend`, `${prefix}_change_weekday`, `${prefix}_change_weekend`],
+      monthly: [`${prefix}_month`, `${prefix}_change_month`],
+      historical: `${prefix}_week`,
+    };
 
+    return {
+      slug: indicators[state.type],
+      region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
+    };
+  };
+}
+
+function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
     const regions = uniq(rawData.map((x) => x.region));
     const colorsByRegionName = getColorsByRegionName(rawData);
 
-    if (state.type === 'weekly') {
-      const weeks = uniq(rawData.map((x) => x.date))
+    if (['weekly', 'monthly'].includes(state.type)) {
+      const periods = uniq(rawData.map((x) => x.date))
         .sort()
         .reverse();
-      const selectedWeek = state.week || weeks[0];
-      const selectedYear = getYear(selectedWeek);
-      const dataForWeek = rawData.filter((x) => x.date === selectedWeek);
-      let data = dataForWeek.filter((x) => x.indicator !== changeIndicator);
-      const changeData = dataForWeek.filter((x) => x.indicator === changeIndicator);
-      data = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+      const selectedPeriod = state.period || periods[0];
+      const selectedYear = getYear(selectedPeriod);
+      const selectedMonth = allMonths[getMonth(selectedPeriod) - 1];
+      const indicatorsMap = {
+        [`${indicatorPrefix}_weekday`]: 'Weekday',
+        [`${indicatorPrefix}_weekend`]: 'Weekend',
+        [`${indicatorPrefix}_month`]: selectedMonth,
+      };
+      const changeMap = {
+        [`${indicatorPrefix}_change_weekday`]: 'Weekday',
+        [`${indicatorPrefix}_change_weekend`]: 'Weekend',
+        [`${indicatorPrefix}_change_month`]: selectedMonth,
+      };
+      const data = rawData
+        .filter((x) => x.date === selectedPeriod)
+        .map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] || x.indicator }));
       return {
         type: 'compare',
         data,
-        changeData,
+        changeMap,
+        colors: getColorsByRegionName(data),
         currentYear: parseInt(selectedYear, 10),
         controls: [
-          { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
-          { type: 'select', side: 'right', name: 'week', options: getWeekOptions(weeks) },
+          { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
+          {
+            type: 'select',
+            side: 'right',
+            name: 'period',
+            options: state.type === 'weekly' ? getWeekOptions(periods) : getOptions(periods),
+          },
         ],
         mergeBy: 'indicator',
         labelKey: 'region',
@@ -62,18 +88,13 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         unit,
       };
     }
-    const withoutChange = rawData.filter((x) => x.indicator !== changeIndicator);
-    let data = filterBySelectedYear(withoutChange, state.year);
-    data = Object.values(groupBy(data, (d: IndicatorValue) => [d.date, d.region])).map((grouped: IndicatorValue[]) => ({
-      ...grouped[0],
-      value: Number((grouped.reduce((acc, v) => acc + v.value, 0) / grouped.length).toFixed(2)),
-    }));
+    const data = filterBySelectedYear(rawData, state.year);
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
       data: chartData,
       controls: [
-        { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Historical']) },
+        { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
       lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
@@ -99,39 +120,30 @@ const theme: ThemeFrontendDefinition = {
       slug: 'occupancy_rates',
       initialState: {
         year: 'all_years',
-        week: undefined,
+        period: undefined,
         type: 'weekly',
       },
-      fetchParams: (state: any) => ({
-        slug: ['occupancy_weekday', 'occupancy_weekend', 'occupancy_change_week'],
-        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
-      }),
+      fetchParams: getFetchParamsFunction('occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
     },
     {
       slug: 'average_daily_hotel_rate',
       initialState: {
         year: 'all_years',
-        week: undefined,
+        period: undefined,
         type: 'weekly',
       },
-      fetchParams: (state: any) => ({
-        slug: ['adr_weekday', 'adr_weekend', 'adr_change_week'],
-        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
-      }),
+      fetchParams: getFetchParamsFunction('adr'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
     },
     {
       slug: 'revenue_per_available_room',
       initialState: {
         year: 'all_years',
-        week: undefined,
+        period: undefined,
         type: 'weekly',
       },
-      fetchParams: (state: any) => ({
-        slug: ['revpar_weekday', 'revpar_weekend', 'revpar_change_week'],
-        region: [state.selectedRegion.slug, state.selectedRegion.parent?.slug].filter((x) => x),
-      }),
+      fetchParams: getFetchParamsFunction('revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
     },
   ],

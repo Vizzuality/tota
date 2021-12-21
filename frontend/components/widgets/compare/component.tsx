@@ -7,28 +7,17 @@ import Icon from 'components/icon';
 import ArrowIcon from 'svgs/arrow-right.svg?sprite';
 
 import type { CompareProps } from './types';
-import type { IndicatorValue } from 'types';
 
 import BarChart from 'components/widgets/charts/bar';
 import { COLORS } from 'constants/charts';
-import { getColorsByRegionName, mergeForChart } from 'utils/charts';
-
-function changeValues(data: IndicatorValue[], changeData: IndicatorValue[], key: string): IndicatorValue[] {
-  return data.map((d) => {
-    const percentage = changeData.find((x) => x[key] === d[key])?.value;
-
-    return {
-      ...d,
-      value: Number((d.value / (1 + percentage / 100)).toFixed(2)),
-    };
-  });
-}
+import { mergeForChart } from 'utils/charts';
 
 const Compare: FC<CompareProps> = ({
   data,
-  changeData,
+  changeMap,
   currentYear,
   unit,
+  colors,
   mergeBy,
   labelKey,
   valueKey,
@@ -36,11 +25,26 @@ const Compare: FC<CompareProps> = ({
   const [showCompare, setShowCompare] = useState(false);
   const theme = showCompare ? 'dark-gray-alt' : 'dark-gray';
   const year = showCompare ? currentYear - 1 : currentYear;
-  const currentYearData = data;
-  const previousYearData = changeValues(currentYearData, changeData, labelKey);
+  const changeKeys = Object.keys(changeMap);
+  const currentYearData = data.filter((x) => !changeKeys.includes(x[mergeBy]));
+  const changeData = data.filter((x) => changeKeys.includes(x[mergeBy]));
+  const previousYearData = currentYearData
+    .map((d) => {
+      const percentage = changeData.find(
+        (x) => x[labelKey] === d[labelKey] && changeMap[x[mergeBy]] === d[mergeBy],
+      )?.value;
+
+      if (!percentage) return null;
+
+      return {
+        ...d,
+        value: Number((d.value / (1 + percentage / 100)).toFixed(2)),
+      };
+    })
+    .filter((x) => x);
   const useData = showCompare ? previousYearData : currentYearData;
 
-  const allDataValues = [...currentYearData, ...previousYearData].map((x) => x.value);
+  const allDataValues = [...currentYearData, ...previousYearData].map((x) => x.value).filter((x) => !isNaN(x));
   const minValue = Math.min(...allDataValues);
   const maxValue = Math.max(...allDataValues);
 
@@ -52,17 +56,15 @@ const Compare: FC<CompareProps> = ({
   });
   const labels = uniq(data.map((x) => x[labelKey]));
   const bars = labels.map((x) => ({ dataKey: x }));
-  const colorsByRegionName = getColorsByRegionName(data);
-  if (labelKey === 'region') {
-    bars.forEach((b) => {
-      b['color'] = colorsByRegionName[b.dataKey];
-    });
-  }
+  const colorsByLabelKey = colors || labels.reduce((acc, l, i) => ({ ...acc, [l]: COLORS[i] }), {});
+  bars.forEach((b) => {
+    b['color'] = colorsByLabelKey[b.dataKey];
+  });
   const chartProps = {
     bars,
     yAxis: {
       domain: [Math.min(0, minValue), Math.round(maxValue * 1.1)],
-      tickFormatter: (val) => `${val}${unit}`,
+      tickFormatter: (val) => `${val}${unit ?? ''}`,
     },
     xAxis: {
       dataKey: mergeBy,
@@ -70,24 +72,27 @@ const Compare: FC<CompareProps> = ({
     },
     tooltip: {
       cursor: false,
-      valueFormatter: (val) => `${val}${unit}`,
+      valueFormatter: (val) => `${val}${unit ?? ''}`,
     },
   };
-  const changeDataValueColor = labels.map((b, index) => {
-    return {
-      value: changeData.find((x) => x[labelKey] === b)?.value,
-      color: labelKey === 'region' ? colorsByRegionName[b] : COLORS[index],
-    };
-  });
+  const changeDataSeries = uniq(changeData.map((x) => x[mergeBy]));
+  const changeDataValueColor = (serie: string) =>
+    labels.map((label) => {
+      return {
+        value: changeData.find((x) => x[mergeBy] === serie && x[labelKey] === label)?.value,
+        color: colorsByLabelKey[label],
+      };
+    });
+  const yOffset = changeDataSeries.length > 1 ? 100 : 80;
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
       <div className="lg:w-1/2">
         <BarChart data={chartData} {...chartProps} />
       </div>
-      <div className="lg:w-1/2 px-6 py-20 lg:p-6 flex justify-center items-center relative">
+      <div className="lg:w-1/2 px-6 py-32 lg:p-6 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
-          {(changeData || []).length > 0 !== null ? (
+          {(previousYearData || []).length > 0 ? (
             <>
               <Button
                 theme={theme}
@@ -107,25 +112,33 @@ const Compare: FC<CompareProps> = ({
                 <span>{currentYear}</span>
               </div>
               <div
-                className={cx('absolute transition duration-300 ease-in-out transform flex flex-row justify-between', {
-                  'translate-y-20 opacity-1': showCompare,
+                className={cx('absolute transition duration-300 ease-in-out transform', {
+                  'opacity-1': showCompare,
                   'opacity-0': !showCompare,
-                  'w-full': changeDataValueColor.length > 1,
+                  'w-full': labels.length > 1,
                 })}
+                style={{
+                  transform: showCompare && `translate(0, ${yOffset}px)`,
+                }}
               >
-                {changeDataValueColor.map(({ value, color }, index) => (
-                  <div
-                    key={index}
-                    className="px-4 py-3 text-lg text-white font-bold"
-                    style={{ backgroundColor: color }}
-                  >
-                    {value}%
+                {changeDataSeries.map((serie) => (
+                  <div key={serie} className="flex flex-row justify-between gap-2 mt-2">
+                    {changeDataSeries.length > 1 && <div className="font-bold mt-4">{changeMap[serie]}</div>}
+                    {changeDataValueColor(serie).map(({ value, color }, index) => (
+                      <div
+                        key={index}
+                        className="px-4 py-3 text-lg text-white text-center font-bold"
+                        style={{ backgroundColor: color, minWidth: 90 }}
+                      >
+                        {value > 0 ? `+${value}` : value}%
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
             </>
           ) : (
-            <p>No data for previous year</p>
+            <p className="font-bold">No data for previous year</p>
           )}
         </div>
       </div>
