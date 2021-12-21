@@ -28,16 +28,20 @@ const Compare: FC<CompareProps> = ({
   const changeKeys = Object.keys(changeMap);
   const currentYearData = data.filter((x) => !changeKeys.includes(x[mergeBy]));
   const changeData = data.filter((x) => changeKeys.includes(x[mergeBy]));
-  const previousYearData = currentYearData.map((d) => {
-    const percentage = changeData.find(
-      (x) => x[labelKey] === d[labelKey] && changeMap[x[mergeBy]] === d[mergeBy],
-    )?.value;
+  const previousYearData = currentYearData
+    .map((d) => {
+      const percentage = changeData.find(
+        (x) => x[labelKey] === d[labelKey] && changeMap[x[mergeBy]] === d[mergeBy],
+      )?.value;
 
-    return {
-      ...d,
-      value: Number((d.value / (1 + percentage / 100)).toFixed(2)),
-    };
-  });
+      if (!percentage) return null;
+
+      return {
+        ...d,
+        value: Number((d.value / (1 + percentage / 100)).toFixed(2)),
+      };
+    })
+    .filter((x) => x);
   const useData = showCompare ? previousYearData : currentYearData;
 
   const allDataValues = [...currentYearData, ...previousYearData].map((x) => x.value).filter((x) => !isNaN(x));
@@ -87,7 +91,7 @@ const Compare: FC<CompareProps> = ({
       </div>
       <div className="lg:w-1/2 px-6 py-32 lg:p-6 flex justify-center items-center relative">
         <div className="w-auto relative flex justify-center items-center ">
-          {(changeData || []).length > 0 !== null ? (
+          {(previousYearData || []).length > 0 ? (
             <>
               <Button
                 theme={theme}
@@ -133,7 +137,7 @@ const Compare: FC<CompareProps> = ({
               </div>
             </>
           ) : (
-            <p>No data for previous year</p>
+            <p className="font-bold">No data for previous year</p>
           )}
         </div>
       </div>

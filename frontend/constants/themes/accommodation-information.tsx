@@ -1,6 +1,5 @@
 import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 import uniq from 'lodash/uniq';
-import groupBy from 'lodash/groupBy';
 import { parseISO, format } from 'date-fns';
 
 import {
@@ -50,7 +49,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   const changeMap = {
     [`${indicatorPrefix}_change_weekday`]: 'Weekday',
     [`${indicatorPrefix}_change_weekend`]: 'Weekend',
-    [`${indicatorPrefix}_change_month`]: `${indicatorPrefix}_month`,
+    [`${indicatorPrefix}_change_month`]: `Month`,
   };
 
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
