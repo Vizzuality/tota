@@ -9,6 +9,8 @@ import {
   getOptions,
   mergeForChart,
   getYear,
+  getMonth,
+  allMonths,
 } from 'utils/charts';
 import { defaultTooltip } from 'constants/charts';
 
@@ -41,17 +43,6 @@ function getFetchParamsFunction(prefix: string) {
 }
 
 function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
-  const indicatorsMap = {
-    [`${indicatorPrefix}_weekday`]: 'Weekday',
-    [`${indicatorPrefix}_weekend`]: 'Weekend',
-    [`${indicatorPrefix}_month`]: 'Month',
-  };
-  const changeMap = {
-    [`${indicatorPrefix}_change_weekday`]: 'Weekday',
-    [`${indicatorPrefix}_change_weekend`]: 'Weekend',
-    [`${indicatorPrefix}_change_month`]: `Month`,
-  };
-
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
     const regions = uniq(rawData.map((x) => x.region));
     const colorsByRegionName = getColorsByRegionName(rawData);
@@ -62,6 +53,18 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         .reverse();
       const selectedPeriod = state.period || periods[0];
       const selectedYear = getYear(selectedPeriod);
+      const selectedMonth = allMonths[getMonth(selectedPeriod) - 1];
+      const indicatorsMap = {
+        [`${indicatorPrefix}_weekday`]: 'Weekday',
+        [`${indicatorPrefix}_weekend`]: 'Weekend',
+        [`${indicatorPrefix}_month`]: selectedMonth,
+      };
+      const changeMap = {
+        [`${indicatorPrefix}_change_weekday`]: 'Weekday',
+        [`${indicatorPrefix}_change_weekend`]: 'Weekend',
+        [`${indicatorPrefix}_change_month`]: selectedMonth,
+      };
+      console.log('selected month', selectedMonth);
       const data = rawData.filter((x) => x.date === selectedPeriod);
       data.forEach((d) => {
         d.indicator = indicatorsMap[d.indicator] || d.indicator;

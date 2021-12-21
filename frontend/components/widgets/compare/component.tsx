@@ -83,6 +83,7 @@ const Compare: FC<CompareProps> = ({
         color: colorsByLabelKey[label],
       };
     });
+  const yOffset = changeDataSeries.length > 1 ? 100 : 80;
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
@@ -117,12 +118,12 @@ const Compare: FC<CompareProps> = ({
                   'w-full': labels.length > 1,
                 })}
                 style={{
-                  transform: showCompare && 'translate(0, 100px)',
+                  transform: showCompare && `translate(0, ${yOffset}px)`,
                 }}
               >
                 {changeDataSeries.map((serie) => (
                   <div key={serie} className="flex flex-row justify-between gap-2 mt-2">
-                    <div className="font-bold mt-4">{changeMap[serie]}</div>
+                    {changeDataSeries.length > 1 && <div className="font-bold mt-4">{changeMap[serie]}</div>}
                     {changeDataValueColor(serie).map(({ value, color }, index) => (
                       <div
                         key={index}
