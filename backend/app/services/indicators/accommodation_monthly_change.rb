@@ -37,7 +37,7 @@ module Indicators
         values_to_add << change_indicator.indicator_values.build(
           region_id: v.region_id,
           date: v.date,
-          value: ((v.value / prev_year_data.value.to_f) - 1).round(4) * 100
+          value: (((v.value / prev_year_data.value.to_f) - 1) * 100).round(2)
         )
       end
 
