@@ -59,7 +59,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'Edit' do
-    let!(:user) { create(:admin, email: 'user1@example.com', name: 'Tomasz') }
+    let!(:user) { create(:user, email: 'user1@example.com', name: 'Tomasz') }
 
     before { visit '/admin/users' }
 
@@ -103,6 +103,48 @@ RSpec.describe 'Users', type: :system do
       click_on 'Sign in'
 
       expect(page).to have_current_path(admin_dashboards_path)
+    end
+
+    context 'permissions' do
+      before { visit edit_admin_user_path(user) }
+
+      it 'updates admin field' do
+        expect(page).to have_unchecked_field(:user_admin)
+
+        check :user_admin
+        click_on 'Update User'
+
+        within_row('user1@example.com') do
+          expect(page).to have_text('Yes')
+        end
+      end
+
+      context 'single regions' do
+        before do
+          create(:region, name: 'Region 1')
+          create(:region, name: 'Region 2')
+          create(:region, name: 'Region 3')
+        end
+        before { visit edit_admin_user_path(user) }
+
+        it 'updates regional permissions' do
+          check 'Region 1'
+          check 'Region 3'
+
+          click_on 'Update User'
+
+          expect(page).to have_text('User was successfully updated')
+
+          within_row('user1@example.com') do
+            click_on 'Actions'
+            click_on 'Edit'
+          end
+
+          expect(page).to have_checked_field('Region 1')
+          expect(page).to have_unchecked_field('Region 2')
+          expect(page).to have_checked_field('Region 3')
+        end
+      end
     end
 
     context 'errors' do
