@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   include Admin::Resources
 
   def update
-    if params[:refresh_form_action] == 'update'
+    if params[:commit].blank?
       @resource.assign_attributes(resource_params)
       render :edit
     elsif update_user

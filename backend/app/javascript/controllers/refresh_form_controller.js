@@ -1,5 +1,4 @@
-import Rails from '@rails/ujs'
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static values = {
@@ -7,32 +6,21 @@ export default class extends Controller {
   }
 
   connect() {
-    this._addHiddenRefreshFormActionInput()
     this._resetFrameTarget();
   }
 
   update() {
     const frame = document.getElementById(this.frameValue);
-    if (frame) frame.setAttribute('target', '');
-    this.refreshFormActionInput.value = 'update'
-    Rails.fire(this.element, 'submit')
+    frame.setAttribute('target', '');
+    this.element.requestSubmit();
   }
 
   _resetFrameTarget() {
     const frame = document.getElementById(this.frameValue);
-    if (frame) frame.setAttribute('target', '_top');
-  }
-
-  _addHiddenRefreshFormActionInput() {
-    if (!this.refreshFormActionInput) {
-      const hidden = document.createElement('input')
-      hidden.setAttribute('type', 'hidden')
-      hidden.setAttribute('name', 'refresh_form_action')
-      this.element.appendChild(hidden)
+    if (frame) {
+      frame.setAttribute('target', '_top');
+    } else {
+      console.error(`refresh_form_controller: missing frame ${this.frameValue}`);
     }
-  }
-
-  get refreshFormActionInput() {
-    return this.element.querySelector('[name=refresh_form_action]')
   }
 }

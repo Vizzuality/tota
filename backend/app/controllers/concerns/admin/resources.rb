@@ -57,7 +57,7 @@ module Admin::Resources
 
     authorize @resource
 
-    if params[:refresh_form_action] == 'update'
+    if params[:commit].blank?
       render :new
     elsif @resource.save
       redirect_to resources_url, notice: "#{resource_name} was successfully created."
@@ -68,7 +68,7 @@ module Admin::Resources
 
   # PATCH/PUT /resources/1
   def update
-    if params[:refresh_form_action] == 'update'
+    if params[:commit].blank?
       @resource.assign_attributes(resource_params)
       render :edit
     elsif @resource.update(resource_params)

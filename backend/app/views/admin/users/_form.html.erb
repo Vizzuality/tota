@@ -14,7 +14,7 @@
       <% end %>
 
       <%= card 'Permissions', class: 'mt-3' do %>
-        <%= f.input :admin, input_html: {'data-action' => 'change->refresh-form#update'} %>
+        <%= f.input :admin, label: 'Admin (Frontend read access to the whole content)', input_html: {'data-action' => 'change->refresh-form#update'} %>
 
         <% if !user.admin? %>
           <%= f.association :regions,
