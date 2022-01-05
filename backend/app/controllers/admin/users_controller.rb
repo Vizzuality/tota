@@ -36,7 +36,7 @@ class Admin::UsersController < Admin::AdminController
       :name,
       :password,
       :password_confirmation,
-      :admin,
+      :account_type,
       region_ids: []
     ]
   end

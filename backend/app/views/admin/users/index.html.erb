@@ -5,7 +5,7 @@
 <h1 class="h3 mb-3 me-2 d-inline-block">Users</h1>
 
 <%= render "index_search_form", q: @q, search_by: :email_cont do |f| %>
-  <%= f.input :admin_eq, as: :select, label: 'Admin User?', collection: [['Yes', true], ['No', false]] %>
+  <%= f.input :account_type_eq, as: :select, label: 'Account Type', collection: select_collection(User::ACCOUNT_TYPES) %>
 <% end %>
 
 <table class="table table-hover" data-controller="table">
@@ -28,7 +28,7 @@
       <tr data-link="<%= edit_admin_user_path(user) %>">
         <td><%= user.email %></td>
         <td><%= user.name %></td>
-        <td><%= status_tag user.admin %></td>
+        <td><%= status_tag user.admin? %></td>
         <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>

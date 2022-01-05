@@ -109,9 +109,9 @@ RSpec.describe 'Users', type: :system do
       before { visit edit_admin_user_path(user) }
 
       it 'updates admin field' do
-        expect(page).to have_unchecked_field(:user_admin)
+        expect(page).to have_select(:user_account_type, selected: 'User')
 
-        check :user_admin
+        select 'Admin', from: :user_account_type
         click_on 'Update User'
 
         within_row('user1@example.com') do

@@ -14,7 +14,12 @@
       <% end %>
 
       <%= card 'Permissions', class: 'mt-3' do %>
-        <%= f.input :admin, label: 'Admin (Frontend read access to the whole content)', input_html: {'data-action' => 'change->refresh-form#update'} %>
+        <%= f.input :account_type,
+           collection: select_collection(User::ACCOUNT_TYPES),
+           hint: user.admin? && 'Admin users have frontend read access to the whole content',
+           include_blank: false,
+           input_html: {'data-action' => 'change->refresh-form#update'}
+        %>
 
         <% if !user.admin? %>
           <%= f.association :regions,
