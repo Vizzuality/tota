@@ -33,11 +33,23 @@ module PageHelpers
   # elements outside window view
   def click_on(locator = nil, **options)
     link_or_button = find(:link_or_button, locator, **options)
-    unless in_viewport?(link_or_button)
-      page.scroll_to(link_or_button, align: :center)
-      sleep 0.3 # dunno why have to wait on CI
-    end
+    bring_into_viewport(link_or_button)
     link_or_button.click
+  end
+
+  # override because cuprite at least on CI has problem with clicking on
+  # elements outside window view
+  def check(locator = nil, **options)
+    checkbox = find(:checkbox, locator, **options)
+    bring_into_viewport(checkbox)
+    page.check(locator, **options)
+  end
+
+  def bring_into_viewport(element)
+    return if in_viewport?(element)
+
+    page.scroll_to(element, align: :center)
+    sleep 0.3 # dunno why have to wait on CI
   end
 
   def in_viewport?(element)
