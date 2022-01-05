@@ -112,6 +112,7 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_select(:user_account_type, selected: 'User')
 
         select 'Admin', from: :user_account_type
+        sleep 0.3 # dunno why have to wait on CI
         click_on 'Update User'
 
         within_row('user1@example.com') do

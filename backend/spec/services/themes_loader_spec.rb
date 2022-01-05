@@ -11,7 +11,7 @@ RSpec.describe ThemesLoader do
       expect(service.call).to be(true)
       expect(Theme.count).to eq(3)
 
-      widgets_json = Widget.all.to_json(
+      widgets_json = Widget.all.order(:created_at).to_json(
         only: [:title, :sub_title, :description, :note, :sources]
       )
       expect(widgets_json).to match_snapshot('services/themes-loader-empty-db')
@@ -53,7 +53,7 @@ RSpec.describe ThemesLoader do
       expect(Widget.find_by(slug: :should_be_removed).present?).to be(false)
       expect(Theme.find_by(slug: :airport_information).title).to eq('Airport Information old')
       expect(Widget.find_by(slug: :airport_arrivals).title).to eq('Airport arrivals old')
-      widgets_json = Widget.all.to_json(
+      widgets_json = Widget.all.order(:created_at).to_json(
         only: [:title, :sub_title, :description, :note, :sources]
       )
       expect(widgets_json).to match_snapshot('services/themes-loader-existing-widgets')
@@ -72,7 +72,7 @@ RSpec.describe ThemesLoader do
       expect(Theme.find_by(slug: :airport_information).title).to eq('Airport Information')
       expect(Widget.find_by(slug: :airport_arrivals).title).to eq('Number of arriving flights')
 
-      widgets_json = Widget.all.to_json(
+      widgets_json = Widget.all.order(:created_at).to_json(
         only: [:title, :sub_title, :description, :note, :sources]
       )
       # match the same snapshot as empty database spec
