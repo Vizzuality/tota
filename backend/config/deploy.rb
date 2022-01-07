@@ -3,7 +3,7 @@ set :application, 'tota'
 set :repo_url, 'git@github.com:Vizzuality/tota.git'
 set :repo_tree, 'backend'
 set :deploy_to, '~/tota-api'
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/downloads', 'vendor/bundle', 'db/csvs'
+append :linked_dirs, 'log', 'storage', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/downloads', 'vendor/bundle', 'db/csvs'
 set :keep_releases, 3
 
 set :rbenv_type, :user
@@ -82,12 +82,5 @@ namespace :deploy do
     end
   end
 
-  #before :starting,     :check_revision
-  #after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  # after  :finishing,    :restart
 end
-
-# ps aux | grep puma    # Get puma pid
-# kill -s SIGUSR2 pid   # Restart puma
-# kill -s SIGTERM pid   # Stop puma
