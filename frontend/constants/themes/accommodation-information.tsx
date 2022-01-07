@@ -97,10 +97,16 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
       };
     }
     let data = filterBySelectedYear(rawData, state.year);
-    let xAxis = { dataKey: 'date' } as any;
-    let tooltipLabelFormatter;
+    data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
+    let xAxis = {
+      dataKey: 'date',
+      tickFormatter: (date) => {
+        const parsedDate = new Date(parseInt(date));
+        if (isNaN(parsedDate.getTime())) return date;
+        return format(parsedDate, "yyyy 'W'II");
+      },
+    } as any;
     if (state.year !== 'all_years') {
-      data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
       const allDates = data.map((x) => parseInt(x.date));
       const minDate = Math.min(...allDates);
       const months = allMonths.map((x) => new Date(`${state.year} ${x}`).getTime());
@@ -115,10 +121,6 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         type: 'number',
         scale: 'time',
         domain: ['auto', 'auto'],
-      };
-      tooltipLabelFormatter = (value) => {
-        const parsedDate = new Date(parseInt(value));
-        return format(parsedDate, "yyyy MMM - Io 'week of year'");
       };
     }
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
@@ -137,7 +139,10 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
       tooltip: {
         ...defaultTooltip,
         valueFormatter: (val) => `${val}${unit}`,
-        labelFormatter: tooltipLabelFormatter,
+        labelFormatter: (value) => {
+          const parsedDate = new Date(parseInt(value));
+          return format(parsedDate, "yyyy MMM - Io 'week of the year'");
+        },
       },
     };
   };
