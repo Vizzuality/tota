@@ -12,12 +12,17 @@ import {
   getMonth,
   allMonths,
 } from 'utils/charts';
-import { thisYear } from './utils';
+import { thisYear, shortMonthName } from './utils';
 import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
 
 const TABS = ['Historical', 'Weekly', 'Monthly'];
+
+function monthWeekFormatter(date: string) {
+  const d = parseISO(date);
+  return format(d, "MMM 'W'II");
+}
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
@@ -91,8 +96,31 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         unit,
       };
     }
-    const data = filterBySelectedYear(rawData, state.year);
-    console.log('state year', state.year);
+    let data = filterBySelectedYear(rawData, state.year);
+    let xAxis = { dataKey: 'date' } as any;
+    let tooltipLabelFormatter;
+    if (state.year !== 'all_years') {
+      data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
+      const allDates = data.map((x) => parseInt(x.date));
+      const minDate = Math.min(...allDates);
+      const months = allMonths.map((x) => new Date(`${state.year} ${x}`).getTime());
+      xAxis = {
+        dataKey: 'date',
+        ticks: [minDate, ...months.filter((x) => x > minDate)],
+        tickFormatter: (date) => {
+          const parsedDate = new Date(parseInt(date));
+          if (isNaN(parsedDate.getTime())) return date;
+          return format(parsedDate, 'MMM');
+        },
+        type: 'number',
+        scale: 'time',
+        domain: ['auto', 'auto'],
+      };
+      tooltipLabelFormatter = (value) => {
+        const parsedDate = new Date(parseInt(value));
+        return format(parsedDate, "yyyy MMM - Io 'week of year'");
+      };
+    }
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
@@ -102,15 +130,14 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
       lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
-      xAxis: {
-        dataKey: 'date',
-      },
+      xAxis,
       yAxis: {
         tickFormatter: (val) => `${val}${unit}`,
       },
       tooltip: {
         ...defaultTooltip,
         valueFormatter: (val) => `${val}${unit}`,
+        labelFormatter: tooltipLabelFormatter,
       },
     };
   };
