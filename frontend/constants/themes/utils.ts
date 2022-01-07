@@ -1,10 +1,5 @@
-import { parseISO } from 'date-fns';
-
 export const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
-export const shortMonthName = (date: string) => {
-  const d = parseISO(date);
-  return monthNameFormatter.format(d);
-};
+export const shortMonthName = (date: string) => monthNameFormatter.format(new Date(date));
 export const formatPercentage = (value: number) =>
   value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
 export const compactNumberTickFormatter = (value) =>
