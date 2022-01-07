@@ -12,17 +12,12 @@ import {
   getMonth,
   allMonths,
 } from 'utils/charts';
-import { thisYear, shortMonthName } from './utils';
+import { thisYear } from './utils';
 import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
 
 const TABS = ['Historical', 'Weekly', 'Monthly'];
-
-function monthWeekFormatter(date: string) {
-  const d = parseISO(date);
-  return format(d, "MMM 'W'II");
-}
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
