@@ -98,31 +98,10 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
     }
     let data = filterBySelectedYear(rawData, state.year);
     data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
-    let xAxis = {
-      dataKey: 'date',
-      tickFormatter: (date) => {
-        const parsedDate = new Date(parseInt(date));
-        if (isNaN(parsedDate.getTime())) return date;
-        return format(parsedDate, "yyyy 'W'II");
-      },
-    } as any;
-    if (state.year !== 'all_years') {
-      const allDates = data.map((x) => parseInt(x.date));
-      const minDate = Math.min(...allDates);
-      const months = allMonths.map((x) => new Date(`${state.year} ${x}`).getTime());
-      xAxis = {
-        dataKey: 'date',
-        ticks: [minDate, ...months.filter((x) => x > minDate)],
-        tickFormatter: (date) => {
-          const parsedDate = new Date(parseInt(date));
-          if (isNaN(parsedDate.getTime())) return date;
-          return format(parsedDate, 'MMM');
-        },
-        type: 'number',
-        scale: 'time',
-        domain: ['auto', 'auto'],
-      };
-    }
+    const allDates = data.map((x) => parseInt(x.date));
+    const allYears = uniq(allDates.map((x) => new Date(x).getFullYear()));
+    const minDate = Math.min(...allDates);
+    const months = allYears.flatMap((year) => allMonths.map((month) => new Date(`${year} ${month}`).getTime()));
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
@@ -132,7 +111,20 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
       lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
-      xAxis,
+      xAxis: {
+        dataKey: 'date',
+        ticks: state.year !== 'all_years' ? [minDate, ...months.filter((x) => x > minDate)] : undefined,
+        tickFormatter: (date) => {
+          const parsedDate = new Date(parseInt(date));
+          if (isNaN(parsedDate.getTime())) return date;
+          if (state.year === 'all_years') return format(parsedDate, 'yyyy MMM');
+
+          return format(parsedDate, 'MMM');
+        },
+        type: 'number',
+        scale: 'time',
+        domain: ['auto', 'auto'],
+      },
       yAxis: {
         tickFormatter: (val) => `${val}${unit}`,
       },
