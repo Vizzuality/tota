@@ -12,9 +12,12 @@ import {
   getMonth,
   allMonths,
 } from 'utils/charts';
+import { thisYear } from './utils';
 import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
+
+const TABS = ['Historical', 'Weekly', 'Monthly'];
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
@@ -74,7 +77,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         colors: getColorsByRegionName(data),
         currentYear: parseInt(selectedYear, 10),
         controls: [
-          { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
+          { type: 'tabs', side: 'left', name: 'type', options: getOptions(TABS) },
           {
             type: 'select',
             side: 'right',
@@ -89,12 +92,13 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
       };
     }
     const data = filterBySelectedYear(rawData, state.year);
+    console.log('state year', state.year);
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
       data: chartData,
       controls: [
-        { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
+        { type: 'tabs', side: 'left', name: 'type', options: getOptions(TABS) },
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
       lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
@@ -119,9 +123,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'occupancy_rates',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
@@ -129,9 +133,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'average_daily_hotel_rate',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('adr'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
@@ -139,9 +143,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'revenue_per_available_room',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
