@@ -1,8 +1,6 @@
-<div class="row">
-  <% flash.each do |type, message| %>
-    <div class="alert alert-dismissible <%= bootstrap_class_for(type) %>" role="alert">
-      <%= bootstrap_close_button_tag(dismiss: "alert") %>
-      <%= message %>
-    </div>
-  <% end %>
-</div>
+<% flash.each do |type, message| %>
+  <div class="alert alert-dismissible rounded <%= bootstrap_class_for(type) %>" role="alert">
+    <%= bootstrap_close_button_tag(dismiss: "alert") %>
+    <%= message %>
+  </div>
+<% end %>
