@@ -12,9 +12,12 @@ import {
   getMonth,
   allMonths,
 } from 'utils/charts';
+import { thisYear } from './utils';
 import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
+
+const TABS = ['Historical', 'Weekly', 'Monthly'];
 
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
@@ -74,7 +77,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         colors: getColorsByRegionName(data),
         currentYear: parseInt(selectedYear, 10),
         controls: [
-          { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
+          { type: 'tabs', side: 'left', name: 'type', options: getOptions(TABS) },
           {
             type: 'select',
             side: 'right',
@@ -88,18 +91,34 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         unit,
       };
     }
-    const data = filterBySelectedYear(rawData, state.year);
+    let data = filterBySelectedYear(rawData, state.year);
+    data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
+    const allDates = data.map((x) => parseInt(x.date));
+    const allYears = uniq(allDates.map((x) => new Date(x).getFullYear()));
+    const minDate = Math.min(...allDates);
+    const months = allYears.flatMap((year) => allMonths.map((month) => new Date(`${year} ${month}`).getTime()));
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
     return {
       type: 'charts/line',
       data: chartData,
       controls: [
-        { type: 'tabs', side: 'left', name: 'type', options: getOptions(['Weekly', 'Monthly', 'Historical']) },
+        { type: 'tabs', side: 'left', name: 'type', options: getOptions(TABS) },
         { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
       ],
       lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
       xAxis: {
         dataKey: 'date',
+        ticks: state.year !== 'all_years' ? [minDate, ...months.filter((x) => x > minDate)] : undefined,
+        tickFormatter: (date) => {
+          const parsedDate = new Date(parseInt(date));
+          if (isNaN(parsedDate.getTime())) return date;
+          if (state.year === 'all_years') return format(parsedDate, 'yyyy MMM');
+
+          return format(parsedDate, 'MMM');
+        },
+        type: 'number',
+        scale: 'time',
+        domain: ['auto', 'auto'],
       },
       yAxis: {
         tickFormatter: (val) => `${val}${unit}`,
@@ -107,6 +126,10 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
       tooltip: {
         ...defaultTooltip,
         valueFormatter: (val) => `${val}${unit}`,
+        labelFormatter: (value) => {
+          const parsedDate = new Date(parseInt(value));
+          return format(parsedDate, "yyyy MMM - Io 'week of the year'");
+        },
       },
     };
   };
@@ -119,9 +142,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'occupancy_rates',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('occupancy', '%'),
@@ -129,9 +152,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'average_daily_hotel_rate',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('adr'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adr', '$'),
@@ -139,9 +162,9 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'revenue_per_available_room',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         period: undefined,
-        type: 'weekly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),

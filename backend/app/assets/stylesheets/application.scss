@@ -27,6 +27,30 @@ html,
 body {
   overflow-y: scroll;
   opacity: 1 !important;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Nunito Sans';
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/assets/nunito-sans-v6-latin-regular.woff2') format('woff2'),
+       url('/assets/nunito-sans-v6-latin-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/assets/nunito-sans-v6-latin-700.woff2') format('woff2'),
+       url('/assets/nunito-sans-v6-latin-700.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.bg-blue {
+  background-color: #314057;
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {

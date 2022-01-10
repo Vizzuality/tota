@@ -50,7 +50,6 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
   } = useIndicatorValues(widget.fetchParams(wholeState));
   const {
     data,
-    widgetTypeOverride,
     widgetWrapper: WidgetWrapper,
     type: widgetType,
     controls,

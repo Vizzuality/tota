@@ -7,12 +7,18 @@ import type { ControlProps } from './types';
 
 import { useComponentId } from 'hooks/misc';
 
+// set of options that should not be changed to after loading new options
+const DEFAULT_OPTIONS_TO_EXCLUDE = ['all_years'];
+
 const Control: FC<ControlProps> = ({ type, side, name, value, options, onControlChange, ...rest }: ControlProps) => {
   const componentId = useComponentId();
 
   useEffect(() => {
-    if (options && options.length > 0 && !options.some((option) => option.value.toString() === value?.toString())) {
-      onControlChange(name, options[0].value);
+    if (options && options.length > 0) {
+      const changeableOptions = options.filter((o) => !DEFAULT_OPTIONS_TO_EXCLUDE.includes(o.value as string));
+      if (changeableOptions.length > 0 && !options.find((option) => option.value.toString() === value?.toString())) {
+        onControlChange(name, changeableOptions[0].value as string);
+      }
     }
   }, [options, value]);
 
