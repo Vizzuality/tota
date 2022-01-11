@@ -33,13 +33,13 @@ const Chart: FC<BarChartProps> = ({
   tooltip = { cursor: false },
 }: BarChartProps) => {
   const colors = getColorPalette(bars.length);
-  const [selectedData, setSelectedData] = useState(null);
   const { chartWidth, containerRef } = useChartWidth();
   const { layout } = chartProps;
   let yAxisWidth = 60;
   if (layout === 'vertical') {
     yAxisWidth += chartWidth < 600 ? 20 : 80;
   }
+  const [selectedData, setSelectedData] = useState(null);
   const newBars = bars.map((bar, index) => ({
     ...bar,
     fill: bar.color || colors[index],

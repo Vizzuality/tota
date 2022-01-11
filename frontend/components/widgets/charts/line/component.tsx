@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -38,24 +38,39 @@ const Chart: FC<LineChartProps> = ({
     },
   };
   const colors = getColorPalette(Object.keys(lines || {}).length);
+  const [selectedData, setSelectedData] = useState(null);
+  const newLines = Object.keys(lines).reduce(
+    (acc, lineKey, index) => ({
+      ...acc,
+      [lineKey]: {
+        ...lines[lineKey],
+        color: lines[lineKey].color || colors[index],
+        hide: selectedData && !selectedData.includes(lines[lineKey].dataKey),
+      },
+    }),
+    {},
+  );
+  const handleLegendChange = (filtered: string[]) => setSelectedData(filtered);
 
   return (
     <ResponsiveContainer width="100%" height={400} debounce={100}>
       <LineChart data={data} margin={margin} {...chartProps}>
-        {legend && <Legend {...legendProps} content={<CustomLegend {...legendProps} />} />}
+        {legend && (
+          <Legend {...legendProps} content={<CustomLegend {...legendProps} onChange={handleLegendChange} />} />
+        )}
         {cartesianGrid && <CartesianGrid {...cartesianGrid} />}
         {cartesianAxis && <CartesianAxis {...cartesianAxis} />}
         {xAxis && <XAxis {...tick} {...noLines} {...xAxis} />}
         {yAxis && <YAxis {...tick} {...noLines} width={yAxisWidth} {...yAxis} />}
-        {lines &&
-          Object.keys(lines).map((line, index) => (
+        {newLines &&
+          Object.keys(newLines).map((line, index) => (
             <Line
               key={`line_${index}`}
               strokeWidth={3}
               dot={false}
               activeDot={{ strokeWidth: 0, r: 3 }}
-              stroke={lines[line].color || colors[index]}
-              {...lines[line]}
+              stroke={newLines[line].color}
+              {...newLines[line]}
             />
           ))}
         {tooltip && <Tooltip {...tooltip} content={<CustomTooltip {...tooltip} />} />}
