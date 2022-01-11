@@ -28,6 +28,8 @@ gem 'ransack'
 gem 'simple_form'
 gem 'store_model'
 
+gem 'appsignal'
+
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
