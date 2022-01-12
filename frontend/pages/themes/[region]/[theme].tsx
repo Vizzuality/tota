@@ -10,19 +10,23 @@ import ThemeWidgets from 'components/themes/widgets';
 import ThemesNavbar from 'components/themes/navbar';
 
 import { useRouterSelectedTheme } from 'hooks/themes';
-import { useRegions } from 'hooks/regions';
+import { useRegions, useRouterSelectedRegion } from 'hooks/regions';
 
 const ThemePage: React.FC<void> = (): JSX.Element => {
   const theme = useRouterSelectedTheme();
+  const region = useRouterSelectedRegion();
   const { data: regions } = useRegions();
+  const dataReady = theme && regions.length > 0;
 
   return (
     <Layout className="w-full">
       <Head>
-        <title>Theme page</title>
+        <title>
+          {region?.name} - {theme?.title}
+        </title>
       </Head>
 
-      {theme && regions.length && (
+      {dataReady && (
         <>
           <ThemeMainHeader />
           <ThemesNavbar />
