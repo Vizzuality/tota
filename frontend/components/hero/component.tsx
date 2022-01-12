@@ -20,7 +20,15 @@ const Hero: FC<HeroProps> = ({
       {images ? (
         <ImageCarousel images={images} />
       ) : (
-        <Image alt="Hero image" src={image} layout="fill" objectFit="cover" objectPosition="bottom" quality={100} />
+        <Image
+          alt="Hero image"
+          src={image}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="bottom"
+          quality={100}
+          priority
+        />
       )}
     </div>
     {children ? (
