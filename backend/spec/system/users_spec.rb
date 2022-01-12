@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'Users', type: :system do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
+  let_it_be(:admin) { create(:admin, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   before { sign_in admin }
 
@@ -103,6 +103,49 @@ RSpec.describe 'Users', type: :system do
       click_on 'Sign in'
 
       expect(page).to have_current_path(admin_dashboards_path)
+    end
+
+    context 'permissions' do
+      before { visit edit_admin_user_path(user) }
+
+      it 'updates admin field' do
+        expect(page).to have_select(:user_account_type, selected: 'User')
+
+        select 'Admin', from: :user_account_type
+        sleep 0.3 # dunno why have to wait on CI
+        click_on 'Update User'
+
+        within_row('user1@example.com') do
+          expect(page).to have_text('Yes')
+        end
+      end
+
+      context 'single regions' do
+        before do
+          create(:region, name: 'Region 1')
+          create(:region, name: 'Region 2')
+          create(:region, name: 'Region 3')
+        end
+        before { visit edit_admin_user_path(user) }
+
+        it 'updates regional permissions' do
+          check 'Region 1'
+          check 'Region 3'
+
+          click_on 'Update User'
+
+          expect(page).to have_text('User was successfully updated')
+
+          within_row('user1@example.com') do
+            click_on 'Actions'
+            click_on 'Edit'
+          end
+
+          expect(page).to have_checked_field('Region 1')
+          expect(page).to have_unchecked_field('Region 2')
+          expect(page).to have_checked_field('Region 3')
+        end
+      end
     end
 
     context 'errors' do

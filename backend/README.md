@@ -35,6 +35,13 @@ using foreman `bin/watch` and the server in the standard way in a separate termi
 
 `bundle exec rspec`
 
+#### Full page screenshots
+
+By default, whenever spec fails, screenshot of the viewport is taken. The same can be achieved by invoking `take_screenshot` method
+in spec. It is also possible to take screenshot of the whole page, specs needs to be run with `FULL_SCREENSHOT=true` ENV variable.
+
+To see details check `support/full_screenshot_extension.rb`
+
 ### Run linters
 
 `bundle exec rubocop`

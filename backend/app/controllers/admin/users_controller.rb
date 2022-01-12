@@ -2,7 +2,10 @@ class Admin::UsersController < Admin::AdminController
   include Admin::Resources
 
   def update
-    if update_user
+    if params[:commit].blank?
+      @resource.assign_attributes(resource_params)
+      render :edit
+    elsif update_user
       redirect_to resources_url, notice: "#{resource_name} was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -32,7 +35,9 @@ class Admin::UsersController < Admin::AdminController
       :email,
       :name,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :account_type,
+      region_ids: []
     ]
   end
 end

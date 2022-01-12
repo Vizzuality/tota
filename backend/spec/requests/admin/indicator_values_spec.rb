@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin Indicator Values', type: :request do
-  let_it_be(:admin) { create(:user, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
+  let_it_be(:admin) { create(:admin, email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin Example') }
 
   let_it_be(:region) { create(:region, name: 'Region 1') }
   let_it_be(:visits_by_origin) do

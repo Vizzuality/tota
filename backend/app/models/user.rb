@@ -15,8 +15,13 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
+  ACCOUNT_TYPES = %w[user admin].freeze
+  enum account_type: array_to_enum_hash(ACCOUNT_TYPES), _default: 'user'
+
+  has_many :region_permissions
+  has_many :regions, through: :region_permissions
 
   validates :password,
             length: {minimum: 12, message: 'must be at least 12 characters long'},

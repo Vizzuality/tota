@@ -7,8 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Rails.env.development?
-  User.create!(email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin User')
+  User.create!(email: 'admin@example.com', password: 'SuperSecret6', name: 'Admin User', account_type: 'admin')
 
   puts 'Executing import all rake task'
   Rake::Task['import:all'].invoke
+  puts 'Adding themes and widgets'
+  Rake::Task['themes:reimport'].invoke
 end

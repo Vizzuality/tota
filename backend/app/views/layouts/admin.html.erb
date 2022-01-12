@@ -7,44 +7,46 @@
         <% end %>
 
         <ul class="sidebar-nav">
-          <li class="sidebar-header">
-            Data
-          </li>
+          <% if current_user.admin? %>
+            <li class="sidebar-header">
+              Data
+            </li>
 
-          <%= sidebar_link_to admin_regions_path do %>
-            <i class="bi-pin-map"></i> Regions
-          <% end %>
+            <%= sidebar_link_to admin_regions_path do %>
+              <i class="bi-pin-map"></i> Regions
+            <% end %>
 
-          <%= sidebar_link_to admin_organizations_path do %>
-            <i class="bi-building"></i> Organizations
-          <% end %>
+            <%= sidebar_link_to admin_organizations_path do %>
+              <i class="bi-building"></i> Organizations
+            <% end %>
 
-          <%= sidebar_link_to admin_development_funds_path do %>
-            <i class="bi-cash"></i> Development Funds
-          <% end %>
+            <%= sidebar_link_to admin_development_funds_path do %>
+              <i class="bi-cash"></i> Development Funds
+            <% end %>
 
-          <%= sidebar_link_to admin_indicator_values_path do %>
-            <i class="bi-graph-up"></i> Indicators
-          <% end %>
+            <%= sidebar_link_to admin_indicator_values_path do %>
+              <i class="bi-graph-up"></i> Indicators
+            <% end %>
 
-          <%= sidebar_link_to admin_data_uploads_path do %>
-            <i class="bi-upload"></i> Data Uploads
-          <% end %>
+            <%= sidebar_link_to admin_data_uploads_path do %>
+              <i class="bi-upload"></i> Data Uploads
+            <% end %>
 
-          <li class="sidebar-header">
-            Content
-          </li>
+            <li class="sidebar-header">
+              Content
+            </li>
 
-          <%= sidebar_link_to admin_themes_path do %>
-            <i class="bi-file-bar-graph"></i> Themes & Widgets
-          <% end %>
+            <%= sidebar_link_to admin_themes_path do %>
+              <i class="bi-file-bar-graph"></i> Themes & Widgets
+            <% end %>
 
-          <li class="sidebar-header">
-            Admin
-          </li>
+            <li class="sidebar-header">
+              User Management
+            </li>
 
-          <%= sidebar_link_to admin_users_path do %>
-            <i class="bi-person-lines-fill"></i> Users
+            <%= sidebar_link_to admin_users_path do %>
+              <i class="bi-person-lines-fill"></i> Users
+            <% end %>
           <% end %>
         </ul>
       </div>
