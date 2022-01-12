@@ -77,6 +77,8 @@ GEM
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
+    appsignal (3.0.19)
+      rack
     ast (2.4.2)
     attr_extras (6.2.5)
     bcrypt (3.1.16)
@@ -368,6 +370,7 @@ DEPENDENCIES
   activerecord-import
   acts_as_list
   annotate
+  appsignal
   blueprinter
   bootsnap (>= 1.4.4)
   brakeman
