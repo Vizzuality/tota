@@ -93,7 +93,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
     }
     let data = filterBySelectedYear(rawData, state.year);
     data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
-    const allDates = data.map((x) => parseInt(x.date));
+    const allDates = data.map((x) => parseInt(x.date, 10));
     const allYears = uniq(allDates.map((x) => new Date(x).getFullYear()));
     const minDate = Math.min(...allDates);
     const months = allYears.flatMap((year) => allMonths.map((month) => new Date(`${year} ${month}`).getTime()));
@@ -110,7 +110,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         dataKey: 'date',
         ticks: state.year !== 'all_years' ? [minDate, ...months.filter((x) => x > minDate)] : undefined,
         tickFormatter: (date) => {
-          const parsedDate = new Date(parseInt(date));
+          const parsedDate = new Date(parseInt(date, 10));
           if (isNaN(parsedDate.getTime())) return date;
           if (state.year === 'all_years') return format(parsedDate, 'yyyy MMM');
 
@@ -127,7 +127,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
         ...defaultTooltip,
         valueFormatter: (val) => `${val}${unit}`,
         labelFormatter: (value) => {
-          const parsedDate = new Date(parseInt(value));
+          const parsedDate = new Date(parseInt(value, 10));
           return format(parsedDate, "yyyy MMM - Io 'week of the year'");
         },
       },

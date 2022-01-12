@@ -409,7 +409,8 @@ const theme: ThemeFrontendDefinition = {
           .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
         let data = rawData.filter((x: any) => x.category_1 === state.year);
         const allDates = data.map((x) => parseISO(x.date).getTime());
-        const months = allMonths.map((x) => new Date(`${thisYear} ${x}`).getTime());
+        const selectedYear = Math.max(...uniq(allDates.map((x) => new Date(x).getFullYear())));
+        const months = allMonths.map((x) => new Date(`${selectedYear} ${x}`).getTime());
         const minDate = Math.min(...allDates);
         data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
         const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
@@ -424,7 +425,7 @@ const theme: ThemeFrontendDefinition = {
               side: 'right',
               name: 'year',
               options: yearsOptions,
-              prefix: `${thisYear} Compared to: `,
+              prefix: `${selectedYear} Compared to: `,
             },
           ],
           lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
@@ -432,7 +433,7 @@ const theme: ThemeFrontendDefinition = {
             dataKey: 'date',
             ticks: [minDate, ...months.slice(1)],
             tickFormatter: (date) => {
-              const parsedDate = new Date(parseInt(date));
+              const parsedDate = new Date(parseInt(date, 10));
               if (isNaN(parsedDate.getTime())) return date;
               return format(parsedDate, 'MMM');
             },
@@ -443,7 +444,7 @@ const theme: ThemeFrontendDefinition = {
           tooltip: {
             ...defaultTooltip,
             labelFormatter: (value) => {
-              const parsedDate = new Date(parseInt(value));
+              const parsedDate = new Date(parseInt(value, 10));
               return format(parsedDate, 'MMM d');
             },
           },
