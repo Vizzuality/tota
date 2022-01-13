@@ -1,0 +1,46 @@
+<div class="text-center mt-4 text-white">
+  <p class="lead">
+    Update Your Profile
+  </p>
+</div>
+
+<div class="card rounded">
+  <div class="card-body">
+    <div class="m-sm-4">
+      <%= form_for(resource, as: resource_name, url: user_registration_path, data: { turbo: false }, html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control form-control-lg", placeholder: "Enter your email", autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :name, class: "form-label" %>
+          <%= f.text_field :name, class: "form-control form-control-lg" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :password, class: "form-label" %>
+          <%= f.password_field :password, class: "form-control form-control-lg", autocomplete: "new-password" %>
+          <small class="form-text text-muted">
+            leave it blank if you don't want to change it
+          </small>
+        </div>
+        <div class="mb-3">
+          <%= f.label :password_confirmation, class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control form-control-lg", autocomplete: "new-password" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :current_password, class: "form-label" %>
+          <%= f.password_field :current_password, class: "form-control form-control-lg", autocomplete: "current-password" %>
+          <small class="form-text text-muted">
+            we need your current password to confirm your changes
+          </small>
+        </div>
+        <div class="text-center mt-3">
+          <%= f.submit "Update", class: "btn btn-lg btn-primary" %> or
+          <%= link_to "Go back", :back %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
