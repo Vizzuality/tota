@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import kebabCase from 'lodash/kebabCase';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { useThemes } from 'hooks/themes';
 
@@ -54,7 +55,7 @@ const Footer: FC<FooterProps> = () => {
         <div className="w-full lg:w-auto pb-10">
           <Link href="/">
             <a>
-              <img src={LogoWhite} />
+              <Image src={LogoWhite} />
             </a>
           </Link>
         </div>
