@@ -1,8 +1,14 @@
 const path = require("path");
 
 module.exports = {
+  core: {
+    builder: "webpack5",
+  },
+  staticDirs: ['../public'],
   stories: ["../docs/**/*.stories.@(js|jsx|ts|tsx|mdx)", "../components/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  typescript: { reactDocgen: false },
+
   /* nextjs -> no need to import React and can use alias modules */
   webpackFinal: async (config) => {
     // *************************
@@ -38,12 +44,20 @@ module.exports = {
           loader: 'svgo-loader',
           options: {
             plugins: [
-              { removeTitle: true },
-              { convertColors: { shorthex: false } },
-              { convertPathData: false }
-            ]
+              {
+                name: 'preset-default',
+                params: {
+                  overrides: {
+                    convertColors: {
+                      shorthex: false,
+                    },
+                    convertPathData: false,
+                  },
+                },
+              },
+            ],
           }
-        }]
+      }]
     });
 
     return config;

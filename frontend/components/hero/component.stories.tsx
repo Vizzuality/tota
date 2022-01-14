@@ -15,7 +15,7 @@ Default.args = {
   title: 'Hero title',
   className: 'text-blue-800',
   subtitle: 'This is the hero subtitle',
-  image: 'example.jpeg',
+  image: '/example.jpeg',
   height: 500,
 };
 

@@ -5,16 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const nextConfig = {
-  webpack: (config) => {
-    config.node = {
-      fs: 'empty',
-    };
-
-    return config;
-  },
-};
-
 module.exports = withPlugins(
   [
     withOptimizedImages({
@@ -22,5 +12,9 @@ module.exports = withPlugins(
     }),
     withBundleAnalyzer
   ],
-  nextConfig,
+  {
+    images: {
+      disableStaticImages: true,
+    }
+  }
 );

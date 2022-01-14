@@ -9,7 +9,13 @@ export interface IndicatorLinkProps {
   image: string;
 }
 
-const IndicatorLink: FC<IndicatorLinkProps> = ({ className = 'w-40 h-40', url, name, image, ...args }: IndicatorLinkProps) => (
+const IndicatorLink: FC<IndicatorLinkProps> = ({
+  className = 'w-40 h-40',
+  url,
+  name,
+  image,
+  ...args
+}: IndicatorLinkProps) => (
   <Link href={url}>
     <a
       className={cx(className, 'text-white text-2xl font-bold bg-cover relative')}
