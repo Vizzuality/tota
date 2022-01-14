@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import Hamburger from 'components/hamburger';
 import NavLink from 'layout/navlink';
+import UserInfo from 'components/user-info';
 
 import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
 import LogoColour from 'images/BCRTS-Logo-Horizontal-Colour.png';
@@ -102,6 +103,7 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
             <NavLink theme={navLinkTheme} href="/get-involved">
               Get Involved
             </NavLink>
+            <UserInfo theme={navLinkTheme} />
           </div>
         </div>
       </nav>

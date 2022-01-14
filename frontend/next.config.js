@@ -15,6 +15,28 @@ module.exports = withPlugins(
   {
     images: {
       disableStaticImages: true,
+    },
+    async rewrites() {
+      const backend = process.env.NEXT_PUBLIC_TOTA_API.replace('/api/v1', '')
+
+      return [
+        {
+          source: '/admin/:path*',
+          destination: `${backend}/admin/:path*`
+        },
+        {
+          source: '/auth/:path*',
+          destination: `${backend}/auth/:path*`
+        },
+        {
+          source: '/assets/:path*',
+          destination: `${backend}/assets/:path*`
+        },
+        {
+          source: '/api/:path*',
+          destination: `${backend}/api/:path*`
+        },
+      ]
     }
   }
 );

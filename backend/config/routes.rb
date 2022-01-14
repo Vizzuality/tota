@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       resources :regions, only: [:index]
       resources :themes, only: [:index]
       resources :widgets, only: [:index]
+      resource :user, only: [:show]
     end
   end
 end

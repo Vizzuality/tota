@@ -16,7 +16,7 @@ interface GetSingleIndicatorArgs extends GetIndicatorsArgs {
 }
 
 class API {
-  baseURL = process.env.NEXT_PUBLIC_TOTA_API;
+  baseURL = '/api/v1';
   baseConfig = {
     headers: {
       Accept: 'application/json',
