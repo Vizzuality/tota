@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import cx from 'classnames';
 
 import krtLogo from 'images/home/KRT-Logo.png';
@@ -49,7 +48,7 @@ const ParticipatingRegions: FC<ParticipatingRegionsProps> = ({ className }: Part
       {participatingRegions.map((region) => (
         <Link key={region.title} href={region.link}>
           <a className="relative z-20">
-            <Image src={region.logo} alt={region.title} />
+            <img src={region.logo} alt={region.title} />
           </a>
         </Link>
       ))}
