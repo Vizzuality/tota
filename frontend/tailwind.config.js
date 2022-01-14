@@ -1,9 +1,5 @@
 module.exports = {
-  purge: {
-    enabled: process.env.NODE_ENV !== 'development',
-    content: ['./**/*.{tsx,ts,jsx}'],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./**/*.{tsx,ts,jsx}'],
   theme: {
     container: {
       padding: '2rem',
@@ -70,11 +66,6 @@ module.exports = {
       transitionProperty: {
         width: 'width',
       },
-    },
-  },
-  variants: {
-    extend: {
-      borderWidth: ['last'],
     },
   },
   plugins: [],
