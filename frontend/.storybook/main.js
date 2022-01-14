@@ -1,8 +1,13 @@
 const path = require("path");
 
 module.exports = {
+  core: {
+    builder: "webpack5",
+  },
   stories: ["../docs/**/*.stories.@(js|jsx|ts|tsx|mdx)", "../components/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  typescript: { reactDocgen: false },
+
   /* nextjs -> no need to import React and can use alias modules */
   webpackFinal: async (config) => {
     // *************************
@@ -43,7 +48,7 @@ module.exports = {
               { convertPathData: false }
             ]
           }
-        }]
+      }]
     });
 
     return config;
