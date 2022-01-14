@@ -9,8 +9,8 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "storybook:styles:dev": "NODE_ENV=development tailwind build -i ./styles/globals.css -o ./public/styles/tailwind.storybook.css",
     "storybook:styles:prod": "NODE_ENV=production tailwind build -i ./styles/globals.css -o ./public/styles/tailwind.storybook.css",
-    "storybook:dev": "yarn storybook:styles:dev && start-storybook -p 6006 -s ./public -c .storybook",
-    "storybook:build": "yarn storybook:styles:prod && build-storybook -s ./public -c .storybook"
+    "storybook:dev": "yarn storybook:styles:dev && start-storybook -p 6006 -c .storybook",
+    "storybook:build": "yarn storybook:styles:prod && build-storybook -c .storybook"
   },
   "dependencies": {
     "@dnd-kit/core": "^5.0.1",
