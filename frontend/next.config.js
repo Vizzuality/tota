@@ -17,24 +17,12 @@ module.exports = withPlugins(
       disableStaticImages: true,
     },
     async rewrites() {
-      const backend = process.env.NEXT_PUBLIC_TOTA_API.replace('/api/v1', '')
+      const backend = process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST;
 
       return [
         {
-          source: '/admin/:path*',
-          destination: `${backend}/admin/:path*`
-        },
-        {
-          source: '/auth/:path*',
-          destination: `${backend}/auth/:path*`
-        },
-        {
-          source: '/assets/:path*',
-          destination: `${backend}/assets/:path*`
-        },
-        {
-          source: '/api/:path*',
-          destination: `${backend}/api/:path*`
+          source: '/:backend_path(admin|auth|assets|api|mini-profiler-resources|rails)/:path*',
+          destination: `${backend}/:backend_path/:path*`
         },
       ]
     }

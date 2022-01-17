@@ -242,7 +242,7 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
   params.append('fields', 'id,latitude,longitude');
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
-  const organizationsGeoJSONUrl = `/api/v1/organizations.geojson${searchParams}`;
+  const organizationsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/organizations.geojson${searchParams}`;
 
   return {
     id: 'organizations',
@@ -307,7 +307,7 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
   const params = new URLSearchParams();
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
-  const developmentFundsGeoJSONUrl = `/api/v1/development_funds.geojson${searchParams}`;
+  const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
 
   return {
     id: 'development_funds',
