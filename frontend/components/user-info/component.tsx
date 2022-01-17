@@ -13,8 +13,13 @@ const THEMES = {
   },
 };
 
-const SELECT_OPTIONS = [
-  { label: 'User Profile', value: 'profile' },
+const USER_OPTIONS = [
+  { label: 'Profile', value: 'profile' },
+  { label: 'Sign Out', value: 'sign_out' },
+];
+const ADMIN_OPTIONS = [
+  { label: 'Admin Panel', value: 'admin_panel' },
+  { label: 'Profile', value: 'profile' },
   { label: 'Sign Out', value: 'sign_out' },
 ];
 
@@ -28,9 +33,12 @@ const UserInfo: FC<UserInfoProps> = ({ theme }: UserInfoProps) => {
   const handleSelect = (option: string) => {
     if (option === 'profile') window.location.assign('/auth/edit');
     if (option === 'sign_out') window.location.assign('/auth/sign_out');
+    if (option === 'admin_panel') window.location.assign('/admin');
   };
 
   if (user) {
+    const options = user.account_type === 'admin' ? ADMIN_OPTIONS : USER_OPTIONS;
+
     return (
       <div
         className={cx('p-2 font-bold tracking-tight border-b-4 border-transparent', {
@@ -43,7 +51,7 @@ const UserInfo: FC<UserInfoProps> = ({ theme }: UserInfoProps) => {
           size="base"
           placeholder={user.email}
           maxHeight={400}
-          options={SELECT_OPTIONS}
+          options={options}
           onChange={handleSelect}
         />
       </div>

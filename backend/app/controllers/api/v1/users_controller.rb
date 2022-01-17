@@ -4,7 +4,10 @@ module API
       before_action :authenticate_user!
 
       def show
-        render json: { data: current_user.slice(:name, :email) }
+        render json: UserBlueprint.render(
+          current_user,
+          root: :data
+        )
       end
     end
   end
