@@ -47,8 +47,8 @@ const UserInfo: FC<UserInfoProps> = ({ theme }: UserInfoProps) => {
       >
         <Select
           id="user-select"
-          theme="transparent"
-          size="base"
+          theme="user"
+          size="user"
           placeholder={user.email}
           maxHeight={400}
           options={options}

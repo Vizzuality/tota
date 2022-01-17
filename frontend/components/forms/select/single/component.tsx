@@ -184,7 +184,7 @@ export const SingleSelect: FC<SelectProps> = ({
           {...attributes.popper}
         >
           <Menu theme={theme} size={size} status={status} disabled={disabled} opened={isOpen} attributes={attributes}>
-            <div className={cx({ invisible: theme === 'transparent' })}>
+            <div className={cx({ invisible: ['transparent', 'user'].includes(theme) })}>
               <Toggle
                 options={options}
                 theme={theme}

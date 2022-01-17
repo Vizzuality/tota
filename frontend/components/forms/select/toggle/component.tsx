@@ -59,7 +59,7 @@ export const SelectToggle: FC<SelectToggleProps> = ({
       <span
         className={cx({
           'leading-none': true,
-          [THEME[theme].prefix.base]: selectedItems.length,
+          [THEME[theme].prefix.base]: selectedItems.length || placeholder,
         })}
       >
         {labelDefaultFormatter()}
