@@ -15,8 +15,12 @@ interface GetSingleIndicatorArgs extends GetIndicatorsArgs {
   slug: string;
 }
 
+const isServer = typeof window === 'undefined';
+
 class API {
-  baseURL = process.env.NEXT_PUBLIC_TOTA_API;
+  baseURL = isServer
+    ? process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST + process.env.NEXT_PUBLIC_TOTA_API
+    : process.env.NEXT_PUBLIC_TOTA_API;
   baseConfig = {
     headers: {
       Accept: 'application/json',
