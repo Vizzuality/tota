@@ -24,6 +24,7 @@ Capybara.default_driver = Capybara.javascript_driver = :cuprite
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
   config.include PageHelpers, type: :system
+  config.include EmailHelpers, type: :system
 
   config.around(:each, type: :system) do |ex|
     was_host = Rails.application.default_url_options[:host]
