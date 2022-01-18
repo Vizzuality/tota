@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import kebabCase from 'lodash/kebabCase';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { useThemes } from 'hooks/themes';
 
 import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
 
-interface FooterProps {}
+interface FooterProps { }
 
 const Footer: FC<FooterProps> = () => {
   const { data: themes } = useThemes();
@@ -54,7 +55,7 @@ const Footer: FC<FooterProps> = () => {
         <div className="w-full lg:w-auto pb-10">
           <Link href="/">
             <a>
-              <img src={LogoWhite} />
+              <Image src={LogoWhite} />
             </a>
           </Link>
         </div>

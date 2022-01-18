@@ -1,3 +1,3 @@
 export interface ImageCarouselProps {
-  images: string[];
+  images: string[] | StaticImageData[];
 }

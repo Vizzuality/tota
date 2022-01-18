@@ -24,6 +24,8 @@ const ImageCarousel: FC<ImageCarouselProps> = ({ images }: ImageCarouselProps) =
           objectFit="cover"
           objectPosition="bottom"
           quality={100}
+          placeholder="blur"
+          priority={i === 0}
           className={`transition duration-500 ease-in-out
         ${i === activeImage ? 'opacity-1' : 'opacity-0'}`}
         />

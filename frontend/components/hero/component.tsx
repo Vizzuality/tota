@@ -27,6 +27,7 @@ const Hero: FC<HeroProps> = ({
           objectFit="cover"
           objectPosition="bottom"
           quality={100}
+          placeholder="blur"
           priority
         />
       )}
