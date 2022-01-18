@@ -17,18 +17,8 @@ export default {
 
 const Template: Story<LegendProps> = (args) => {
   const [items, setItems] = useState(ITEMS);
-  const [sortArray, setSortArray] = useState([]);
-
-  // Sorted
-  const sortedItems = useMemo(() => {
-    const itms = items.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
-    return itms;
-  }, [sortArray, items]);
 
   // Callbacks
-  const onChangeOrder = useCallback((ids) => {
-    setSortArray(ids);
-  }, []);
   const onRemove = useCallback(
     (id) => {
       setItems(items.filter((x) => x.id !== id));
@@ -45,8 +35,8 @@ const Template: Story<LegendProps> = (args) => {
   return (
     <div className="bg-gray-50 p-10">
       <div style={{ maxWidth: 500 }}>
-        <Legend {...args} onChangeOrder={onChangeOrder}>
-          {sortedItems.map((i) => {
+        <Legend {...args}>
+          {items.map((i) => {
             const { type, items } = i;
             return (
               <LegendItem key={i.id} {...i} onRemove={onRemove} onVisibilityChange={onVisibilityChange}>

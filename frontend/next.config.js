@@ -10,11 +10,11 @@ module.exports = withPlugins(
     withOptimizedImages({
       optimizeImages: false,
     }),
-    withBundleAnalyzer
+    withBundleAnalyzer,
   ],
   {
     images: {
       disableStaticImages: true,
-    }
-  }
+    },
+  },
 );
