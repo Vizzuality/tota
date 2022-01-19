@@ -31,7 +31,8 @@ const THEMES = {
 
 const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', position = 'fixed' }: NavbarProps) => {
   const [isOpen, setOpen] = useState(false);
-  const [theme, setTheme] = useState(initialTheme);
+  const [_theme, setTheme] = useState(initialTheme);
+  const theme = isOpen ? 'gray' : _theme;
 
   useEffect(() => {
     const onScroll = () => {
