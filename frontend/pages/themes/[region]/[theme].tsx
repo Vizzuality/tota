@@ -30,7 +30,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
         <>
           <ThemeMainHeader />
           <ThemesNavbar />
-          <div className="container mx-auto">
+          <div className="sm:container sm:mx-auto">
             <ThemeHeader />
             <ThemeWidgets />
             <ThemeMobileFooter />

@@ -7,7 +7,7 @@ export function useChartWidth() {
   const containerRef = useRef(null);
   const handleResize = useCallback(() => {
     if (containerRef.current) {
-      setChartWidth(containerRef.current?.containerRef?.current?.clientWidth); // ?? not sure why containerRef twice
+      setChartWidth(containerRef.current?.current?.clientWidth); // ?? not sure why current twice TODO: figure this out
     }
   }, [containerRef]);
   useResize(handleResize);
