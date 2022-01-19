@@ -32,6 +32,7 @@ class Admin::WidgetsController < Admin::AdminController
       :sub_title,
       :description,
       :note,
+      :public,
       sources_attributes: [:link, :text, :note, :_destroy]
     ]
   end

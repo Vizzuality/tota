@@ -37,6 +37,9 @@
             Description
           </th>
           <th>
+            Visibility
+          </th>
+          <th>
           </th>
         </tr>
       </thead>
@@ -49,6 +52,7 @@
             </td>
             <td><%= widget.title %></td>
             <td><%= widget.description&.html_safe %></td>
+            <td><%= status_tag widget.public? ? 'Public' : 'Private' %></td>
             <td class="text-end">
               <%= dropdown "Actions" do %>
                 <li>

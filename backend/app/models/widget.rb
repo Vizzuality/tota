@@ -28,4 +28,8 @@ class Widget < ApplicationRecord
   def sources_attributes=(attr)
     self.sources = attr.values.reject { |a| ActiveModel::Type::Boolean.new.cast(a[:_destroy]) }
   end
+
+  def private?
+    !public?
+  end
 end
