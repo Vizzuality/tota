@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useCallback } from 'react';
+import React, { FC } from 'react';
 import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 import type { PieChartProps } from './types';
@@ -40,7 +40,7 @@ const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { 
       <PieChart {...chartProps}>
         {legendProps && <Legend {...legendProps} />}
         {pies &&
-          Object.keys(pies).map((pie, index) => (
+          Object.keys(pies).map((pie) => (
             <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data}>
               {data.map((d, i) => (
                 <Cell key={`cell-${d}`} fill={d.color || colors[i % colors.length]} />

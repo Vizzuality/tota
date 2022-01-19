@@ -136,6 +136,7 @@ export const SingleSelect: FC<SelectProps> = ({
 
   // workaround for popper to be placed in top 0 left 0 without transform
   // TODO: find different solution
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_forceUpdate, forceUpdate] = useState(null);
   useEffect(() => {
     let timeout;
@@ -183,7 +184,7 @@ export const SingleSelect: FC<SelectProps> = ({
           {...attributes.popper}
         >
           <Menu theme={theme} size={size} status={status} disabled={disabled} opened={isOpen} attributes={attributes}>
-            <div className={cx({ invisible: theme === 'transparent' })}>
+            <div className={cx({ invisible: ['transparent', 'user'].includes(theme) })}>
               <Toggle
                 options={options}
                 theme={theme}

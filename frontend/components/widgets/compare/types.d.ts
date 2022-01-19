@@ -1,5 +1,4 @@
 import { IndicatorValue } from 'types';
-import { ChartProps } from '../types';
 
 export interface CompareProps {
   data: IndicatorValue[];

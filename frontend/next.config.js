@@ -16,5 +16,15 @@ module.exports = withPlugins(
     images: {
       disableStaticImages: true,
     },
+    async rewrites() {
+      const backend = process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST;
+
+      return [
+        {
+          source: '/:backend_path(admin|auth|assets|api|mini-profiler-resources|rails)/:path*',
+          destination: `${backend}/:backend_path/:path*`,
+        },
+      ];
+    },
   },
 );

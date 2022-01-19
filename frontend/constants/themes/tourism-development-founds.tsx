@@ -23,7 +23,7 @@ const getDevelopmentFundsLayer = (fundSources, selectedRegion, selectedYear) => 
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
   if (selectedYear && selectedYear !== 'all_years') params.append('filter[funding_call_year]', selectedYear);
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
-  const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API}/development_funds.geojson${searchParams}`;
+  const developmentFundsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API_PATH}/development_funds.geojson${searchParams}`;
 
   const colors = getColorPalette(fundSources.length);
   const fundColors = flatten(zip(fundSources, colors).filter((s) => s[0]));

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, path: 'auth'
+  devise_for :users, path: 'auth', controllers: { sessions: 'auth/sessions' }
 
   root to: redirect('admin/dashboards')
 
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       resources :regions, only: [:index]
       resources :themes, only: [:index]
       resources :widgets, only: [:index]
+      resource :user, only: [:show]
     end
   end
 end

@@ -1,5 +1,11 @@
 import { ReactNode } from 'react';
 
+export interface User {
+  email: string;
+  name?: string;
+  account_type: 'admin' | 'user';
+}
+
 export interface IndicatorValue {
   indicator?: string;
   category_1?: string;

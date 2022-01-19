@@ -56,6 +56,25 @@ export default {
       disabled: 'text-lg opacity-50 pointer-events-none',
     },
   },
+  user: {
+    container: 'bg-transparent',
+    open: 'bg-transparent',
+    closed: 'bg-transparent',
+    menu: 'bg-white',
+    prefix: {
+      base: 'font-bold',
+    },
+    icon: {
+      closed: '',
+      open: 'transform rotate-180',
+      disabled: 'text-gray-400',
+    },
+    item: {
+      base: 'text-lg text-blue-800 font-bold',
+      highlighted: 'text-lg text-blue-800 font-bold opacity-40',
+      disabled: 'text-lg opacity-50 pointer-events-none',
+    },
+  },
   states: {
     none: '',
     error: 'ring-red-500',
@@ -65,5 +84,6 @@ export default {
     lg: 'pl-4 pr-4 py-6 text-lg',
     base: 'pl-4 pr-4 py-4 text-lg',
     s: 'pl-4 pr-4 py-4 text-base',
+    user: 'p-2 text-lg',
   },
 };
