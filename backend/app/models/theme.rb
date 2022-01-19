@@ -19,5 +19,10 @@ class Theme < ApplicationRecord
     def load_config(cleanup: false)
       ThemesLoader.new(path: Rails.root.join('config/themes.yml'), cleanup: cleanup).call
     end
+
+    def read_config
+      content = YAML.safe_load(Rails.root.join('config/themes.yml').read)
+      content['themes']
+    end
   end
 end
