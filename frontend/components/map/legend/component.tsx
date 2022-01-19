@@ -5,25 +5,15 @@ import Icon from 'components/icon';
 import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
 
 import { useId } from '@react-aria/utils';
-import SortableList from './sortable/list';
 
 export interface LegendProps {
   className?: string;
   children: React.ReactNode;
   maxHeight: string | number;
   maxWidth: string | number;
-  sortable?: boolean;
-  onChangeOrder?: (id: string[]) => void;
 }
 
-export const Legend: FC<LegendProps> = ({
-  children,
-  className = '',
-  sortable = false,
-  maxHeight,
-  maxWidth,
-  onChangeOrder,
-}: LegendProps) => {
+export const Legend: FC<LegendProps> = ({ children, className = '', maxHeight, maxWidth }: LegendProps) => {
   const [active, setActive] = useState(true);
 
   const id = useId();
@@ -78,10 +68,7 @@ export const Legend: FC<LegendProps> = ({
             maxWidth,
           }}
         >
-          <div className="overflow-x-hidden overflow-y-auto">
-            {sortable && <SortableList onChangeOrder={onChangeOrder}>{children}</SortableList>}
-            {!sortable && children}
-          </div>
+          <div className="overflow-x-hidden overflow-y-auto">{children}</div>
         </div>
       )}
     </div>

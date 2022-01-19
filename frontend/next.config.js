@@ -10,7 +10,7 @@ module.exports = withPlugins(
     withOptimizedImages({
       optimizeImages: false,
     }),
-    withBundleAnalyzer
+    withBundleAnalyzer,
   ],
   {
     images: {
@@ -22,9 +22,9 @@ module.exports = withPlugins(
       return [
         {
           source: '/:backend_path(admin|auth|assets|api|mini-profiler-resources|rails)/:path*',
-          destination: `${backend}/:backend_path/:path*`
+          destination: `${backend}/:backend_path/:path*`,
         },
-      ]
-    }
-  }
+      ];
+    },
+  },
 );
