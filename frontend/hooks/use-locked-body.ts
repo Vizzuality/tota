@@ -2,10 +2,13 @@ import { useState, useLayoutEffect, useEffect } from 'react';
 
 type ReturnType = [boolean, (locked: boolean) => void];
 
+const isClient = typeof window !== 'undefined';
+const useIsomorphicLayoutEffect = isClient ? useLayoutEffect : useEffect;
+
 export default function useLockedBody(initialLocked = false): ReturnType {
   const [locked, setLocked] = useState(initialLocked);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!locked) return;
 
     const originalOverflow = document.body.style.overflow;
