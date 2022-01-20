@@ -17,6 +17,12 @@ interface GetSingleIndicatorArgs extends GetIndicatorsArgs {
 
 const isServer = typeof window === 'undefined';
 
+function CSRFToken() {
+  const csrfCookie = document.cookie.split('; ').find((c) => c.startsWith('csrf_token='));
+  if (!csrfCookie) return '';
+  return csrfCookie.split('=')[1];
+}
+
 class API {
   baseURL = isServer
     ? process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST + process.env.NEXT_PUBLIC_TOTA_API_PATH
@@ -28,6 +34,7 @@ class API {
     },
   };
 
+  // TODO: refactor, leave only common  get, put, post, delete methods here
   async getIndicators({ slug, region, category_1, category_2 }: GetIndicatorsArgs): Promise<GetIndicatorsResult> {
     const params = new URLSearchParams();
     const wrap = (x: string | string[]) => [x].flat().filter((x) => x);
@@ -59,7 +66,29 @@ class API {
   }
 
   get(endpoint: string): Promise<any> {
-    return fetch(`${this.baseURL}/${endpoint}`)
+    return this._request(endpoint, 'GET');
+  }
+
+  post(endpoint: string): Promise<any> {
+    return this._request(endpoint, 'POST');
+  }
+
+  put(endpoint: string): Promise<any> {
+    return this._request(endpoint, 'PUT');
+  }
+
+  delete(endpoint: string): Promise<any> {
+    return this._request(endpoint, 'DELETE');
+  }
+
+  _request(endpoint: string, method: string) {
+    return fetch(`${this.baseURL}/${endpoint}`, {
+      method,
+      headers: {
+        ...this.baseConfig.headers,
+        'X-CSRF-Token': CSRFToken(),
+      },
+    })
       .then(this._handleResponse)
       .then((d) => d.data);
   }

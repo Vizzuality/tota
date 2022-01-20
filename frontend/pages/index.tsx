@@ -19,10 +19,16 @@ import ParticipatingRegions from 'components/static-pages/participating-regions'
 import GetInvolved from 'components/static-pages/get-involved';
 import NewsletterSignUp from 'components/static-pages/newsletter-sign-up';
 
+import TotaAPI from 'services/api';
+
 const Home: React.FC<void> = (): JSX.Element => {
   const themesResult = useThemes();
   const themes = themesResult.data?.filter((t) => t.slug !== 'general_insights');
   const themesFetchedWithSuccess = themesResult.isFetched && themesResult.isSuccess;
+
+  const handleUpdateUser = () => {
+    TotaAPI.put('/user');
+  };
 
   return (
     <Layout className="w-full">
@@ -53,6 +59,12 @@ const Home: React.FC<void> = (): JSX.Element => {
           </Button>
         }
       />
+
+      <div className="text-center py-5">
+        <Button theme="primary" onClick={handleUpdateUser}>
+          UPDATE USER
+        </Button>
+      </div>
 
       <div className="container mx-auto lg:px-16">
         <div className="text-blue-800 text-center py-24 mx-auto" style={{ maxWidth: 800 }}>
