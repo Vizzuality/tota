@@ -1,10 +1,11 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useLayoutEffect } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 
 import Hamburger from 'components/hamburger';
 import NavLink from 'layout/navlink';
 import UserInfo from 'components/user-info';
+import useLockedBody from 'hooks/use-locked-body';
 
 import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
 import LogoColour from 'images/BCRTS-Logo-Horizontal-Colour.png';
@@ -33,6 +34,8 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
   const [isOpen, setOpen] = useState(false);
   const [_theme, setTheme] = useState(initialTheme);
   const theme = isOpen ? 'gray' : _theme;
+
+  useLockedBody(isOpen);
 
   useEffect(() => {
     const onScroll = () => {
