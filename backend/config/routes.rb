@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, path: 'auth', controllers: { sessions: 'auth/sessions' }
 
-  root to: redirect('admin/dashboards')
+  root to: 'home#index'
 
   namespace :admin do
     root to: 'dashboards#index'
