@@ -9,10 +9,6 @@ module API
           root: :data
         )
       end
-
-      def update
-        render json: {status: 'ok'}, status: :ok
-      end
     end
   end
 end
