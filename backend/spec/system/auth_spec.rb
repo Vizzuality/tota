@@ -34,7 +34,7 @@ RSpec.describe 'Auth', type: :system do
       click_on admin.email
       click_on 'Log out'
 
-      expect(page).to have_current_path(new_user_session_path)
+      expect(page).to have_current_path(root_path)
     end
   end
 

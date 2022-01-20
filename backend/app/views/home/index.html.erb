@@ -1,0 +1,12 @@
+TOTA Backend Home Page, normally accessible in dev and test <br/>
+
+<% if current_user.present? %>
+  Logged in as <%= current_user.email %><br />
+
+  <%= link_to 'Go to Admin', admin_root_path if current_user.admin? %>
+  <%= link_to 'User profile', edit_user_registration_path if current_user.user? %>
+  <br />
+  <%= link_to 'Sign out', destroy_user_session_path %>
+<% else %>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>

@@ -95,14 +95,16 @@ RSpec.describe 'Users', type: :system do
       click_on admin.email
       click_on 'Log out'
 
-      expect(page).to have_current_path(new_user_session_path)
+      expect(page).to have_current_path(root_path)
+      visit new_user_session_path
 
       fill_in :user_email, with: 'user1@example.com'
       fill_in :user_password, with: 'NewPassword666'
 
       click_on 'Sign in'
 
-      expect(page).to have_current_path(admin_dashboards_path)
+      expect(page).to have_current_path(root_path)
+      expect(page).to have_text('Logged in as user1@example.com')
     end
 
     context 'permissions' do
