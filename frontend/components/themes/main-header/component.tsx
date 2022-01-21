@@ -43,10 +43,13 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const theme = useRouterSelectedTheme();
   const selectedRegion = useRouterSelectedRegion();
   const { data: regions } = useRegions();
-  const { isFetched, isFetching, data } = useIndicatorValues({
-    slug: STATISTICS.map((x) => x.indicator),
-    region: selectedRegion.slug,
-  });
+  const { isFetched, data } = useIndicatorValues(
+    {
+      slug: STATISTICS.map((x) => x.indicator),
+      region: selectedRegion?.slug,
+    },
+    { enabled: Boolean(selectedRegion) },
+  );
 
   const handleRegionChange = (value: string) => {
     if (theme.slug === 'general_insights') {
@@ -92,14 +95,14 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
             size="lg"
             maxHeight={400}
             options={regions.map((r): SelectOptionProps => ({ label: r.name, value: kebabCase(r.slug) }))}
-            selected={kebabCase(selectedRegion.slug)}
+            selected={kebabCase(selectedRegion?.slug)}
             onChange={handleRegionChange}
           />
         </div>
         <div className="w-full flex justify-center mt-10 lg:mt-20 bg-white bg-opacity-20">
           <div className="lg:w-full grid grid-cols-2 lg:grid-cols-4 place-content-center place-items-start lg:place-items-center">
             {statistics.map((s, index) => (
-              <StatisticBlock key={index} loading={isFetching} {...s} />
+              <StatisticBlock key={index} loading={!isFetched} {...s} />
             ))}
           </div>
         </div>

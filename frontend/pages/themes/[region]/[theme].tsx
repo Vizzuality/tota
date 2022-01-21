@@ -17,26 +17,25 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
   const region = useRouterSelectedRegion();
   const { data: regions } = useRegions();
   const dataReady = theme && regions.length > 0;
+  const title = region && theme ? `${region.name} - ${theme.title}` : 'Theme';
 
   return (
     <Layout className="w-full">
       <Head>
-        <title>
-          {region?.name} - {theme?.title}
-        </title>
+        <title>{title}</title>
       </Head>
 
-      {dataReady && (
-        <>
-          <ThemeMainHeader />
-          <ThemesNavbar />
-          <div className="sm:container sm:mx-auto">
+      <ThemeMainHeader />
+      <ThemesNavbar />
+      <div className="sm:container sm:mx-auto">
+        {dataReady && (
+          <>
             <ThemeHeader />
             <ThemeWidgets />
             <ThemeMobileFooter />
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </Layout>
   );
 };

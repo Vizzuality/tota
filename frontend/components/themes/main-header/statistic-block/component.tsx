@@ -11,17 +11,17 @@ export interface StatisticBlock {
 const StatisticBlock: React.FC<StatisticBlock> = ({ loading = false, title, subtitle, value }: StatisticBlock) => {
   return (
     <div className="text-white p-4 md:p-8 lg:p-16">
-      {loading && <Loading iconClassName="w-10 h-10" visible />}
-      {!loading && (
-        <>
-          <div className="font-bold text-base md:text-lg uppercase">{title}</div>
-          <div className="text-xs md:text-sm">{subtitle}</div>
-          <div className="mt-4 font-bold text-xl md:text-2xl">
+      <div className="font-bold text-base md:text-lg uppercase">{title}</div>
+      <div className="text-xs md:text-sm">{subtitle}</div>
+      <div className="mt-4 font-bold text-xl md:text-2xl">
+        {loading && <Loading iconClassName="w-10 h-10" visible />}
+        {!loading && (
+          <>
             {value && value}
             {!value && 'No data'}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
