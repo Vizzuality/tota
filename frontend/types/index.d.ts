@@ -16,11 +16,6 @@ export interface IndicatorValue {
   value: number;
 }
 
-export interface Indicator {
-  slug: string;
-  indicator_values: IndicatorValue[];
-}
-
 export interface Region {
   id: number;
   name: string;
@@ -60,7 +55,6 @@ export interface ThemeFrontendDefinition {
 export interface WidgetFrontendDefinition {
   slug: string;
   initialState?: any;
-  display?: (selectedRegion: Region) => boolean;
   fetchParams: (state: any) => any;
   fetchWidgetProps: (indicatorValues: IndicatorValue[], state: any) => any;
 }
@@ -72,6 +66,7 @@ export interface WidgetAPI {
   description: string;
   note?: string;
   sources?: Source[];
+  regions?: string[];
 }
 
 export interface ThemeAPI {

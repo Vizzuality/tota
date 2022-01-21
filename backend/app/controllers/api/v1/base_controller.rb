@@ -4,6 +4,7 @@ module API
       include API::Errors
       include API::Authentication
       include API::Filtering
+      include Pundit
     end
   end
 end

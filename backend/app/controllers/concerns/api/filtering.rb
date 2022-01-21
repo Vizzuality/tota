@@ -9,12 +9,17 @@ module API
         v = v.map do |val|
           val == 'nil' ? nil : val
         end
-        [k, v]
+        key = filter_keys_map[k.to_s] || k
+        [key, v]
       end.to_h
     end
 
     def fields
       params[:fields]&.split(',')&.map(&:to_sym)
+    end
+
+    def filter_keys_map
+      {}
     end
   end
 end

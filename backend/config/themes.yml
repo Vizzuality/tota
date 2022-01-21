@@ -250,6 +250,8 @@ themes:
           - tourism_employment_hourly_earnings_by_economic_region
 
       - slug: employment_by_job_status
+        regions:
+          - british_columbia
         title: Employment by job status
         description: Shares of full time and part time empployment in tourism and its sub-sectors for the seclected regions.
         sources:

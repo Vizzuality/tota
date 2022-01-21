@@ -11,12 +11,17 @@ import { Theme, ThemeAPI } from 'types';
 function mergeWithFrontendDefinitions(data: ThemeAPI[]): Theme[] {
   if (!data?.length) return [];
 
-  return themes.map((t) => {
-    return {
-      ...t,
-      ...data.find((d) => d.slug === t.slug),
-    };
-  });
+  return themes
+    .map((t) => {
+      const apiTheme = data.find((d) => d.slug === t.slug);
+      if (!apiTheme) return null;
+
+      return {
+        ...t,
+        ...apiTheme,
+      };
+    })
+    .filter((x) => x);
 }
 
 export function useRouterSelectedTheme(): Theme {
