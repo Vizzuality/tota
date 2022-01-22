@@ -15,26 +15,10 @@
   </li>
 <% end %>
 
-<table class="table table-hover" data-controller="table">
-  <thead>
-    <tr>
-      <th>
-        <%= sort_link @q, :region_name, 'Region' %>
-      </th>
-      <th>
-        <%= sort_link @q, :project_title %>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @resources.each do |value| %>
-      <tr data-link="<%= admin_development_fund_path(value) %>">
-        <td><%= value.region&.name %></td>
-        <td><%= value.project_title %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render(Table::Component.new(resources: @resources, q: @q, row_action_link: :admin_development_fund_path)) do |c| %>
+  <% c.column(:region_name, name: 'Region') { |r| r.region&.name } %>
+  <% c.column :project_title %>
+<% end %>
 
 <% content_for(:content_footer) do %>
   <%== pagy_bootstrap_nav(@pagy) %>

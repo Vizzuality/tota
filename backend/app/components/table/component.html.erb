@@ -1,0 +1,49 @@
+<% if resources.any? %>
+  <table class="table table-hover" data-controller="table">
+    <thead>
+      <tr>
+        <% columns.each do |column| %>
+          <th>
+            <% if column.options[:sortable] %>
+              <%= sort_link q, column.attribute, column.options[:name] %>
+            <% else %>
+              <%= column.options[:name] || column.attribute %>
+            <% end %>
+          </th>
+        <% end %>
+        <% if actions_block.present? %>
+          <th>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% resources.each do |resource| %>
+        <%= content_tag :tr, data: { link: data_link(resource) }.compact do %>
+          <% columns.each do |column| %>
+            <td>
+              <%= render ColumnComponent.new(
+                resource: resource,
+                attribute: column.attribute,
+                options: column.options,
+                &column.block
+                )
+              %>
+            </td>
+          <% end %>
+          <% if actions_block.present? %>
+            <td class="text-end">
+              <%= render ActionsComponent.new(resource: resource, &actions_block) %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="card text-center">
+    <div class="card-body p-5">
+      <h5 class="card-title">No Entries yet</h5>
+    </div>
+  </div>
+<% end %>
