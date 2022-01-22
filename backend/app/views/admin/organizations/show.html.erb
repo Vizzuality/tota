@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">Details</div>
   <div class="card-body">
-    <%= render(AttributesTableComponent.new(resource: @resource)) do |c|
+    <%= render(AttributesTable::Component.new(resource: @resource)) do |c|
       c.row :show_on_platform
       c.row :name
       c.row :region_name
