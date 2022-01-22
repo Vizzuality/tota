@@ -41,6 +41,12 @@ class User < ApplicationRecord
     regions
   end
 
+  def non_visible_regions
+    return [] if admin?
+
+    Region.where.not(id: visible_regions.ids)
+  end
+
   def to_s
     email
   end

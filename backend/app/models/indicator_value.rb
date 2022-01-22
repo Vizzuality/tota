@@ -16,6 +16,8 @@ class IndicatorValue < ApplicationRecord
   belongs_to :indicator
   belongs_to :region, optional: true
 
+  scope :only_public, -> { where(indicator: Indicator.only_public) }
+
   validates_presence_of :value
 
   def year

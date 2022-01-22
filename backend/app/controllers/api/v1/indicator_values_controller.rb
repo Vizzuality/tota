@@ -4,8 +4,10 @@ module API
       def index
         values = IndicatorValue
           .where(filters)
-          .where(region: {active: true})
+          .where(regions: {active: true})
           .includes(:region, :indicator)
+
+        values = policy_scope(values)
 
         render json: IndicatorValueBlueprint.render(
           values,
