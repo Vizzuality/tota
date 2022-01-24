@@ -12,7 +12,7 @@ module API
 
         # filter values only for visible regions
         # if user.nil? we don't have to filter that as all private widgets data is filtered out already
-        values = values.where(regions: user.visible_regions) if user.present?
+        values = values.where(regions: current_user.visible_regions) if current_user.present?
 
         render json: IndicatorValueBlueprint.render(
           values,
@@ -24,7 +24,7 @@ module API
       private
 
       def ensure_indicators_whitelist!
-        raise API::Error, 'filter[widget] is mandatory for this endpoint' unless filter_params[:widget].present?
+        raise API::Error, 'filter[widget] is mandatory for this endpoint' unless filter_params&.dig(:widget).present?
 
         indicators = authorized_widgets.flat_map { |w| w.config['indicators'] }.compact.uniq
         indicators.push(*common_stats_indicators) if widget_slugs.include? 'common_stats'
@@ -32,8 +32,11 @@ module API
       end
 
       def authorized_widgets
-        widget_slugs = filter_params[:widget].split(',')
         policy_scope(Widget.where(slug: widget_slugs), policy_scope_class: WidgetPolicy::Scope)
+      end
+
+      def widget_slugs
+        filter_params[:widget].split(',')
       end
 
       def common_stats_indicators

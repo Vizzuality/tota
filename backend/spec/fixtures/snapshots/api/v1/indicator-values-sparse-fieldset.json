@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "date": "2020-01",
+      "value": 33434.0,
+      "indicator": "visits_by_origin"
+    },
+    {
+      "date": "2020-01",
+      "value": 33333.0,
+      "indicator": "visits_by_origin"
+    },
+    {
+      "date": "2020-02",
+      "value": 2222.0,
+      "indicator": "visits_by_origin"
+    },
+    {
+      "date": "2020-02",
+      "value": 2222.0,
+      "indicator": "visits_by_origin"
+    },
+    {
+      "date": "2020-01",
+      "value": 11111.0,
+      "indicator": "stays_by_origin"
+    },
+    {
+      "date": "2020-01",
+      "value": 33333.0,
+      "indicator": "stays_by_origin"
+    },
+    {
+      "date": "2020-02",
+      "value": 2222.0,
+      "indicator": "stays_by_origin"
+    },
+    {
+      "date": "2020-02",
+      "value": 2222.0,
+      "indicator": "stays_by_origin"
+    }
+  ]
+}
