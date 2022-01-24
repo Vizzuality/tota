@@ -3,28 +3,34 @@ import { useQuery, UseQueryResult } from 'react-query';
 import type { IndicatorValue } from 'types';
 
 interface GetIndicatorValuesArgs {
+  widget: string;
   slug?: string | string[];
   region?: string | string[];
   category_1?: string | string[];
   category_2?: string | string[];
 }
 
+function addParam(params: URLSearchParams, name: string, value: string | string[]) {
+  const wrap = (x: string | string[]) => [x].flat().filter((x) => x);
+  const valueArray = wrap(value);
+  if (valueArray.length > 0) params.append(name, valueArray.join(','));
+}
+
 function getIndicatorValues({
   slug,
   region,
+  widget,
   category_1,
   category_2,
 }: GetIndicatorValuesArgs): Promise<IndicatorValue[]> {
   const params = new URLSearchParams();
-  const wrap = (x: string | string[]) => [x].flat().filter((x) => x);
-  const slugArray = wrap(slug);
-  const regionArray = wrap(region);
-  const category_1Array = wrap(category_1);
-  const category_2Array = wrap(category_2);
-  if (slugArray.length > 0) params.append('filter[indicator]', slugArray.join(','));
-  if (regionArray.length > 0) params.append('filter[region_slug]', regionArray.join(','));
-  if (category_1Array.length > 0) params.append('filter[category_1]', category_1Array.join(','));
-  if (category_2Array.length > 0) params.append('filter[category_2]', category_2Array.join(','));
+
+  addParam(params, 'filter[widget]', widget);
+  addParam(params, 'filter[indicator]', slug);
+  addParam(params, 'filter[region_slug]', region);
+  addParam(params, 'filter[category_1]', category_1);
+  addParam(params, 'filter[category_2]', category_2);
+
   const queryString = Array.from(params).length > 0 ? `?${params.toString()}` : '';
 
   return TotaAPI.get(`indicator_values${queryString}`);

@@ -1,17 +1,26 @@
 module API
   module Filtering
-    def filters
-      result = params.permit(filter: {})[:filter]
-      return unless result.respond_to?(:to_h)
+    def filter_params
+      params.permit(filter: {})[:filter]
+    end
 
-      result.to_h.map do |k, v|
+    def filters
+      return unless filter_params.respond_to?(:to_h)
+
+      filter_params.to_h.map do |k, v|
         v = v.split(',') if v.is_a?(String)
         v = v.map do |val|
           val == 'nil' ? nil : val
         end
-        key = filter_keys_map[k.to_s] || k
+        key = if filter_keys_map.key?(k.to_s)
+                filter_keys_map[k.to_s]
+              else
+                k
+              end
+        next unless key.present?
+
         [key, v]
-      end.to_h
+      end.compact.to_h
     end
 
     def fields

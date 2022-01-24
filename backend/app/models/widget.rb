@@ -37,7 +37,7 @@ class Widget < ApplicationRecord
   end
 
   def config
-    Widget.config[slug]
+    Widget.config[slug]&.with_indifferent_access
   end
 
   class << self

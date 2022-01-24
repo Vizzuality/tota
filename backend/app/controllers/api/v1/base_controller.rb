@@ -5,6 +5,8 @@ module API
       include API::Authentication
       include API::Filtering
       include Pundit
+
+      wrap_parameters format: [:json]
     end
   end
 end

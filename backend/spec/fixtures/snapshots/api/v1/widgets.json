@@ -24,7 +24,8 @@
         }
       ],
       "theme_slug": "theme_1",
-      "position": 0
+      "position": 0,
+      "regions": null
     },
     {
       "slug": "theme_1_widget_2",
@@ -50,7 +51,8 @@
         }
       ],
       "theme_slug": "theme_1",
-      "position": 1
+      "position": 1,
+      "regions": null
     },
     {
       "slug": "theme_2_widget_1",
@@ -76,7 +78,8 @@
         }
       ],
       "theme_slug": "theme_2",
-      "position": 0
+      "position": 0,
+      "regions": null
     },
     {
       "slug": "theme_2_widget_2",
@@ -102,7 +105,8 @@
         }
       ],
       "theme_slug": "theme_2",
-      "position": 1
+      "position": 1,
+      "regions": null
     }
   ]
 }

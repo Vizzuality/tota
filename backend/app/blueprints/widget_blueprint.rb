@@ -7,10 +7,10 @@ class WidgetBlueprint < Blueprinter::Base
   field :theme_slug do |val|
     val.theme&.slug
   end
-  field :regions do |val, context|
-    regions = val.config['regions']
+  field :regions do |widget, context|
+    regions = widget.config&.dig('regions')
 
-    if context[:user].nil? || val.public?
+    if context[:user].nil? || widget.public?
       regions
     elsif regions.present?
       regions & context[:user].visible_regions.pluck(:slug)

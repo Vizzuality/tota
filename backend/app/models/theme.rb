@@ -16,7 +16,7 @@ class Theme < ApplicationRecord
   validates_uniqueness_of :slug
 
   def config
-    Theme.config[slug]
+    Theme.config[slug]&.with_indifferent_access
   end
 
   class << self
