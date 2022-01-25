@@ -1,7 +1,9 @@
 import Head from 'next/head';
-import Layout from 'layout';
-import Hero from 'components/hero';
+import Image from 'next/image';
 
+import Layout from 'layout';
+
+import Hero from 'components/hero';
 import Button from 'components/button';
 import Input from 'components/forms/input';
 
@@ -25,32 +27,39 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
 
       <div className="container mx-auto lg:px-16">
         <div className="grid md:grid-cols-2 gap-10 xl:gap-20 mt-20 text-center">
-          <div className="p-10 xl:p-16 bg-cover text-white" style={{ backgroundImage: `url(${background1Image})` }}>
-            <h2 className="text-2xl">Suggest a story</h2>
-            <p className="leading-7 mt-10">
-              See a connection or insight in the data worth exploring? Let us know about it. We might craft a story
-              around the lead you sent in the future and extend insights thanks to those suggestions.
-            </p>
-            <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
-              Suggest a Story
-            </Button>
+          <div className="p-10 xl:p-16 text-white relative">
+            <Image src={background1Image} layout="fill" objectFit="cover" objectPosition="center" />
+            <div className="relative">
+              <h2 className="text-2xl">Suggest a story</h2>
+              <p className="leading-7 mt-10">
+                See a connection or insight in the data worth exploring? Let us know about it. We might craft a story
+                around the lead you sent in the future and extend insights thanks to those suggestions.
+              </p>
+              <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
+                Suggest a Story
+              </Button>
+            </div>
           </div>
-          <div className="p-10 xl:p-16 bg-cover text-white" style={{ backgroundImage: `url(${background2Image})` }}>
-            <h2 className="text-2xl">Contribute data</h2>
-            <p className="leading-7 mt-10">
-              Join the open data revolution. We’re committed to making data freely accessible to everyone. If you want
-              to help us on this journey and have data you can share (data you collected, or a data set you know of on
-              another platform), we want to hear from you*.
-            </p>
+          <div className="p-10 xl:p-16 text-white relative">
+            <Image src={background2Image} layout="fill" objectFit="cover" objectPosition="center" />
+            <div className="relative">
+              <h2 className="text-2xl">Contribute data</h2>
+              <p className="leading-7 mt-10">
+                Join the open data revolution. We’re committed to making data freely accessible to everyone. If you want
+                to help us on this journey and have data you can share (data you collected, or a data set you know of on
+                another platform), we want to hear from you*.
+              </p>
 
-            <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
-              Submit/Propose a data set
-            </Button>
-            <p className="text-xs mt-6">
-              *Note: The proposed data will be reviewed carefully. Its inclusion will depend on several factors such as
-              the overall quality, completeness, reliability, relevance and timeliness, among others. Based on these
-              factors, the participating regions will decide if the information will be included on the portal or not.
-            </p>
+              <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
+                Submit/Propose a data set
+              </Button>
+              <p className="text-xs mt-6">
+                *Note: The proposed data will be reviewed carefully. Its inclusion will depend on several factors such
+                as the overall quality, completeness, reliability, relevance and timeliness, among others. Based on
+                these factors, the participating regions will decide if the information will be included on the portal
+                or not.
+              </p>
+            </div>
           </div>
         </div>
 
