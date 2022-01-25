@@ -25,34 +25,7 @@
       ],
       "theme_slug": "theme_1",
       "position": 0,
-      "regions": null
-    },
-    {
-      "slug": "theme_1_widget_2",
-      "title": "Widget title",
-      "sub_title": "Widget subtitle",
-      "description": "Widget description",
-      "note": "Widget note",
-      "sources": [
-        {
-          "text": "Source text",
-          "link": "https://example.com",
-          "note": "Source note"
-        },
-        {
-          "text": "Source text",
-          "link": "https://example.com",
-          "note": "Source note"
-        },
-        {
-          "text": "Source text",
-          "link": "https://example.com",
-          "note": "Source note"
-        }
-      ],
-      "theme_slug": "theme_1",
-      "position": 1,
-      "regions": null
+      "regions_whitelist": null
     },
     {
       "slug": "theme_2_widget_1",
@@ -79,7 +52,7 @@
       ],
       "theme_slug": "theme_2",
       "position": 0,
-      "regions": null
+      "regions_whitelist": null
     },
     {
       "slug": "theme_2_widget_2",
@@ -106,7 +79,7 @@
       ],
       "theme_slug": "theme_2",
       "position": 1,
-      "regions": null
+      "regions_whitelist": null
     }
   ]
 }

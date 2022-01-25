@@ -66,7 +66,7 @@ export interface WidgetAPI {
   description: string;
   note?: string;
   sources?: Source[];
-  regions?: string[];
+  regions_whitelist?: string[];
 }
 
 export interface ThemeAPI {

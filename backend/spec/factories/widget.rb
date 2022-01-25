@@ -9,5 +9,9 @@ FactoryBot.define do
     public { true }
 
     theme
+
+    trait :private do
+      public { false }
+    end
   end
 end

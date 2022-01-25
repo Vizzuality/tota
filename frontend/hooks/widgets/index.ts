@@ -37,7 +37,7 @@ export function useWidgets(themeSlug: string, selectedRegion?: Region) {
         (data: WidgetAPI[]) => {
           return orderBy(
             mergeWithFrontendDefinitions(themeSlug, data).filter((w) =>
-              w.regions ? w.regions.includes(selectedRegion?.slug) : true,
+              w.regions_whitelist ? w.regions_whitelist.includes(selectedRegion?.slug) : true,
             ),
             'position',
           );

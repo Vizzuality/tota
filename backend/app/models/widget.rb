@@ -44,5 +44,9 @@ class Widget < ApplicationRecord
     def config
       @config ||= Theme.config.values.flat_map { |t| t['widgets'] }.to_h { |w| [w['slug'], w] }
     end
+
+    def reset_config
+      @config = nil
+    end
   end
 end

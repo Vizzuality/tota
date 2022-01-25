@@ -25,7 +25,7 @@
       ],
       "theme_slug": "theme_2",
       "position": 0,
-      "regions": null
+      "regions_whitelist": null
     },
     {
       "slug": "theme_2_widget_2",
@@ -52,7 +52,7 @@
       ],
       "theme_slug": "theme_2",
       "position": 1,
-      "regions": null
+      "regions_whitelist": null
     }
   ]
 }

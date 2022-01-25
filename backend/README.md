@@ -104,9 +104,13 @@ Return as geojson FeatureCollection
 
 Return as geojson FeatureCollection
 
-### Indicators
+### Indicator Values
 
-### `GET /indicators`
+### `GET /indicators_values`
+
+After adding widget permissions to get indicator values `filter[widget]` is mandatory. Otherwise API return `:bad_request` status code.
+
+### `GET /indicators_values?filter[widget]=some_widget_slug`
 
 ### Themes
 

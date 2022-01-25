@@ -22,20 +22,22 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
 
     Indicators::EstablishmentsByType.generate
 
-    create(:widget, slug: 'widget1', theme: create(:theme, slug: 'theme1'))
+    create(:widget, slug: 'widget_1', theme: create(:theme, slug: 'theme_1'))
   end
 
   before(:each) do
-    allow(Theme).to receive(:config).and_return(
-      theme1: {
-        slug: 'theme1',
+    allow(Theme).to receive(:config).and_return({
+      theme_1: {
+        slug: 'theme_1',
         widgets: {
-          slug: 'widget1',
+          slug: 'widget_1',
           indicators: %w[visits_by_origin stays_by_origin]
         }
-      }.with_indifferent_access
-    )
+      }
+    }.with_indifferent_access)
+    Widget.reset_config
   end
+  after(:each) { Widget.reset_config }
 
   let_it_be(:visits_by_origin) do
     create(
@@ -85,7 +87,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
 
     context 'with widget filter param' do
       it 'should return widget1 indicators' do
-        get '/api/v1/indicator_values?filter[widget]=widget1'
+        get '/api/v1/indicator_values?filter[widget]=widget_1'
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to match_snapshot('api/v1/indicator-values')
@@ -94,7 +96,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
 
       context 'filters' do
         it 'should filter by slug' do
-          get '/api/v1/indicator_values?filter[widget]=widget1&filter[indicator]=visits_by_origin'
+          get '/api/v1/indicator_values?filter[widget]=widget_1&filter[indicator]=visits_by_origin'
 
           expect(response).to have_http_status(:ok)
           expect(response.body).to match_snapshot('api/v1/indicator-values-filter-by-slug')
@@ -103,7 +105,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
 
       context 'sparse fieldset' do
         it 'should work' do
-          get '/api/v1/indicator_values?filter[widget]=widget1&fields=indicator,date,value'
+          get '/api/v1/indicator_values?filter[widget]=widget_1&fields=indicator,date,value'
 
           expect(response).to have_http_status(:ok)
           expect(response.body).to match_snapshot('api/v1/indicator-values-sparse-fieldset')
