@@ -44,10 +44,10 @@ RSpec.describe 'API V1 Widgets', type: :request do
         allow(Theme).to receive(:config).and_return({
           theme_1: {
             slug: 'theme_1',
-            widgets: {
+            widgets: [{
               slug: widget.slug,
               regions_whitelist: ['thompson_okanagan']
-            }
+            }]
           }
         }.with_indifferent_access)
         Widget.reset_config
