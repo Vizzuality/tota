@@ -10,10 +10,6 @@ module API
           .where(regions: {active: true})
           .includes(:region, :indicator)
 
-        # filter values only for visible regions
-        # if user.nil? we don't have to filter that as all private widgets data is filtered out already
-        values = values.where(regions: current_user.visible_regions) if current_user.present?
-
         render json: IndicatorValueBlueprint.render(
           values,
           root: :data,
