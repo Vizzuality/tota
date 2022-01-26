@@ -15,6 +15,8 @@ module Tota
     config.generators do |g|
       g.test_framework  :rspec
     end
+
+    config.themes = config_for(:themes)
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

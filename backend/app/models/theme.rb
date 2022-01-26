@@ -16,7 +16,7 @@ class Theme < ApplicationRecord
   validates_uniqueness_of :slug
 
   def config
-    Theme.config[slug]&.with_indifferent_access
+    Theme.config[slug]
   end
 
   class << self
@@ -25,13 +25,7 @@ class Theme < ApplicationRecord
     end
 
     def config
-      @config ||= config_content['themes'].to_h { |t| [t['slug'], t] }
-    end
-
-    private
-
-    def config_content
-      YAML.safe_load(Rails.root.join('config/themes.yml').read)
+      Rails.application.config.themes[:themes].to_h { |t| [t[:slug], t] }.with_indifferent_access
     end
   end
 end
