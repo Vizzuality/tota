@@ -20,7 +20,7 @@ module API
 
       def filter_keys_map
         {
-          'indicator' => 'indicators.slug',
+          'indicator' => 'indicator.slug',
           'region' => 'regions.name',
           'region_slug' => 'regions.slug'
         }

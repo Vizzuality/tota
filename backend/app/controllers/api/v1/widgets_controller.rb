@@ -12,6 +12,14 @@ module API
           user: current_user
         )
       end
+
+      private
+
+      def filter_keys_map
+        {
+          'theme_slug' => 'theme.slug'
+        }
+      end
     end
   end
 end

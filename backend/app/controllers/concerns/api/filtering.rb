@@ -1,7 +1,7 @@
 module API
   module Filtering
     def filter_params
-      params.permit(filter: {})[:filter]
+      params[:filter]&.to_unsafe_h || {}
     end
 
     def filters
