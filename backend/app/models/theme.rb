@@ -25,8 +25,13 @@ class Theme < ApplicationRecord
     end
 
     def config
-      content = YAML.safe_load(Rails.root.join('config/themes.yml').read)
-      @config ||= content['themes'].to_h { |t| [t['slug'], t] }
+      @config ||= config_content['themes'].to_h { |t| [t['slug'], t] }
+    end
+
+    private
+
+    def config_content
+      YAML.safe_load(Rails.root.join('config/themes.yml').read)
     end
   end
 end
