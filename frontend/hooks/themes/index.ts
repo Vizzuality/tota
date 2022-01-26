@@ -27,9 +27,13 @@ function mergeWithFrontendDefinitions(data: ThemeAPI[]): Theme[] {
 export function useRouterSelectedTheme(): Theme {
   const router = useRouter();
   const { theme: themeSlug } = router.query;
-  const { data: themes } = useThemes();
+  const { data: themes, isFetched } = useThemes();
 
-  return (themes || []).find((t) => t.slug === snakeCase(themeSlug as string));
+  const theme = (themes || []).find((t) => t.slug === snakeCase(themeSlug as string));
+
+  if (isFetched && !theme) router.push('/page-not-found');
+
+  return theme;
 }
 
 export function useThemes() {
