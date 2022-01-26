@@ -22,8 +22,7 @@ module API
         {
           'indicator' => 'indicators.slug',
           'region' => 'regions.name',
-          'region_slug' => 'regions.slug',
-          'widget' => nil
+          'region_slug' => 'regions.slug'
         }
       end
     end

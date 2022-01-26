@@ -46,7 +46,6 @@ const ThemeMainHeader: React.FC<ThemeMainHeaderProps> = () => {
   const { isFetched, isFetching, data } = useIndicatorValues({
     slug: STATISTICS.map((x) => x.indicator),
     region: selectedRegion.slug,
-    widget: 'common_stats',
   });
 
   const handleRegionChange = (value: string) => {

@@ -47,7 +47,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     isLoading,
     isError,
     isSuccess,
-  } = useIndicatorValues({ widget: widget.slug, ...widget.fetchParams(wholeState) });
+  } = useIndicatorValues(widget.fetchParams(wholeState));
   const {
     data,
     widgetWrapper: WidgetWrapper,

@@ -2,8 +2,8 @@ module API
   module V1
     class WidgetsController < BaseController
       def index
-        filtered = Widget.where(filters).includes(:theme).order(:theme_id, :position)
-        widgets = policy_scope(filtered)
+        widgets = Widget.where(filters).includes(:theme).order(:theme_id, :position)
+        widgets = policy_scope(widgets)
 
         render json: WidgetBlueprint.render(
           widgets,
