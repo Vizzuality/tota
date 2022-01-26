@@ -19,14 +19,14 @@ const THEMES = {
     nav: 'text-white',
     logo: LogoWhite,
     hamburger: 'white',
-    mobile: 'bg-gray-500',
+    mobile: 'bg-gray-50',
   },
   gray: {
     container: 'bg-gray-50 border-b border-blue-800',
     nav: 'text-blue-800',
     logo: LogoColour,
     hamburger: 'black',
-    mobile: 'bg-gray-200',
+    mobile: 'bg-gray-50',
   },
 };
 
@@ -86,7 +86,7 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
         <div
           className={cx(
             'fixed lg:static z-10 top-0 left-0',
-            'bg-gray-200 lg:bg-transparent w-screen h-screen lg:w-auto lg:h-auto flex flex-col lg:flex-row',
+            'lg:bg-transparent w-screen h-screen lg:w-auto lg:h-auto flex flex-col lg:flex-row',
             offScreenSlide,
             {
               [THEMES[theme].mobile]: true,
