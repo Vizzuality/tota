@@ -7,12 +7,24 @@ export default class extends Controller {
 
   connect() {
     this._resetFrameTarget();
+    this.element.addEventListener('submit', this.handleSubmit);
   }
 
-  update() {
+  disconnect() {
+    this.element.removeEventListener('submit', this.handleSubmit);
+  }
+
+  update(e) {
     const frame = document.getElementById(this.frameValue);
-    frame.setAttribute('target', '');
+    frame.setAttribute('target', e.target.dataset?.targetForm || '');
     this.element.requestSubmit();
+  }
+
+  handleSubmit = (event) => {
+    const form = event.target;
+    if (event.submitter?.name === 'commit') {
+      this._resetFrameTarget();
+    }
   }
 
   _resetFrameTarget() {
