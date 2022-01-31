@@ -9,12 +9,16 @@ module.exports = withPlugins(
   [
     withOptimizedImages({
       optimizeImages: false,
+      handleImages: ['svg'],
     }),
     withBundleAnalyzer,
   ],
   {
-    images: {
-      disableStaticImages: true,
+    webpack: (config) => {
+      const nextImageLoader = config.module.rules.find((rule) => rule.loader === 'next-image-loader');
+      // remove svg from next-image-loader
+      nextImageLoader.test = /\.(png|jpg|jpeg|gif|webp|avif|ico|bmp)$/i;
+      return config;
     },
     async rewrites() {
       const backend = process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST;

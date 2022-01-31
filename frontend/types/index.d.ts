@@ -48,7 +48,7 @@ interface Source {
 
 export interface ThemeFrontendDefinition {
   slug: string;
-  image?: string;
+  image?: string | StaticImageData;
   widgets?: WidgetFrontendDefinition[];
 }
 
