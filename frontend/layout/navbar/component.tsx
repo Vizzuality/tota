@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useLayoutEffect } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import Hamburger from 'components/hamburger';
 import NavLink from 'layout/navlink';
@@ -72,8 +73,8 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
         })}
       >
         <Link href="/">
-          <a className="relative z-20 h-full">
-            <img src={THEMES[theme].logo} className="max-h-8 lg:max-h-10" />
+          <a className="relative z-20" style={{ width: 240, height: 40 }}>
+            <Image src={THEMES[theme].logo} layout="fill" objectFit="contain" objectPosition="left" />
           </a>
         </Link>
         {header && <h1 className="hidden md:block text-xl lg:text-2xl font-bold whitespace-nowrap">{header}</h1>}
