@@ -2,28 +2,12 @@
   background-color: $primary;
 }
 
-.badge-live {
-  background-color: $red;
-}
-
-.badge-proposal {
-  background-color: $yellow;
-}
-
-.badge-finished {
+.badge-public {
   background-color: $green;
 }
 
-.badge-paid {
-  background-color: $green;
-}
-
-.badge-pending-to-issue {
+.badge-private {
   background-color: $red;
-}
-
-.badge-waiting-for-payment {
-  background-color: $yellow;
 }
 
 .badge-yes {

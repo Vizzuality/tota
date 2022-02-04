@@ -8,6 +8,7 @@
       <%= f.input :sub_title %>
       <%= f.input :description, as: :trix_editor %>
       <%= f.input :note, as: :trix_editor %>
+      <%= f.input :public, as: :select, label: 'Visibility', collection: [['Public', true], ['Private', false]], include_blank: false %>
     <% end %>
 
     <%= card 'Sources', class: 'mt-3' do %>

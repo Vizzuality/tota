@@ -67,7 +67,7 @@ module BootstrapHelper
                      [text.to_sym, text.to_s.humanize]
                    end
 
-    content_tag :span, display, class: "badge badge-#{key}"
+    content_tag :span, display, class: "badge badge-#{key.downcase}"
   end
 
   def card(header_text, options = {}, &block)

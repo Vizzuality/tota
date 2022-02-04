@@ -12,8 +12,13 @@ export default class extends Controller {
     if (firstFormCheck) {
       firstFormCheck.insertAdjacentHTML('beforebegin', html);
       const selectAllElement = this.element.querySelector('#select_all');
+      this.selectAllElementParent = selectAllElement.parentNode;
       selectAllElement.addEventListener('change', this.handleSelectAll);
     }
+  }
+
+  disconnect() {
+    this.selectAllElementParent?.remove();
   }
 
   handleSelectAll = (event) => {

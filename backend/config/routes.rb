@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :development_funds, only: [:index], format: /(json|geojson)/
       resources :organizations, only: [:index], format: /(json|geojson)/
       resources :indicators, only: [:index]
+      resources :indicator_values, only: [:index]
       resources :regions, only: [:index]
       resources :themes, only: [:index]
       resources :widgets, only: [:index]

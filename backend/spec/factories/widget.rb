@@ -6,7 +6,12 @@ FactoryBot.define do
     description { 'Widget description' }
     note { 'Widget note' }
     sources { build_list(:source, 3) }
+    public { true }
 
     theme
+
+    trait :private do
+      public { false }
+    end
   end
 end

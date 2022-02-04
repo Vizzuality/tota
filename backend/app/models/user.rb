@@ -35,6 +35,18 @@ class User < ApplicationRecord
     errors.add :password, 'must include at least one lowercase letter, one uppercase letter, and one digit'
   end
 
+  def visible_regions
+    return Region.province.or(Region.tourism_region).active if admin?
+
+    regions
+  end
+
+  def non_visible_regions
+    return [] if admin?
+
+    Region.where.not(id: visible_regions.ids)
+  end
+
   def to_s
     email
   end

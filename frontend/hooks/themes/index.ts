@@ -11,20 +11,29 @@ import { Theme, ThemeAPI } from 'types';
 function mergeWithFrontendDefinitions(data: ThemeAPI[]): Theme[] {
   if (!data?.length) return [];
 
-  return themes.map((t) => {
-    return {
-      ...t,
-      ...data.find((d) => d.slug === t.slug),
-    };
-  });
+  return themes
+    .map((t) => {
+      const apiTheme = data.find((d) => d.slug === t.slug);
+      if (!apiTheme) return null;
+
+      return {
+        ...t,
+        ...apiTheme,
+      };
+    })
+    .filter((x) => x);
 }
 
 export function useRouterSelectedTheme(): Theme {
   const router = useRouter();
   const { theme: themeSlug } = router.query;
-  const { data: themes } = useThemes();
+  const { data: themes, isFetched } = useThemes();
 
-  return (themes || []).find((t) => t.slug === snakeCase(themeSlug as string));
+  const theme = (themes || []).find((t) => t.slug === snakeCase(themeSlug as string));
+
+  if (isFetched && !theme) router.push('/page-not-found');
+
+  return theme;
 }
 
 export function useThemes() {

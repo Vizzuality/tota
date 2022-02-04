@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'API V1 Indicators', type: :request do
+RSpec.describe 'API V1 Indicator', type: :request do
   before_all do
     bt1 = create(:business_type, name: 'Accommodation')
     bt2 = create(:business_type, name: 'Bed & Breakfast', parent: bt1)

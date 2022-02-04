@@ -15,9 +15,17 @@ class Theme < ApplicationRecord
   validates_presence_of :slug, :title
   validates_uniqueness_of :slug
 
+  def config
+    Theme.config[slug]
+  end
+
   class << self
     def load_config(cleanup: false)
-      ThemesLoader.new(path: Rails.root.join('config/themes.yml'), cleanup: cleanup).call
+      ThemesLoader.new(themes_config: Rails.application.config.themes, cleanup: cleanup).call
+    end
+
+    def config
+      @config ||= Rails.application.config.themes[:themes].to_h { |t| [t[:slug], t] }.with_indifferent_access
     end
   end
 end

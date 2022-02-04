@@ -372,10 +372,6 @@ const theme: ThemeFrontendDefinition = {
         year: 'all_years',
         sector: 'Tourism',
       },
-      display: (selectedRegion: Region) => {
-        if (selectedRegion.parent) return false;
-        return true; //only for parent regions like british columbia
-      },
       fetchParams: (state: any) => {
         return {
           slug: 'tourism_employment_by_job_status',

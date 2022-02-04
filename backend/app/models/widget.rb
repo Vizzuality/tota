@@ -25,7 +25,28 @@ class Widget < ApplicationRecord
   validates_uniqueness_of :slug
   validates :sources, store_model: true, allow_nil: true
 
+  scope :only_public, -> { where(public: true) }
+  scope :only_private, -> { where(public: false) }
+
   def sources_attributes=(attr)
     self.sources = attr.values.reject { |a| ActiveModel::Type::Boolean.new.cast(a[:_destroy]) }
+  end
+
+  def private?
+    !public?
+  end
+
+  def config
+    Widget.config[slug]
+  end
+
+  class << self
+    def config
+      @config ||= Theme.config.values.flat_map { |t| t[:widgets] }.to_h { |w| [w[:slug], w] }.with_indifferent_access
+    end
+
+    def reset_config
+      @config = nil
+    end
   end
 end

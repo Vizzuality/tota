@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import kebabCase from 'lodash/kebabCase';
 
 import { useRouterSelectedTheme, useThemes } from 'hooks/themes';
 
@@ -10,13 +11,17 @@ import Icon from 'components/icon';
 import Link from 'next/link';
 
 import ChevronIcon from 'svgs/chevron-down.svg?sprite';
+import { useRouterSelectedRegion } from 'hooks/regions';
 
 export interface ThemeMobileFooterProps {}
 
 const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
   const [isOpen, setOpen] = useState(false);
   const theme = useRouterSelectedTheme();
+  const region = useRouterSelectedRegion();
   const { data: themes } = useThemes();
+
+  const regionSlug = region?.slug || 'british-columbia';
 
   return (
     <div className="lg:hidden">
@@ -40,7 +45,7 @@ const ThemeMobileFooter: React.FC<ThemeMobileFooterProps> = () => {
       <Drawer placement="bottom" isOpen={isOpen}>
         <div id="mobile-bottom-drawer" className="mb-20 overflow-auto bg-blue-800 flex flex-col text-white">
           {themes.map((theme) => (
-            <Link key={theme.slug} href={`/themes/${theme.slug}`}>
+            <Link key={theme.slug} href={`/themes/${kebabCase(regionSlug)}/${kebabCase(theme.slug)}`}>
               <a className="mx-5 py-5 border-b-2 border-white last:border-b-0" onClick={() => setOpen(false)}>
                 {theme.title}
               </a>

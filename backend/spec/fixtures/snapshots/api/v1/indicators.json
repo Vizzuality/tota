@@ -9,7 +9,8 @@
           "category_2": "all",
           "value": 3.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -17,7 +18,8 @@
           "category_2": "all",
           "value": 2.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -25,7 +27,8 @@
           "category_2": "all",
           "value": 2.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -33,7 +36,8 @@
           "category_2": "all",
           "value": 1.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -41,7 +45,8 @@
           "category_2": "all",
           "value": 1.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -49,7 +54,8 @@
           "category_2": "biosphere",
           "value": 2.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -57,7 +63,8 @@
           "category_2": "biosphere",
           "value": 1.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -65,7 +72,8 @@
           "category_2": "biosphere",
           "value": 1.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "establishments_by_type"
         },
         {
           "date": null,
@@ -73,7 +81,8 @@
           "category_2": "biosphere",
           "value": 1.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "establishments_by_type"
         }
       ]
     },
@@ -86,7 +95,8 @@
           "category_2": null,
           "value": 5.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "total_establishments"
         },
         {
           "date": null,
@@ -94,7 +104,8 @@
           "category_2": null,
           "value": 4.0,
           "region": "region 2",
-          "region_slug": "region_2"
+          "region_slug": "region_2",
+          "indicator": "total_establishments"
         }
       ]
     },
@@ -107,7 +118,8 @@
           "category_2": null,
           "value": 33434.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "visits_by_origin"
         },
         {
           "date": "2020-01",
@@ -115,7 +127,8 @@
           "category_2": null,
           "value": 33333.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "visits_by_origin"
         },
         {
           "date": "2020-02",
@@ -123,7 +136,8 @@
           "category_2": null,
           "value": 2222.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "visits_by_origin"
         },
         {
           "date": "2020-02",
@@ -131,7 +145,8 @@
           "category_2": null,
           "value": 2222.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "visits_by_origin"
         }
       ]
     },
@@ -144,7 +159,8 @@
           "category_2": null,
           "value": 11111.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "stays_by_origin"
         },
         {
           "date": "2020-01",
@@ -152,7 +168,8 @@
           "category_2": null,
           "value": 33333.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "stays_by_origin"
         },
         {
           "date": "2020-02",
@@ -160,7 +177,8 @@
           "category_2": null,
           "value": 2222.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "stays_by_origin"
         },
         {
           "date": "2020-02",
@@ -168,7 +186,8 @@
           "category_2": null,
           "value": 2222.0,
           "region": "region 1",
-          "region_slug": "region_1"
+          "region_slug": "region_1",
+          "indicator": "stays_by_origin"
         }
       ]
     }

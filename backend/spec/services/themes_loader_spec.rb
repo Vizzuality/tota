@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ThemesLoader do
   let(:file_path) { Rails.root.join('spec/fixtures/files/themes.yml') }
+  let(:themes_config) { Rails.application.config_for(file_path) }
 
   context 'with empty database' do
     it 'should load all themes and widgets' do
-      service = ThemesLoader.new(path: file_path)
+      service = ThemesLoader.new(themes_config: themes_config)
 
       expect(Theme.count).to eq(0)
       expect(service.call).to be(true)
@@ -42,7 +43,7 @@ RSpec.describe ThemesLoader do
     end
 
     it 'should load new themes, widgets and remove non existent' do
-      service = ThemesLoader.new(path: file_path)
+      service = ThemesLoader.new(themes_config: themes_config)
 
       expect(Theme.count).to eq(2)
       expect(Widget.find_by(slug: :should_be_removed).present?).to be(true)
@@ -60,7 +61,7 @@ RSpec.describe ThemesLoader do
     end
 
     it 'should remove existing themes and load new with cleanup option' do
-      service = ThemesLoader.new(path: file_path, cleanup: true)
+      service = ThemesLoader.new(themes_config: themes_config, cleanup: true)
 
       expect(Theme.count).to eq(2)
       expect(Widget.find_by(slug: :should_be_removed).present?).to be(true)

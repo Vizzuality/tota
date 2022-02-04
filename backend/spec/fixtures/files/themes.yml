@@ -1,58 +1,59 @@
-themes:
-  - slug: general_insights
-    title: General Insights
-    widgets:
-      - slug: size_tourism_region
-        title: Size of regions (km2)
-        description: |
-          Total size of all BC regions, based on the administritive boundaries of tourism regions. Overall, BC has a territory of 922,000 km².
-        sources:
-          - text: DestinationBC - Regional Profiles
-            link: https://www.destinationbc.ca/research-insights/type/regional-research/regional-profiles/
+shared:
+  themes:
+    - slug: general_insights
+      title: General Insights
+      widgets:
+        - slug: size_tourism_region
+          title: Size of regions (km2)
+          description: |
+            Total size of all BC regions, based on the administritive boundaries of tourism regions. Overall, BC has a territory of 922,000 km².
+          sources:
+            - text: DestinationBC - Regional Profiles
+              link: https://www.destinationbc.ca/research-insights/type/regional-research/regional-profiles/
 
-      - slug: population
-        title: Population
-        description: |
-          Total population per participating region. The most populated regions are Vancouver Island and Thompson Okanagan. The total population of BC is 4,892,084 people.
-        note: New census data for 2021 coming soon.
-        sources:
-          - text: Statistics Canada - Census Data
-            link: https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/index-eng.cfm
+        - slug: population
+          title: Population
+          description: |
+            Total population per participating region. The most populated regions are Vancouver Island and Thompson Okanagan. The total population of BC is 4,892,084 people.
+          note: New census data for 2021 coming soon.
+          sources:
+            - text: Statistics Canada - Census Data
+              link: https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/index-eng.cfm
 
-  - slug: airport_information
-    title: Airport Information
-    description: Airport Information description
-    widgets:
-      - slug: airport_arrivals
-        title: Number of arriving flights
-        sub_title: (top 3 airports)
-        description: Total number of flights arriving to the top 3 airports per selected region.
-        note: Flights per destination include all airlines serving that route.
-        sources:
-          - text: Individual airports
+    - slug: airport_information
+      title: Airport Information
+      description: Airport Information description
+      widgets:
+        - slug: airport_arrivals
+          title: Number of arriving flights
+          sub_title: (top 3 airports)
+          description: Total number of flights arriving to the top 3 airports per selected region.
+          note: Flights per destination include all airlines serving that route.
+          sources:
+            - text: Individual airports
 
-      - slug: passenger_volume
-        title: Total passenger volume
-        description: Total air passenger arrivals to the top 3 airports per selected region.
-        sources:
-          - text: Individual airports
+        - slug: passenger_volume
+          title: Total passenger volume
+          description: Total air passenger arrivals to the top 3 airports per selected region.
+          sources:
+            - text: Individual airports
 
-      - slug: int_vs_dom_arrivals
-        title: International vs. domestic arrivals
-        description: Share of international and domestic air passenger arrivals to the top 3 airport per selected region.
-        note: Passenger splits are based on O/D data.
-        sources:
-          - text: Individual airports
+        - slug: int_vs_dom_arrivals
+          title: International vs. domestic arrivals
+          description: Share of international and domestic air passenger arrivals to the top 3 airport per selected region.
+          note: Passenger splits are based on O/D data.
+          sources:
+            - text: Individual airports
 
 
-  - slug: accommodation_information
-    title: Accommodation Information
-    widgets:
-      - slug: occupancy_rates
-        title: Occupancy rates
-        description: |
-          Occupancy rate of hotels in the selected region. Shown are the average rates during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.
-        note: |
-          Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.
-        sources:
-          - text: STR/NCHA/BCRTS Destination Weekly Reports
+    - slug: accommodation_information
+      title: Accommodation Information
+      widgets:
+        - slug: occupancy_rates
+          title: Occupancy rates
+          description: |
+            Occupancy rate of hotels in the selected region. Shown are the average rates during the week vs. weekends (%) and the percentage change to the previous year. The historical data shows the development over time per year.
+          note: |
+            Insights of hotels participating in the STR report. Occupancy rates are calculated by dividing the the number of occupied rooms by the number of available rooms that physically exist in a hotel. To participate in the STR "STAR" Report, hotels can submit data and receive free reports benchmarking performance against market trends. To enroll, see here.
+          sources:
+            - text: STR/NCHA/BCRTS Destination Weekly Reports

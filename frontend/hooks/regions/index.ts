@@ -36,10 +36,13 @@ export function useRegions() {
 
 export function useRouterSelectedRegion(): Region {
   const router = useRouter();
-  const { region } = router.query;
-  const { data: regions } = useRegions();
+  const { region: regionSlug } = router.query;
+  const { data: regions, isFetched } = useRegions();
 
-  if (!region) return null;
+  if (!regionSlug) return null;
 
-  return regions.find((r) => r.slug === snakeCase(region as string));
+  const region = regions.find((r) => r.slug === snakeCase(regionSlug as string));
+  if (isFetched && !region) router.push('/page-not-found');
+
+  return region;
 }

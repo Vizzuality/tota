@@ -1,10 +1,6 @@
 class ThemesLoader
-  def initialize(path:, cleanup: false)
-    @path = if path.is_a? Pathname
-              path
-            else
-              Pathname.new(path)
-            end
+  def initialize(themes_config:, cleanup: false)
+    @themes_config = themes_config
     @cleanup = cleanup
   end
 
@@ -15,9 +11,9 @@ class ThemesLoader
       theme_slugs = []
       widget_slugs = []
 
-      content = YAML.safe_load(@path.read)
+      content = @themes_config.with_indifferent_access
       content['themes'].each do |theme_conf|
-        theme_slug = theme_conf['slug']
+        theme_slug = theme_conf[:slug]
         theme = Theme
           .create_with(
             title: theme_conf['title'],
@@ -29,7 +25,7 @@ class ThemesLoader
         theme_conf['widgets'].each do |widget_conf|
           widget_slug = widget_conf['slug']
           Widget
-            .create_with(widget_conf.merge(theme: theme))
+            .create_with(widget_conf.except(:indicators, :regions_whitelist).merge(theme: theme))
             .find_or_create_by!(slug: widget_slug)
           widget_slugs << widget_slug
         end
