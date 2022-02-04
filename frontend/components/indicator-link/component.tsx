@@ -19,7 +19,7 @@ const IndicatorLink: FC<IndicatorLinkProps> = ({
 }: IndicatorLinkProps) => (
   <Link href={url}>
     <a className={cx(className, 'text-white text-2xl font-bold relative')} style={{ paddingBottom: '100%' }} {...args}>
-      <Image src={image} layout="fill" objectFit="cover" />
+      <Image src={image} layout="fill" objectFit="cover" quality={100} />
       <span className="absolute left-0 bottom-0 p-5 text-left">{name}</span>
     </a>
   </Link>

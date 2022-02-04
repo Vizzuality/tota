@@ -28,7 +28,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
       <div className="container mx-auto lg:px-16">
         <div className="grid md:grid-cols-2 gap-10 xl:gap-20 mt-20 text-center">
           <div className="p-10 xl:p-16 text-white relative">
-            <Image src={background1Image} layout="fill" objectFit="cover" objectPosition="center" />
+            <Image src={background1Image} layout="fill" objectFit="cover" objectPosition="center" quality={100} />
             <div className="relative">
               <h2 className="text-2xl">Suggest a story</h2>
               <p className="leading-7 mt-10">
@@ -41,7 +41,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
             </div>
           </div>
           <div className="p-10 xl:p-16 text-white relative">
-            <Image src={background2Image} layout="fill" objectFit="cover" objectPosition="center" />
+            <Image src={background2Image} layout="fill" objectFit="cover" objectPosition="center" quality={100} />
             <div className="relative">
               <h2 className="text-2xl">Contribute data</h2>
               <p className="leading-7 mt-10">

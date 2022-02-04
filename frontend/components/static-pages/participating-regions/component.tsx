@@ -49,7 +49,7 @@ const ParticipatingRegions: FC<ParticipatingRegionsProps> = ({ className }: Part
       {participatingRegions.map((region) => (
         <Link key={region.title} href={region.link}>
           <a className="relative z-20">
-            <Image src={region.logo} alt={region.title} />
+            <Image src={region.logo} alt={region.title} quality={100} />
           </a>
         </Link>
       ))}

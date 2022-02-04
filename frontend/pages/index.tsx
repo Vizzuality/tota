@@ -96,7 +96,7 @@ const Home: React.FC<void> = (): JSX.Element => {
                 className="relative w-full text-white text-2xl font-bold bg-cover"
                 style={{ backgroundImage: `url(${boxComingSoonImage})`, paddingBottom: '100%' }}
               >
-                <Image src={boxComingSoonImage} layout="fill" objectFit="cover" />
+                <Image src={boxComingSoonImage} layout="fill" objectFit="cover" quality={100} />
                 <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
               </div>
             </div>

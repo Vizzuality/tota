@@ -7,7 +7,7 @@ import { useThemes } from 'hooks/themes';
 
 import LogoWhite from 'images/BCRTS-Logo-Horizontal-White.png';
 
-interface FooterProps { }
+interface FooterProps {}
 
 const Footer: FC<FooterProps> = () => {
   const { data: themes } = useThemes();
@@ -55,7 +55,7 @@ const Footer: FC<FooterProps> = () => {
         <div className="w-full lg:w-auto pb-10">
           <Link href="/">
             <a>
-              <Image src={LogoWhite} />
+              <Image src={LogoWhite} quality={100} />
             </a>
           </Link>
         </div>

@@ -74,7 +74,7 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
       >
         <Link href="/">
           <a className="relative z-20" style={{ width: 240, height: 40 }}>
-            <Image src={THEMES[theme].logo} layout="fill" objectFit="contain" objectPosition="left" />
+            <Image src={THEMES[theme].logo} layout="fill" objectFit="contain" objectPosition="left" quality={100} />
           </a>
         </Link>
         {header && <h1 className="hidden md:block text-xl lg:text-2xl font-bold whitespace-nowrap">{header}</h1>}
