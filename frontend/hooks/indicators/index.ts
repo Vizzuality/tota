@@ -33,12 +33,16 @@ function getIndicatorValues({
   return TotaAPI.get(`indicator_values${queryString}`);
 }
 
-export function useIndicatorValues(params: GetIndicatorValuesArgs): UseQueryResult<IndicatorValue[]> {
+export function useIndicatorValues(
+  params: GetIndicatorValuesArgs,
+  useQueryParams: any = {},
+): UseQueryResult<IndicatorValue[]> {
   return useQuery<IndicatorValue[], Error>(
     ['Fetch indicator values', params],
     !!params ? () => getIndicatorValues(params) : () => Promise.resolve([]),
     {
       staleTime: Infinity,
+      ...useQueryParams,
     },
   );
 }

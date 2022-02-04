@@ -6,6 +6,8 @@ import MultipleSelect from 'components/forms/select/multi';
 import type { SelectProps } from './types';
 import useStatus from '../utils';
 
+const isServer = typeof window === 'undefined';
+
 export const Select: FC<SelectProps> = (props: SelectProps) => {
   const {
     theme = 'dark',
@@ -18,6 +20,8 @@ export const Select: FC<SelectProps> = (props: SelectProps) => {
     disabled,
     onChange,
   } = props;
+
+  if (isServer) return null;
 
   const status = useStatus({ meta, disabled });
 
