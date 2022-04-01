@@ -4,7 +4,7 @@ module API
       include API::Errors
       include API::Authentication
       include API::Filtering
-      include Pundit
+      include Pundit::Authorization
 
       wrap_parameters format: [:json]
     end

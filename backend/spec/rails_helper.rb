@@ -22,7 +22,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
   config.request_snapshots_dynamic_attributes = %w(id created_at updated_at region_id parent_id)
-  config.request_snapshots_ignore_order = %w(indicator_values)
+  config.request_snapshots_ignore_order = %w(indicator_values data)
 
   config.include FactoryBot::Syntax::Methods
   config.include FixtureFileHelper
