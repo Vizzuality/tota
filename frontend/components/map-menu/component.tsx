@@ -5,7 +5,7 @@ import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 
-import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
+import ARROW_DOWN_SVG from 'svgs/map/arrow.svg';
 
 import type { SelectOptionProps } from 'components/forms/select/types';
 

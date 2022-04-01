@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { useSelect } from 'downshift';
 import { usePopper } from 'react-popper';
 
-import PlusIcon from 'svgs/ui/plus.svg?sprite';
+import PlusIcon from 'svgs/ui/plus.svg';
 
 import Icon from 'components/icon';
 

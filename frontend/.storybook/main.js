@@ -35,29 +35,19 @@ module.exports = {
       test: /\.svg$/,
       use: [
         {
-          loader: 'svg-sprite-loader',
+          loader: '@svgr/webpack',
           options: {
-            extract: false,
-          }
-        },
-        {
-          loader: 'svgo-loader',
-          options: {
-            plugins: [
-              {
-                name: 'preset-default',
-                params: {
-                  overrides: {
-                    convertColors: {
-                      shorthex: false,
-                    },
-                    convertPathData: false,
-                  },
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'removeViewBox',
+                  active: false,
                 },
-              },
-            ],
-          }
-      }]
+              ],
+            },
+          },
+        },
+      ],
     });
 
     return config;
