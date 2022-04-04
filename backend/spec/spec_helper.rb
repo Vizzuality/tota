@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'rspec/retry'
 
 SimpleCov.start do
   add_filter '/spec/'
@@ -16,6 +17,21 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  # show retry status in spec process
+  config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
+
+  # run retry only on system specs
+  config.around :each, type: :system do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  # callback to be run between retries
+  config.retry_callback = proc do |ex|
+    Capybara.reset! if ex.metadata[:type] == :system
+  end
 
   # Print the 10 slowest examples and example groups at the
   # end of the spec run, to help surface which specs are running
