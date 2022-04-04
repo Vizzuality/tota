@@ -1,4 +1,4 @@
-lock '~> 3.16.0'
+lock '~> 3.17.0'
 set :application, 'tota'
 set :repo_url, 'git@github.com:Vizzuality/tota.git'
 set :repo_tree, 'backend'
