@@ -50,6 +50,38 @@ describe CSVImport::Organizations do
     end
   end
 
+  describe 'regional import' do
+    let(:tourism_region_1) { create(:region, name: 'Region 1') }
+    let(:tourism_subregion_1) { create(:region, name: 'SubRegion 1', parent: tourism_region_1, region_type: 'tourism_subregion') }
+    let!(:organizations_region_1) { create_list(:organization, 3, region: tourism_subregion_1) }
+
+    it 'does not destroy organizations for other tourism region' do
+      service = CSVImport::Organizations.new(fixture_file('csv/organizations_proper.csv'))
+      service.call
+
+      expect(service.errors.messages).to eq({})
+      expect(Organization.count).to eq(6)
+      expect(Organization.where(region: tourism_subregion_1).count).to eq(3)
+      expect(Region.count).to eq(5)
+
+      # changing imported organization property and import again
+      # that would just remove only organization from imported region
+      org = Organization.find_by(name: 'Planet Bee Honey Farm & Meadery')
+      org.update!(name: 'New name')
+
+      service = CSVImport::Organizations.new(fixture_file('csv/organizations_proper.csv'))
+      service.call
+
+      org = Organization.find_by(name: 'Planet Bee Honey Farm & Meadery')
+
+      expect(org).to be_present
+      expect(service.errors.messages).to eq({})
+      expect(Organization.count).to eq(6)
+      expect(Organization.where(region: tourism_subregion_1).count).to eq(3)
+      expect(Region.count).to eq(5)
+    end
+  end
+
   describe 'import exported' do
     let(:organizations) { create_list(:organization, 2) }
 

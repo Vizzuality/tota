@@ -81,7 +81,7 @@ module CSVImport
       region_name = row[:tourism_region]
       return unless region_name.present?
 
-      @regions[Slug.create(region_name)] ||= Region.create!(name: region_name)
+      @regions[Slug.create(region_name)]
     end
   end
 end

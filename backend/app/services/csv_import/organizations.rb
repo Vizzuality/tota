@@ -2,8 +2,8 @@ module CSVImport
   class Organizations < BaseImporter
     def import
       organizations = []
+      imported_region_names = []
 
-      cleanup
       prepare_cache
 
       import_each_csv_row(csv) do |row|
@@ -24,17 +24,21 @@ module CSVImport
 
         organization.validate!
         organizations << organization
+
+        imported_region_names << row[:tourism_region] unless imported_region_names.include?(row[:tourism_region])
       end
 
+      cleanup_organizations_for_regions(imported_region_names)
       Organization.import! organizations, all_or_none: true
       regenerate_dynamic_indicators
     end
 
     private
 
-    def cleanup
-      Organization.delete_all
-      BusinessType.delete_all
+    def cleanup_organizations_for_regions(region_names)
+      region_ids = region_names.map(&:downcase).map { |name| @regions[name] }.map(&:id)
+      subregion_ids = Region.where(id: region_ids).includes(:subregions).flat_map(&:subregion_ids)
+      Organization.where(region: region_ids + subregion_ids).delete_all
     end
 
     def regenerate_dynamic_indicators

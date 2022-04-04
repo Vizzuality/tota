@@ -2,6 +2,7 @@ module BootstrapHelper
   BOOTSTRAP_FLASH_CLASSES = {
     notice: 'alert-success',
     success: 'alert-success',
+    info: 'alert-info',
     error: 'alert-danger',
     alert: 'alert-danger'
   }.freeze
@@ -29,6 +30,12 @@ module BootstrapHelper
     HTML
 
     html.html_safe
+  end
+
+  def message_box(type:, &block)
+    content_tag :div, class: "alert #{bootstrap_class_for(type)}", role: 'alert' do
+      yield if block.present?
+    end
   end
 
   def bootstrap_close_button_tag(dismiss: 'modal')
