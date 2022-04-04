@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import type { CollapsibleProps } from './types';
 
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg';
 
 import Icon from 'components/icon';
 

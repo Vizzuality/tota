@@ -4,7 +4,7 @@ import uniq from 'lodash/uniq';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
-import ArrowIcon from 'svgs/arrow-right.svg?sprite';
+import ArrowIcon from 'svgs/arrow-right.svg';
 
 import type { CompareProps } from './types';
 

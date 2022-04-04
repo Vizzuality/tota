@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from 'react';
 import cx from 'classnames';
 
 import Icon from 'components/icon';
-import ARROW_DOWN_SVG from 'svgs/map/arrow.svg?sprite';
+import ARROW_DOWN_SVG from 'svgs/map/arrow.svg';
 
 import { useId } from '@react-aria/utils';
 

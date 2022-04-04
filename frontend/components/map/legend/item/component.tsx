@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 /* import cx from 'classnames'; */
 import Icon from 'components/icon';
-import REMOVE_SVG from 'svgs/map/remove.svg?sprite';
-import VISIBLE_SVG from 'svgs/map/visible.svg?sprite';
-import INVISIBLE_SVG from 'svgs/map/invisible.svg?sprite';
+import REMOVE_SVG from 'svgs/map/remove.svg';
+import VISIBLE_SVG from 'svgs/map/visible.svg';
+import INVISIBLE_SVG from 'svgs/map/invisible.svg';
 
 export interface LegendItemProps {
   id: string;

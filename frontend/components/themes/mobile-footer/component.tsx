@@ -10,7 +10,7 @@ import Icon from 'components/icon';
 
 import Link from 'next/link';
 
-import ChevronIcon from 'svgs/chevron-down.svg?sprite';
+import ChevronIcon from 'svgs/chevron-down.svg';
 import { useRouterSelectedRegion } from 'hooks/regions';
 
 export interface ThemeMobileFooterProps {}

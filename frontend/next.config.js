@@ -1,23 +1,40 @@
 /* eslint-disable */
 const withPlugins = require('next-compose-plugins');
-const withOptimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
 module.exports = withPlugins(
   [
-    withOptimizedImages({
-      optimizeImages: false,
-      handleImages: ['svg'],
-    }),
     withBundleAnalyzer,
   ],
   {
     webpack: (config) => {
-      const nextImageLoader = config.module.rules.find((rule) => rule.loader === 'next-image-loader');
-      // remove svg from next-image-loader
-      nextImageLoader.test = /\.(png|jpg|jpeg|gif|webp|avif|ico|bmp)$/i;
+      config.module.rules.push({
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url
+      });
+      config.module.rules.push({
+        test: /\.svg$/i,
+        issuer: /\.tsx?$/,
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false,
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      });
       return config;
     },
     async rewrites() {

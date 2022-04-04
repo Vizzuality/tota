@@ -4,7 +4,7 @@ import type { TagProps } from '../types';
 
 import Icon from 'components/icon';
 
-import CloseIcon from 'svgs/ui/close.svg?sprite';
+import CloseIcon from 'svgs/ui/close.svg';
 
 const Tag: FC<TagProps> = ({ label, value, color, removable, onRemove }: TagProps) => {
   return (
