@@ -82,7 +82,6 @@ module CSVImport
       csv.each.with_index(2) do |row, row_index|
         handle_row_errors(row_index) do
           yield row
-          # yield Row.new(row)
         end
       end
     end

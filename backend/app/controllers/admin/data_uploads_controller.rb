@@ -7,7 +7,9 @@ class Admin::DataUploadsController < Admin::AdminController
     authorize @process.data_upload
     @resource = @process
 
-    if @process.call
+    if params[:commit].blank?
+      render :new
+    elsif @process.call
       redirect_to admin_data_uploads_path, notice: 'File was successfully imported'
     else
       render :new, status: :unprocessable_entity

@@ -26,12 +26,13 @@ describe CSVImport::DevelopmentFunds do
       service = CSVImport::DevelopmentFunds.new(fixture_file('development_funds.csv', content: csv_content))
 
       expect(service.call).to eq(false)
-      expect(service.full_error_messages).to eq("Error on row 1: Validation failed: Project title can't be blank.")
+      expect(service.full_error_messages).to eq("Error on row 1: Validation failed: Region must exist, Project title can't be blank.")
     end
   end
 
   describe 'proper import' do
     it 'should import data' do
+      create(:region, name: 'Thompson Okanagan')
       service = CSVImport::DevelopmentFunds.new(fixture_file('csv/development_funds_proper.csv'))
 
       service.call

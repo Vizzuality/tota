@@ -13,6 +13,7 @@
 #  position    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  public      :boolean          default(FALSE), not null
 #
 class Widget < ApplicationRecord
   belongs_to :theme

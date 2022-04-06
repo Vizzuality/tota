@@ -1,27 +1,49 @@
-<%= simple_form_for [:admin, data_upload] do |f| %>
-  <% if data_upload.errors.any? %>
-    <div class="alert alert-danger">
-      Please review the problems below:
-      <% extra_errors = data_upload.errors.reject { |e| e.attribute.in?([:file, :uploader]) }  %>
+<%= turbo_frame_tag "data_upload_form" do %>
+  <%= simple_form_for [:admin, data_upload], html: {'data-controller' => 'refresh-form', 'data-refresh-form-frame-value' => 'data_upload_form'} do |f| %>
+    <% if data_upload.errors.any? %>
+      <div class="alert alert-danger">
+        Please review the problems below:
+        <% extra_errors = data_upload.errors.reject { |e| e.attribute.in?([:file, :uploader]) }  %>
 
-      <% if extra_errors.any? %>
-        <ul>
-          <% extra_errors.each do |error| %>
-            <li><%= error.message %></li>
-          <% end %>
-        </ul>
+        <% if extra_errors.any? %>
+          <ul>
+            <% extra_errors.each do |error| %>
+              <li><%= error.message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% hint = data_upload.uploader == 'IndicatorValues' ? 'dupa' : 'kupa' %>
+
+    <div class="form-inputs">
+      <%= card 'Upload details' do %>
+        <%= f.input :uploader,
+            value: params[:uploader],
+           collection: DataUpload::UPLOADERS,
+           input_html: {
+             'data-action' => 'change->refresh-form#update',
+             'data-target-form' => 'data_upload_form',
+           }
+        %>
+        <% if data_upload.uploader.present? %>
+          <%= message_box type: :info do %>
+            <% if data_upload.uploader == 'IndicatorValues' %>
+              When uploading indicator values the system will first remove all data for indicators that are present in uploaded file.
+            <% elsif data_upload.uploader == 'DevelopmentFunds' %>
+              When uploading Development funds the system will first remove all existing development funds.
+            <% elsif data_upload.uploader == 'Organizations' %>
+              When uploading Organizations the system will first remove all existing organizations for regions that are present in uploaded file.
+            <% end%>
+          <% end%>
+        <% end %>
+        <%= f.input :file, as: :file %>
       <% end %>
     </div>
+
+    <div class="form-actions mt-3">
+      <%= f.button :submit, 'Upload', class: 'btn btn-primary' %> or <%= link_to 'Back', admin_data_uploads_path %>
+    </div>
   <% end %>
-
-  <div class="form-inputs">
-    <%= card 'Upload details' do %>
-      <%= f.input :uploader, value: params[:uploader], collection: DataUpload::UPLOADERS %>
-      <%= f.input :file, as: :file %>
-    <% end %>
-  </div>
-
-  <div class="form-actions mt-3">
-    <%= f.button :submit, 'Upload', class: 'btn btn-primary', data: {disable_with: 'Uploading...'} %> or <%= link_to 'Back', :back %>
-  </div>
 <% end %>
