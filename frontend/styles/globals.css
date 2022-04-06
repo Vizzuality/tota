@@ -28,15 +28,15 @@
 }
 
 @layer components {
-  .widget-details a {
+  .free-text a {
     @apply text-blue-500 underline;
   }
 
-  .widget-details ul {
+  .free-text ul {
     @apply list-disc list-inside;
   }
 
-  .widget-details ol {
+  .free-text ol {
     @apply list-decimal list-inside;
   }
 }
