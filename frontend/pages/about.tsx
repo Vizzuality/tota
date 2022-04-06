@@ -68,17 +68,17 @@ const About: React.FC<void> = (): JSX.Element => {
 
           <p className="mt-10 leading-7">
             For this shift to occur, reliable and timely data about the economic, environmental, and social impacts of
-            tourism are needed. However, due to the unique realities in destinations, as well as the complexity of the
-            tourism value chain with its many different stakeholders and linkages with other sectors, this task presents
+            tourism are needed. Due to the unique realities in destinations, as well as the complexity of the tourism
+            value chain with its many different stakeholders and linkages with other sectors, this task presents
             enormous challenges as information tends to be located in many different organizations and in different
-            formats. At the same time, available data is often not available in a regular and timely manner, gathered
-            with different methodologies and coming from different data sources. As a result, it tends to be enormously
-            difficult for tourism stakeholder to understand what kind of reliable information is available, who are the
-            responsible entities to connect with, what is the quality of information, what are the sharing rights, what
-            are efficient ways to integrate information in existing processes for decision-making. As this scattered
-            landscape makes it extremely difficult to identify data gaps and observe and understand development trends,
-            hence presenting in a certain way a barrier to responsible and sustainable development, this initiative
-            seeks to minimize some of those challenges.
+            formats. Additionally, available data is often not available in a regular and timely manner, gathered with
+            different methodologies and comes from different data sources. As a result, it tends to be enormously
+            difficult for tourism stakeholder to understand what kind of reliable information is available, who is the
+            responsible for the data, what is the quality of information, what are the sharing rights, and what are
+            efficient ways to integrate information in existing processes for decision-making. This scattered landscape
+            makes it extremely difficult to identify data gaps and observe and understand development trends, creating
+            barriers to responsible and sustainable development. This initiative seeks to minimize some of those
+            challenges and support the destination decision-makers along their sustainable tourism journey.
           </p>
         </div>
       </div>
