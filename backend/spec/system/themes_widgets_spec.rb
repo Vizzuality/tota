@@ -27,7 +27,7 @@ RSpec.describe 'Themes & Widgets', type: :system do
             build(:source, text: 'Source 2')
           ]
         ),
-        build(:widget, title: 'Average daily hotel rate')
+        build(:widget, title: 'Average daily hotel rate', sources: nil)
       ]
     )
   end
@@ -122,6 +122,29 @@ RSpec.describe 'Themes & Widgets', type: :system do
       expect(page).to have_selector("input[value='New Source']")
       expect(page).not_to have_selector("input[value='Source 1']")
       expect(page).not_to have_selector("input[value='Source 2']")
+    end
+
+    context 'when no source exists' do
+      it 'can add one' do
+        # default action on click show details
+        find_row('Accommodation').click
+
+        within_card('Widgets') do
+          find_row('Average daily hotel rate').click
+        end
+
+        click_on 'Add Source'
+        within(last('div.nested-fields')) do
+          first('div.widget_sources_text input').fill_in with: 'New Source'
+        end
+
+        click_on 'Update Widget'
+        expect(page).to have_text('Widget was successfully updated')
+
+        widget = Widget.find_by(title: 'Average daily hotel rate')
+        expect(widget.sources.count).to eq(1)
+        expect(widget.sources.first.text).to eq('New Source')
+      end
     end
   end
 end
