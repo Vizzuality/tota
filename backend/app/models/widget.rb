@@ -29,6 +29,10 @@ class Widget < ApplicationRecord
   scope :only_public, -> { where(public: true) }
   scope :only_private, -> { where(public: false) }
 
+  def sources
+    super || []
+  end
+
   def sources_attributes=(attr)
     self.sources = attr.values.reject { |a| ActiveModel::Type::Boolean.new.cast(a[:_destroy]) }
   end
