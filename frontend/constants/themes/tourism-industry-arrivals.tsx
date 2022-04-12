@@ -105,7 +105,7 @@ const theme: ThemeFrontendDefinition = {
       slug: 'domestic_arrivals',
       initialState: {
         group: 'visits',
-        year: 'all_years',
+        year: thisYear,
       },
       fetchParams: (state: any) => ({
         slug: `${state.group}_by_origin_country_monthly`,

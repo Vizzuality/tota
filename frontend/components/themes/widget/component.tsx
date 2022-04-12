@@ -81,45 +81,45 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
             <div>{widget.sub_title}</div>
           </div>
         </div>
-        <div className="widget-details flex-1">
-          <p className="mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: widget.description }} />
-          {(widget.note || widget.sources) && (
-            <div className="mt-2 lg:mt-6">
-              {widget.note && (
-                <p className="leading-6 text-sm">
-                  <strong>Note: </strong>
-                  <span dangerouslySetInnerHTML={{ __html: widget.note }} />
-                </p>
-              )}
-              {widget.sources && (
-                <p className={cx('leading-6 text-sm', { 'mt-2': !!widget.note })}>
-                  <strong>Source: </strong>
-                  {widget.sources.map((source, index) => (
-                    <React.Fragment key={index}>
-                      {index > 0 && ', '}
-                      {source.link ? (
-                        <a href={source.link} target="_blank" rel="noopener noreferrer">
-                          {source.text}
-                        </a>
-                      ) : (
-                        source.text
-                      )}
-                      {source.note && ` (${source.note})`}
-                    </React.Fragment>
-                  ))}
-                </p>
-              )}
+        <div className="flex-1 flex flex-col">
+          <p className="free-text mt-4 lg:mt-10 leading-8" dangerouslySetInnerHTML={{ __html: widget.description }} />
+          {widget.note && (
+            <p className="free-text leading-6 text-sm mt-2 lg:mt-6">
+              <strong>Note: </strong>
+              <span dangerouslySetInnerHTML={{ __html: widget.note }} />
+            </p>
+          )}
+
+          {viewOnMap && (
+            <div className="mt-4 lg:mt-6">
+              <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
+                {viewOnMap.title}
+              </LinkButton>
             </div>
           )}
-        </div>
 
-        {viewOnMap && (
-          <div className="mt-4 lg:mt-10">
-            <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
-              {viewOnMap.title}
-            </LinkButton>
-          </div>
-        )}
+          {widget.sources && (
+            <>
+              <div className="flex-1"></div>
+              <p className="free-text leading-6 text-sm mt-2 lg:mt-6">
+                <strong>Source: </strong>
+                {widget.sources.map((source, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && ', '}
+                    {source.link ? (
+                      <a href={source.link} target="_blank" rel="noopener noreferrer">
+                        {source.text}
+                      </a>
+                    ) : (
+                      source.text
+                    )}
+                    {source.note && ` (${source.note})`}
+                  </React.Fragment>
+                ))}
+              </p>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">

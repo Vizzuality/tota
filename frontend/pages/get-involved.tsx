@@ -12,6 +12,8 @@ import background1Image from 'images/get-involved/background1.png';
 import background2Image from 'images/get-involved/background2.png';
 import ParticipatingRegions from 'components/static-pages/participating-regions';
 
+import { SUGGEST_STORY_FORM_URL, CONTRIBUTE_DATA_FORM_URL } from 'constants/links';
+
 const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
@@ -35,7 +37,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
                 See a connection or insight in the data worth exploring? Let us know about it. We might craft a story
                 around the lead you sent in the future and extend insights thanks to those suggestions.
               </p>
-              <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
+              <Button theme="primary" className="mt-10 px-10 uppercase" href={SUGGEST_STORY_FORM_URL}>
                 Suggest a Story
               </Button>
             </div>
@@ -50,7 +52,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
                 another platform), we want to hear from you*.
               </p>
 
-              <Button theme="primary" className="mt-10 px-10 uppercase" href="/">
+              <Button theme="primary" className="mt-10 px-10 uppercase" href={CONTRIBUTE_DATA_FORM_URL}>
                 Submit/Propose a data set
               </Button>
               <p className="text-xs mt-6">

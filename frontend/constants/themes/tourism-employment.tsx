@@ -17,7 +17,7 @@ import {
   getUnitLabel,
   mergeForChart,
 } from 'utils/charts';
-import { compactNumberTickFormatter, shortMonthName, previousYear } from './utils';
+import { compactNumberTickFormatter, shortMonthName, thisYear, previousYear } from './utils';
 import { defaultTooltip, bottomLegend } from 'constants/charts';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
@@ -60,7 +60,7 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'total_employment',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
       },
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
@@ -117,7 +117,7 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'unemployment_rate',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
       },
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
@@ -168,7 +168,7 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'total_tourism_employment',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
       },
       fetchParams: (state: any) => {
         const anySubRegions = state.selectedRegion.children && state.selectedRegion.children.length > 0;
@@ -317,7 +317,7 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'average_tourism_wages',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
       },
       fetchParams: (state: any) => {
         return {
@@ -369,7 +369,7 @@ const theme: ThemeFrontendDefinition = {
     {
       slug: 'employment_by_job_status',
       initialState: {
-        year: 'all_years',
+        year: thisYear,
         sector: 'Tourism',
       },
       fetchParams: (state: any) => {
