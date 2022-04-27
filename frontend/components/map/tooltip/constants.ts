@@ -6,6 +6,9 @@ export const PROPERTIES_NEW_NAMES = {
     sites: 'nrOfSites',
     units: 'nrOfUnits',
   },
+  development_funds: {
+    keyFundingAmount: 'Key Funding Amount ($CAD)',
+  },
   fires: {
     cartodbId: 'id',
     dateStr: 'date',
@@ -51,6 +54,17 @@ export const PROPERTIES_TO_PICK = {
     'source',
   ],
   campgrounds: ['name', 'longitude', 'latitude', 'address', 'city', 'postalCode', 'nrOfSites', 'nrOfUnits'],
+  development_funds: [
+    'projectTitle',
+    'projectDescription',
+    'recipient',
+    'leadOrganization',
+    'Key Funding Amount ($CAD)',
+    'keyFundingSource',
+    'fundingSubtype',
+    'fundingCallYear',
+    'fundingCallMonth',
+  ],
   fires: ['id', 'date', 'longitude', 'latitude', 'daysAgo'],
   first_nations_business: [
     'businessName',
@@ -95,6 +109,18 @@ export const PROPERTIES_TO_PICK = {
     'source',
   ],
   stops: ['signName', 'currentText', 'longitude', 'latitude', 'specificLocation'],
+  trails: [
+    'projectType',
+    'projectName',
+    'siteLocation',
+    'projectEstablishedDate',
+    'definedCampsites',
+    'fileStatusCode',
+    'districtCode',
+    'districtName',
+    'featureLengthM',
+    'tourismRegionName',
+  ],
   visitor_centers: [
     'name',
     'businessType',
@@ -104,5 +130,14 @@ export const PROPERTIES_TO_PICK = {
     'postalCode',
     'tourismRegion',
     'tourismSubRegion',
+  ],
+  wildlife_habitats: [
+    'featureNotes',
+    'commonSpeciesName',
+    'timberHarvestCode',
+    'hectares',
+    'featureAreaSqm',
+    'featureLengthM',
+    'tourismRegionName',
   ],
 };

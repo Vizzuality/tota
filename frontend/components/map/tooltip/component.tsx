@@ -31,6 +31,8 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
       case 'campgrounds':
         return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+      case 'development_funds':
+        return <BasicTooltip title={properties.projectTitle} properties={pickedProperties} />;
       case 'fires':
         const fireProps = {
           ...pickedProperties,
@@ -56,9 +58,14 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         return <BasicTooltip title={properties.facilityName} properties={pickedProperties} />;
       case 'stops':
         return <BasicTooltip title={properties.signName} properties={pickedProperties} />;
+      case 'trails':
+        return <BasicTooltip title={properties.projectName} properties={pickedProperties} />;
       case 'visitor_centers':
         return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+      case 'wildlife_habitats':
+        return <BasicTooltip title={properties.commonSpeciesName} properties={pickedProperties} />;
     }
+    console.log('layer properties', properties);
     return <BasicTooltip title="Feature" properties={properties} />;
   }, [feature]);
 
