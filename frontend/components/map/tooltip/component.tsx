@@ -6,7 +6,7 @@ import pick from 'lodash/pick';
 import BasicTooltip from './basic';
 import OrganizationsTooltip from './features/organizations';
 
-import { PROPERTIES_NEW_NAMES, PROPERTIES_TO_PICK } from './constants';
+import { PROPERTIES_MAP } from './constants';
 
 export interface TooltipProps {
   feature: any;
@@ -15,32 +15,32 @@ export interface TooltipProps {
 function formatProperties(source, properties) {
   return mapKeys(properties, (_v, key) => {
     const newKey = camelCase(key);
-    return (PROPERTIES_NEW_NAMES[source] && PROPERTIES_NEW_NAMES[source][newKey]) || newKey;
+    return (PROPERTIES_MAP[source] && PROPERTIES_MAP[source][newKey]) || newKey;
   });
 }
 
 export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
   const properties = formatProperties(feature.source, feature.properties);
-  const propertiesToPick = PROPERTIES_TO_PICK[feature.source];
+  const propertiesToPick = Object.values(PROPERTIES_MAP[feature.source] || {}) as string[];
   const pickedProperties = propertiesToPick ? pick(properties, propertiesToPick) : properties;
   const DisplayTooltip = useMemo(() => {
     switch (feature.source) {
       case 'airports':
-        return <BasicTooltip title={properties.airportName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Airport Name']} properties={pickedProperties} />;
       case 'accommodations':
-        return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Occupant Name']} properties={pickedProperties} />;
       case 'campgrounds':
-        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Name']} properties={pickedProperties} />;
       case 'development_funds':
-        return <BasicTooltip title={properties.projectTitle} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Project Title']} properties={pickedProperties} />;
       case 'fires':
         const fireProps = {
           ...pickedProperties,
-          additionalLink1:
+          'Additional Link1':
             'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/Fires.asp?Mode=normal&AllFires=1&FC=0',
-          additionalLink2:
+          'Additional Link2':
             'https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=a1e7b1ecb1514974a9ca00bdbfffa3b1',
-          wildfiresOfNote: 'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/OneFire.asp',
+          'Wildfires of Note': 'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/OneFire.asp',
           source: {
             type: 'link',
             text: 'Resource Watch',
@@ -49,21 +49,21 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         };
         return <BasicTooltip title="Fire" properties={fireProps} />;
       case 'first_nations_business':
-        return <BasicTooltip title={properties.businessName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Business Name']} properties={pickedProperties} />;
       case 'first_nations_communities':
-        return <BasicTooltip title={properties.firstNationBcName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['First Nation BC Name']} properties={pickedProperties} />;
       case 'organizations':
         return <OrganizationsTooltip feature={feature} />;
       case 'ski_resorts':
-        return <BasicTooltip title={properties.facilityName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Facility Name']} properties={pickedProperties} />;
       case 'stops':
-        return <BasicTooltip title={properties.signName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Sign Name']} properties={pickedProperties} />;
       case 'trails':
-        return <BasicTooltip title={properties.projectName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Project Name']} properties={pickedProperties} />;
       case 'visitor_centers':
-        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Name']} properties={pickedProperties} />;
       case 'wildlife_habitats':
-        return <BasicTooltip title={properties.commonSpeciesName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Common Species Name']} properties={pickedProperties} />;
     }
     console.log('layer properties', properties);
     return <BasicTooltip title="Feature" properties={properties} />;
