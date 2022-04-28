@@ -132,8 +132,6 @@ export const PROPERTIES_MAP = {
     commonSpeciesName: 'Common Species Name',
     timberHarvestCode: 'Timber Harvest Code',
     hectares: 'Hectares',
-    featureAreaSqm: 'Feature Area (sqm)',
-    featureLengthM: 'Feature Length (m)',
     tourismRegionName: 'Tourism Region',
   },
 };
