@@ -65,7 +65,6 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
       case 'wildlife_habitats':
         return <BasicTooltip title={properties['Common Species Name']} properties={pickedProperties} />;
     }
-    console.log('layer properties', properties);
     return <BasicTooltip title="Feature" properties={properties} />;
   }, [feature]);
 
