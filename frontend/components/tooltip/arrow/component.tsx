@@ -19,7 +19,7 @@ export const Arrow: FC<ArrowProps> = (props: ArrowProps) => {
     >
       <div
         className={cx({
-          'w-2 h-2 bg-blue-800 transform rotate-45': true,
+          'w-2 h-2 bg-white transform rotate-45': true,
         })}
       />
     </div>

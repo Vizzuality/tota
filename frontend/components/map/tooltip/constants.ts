@@ -32,7 +32,10 @@ export const PROPERTIES_MAP = {
     address: 'Address',
     city: 'City',
     postalCode: 'Postal Code',
-    sites: 'Nr. of Sites',
+    sites: {
+      name: 'Nr. of Sites',
+      info: 'Available spots for tents or RVs etc. (not differentiated by available services like electricity etc.',
+    },
     units: 'Nr. of Units',
   },
   development_funds: {
