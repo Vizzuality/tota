@@ -663,6 +663,10 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         },
         legendConfig: {
           type: 'choropleth',
+          source: {
+            text: 'Resource Watch',
+            link: 'https://resourcewatch.org/data/explore/for006nrt-Active-Fires-VIIRS_old_replacement?section=Discover&selectedCollection=&zoom=3&lat=0&lng=0&pitch=0&bearing=0&basemap=dark&labels=light&layers=%255B%257B%2522dataset%2522%253A%252264c948a6-5e34-4ef2-bb69-6a6535967bd5%2522%252C%2522opacity%2522%253A1%252C%2522layer%2522%253A%25222d7882f4-0e42-429c-9951-b29ccc16409e%2522%257D%255D&aoi=&page=1&sort=most-viewed&sortDirection=-1',
+          },
           items: [
             {
               value: '7 days ago',
@@ -837,6 +841,11 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         },
         legendConfig: {
           type: 'choropleth',
+          description: 'Example description for traffic layer',
+          source: {
+            text: 'Mapbox Traffic v1',
+            link: 'https://docs.mapbox.com/data/tilesets/reference/mapbox-traffic-v1/#overview',
+          },
           items: [
             {
               value: 'low',

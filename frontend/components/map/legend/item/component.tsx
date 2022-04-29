@@ -5,9 +5,15 @@ import REMOVE_SVG from 'svgs/map/remove.svg';
 import VISIBLE_SVG from 'svgs/map/visible.svg';
 import INVISIBLE_SVG from 'svgs/map/invisible.svg';
 
+interface Source {
+  text: string;
+  link?: string;
+}
+
 export interface LegendItemProps {
   id: string;
   name: string;
+  source?: Source;
   removable?: boolean;
   visibility?: boolean;
   opacity?: number;
@@ -21,6 +27,7 @@ export const LegendItem: FC<LegendItemProps> = ({
   id,
   description,
   name,
+  source,
   removable = false,
   onRemove,
   visibility,
@@ -54,8 +61,20 @@ export const LegendItem: FC<LegendItemProps> = ({
           )}
         </div>
       </div>
-      {description && <div className="my-2.5 py-2.5 px-5">{description}</div>}
+      {description && <div className="py-2 px-5 text-sm text-blue-800">{description}</div>}
       {children && <div className="py-4 px-5">{children}</div>}
+      {source && (
+        <div className="py-2 px-5 text-right text-blue-800 text-xs free-text">
+          Source:&nbsp;
+          {source.link ? (
+            <a href={source.link} target="_blank" rel="noopener noreferrer">
+              {source.text}
+            </a>
+          ) : (
+            source.text
+          )}
+        </div>
+      )}
     </div>
   );
 };

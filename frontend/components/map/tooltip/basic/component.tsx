@@ -52,7 +52,7 @@ function displayProperty(key, value, autoFormatKey) {
     <div key={key} className="flex justify-between mt-1">
       <div className="flex gap-2">
         {autoFormatKey ? formatKey(key) : key}
-        {value.info && <InfoButton>{value.info}</InfoButton>}
+        {value && value.info && <InfoButton>{value.info}</InfoButton>}
       </div>
       <div className="font-bold text-right ml-10" style={{ maxWidth: 500 }}>
         {formatValue(value)}
