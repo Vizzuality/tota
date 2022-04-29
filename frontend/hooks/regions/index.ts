@@ -42,7 +42,7 @@ export function useRouterSelectedRegion(): Region {
   if (!regionSlug) return null;
 
   const region = regions.find((r) => r.slug === snakeCase(regionSlug as string));
-  if (isFetched && !region) router.push('/page-not-found');
+  if (isFetched && regionSlug && !region) router.push('/page-not-found');
 
   return region;
 }

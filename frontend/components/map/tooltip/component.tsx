@@ -1,44 +1,70 @@
 import { FC, useMemo } from 'react';
 import mapKeys from 'lodash/mapKeys';
+import mapValues from 'lodash/mapValues';
 import camelCase from 'lodash/camelCase';
 import pick from 'lodash/pick';
 
 import BasicTooltip from './basic';
 import OrganizationsTooltip from './features/organizations';
 
-import { PROPERTIES_NEW_NAMES, PROPERTIES_TO_PICK } from './constants';
+import { PROPERTIES_MAP } from './constants';
 
 export interface TooltipProps {
   feature: any;
 }
 
 function formatProperties(source, properties) {
-  return mapKeys(properties, (_v, key) => {
-    const newKey = camelCase(key);
-    return (PROPERTIES_NEW_NAMES[source] && PROPERTIES_NEW_NAMES[source][newKey]) || newKey;
+  const mappedValues = mapValues(properties, (value, key) => {
+    const newProperty = PROPERTIES_MAP[source] && PROPERTIES_MAP[source][key];
+    if (typeof newProperty === 'object') {
+      return {
+        ...newProperty,
+        value,
+      };
+    }
+
+    return value;
   });
+  const mappedKeys = mapKeys(mappedValues, (_v, key) => {
+    return (
+      (PROPERTIES_MAP[source] &&
+        PROPERTIES_MAP[source][key] &&
+        (PROPERTIES_MAP[source][key].name || PROPERTIES_MAP[source][key])) ||
+      key
+    );
+  });
+
+  return mappedKeys;
 }
 
 export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
-  const properties = formatProperties(feature.source, feature.properties);
-  const propertiesToPick = PROPERTIES_TO_PICK[feature.source];
-  const pickedProperties = propertiesToPick ? pick(properties, propertiesToPick) : properties;
+  const propertiesCamelCased = mapKeys(feature.properties, (_v, key) => camelCase(key));
+  const propertiesToPick = Object.keys(PROPERTIES_MAP[feature.source] || {}) as string[];
+  const properties = formatProperties(
+    feature.source,
+    propertiesToPick ? pick(propertiesCamelCased, propertiesToPick) : propertiesCamelCased,
+  );
+
+  console.log('properties', properties);
+
   const DisplayTooltip = useMemo(() => {
     switch (feature.source) {
       case 'airports':
-        return <BasicTooltip title={properties.airportName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Airport Name']} properties={properties} />;
       case 'accommodations':
-        return <BasicTooltip title={properties.occupantName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Occupant Name']} properties={properties} />;
       case 'campgrounds':
-        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Name']} properties={properties} />;
+      case 'development_funds':
+        return <BasicTooltip title={properties['Project Title']} properties={properties} />;
       case 'fires':
         const fireProps = {
-          ...pickedProperties,
-          additionalLink1:
+          ...properties,
+          'Additional Link1':
             'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/Fires.asp?Mode=normal&AllFires=1&FC=0',
-          additionalLink2:
+          'Additional Link2':
             'https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=a1e7b1ecb1514974a9ca00bdbfffa3b1',
-          wildfiresOfNote: 'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/OneFire.asp',
+          'Wildfires of Note': 'http://bcfireinfo.for.gov.bc.ca/hprScripts/WildfireNews/OneFire.asp',
           source: {
             type: 'link',
             text: 'Resource Watch',
@@ -47,17 +73,21 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
         };
         return <BasicTooltip title="Fire" properties={fireProps} />;
       case 'first_nations_business':
-        return <BasicTooltip title={properties.businessName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Business Name']} properties={properties} />;
       case 'first_nations_communities':
-        return <BasicTooltip title={properties.firstNationBcName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['First Nation BC Name']} properties={properties} />;
       case 'organizations':
         return <OrganizationsTooltip feature={feature} />;
       case 'ski_resorts':
-        return <BasicTooltip title={properties.facilityName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Facility Name']} properties={properties} />;
       case 'stops':
-        return <BasicTooltip title={properties.signName} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Sign Name']} properties={properties} />;
+      case 'trails':
+        return <BasicTooltip title={properties['Project Name']} properties={properties} />;
       case 'visitor_centers':
-        return <BasicTooltip title={properties.name} properties={pickedProperties} />;
+        return <BasicTooltip title={properties['Name']} properties={properties} />;
+      case 'wildlife_habitats':
+        return <BasicTooltip title={properties['Common Species Name']} properties={properties} />;
     }
     return <BasicTooltip title="Feature" properties={properties} />;
   }, [feature]);
