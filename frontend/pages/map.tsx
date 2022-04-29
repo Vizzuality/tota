@@ -8,7 +8,7 @@ import Layout from 'layout';
 const Map: React.FC<void> = (): JSX.Element => {
   return (
     <Layout
-      navbarHeader="The Tourism Impact Portal"
+      navbarHeader="BC Tourism Impact Portal"
       navbarTheme="gray"
       navbarPosition="relative"
       className="w-full"
