@@ -252,6 +252,9 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
     source: {
       type: 'geojson',
       data: organizationsGeoJSONUrl,
+      cluster: true,
+      clusterMaxZoom: 10,
+      clusterRadius: 30,
     },
     images: [
       { id: 'organizations_accessiblity', src: ACCESSIBLE_BUSINESSES_SVG },
@@ -317,6 +320,9 @@ export const useDevelopmentFundsLayer = (selectedRegion: string): Layer => {
     source: {
       type: 'geojson',
       data: developmentFundsGeoJSONUrl,
+      cluster: true,
+      clusterMaxZoom: 10,
+      clusterRadius: 30,
     },
     legendConfig: {
       type: 'basic',
