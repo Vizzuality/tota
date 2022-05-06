@@ -45,7 +45,7 @@ const ParticipatingRegions: FC<ParticipatingRegionsProps> = ({ className }: Part
   <div className={cx('text-blue-800 py-24 text-center', { [className]: !!className })}>
     <h3 className="text-4xl font-bold">Participating Regions</h3>
 
-    <div className="mt-20 px-10 md:px-24 flex flex-row flex-wrap gap-24 justify-center items-center">
+    <div className="mt-20 flex flex-row flex-wrap gap-24 justify-center items-center">
       {participatingRegions.map((region) => (
         <Link key={region.title} href={region.link}>
           <a className="relative z-20">
