@@ -55,7 +55,7 @@ const About: React.FC<void> = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="text-blue-800 py-24 text-center bg-yellow-50">
+      <div className="text-white py-24 text-center bg-blue-800">
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">Why a central data portal?</h3>
 
@@ -87,7 +87,7 @@ const About: React.FC<void> = (): JSX.Element => {
         <ParticipatingRegions />
       </div>
 
-      <div className="text-blue-800 bg-yellow-50 py-24 text-center">
+      <div className="bg-blue-800 text-white py-24 text-center">
         <div className="container mx-auto lg:px-16">
           <h3 className="text-4xl font-bold">Objectives behind the data portal</h3>
 
@@ -122,7 +122,7 @@ const About: React.FC<void> = (): JSX.Element => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-10 text-center mt-10">
-            <div className="p-10 bg-white text-2xl">
+            <div className="p-10 bg-white text-blue-800 text-2xl">
               <h4>Who is the portal for?</h4>
               <p className="text-lg mt-10 leading-7">
                 The Tourism Impact Portal has been designed for all stakeholders in the province that are responsible
@@ -131,7 +131,7 @@ const About: React.FC<void> = (): JSX.Element => {
                 communities, and others.
               </p>
             </div>
-            <div className="p-10 bg-white text-2xl">
+            <div className="p-10 bg-white text-blue-800 text-2xl">
               <h4>Data for a sustainable future </h4>
               <p className="text-lg mt-10 leading-7">
                 For sustainable development, it is important to understand current and past dynamics, as well as
