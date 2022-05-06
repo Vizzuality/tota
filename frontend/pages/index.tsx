@@ -8,10 +8,10 @@ import IndicatorLink from 'components/indicator-link';
 
 import { useThemes } from 'hooks/themes';
 
-import heroBackgroundImage1 from 'images/home/hero-background-1.png';
-import heroBackgroundImage2 from 'images/home/hero-background-2.png';
-import heroBackgroundImage3 from 'images/home/hero-background-3.png';
-import heroBackgroundImage4 from 'images/home/hero-background-4.png';
+import heroBackgroundImage1 from 'images/home/hero-background-1.jpg';
+import heroBackgroundImage2 from 'images/home/hero-background-2.jpg';
+import heroBackgroundImage3 from 'images/home/hero-background-3.jpg';
+import heroBackgroundImage4 from 'images/home/hero-background-4.jpg';
 import heroBackgroundImage5 from 'images/home/hero-background-5.png';
 
 import boxComingSoonImage from 'images/home/box-more-coming-soon.png';
