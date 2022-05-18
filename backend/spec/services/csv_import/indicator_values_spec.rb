@@ -19,21 +19,21 @@ describe CSVImport::IndicatorValues do
       expect(service.errors.messages[:base]).to eq(['CSV missing header: Region'])
     end
 
-    xit 'should return error for a row if data invalid' do
+    it 'should return error for a row if data invalid' do
       allow_any_instance_of(Kernel).to receive(:warn) # suppress warning message
 
       csv_content = <<-CSV
         indicator_code,date,region,category_1,category_2,value
         visits_by_prizm_monthly,2019-3,Thompson Okanagan,British Columbia,Country & Western,8.031
         visits_by_prizm_monthly,2019-3,Thompson Okanagan,British Columbia,Suburban Sports,7.33
-        visits_by_origin_province_monthly,2020-1,Thompson Okanagan,Manitoba,,
+        visits_by_origin_province_monthly,2020-1,Super Region,Manitoba,,333
         visits_by_origin_province_monthly,2020-1,Thompson Okanagan,New Brunswick,,3344
       CSV
 
       service = CSVImport::IndicatorValues.new(fixture_file('indicator_values.csv', content: csv_content))
 
       expect(service.call).to eq(false)
-      expect(service.full_error_messages).to eq("Error on row 3: Validation failed: Value can't be blank.")
+      expect(service.full_error_messages).to eq('Error on row 3: Cannot find region with name Super Region.')
     end
   end
 
