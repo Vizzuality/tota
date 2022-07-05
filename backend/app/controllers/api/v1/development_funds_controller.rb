@@ -2,7 +2,8 @@ module API
   module V1
     class DevelopmentFundsController < BaseController
       def index
-        funds = DevelopmentFund.where(filters).includes(:region)
+        funds = DevelopmentFund.where(filters.except('regions.slug')).includes(:region)
+        funds = filter_by_region(funds) if filters['regions.slug']
 
         if params[:format] == 'geojson'
           render json: {
@@ -21,6 +22,12 @@ module API
             fields: fields
           )
         end
+      end
+
+      private
+
+      def filter_by_region(scope)
+        scope.ransack(region_slug_or_region_parent_slug_in: filters['regions.slug']).result
       end
     end
   end
