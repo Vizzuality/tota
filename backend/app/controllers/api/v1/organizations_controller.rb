@@ -2,7 +2,11 @@ module API
   module V1
     class OrganizationsController < BaseController
       def index
-        organizations = Organization.visible.where(filters).includes(:region, :business_type)
+        organizations = Organization
+          .visible
+          .where(filters.except('regions.slug'))
+          .includes(:region, :business_type)
+        organizations = filter_by_region(organizations) if filters['regions.slug']
 
         if params[:format] == 'geojson'
           render json: {
@@ -21,6 +25,12 @@ module API
             fields: fields
           )
         end
+      end
+
+      private
+
+      def filter_by_region(scope)
+        scope.ransack(region_slug_or_region_parent_slug_in: filters['regions.slug']).result
       end
     end
   end
