@@ -7,5 +7,9 @@ FactoryBot.define do
     trait :province do
       region_type { 'province' }
     end
+
+    trait :tourism_subregion do
+      region_type { 'tourism_subregion' }
+    end
   end
 end

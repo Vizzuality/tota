@@ -5,7 +5,8 @@ module API
         organizations = Organization
           .visible
           .where(filters.except('regions.slug'))
-          .includes(:region, :business_type)
+          .with_regions
+          .includes(:business_type)
         organizations = filter_by_region(organizations) if filters['regions.slug']
 
         if params[:format] == 'geojson'
@@ -30,7 +31,9 @@ module API
       private
 
       def filter_by_region(scope)
-        scope.ransack(region_slug_or_region_parent_slug_in: filters['regions.slug']).result
+        scope.ransack(
+          region_slug_or_region_parent_slug_in: filters['regions.slug']
+        ).result
       end
     end
   end

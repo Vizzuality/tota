@@ -5,8 +5,8 @@ RSpec.describe 'Admin Organizations', type: :request do
 
   before_all do
     tota = create(:region, name: 'Thompson Okanagan')
-    region1 = create(:region, name: 'North Okanagan', parent: tota)
-    region2 = create(:region, name: 'Central Okanagan', parent: tota)
+    region1 = create(:region, :tourism_subregion, name: 'North Okanagan', parent: tota)
+    region2 = create(:region, :tourism_subregion, name: 'Central Okanagan', parent: tota)
     business_type = create(:business_type, name: 'Accommodation')
     subtype1 = create(:business_type, name: 'Motel', parent: business_type)
 

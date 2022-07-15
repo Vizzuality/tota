@@ -4,8 +4,8 @@ RSpec.describe 'API V1 Regions', type: :request do
   before_all do
     bc = create(:region, name: 'British Columbia')
     tota = create(:region, name: 'Thompson Okanagan', parent: bc)
-    create(:region, name: 'North Okanagan', parent: tota)
-    create(:region, name: 'Central Okanagan', parent: tota)
+    create(:region, :tourism_subregion, name: 'North Okanagan', parent: tota)
+    create(:region, :tourism_subregion, name: 'Central Okanagan', parent: tota)
   end
 
   describe 'GET #index' do

@@ -23,6 +23,7 @@ class Organization < ApplicationRecord
   belongs_to :business_type, optional: true
 
   scope :visible, -> { where(show_on_platform: true) }
+  scope :with_regions, -> { includes(region: [parent: :parent]) }
 
   validates_presence_of :name
 
@@ -31,15 +32,15 @@ class Organization < ApplicationRecord
   end
 
   def region_name
-    if region.subregion?
-      region.parent.name
-    else
-      region.name
-    end
+    regions.find(&:tourism_region?)&.name
   end
 
   def subregion_name
-    region.name if region.subregion?
+    regions.find(&:tourism_subregion?)&.name
+  end
+
+  def regions
+    [region, region.parent, region.parent&.parent].compact
   end
 
   def business_type_name

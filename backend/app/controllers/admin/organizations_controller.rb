@@ -8,6 +8,6 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def scoped_collection(collection)
-    collection.includes(:region, :business_type)
+    collection.with_regions.includes(:business_type)
   end
 end

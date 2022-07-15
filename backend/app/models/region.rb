@@ -25,10 +25,6 @@ class Region < ApplicationRecord
 
   validates_presence_of :name, :slug, :region_type
 
-  def subregion?
-    parent.present?
-  end
-
   private
 
   def slugify

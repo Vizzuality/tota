@@ -21,7 +21,7 @@
       "slug": "north_okanagan",
       "name": "North Okanagan",
       "parent_id": 863,
-      "region_type": "tourism_region",
+      "region_type": "tourism_subregion",
       "active": true
     },
     {
@@ -29,7 +29,7 @@
       "slug": "central_okanagan",
       "name": "Central Okanagan",
       "parent_id": 863,
-      "region_type": "tourism_region",
+      "region_type": "tourism_subregion",
       "active": true
     }
   ]
