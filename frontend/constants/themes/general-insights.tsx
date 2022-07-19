@@ -2,7 +2,7 @@ import uniq from 'lodash/uniq';
 
 import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 import { previousYear, thisYear } from './utils';
-import { defaultTooltip } from 'constants/charts';
+import { defaultTooltip, getColorPalette } from 'constants/charts';
 import {
   filterBySelectedYear,
   getColorsByRegionName,
@@ -165,6 +165,10 @@ const theme: ThemeFrontendDefinition = {
         };
         const changed = rawData.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
         const data = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
+        const colors = {
+          gdp_tourism: getColorPalette(4)[0],
+          gdp_tourism_bc: getColorPalette(4)[2],
+        };
 
         return {
           type: 'charts/bar',
@@ -186,7 +190,7 @@ const theme: ThemeFrontendDefinition = {
               ],
             },
           ],
-          bars: [{ dataKey: indicatorsMap[state.indicator], stackId: 1 }],
+          bars: [{ dataKey: indicatorsMap[state.indicator], stackId: 1, color: colors[state.indicator] }],
           chartProps: {
             margin: {
               top: 60,
@@ -208,6 +212,7 @@ const theme: ThemeFrontendDefinition = {
           }),
           ...(state.indicator === 'gdp_tourism_bc' && {
             yAxis: {
+              allowDecimals: false,
               tickFormatter: (v) => `${v}%`,
             },
             tooltip: {
