@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import snakeCase from 'lodash/snakeCase';
+import orderBy from 'lodash/orderBy';
 
 import TotaAPI from 'services/api';
 
@@ -30,7 +31,7 @@ export function useRegions() {
   );
   return {
     ...result,
-    data: result.data || [],
+    data: orderBy(result.data || [], ['region_type', 'name'], ['asc', 'asc']),
   };
 }
 
