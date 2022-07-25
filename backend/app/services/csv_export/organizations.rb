@@ -5,8 +5,8 @@ module CSVExport
         name_of_businessorganization
         company_id
         website
-        business_type
-        business_subtype
+        business_type_1
+        business_type_2
         indigenous_tourism
         biosphere_program_member
         accessibility
@@ -26,8 +26,8 @@ module CSVExport
             o.name,
             o.external_company_id,
             o.website_url,
-            o.business_type_name,
-            o.business_subtype_name,
+            o.business_type_1&.name,
+            o.business_type_2&.name,
             o.indigenous_ownership,
             o.biosphere_program_member,
             o.accessibility,

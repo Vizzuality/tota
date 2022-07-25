@@ -7,11 +7,11 @@ RSpec.describe 'Admin Organizations', type: :request do
     tota = create(:region, name: 'Thompson Okanagan')
     region1 = create(:region, :tourism_subregion, name: 'North Okanagan', parent: tota)
     region2 = create(:region, :tourism_subregion, name: 'Central Okanagan', parent: tota)
-    business_type = create(:business_type, name: 'Accommodation')
-    subtype1 = create(:business_type, name: 'Motel', parent: business_type)
+    business_type1 = create(:business_type, name: 'Accommodation')
+    business_type2 = create(:business_type, name: 'Motel')
 
-    create(:organization, name: 'Summit River Lodge And Campsites', region: region1, business_type: business_type)
-    create(:organization, name: 'Double E Sportsman Camp', region: region2, business_type: subtype1)
+    create(:organization, name: 'Summit River Lodge And Campsites', region: region1, business_type_1: business_type1)
+    create(:organization, name: 'Double E Sportsman Camp', region: region2, business_type_1: business_type1, business_type_2: business_type2)
   end
 
   before { sign_in admin }

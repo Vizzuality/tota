@@ -4,7 +4,7 @@ describe CSVImport::Organizations do
   describe 'errors' do
     it 'should return error if required column not provided' do
       csv_content = <<-CSV
-        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
         324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
         121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
       CSV
@@ -19,7 +19,7 @@ describe CSVImport::Organizations do
       allow_any_instance_of(Kernel).to receive(:warn) # suppress warning message
 
       csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type,Business Sub-Type,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
         324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
         121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE,TOTA members
       CSV
@@ -46,7 +46,6 @@ describe CSVImport::Organizations do
       expect(BusinessType.count).to eq(3)
       expect(imported_json).to match_snapshot('csv_import/organizations')
       expect(Region.find_by(name: 'North Okanagan').parent).to eq(Region.find_by(name: 'Thompson Okanagan'))
-      expect(BusinessType.find_by(name: 'Bed & Breakfast').parent).to eq(BusinessType.find_by(name: 'Accommodation'))
     end
   end
 
@@ -102,8 +101,9 @@ describe CSVImport::Organizations do
 
   def organizations_hash(organizations)
     organizations.as_json(
-      except: [:id, :created_at, :updated_at, :region_id, :business_type_id],
-      methods: [:region_name, :subregion_name, :business_type_name, :business_subtype_name]
+      except: [:id, :created_at, :updated_at, :region_id, :business_type_1_id, :business_type_2_id],
+      methods: [:region_name, :subregion_name],
+      include: {business_type_1: {only: :name}, business_type_2: {only: :name}}
     )
   end
 end

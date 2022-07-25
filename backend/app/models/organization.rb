@@ -20,7 +20,8 @@
 #
 class Organization < ApplicationRecord
   belongs_to :region
-  belongs_to :business_type, optional: true
+  belongs_to :business_type_1, class_name: 'BusinessType', optional: true
+  belongs_to :business_type_2, class_name: 'BusinessType', optional: true
 
   scope :visible, -> { where(show_on_platform: true) }
   scope :with_regions, -> { includes(region: [parent: :parent]) }
@@ -41,22 +42,6 @@ class Organization < ApplicationRecord
 
   def regions
     [region, region.parent, region.parent&.parent].compact
-  end
-
-  def business_type_name
-    return if business_type.nil?
-
-    if business_type.subtype?
-      business_type.parent.name
-    else
-      business_type.name
-    end
-  end
-
-  def business_subtype_name
-    return if business_type.nil?
-
-    business_type.name if business_type.subtype?
   end
 
   def website_url_link

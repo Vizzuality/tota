@@ -17,14 +17,14 @@
         "longitude": "34.2333",
         "region": "Thompson Okanagan",
         "subregion": "North Okanagan",
-        "business_type": "Accommodation",
-        "business_subtype": null,
         "biosphere_program_member": false,
         "accessibility": false,
         "features_number": 0,
         "indigenous_ownership": false,
         "website_url": "http://www.example.com",
-        "source": "TOTA members"
+        "source": "TOTA members",
+        "business_type_1": "Accommodation",
+        "business_type_2": null
       }
     },
     {
@@ -43,14 +43,14 @@
         "longitude": "34.2333",
         "region": "Thompson Okanagan",
         "subregion": "Central Okanagan",
-        "business_type": "Accommodation",
-        "business_subtype": "Motel",
         "biosphere_program_member": false,
         "accessibility": false,
         "features_number": 0,
         "indigenous_ownership": false,
         "website_url": "http://www.example.com",
-        "source": "TOTA members"
+        "source": "TOTA members",
+        "business_type_1": "Accommodation",
+        "business_type_2": "Motel"
       }
     }
   ]

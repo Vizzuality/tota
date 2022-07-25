@@ -8,36 +8,36 @@
           "category_1": "Canada",
           "category_2": null,
           "value": 33434.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-01",
           "category_1": "Germany",
           "category_2": null,
           "value": 33333.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Canada",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Germany",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         }
       ]
     }

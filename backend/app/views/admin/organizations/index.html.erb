@@ -25,10 +25,10 @@
         Subregion
       </th>
       <th>
-        Business Type
+        Business Type 1
       </th>
       <th>
-        Business Subtype
+        Business Type 2
       </th>
       <th>
         <%= sort_link @q, :name %>
@@ -40,8 +40,8 @@
       <tr data-link="<%= admin_organization_path(value) %>">
         <td><%= value.region_name %></td>
         <td><%= value.subregion_name %></td>
-        <td><%= value.business_type_name %></td>
-        <td><%= value.business_subtype_name %></td>
+        <td><%= value.business_type_1&.name %></td>
+        <td><%= value.business_type_2&.name %></td>
         <td><%= value.name %></td>
       </tr>
     <% end %>

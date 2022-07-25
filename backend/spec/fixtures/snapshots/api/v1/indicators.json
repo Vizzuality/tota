@@ -8,81 +8,108 @@
           "category_1": "Accommodation",
           "category_2": "all",
           "value": 3.0,
+          "indicator": "establishments_by_type",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": "Activity / Attraction",
           "category_2": "all",
           "value": 2.0,
+          "indicator": "establishments_by_type",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_1"
+        },
+        {
+          "date": null,
+          "category_1": "Bed & Breakfast",
+          "category_2": "all",
+          "value": 1.0,
+          "indicator": "establishments_by_type",
+          "region": "region 1",
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": "Accommodation",
           "category_2": "all",
-          "value": 2.0,
+          "value": 1.0,
+          "indicator": "establishments_by_type",
           "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_2"
         },
         {
           "date": null,
           "category_1": "Activity / Attraction",
           "category_2": "all",
           "value": 1.0,
+          "indicator": "establishments_by_type",
           "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
+          "category_1": "Bed & Breakfast",
+          "category_2": "all",
+          "value": 2.0,
+          "indicator": "establishments_by_type",
+          "region": "region 2",
+          "region_slug": "region_2"
         },
         {
           "date": null,
           "category_1": "Transportation",
           "category_2": "all",
           "value": 1.0,
+          "indicator": "establishments_by_type",
           "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_2"
         },
         {
           "date": null,
           "category_1": "Accommodation",
           "category_2": "biosphere",
           "value": 2.0,
+          "indicator": "establishments_by_type",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": "Activity / Attraction",
           "category_2": "biosphere",
           "value": 1.0,
+          "indicator": "establishments_by_type",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_1"
         },
         {
           "date": null,
-          "category_1": "Accommodation",
+          "category_1": "Bed & Breakfast",
           "category_2": "biosphere",
           "value": 1.0,
-          "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "establishments_by_type"
+          "indicator": "establishments_by_type",
+          "region": "region 1",
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": "Activity / Attraction",
           "category_2": "biosphere",
           "value": 1.0,
+          "indicator": "establishments_by_type",
           "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "establishments_by_type"
+          "region_slug": "region_2"
+        },
+        {
+          "date": null,
+          "category_1": "Bed & Breakfast",
+          "category_2": "biosphere",
+          "value": 1.0,
+          "indicator": "establishments_by_type",
+          "region": "region 2",
+          "region_slug": "region_2"
         }
       ]
     },
@@ -93,19 +120,19 @@
           "date": null,
           "category_1": null,
           "category_2": null,
-          "value": 5.0,
+          "value": 3.0,
+          "indicator": "total_establishments",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "total_establishments"
+          "region_slug": "region_1"
         },
         {
           "date": null,
           "category_1": null,
           "category_2": null,
           "value": 4.0,
+          "indicator": "total_establishments",
           "region": "region 2",
-          "region_slug": "region_2",
-          "indicator": "total_establishments"
+          "region_slug": "region_2"
         }
       ]
     },
@@ -117,36 +144,36 @@
           "category_1": "Canada",
           "category_2": null,
           "value": 33434.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-01",
           "category_1": "Germany",
           "category_2": null,
           "value": 33333.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Canada",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Germany",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "visits_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "visits_by_origin"
+          "region_slug": "region_1"
         }
       ]
     },
@@ -158,36 +185,36 @@
           "category_1": "Canada",
           "category_2": null,
           "value": 11111.0,
+          "indicator": "stays_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "stays_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-01",
           "category_1": "Germany",
           "category_2": null,
           "value": 33333.0,
+          "indicator": "stays_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "stays_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Canada",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "stays_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "stays_by_origin"
+          "region_slug": "region_1"
         },
         {
           "date": "2020-02",
           "category_1": "Germany",
           "category_2": null,
           "value": 2222.0,
+          "indicator": "stays_by_origin",
           "region": "region 1",
-          "region_slug": "region_1",
-          "indicator": "stays_by_origin"
+          "region_slug": "region_1"
         }
       ]
     }
