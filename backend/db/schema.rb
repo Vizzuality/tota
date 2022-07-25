@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_123732) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -46,8 +45,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
   create_table "business_types", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "parent_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_business_types_on_parent_id"
   end
 
@@ -55,8 +54,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.bigint "uploaded_by_id"
     t.string "uploader", null: false
     t.jsonb "details", default: {}
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["uploaded_by_id"], name: "index_data_uploads_on_uploaded_by_id"
   end
 
@@ -80,8 +79,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.integer "funding_call_year"
     t.string "funding_call_month"
     t.string "project_status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_development_funds_on_region_id"
   end
 
@@ -91,8 +90,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.string "category_1"
     t.string "category_2"
     t.float "value", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "region_id"
     t.index ["indicator_id"], name: "index_indicator_values_on_indicator_id"
     t.index ["region_id"], name: "index_indicator_values_on_region_id"
@@ -100,8 +99,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
 
   create_table "indicators", force: :cascade do |t|
     t.string "slug", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "dynamic", default: false, null: false
     t.index ["slug"], name: "index_indicators_on_slug", unique: true
   end
@@ -116,8 +115,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.text "website_url"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "accessibility"
     t.boolean "show_on_platform", default: true, null: false
     t.string "source"
@@ -128,8 +127,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
   create_table "region_permissions", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "region_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_region_permissions_on_region_id"
     t.index ["user_id"], name: "index_region_permissions_on_user_id"
   end
@@ -137,8 +136,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
   create_table "regions", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "parent_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "region_type", default: "tourism_region", null: false
     t.string "slug", null: false
     t.boolean "active", default: true
@@ -150,19 +149,19 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.string "slug", null: false
     t.string "title", null: false
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: 6
-    t.datetime "remember_created_at", precision: 6
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "account_type", default: "user", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -177,8 +176,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_123732) do
     t.text "note"
     t.jsonb "sources"
     t.integer "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "public", default: false, null: false
     t.index ["theme_id"], name: "index_widgets_on_theme_id"
   end
