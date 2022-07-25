@@ -27,7 +27,7 @@ module CSVImport
 
       result = false
       ActiveRecord::Base.transaction do
-        imported  = import_data
+        imported = import_data
         if imported
           data_upload.save!
           result = true

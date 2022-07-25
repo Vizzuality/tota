@@ -7,7 +7,7 @@ module API
     def filters
       return unless filter_params.respond_to?(:to_h)
 
-      filter_params.to_h.map do |k, v|
+      filter_params.to_h.filter_map do |k, v|
         v = v.split(',') if v.is_a?(String)
         v = v.map do |val|
           val == 'nil' ? nil : val
@@ -20,7 +20,7 @@ module API
         next unless key.present?
 
         [key, v]
-      end.compact.to_h
+      end.to_h
     end
 
     def fields

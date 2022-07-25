@@ -73,7 +73,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
       :indicator,
       slug: 'not_configured_indicator',
       indicator_values: [
-        build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r1),
+        build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r1)
       ]
     )
   end
@@ -83,7 +83,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
       slug: 'private_indicator',
       indicator_values: [
         build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r1),
-        build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r2),
+        build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r2)
       ]
     )
   end

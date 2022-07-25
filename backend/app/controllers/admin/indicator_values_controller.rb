@@ -11,7 +11,7 @@ class Admin::IndicatorValuesController < Admin::AdminController
     collection
       .includes(:region, :indicator)
       .where(indicator: Indicator.imported)
-      # .order('indicators.slug': :asc, 'regions.name': :asc, created_at: :desc)
+    # .order('indicators.slug': :asc, 'regions.name': :asc, created_at: :desc)
   end
 
   def pagy_defaults

@@ -107,8 +107,8 @@ module CSVImport
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
     end
 
-    def report_exception(e)
-      # Appsignal.set_error(e)
+    def report_exception(exception)
+      # Appsignal.set_error(exception)
     end
 
     def check_required_headers

@@ -38,6 +38,9 @@ Style/AccessorGrouping:
 Style/HashAsLastArrayItem:
   Enabled: false
 
+Style/MapToHash:
+  Enabled: false
+
 Style/SymbolArray:
   EnforcedStyle: brackets
 
@@ -78,6 +81,7 @@ Layout/LineLength:
   Max: 130
   Exclude:
     - 'db/**/*'
+    - 'spec/**/*'
     - 'spec/spec_helper.rb'
     - 'spec/rails_helper.rb'
     - 'Gemfile'

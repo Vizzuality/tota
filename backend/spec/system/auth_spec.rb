@@ -52,7 +52,7 @@ RSpec.describe 'Auth', type: :system do
       email = last_email_to(admin.email)
       expect(email.subject).to eq('Reset password instructions')
 
-      path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
+      path_regex = /(?:"https?:\/\/.*?)(\/.*?)(?:")/
       reset_link = email.body.match(path_regex)[1]
 
       visit reset_link
