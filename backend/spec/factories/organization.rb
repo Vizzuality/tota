@@ -9,6 +9,7 @@ FactoryBot.define do
     biosphere_program_member { false }
     website_url { 'www.example.com' }
     show_on_platform { true }
+    tags { 'Tag1, Tag2, Tag3' }
 
     source { 'TOTA members' }
 

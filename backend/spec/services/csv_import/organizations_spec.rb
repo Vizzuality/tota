@@ -4,9 +4,9 @@ describe CSVImport::Organizations do
   describe 'errors' do
     it 'should return error if required column not provided' do
       csv_content = <<-CSV
-        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
-        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
+        Company Id,Name of Business,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Tags,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,"Tag1, Tag2",FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        121222,La Maison Osoyoos Larose B&B,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE, TOTA members
       CSV
 
       service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))
@@ -19,9 +19,9 @@ describe CSVImport::Organizations do
       allow_any_instance_of(Kernel).to receive(:warn) # suppress warning message
 
       csv_content = <<-CSV
-        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
-        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
-        121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE,TOTA members
+        Company Id,Name of Business/Organization,website,Tourism Region,Tourism Sub-Region,Business Type 1,Business Type 2,Tags,Indigenous Tourism,Biosphere program member,Accessibility,Latitude,Longitude,Show on platform,Source
+        324323,Planet Bee Honey Farm & Meadery,http://example.com,Thompson Okanagan,North Okanagan,Activity / Attraction,,"Tag1, Tag2",FALSE,FALSE,FALSE,50.2632292,-119.3063629,TRUE,TOTA members
+        121222,,http://example2.com,Thompson Okanagan,South Okanagan,Accommodation,Bed & Breakfast,,TRUE,TRUE,TRUE,49.0463827,-119.4914925,TRUE,TOTA members
       CSV
 
       service = CSVImport::Organizations.new(fixture_file('organizations.csv', content: csv_content))

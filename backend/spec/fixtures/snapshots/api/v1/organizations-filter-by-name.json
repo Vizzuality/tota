@@ -14,7 +14,8 @@
       "website_url": "http://www.example.com",
       "source": "TOTA members",
       "business_type_1": "Accommodation",
-      "business_type_2": "Motel"
+      "business_type_2": "Motel",
+      "tags": "Tag1, Tag2, Tag3"
     }
   ]
 }

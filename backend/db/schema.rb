@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_25_121608) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_26_092423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_25_121608) do
     t.boolean "show_on_platform", default: true, null: false
     t.string "source"
     t.bigint "business_type_2_id"
+    t.text "tags"
     t.index ["business_type_1_id"], name: "index_organizations_on_business_type_1_id"
     t.index ["business_type_2_id"], name: "index_organizations_on_business_type_2_id"
     t.index ["region_id"], name: "index_organizations_on_region_id"

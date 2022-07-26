@@ -7,6 +7,7 @@ module CSVExport
         website
         business_type_1
         business_type_2
+        tags
         indigenous_tourism
         biosphere_program_member
         accessibility
@@ -28,6 +29,7 @@ module CSVExport
             o.website_url,
             o.business_type_1&.name,
             o.business_type_2&.name,
+            o.tags,
             o.indigenous_ownership,
             o.biosphere_program_member,
             o.accessibility,

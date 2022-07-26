@@ -14,7 +14,8 @@
     "subregion_name": "North Okanagan",
     "business_type_1": {
       "name": "Activity / Attraction"
-    }
+    },
+    "tags": "Tag1, Tag2"
   },
   {
     "name": "La Maison Osoyoos Larose B&B",
@@ -34,7 +35,8 @@
     },
     "business_type_2": {
       "name": "Bed & Breakfast"
-    }
+    },
+    "tags": "Tag1"
   },
   {
     "name": "Another Organization",
@@ -54,6 +56,7 @@
     },
     "business_type_2": {
       "name": "Bed & Breakfast"
-    }
+    },
+    "tags": null
   }
 ]

@@ -14,6 +14,7 @@ class OrganizationBlueprint < Blueprinter::Base
   field :business_type_2 do |org|
     org.business_type_2&.name
   end
+  field :tags
   field :features_number do |org|
     org.slice(:indigenous_ownership, :biosphere_program_member, :accessibility).values.count { |v| v == true }
   end
