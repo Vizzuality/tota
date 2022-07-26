@@ -34,8 +34,9 @@ export interface Organization {
   accessibility: boolean;
   region: string;
   subregion?: string;
-  business_type: string;
-  business_subtype?: string;
+  business_type_1: string;
+  business_type_2?: string;
+  tags?: string;
   features_number: number;
   source: string;
 }
