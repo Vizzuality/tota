@@ -60,7 +60,18 @@ export function getMapUrl(selectedRegion: string, activeLayers: string[] = []) {
   return `/map?map=${encodeParam(mapSettings)}`;
 }
 
-export function MapProvider({ children }: MapProviderProps) {
+function withReadyRouter(WrappedComponent) {
+  return function WithReadyRouterComponent(props) {
+    const router = useRouter();
+    if (!router.isReady) {
+      return null;
+    }
+
+    return <WrappedComponent {...props} />;
+  };
+}
+
+const MapProviderComponent = ({ children }: MapProviderProps) => {
   const [mapSettings, setMapSettings] = useEncodedQueryParam('map', {
     viewport: {
       latitude: 54.123389,
@@ -123,12 +134,6 @@ export function MapProvider({ children }: MapProviderProps) {
     [mapSettings],
   );
 
-  // workaround for router not ready
-  const router = useRouter();
-  if (!router.isReady) {
-    return null;
-  }
-
   return (
     <MapContext.Provider
       value={{
@@ -146,4 +151,6 @@ export function MapProvider({ children }: MapProviderProps) {
       {children}
     </MapContext.Provider>
   );
-}
+};
+
+export const MapProvider = withReadyRouter(MapProviderComponent);
