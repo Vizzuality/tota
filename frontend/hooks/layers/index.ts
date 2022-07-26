@@ -840,7 +840,8 @@ export const useLayers = (selectedRegion: string): Layer[] => {
         },
         legendConfig: {
           type: 'choropleth',
-          description: 'Example description for traffic layer',
+          description:
+            'Current traffic volumes. You can also check road conditions and recent events at <a href="https://www.drivebc.ca" rel="noreferrer noopener" target="_blank">Drive BC</a>.',
           source: {
             text: 'Mapbox Traffic v1',
             link: 'https://docs.mapbox.com/data/tilesets/reference/mapbox-traffic-v1/#overview',

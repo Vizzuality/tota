@@ -61,7 +61,9 @@ export const LegendItem: FC<LegendItemProps> = ({
           )}
         </div>
       </div>
-      {description && <div className="py-2 px-5 text-sm text-blue-800">{description}</div>}
+      {description && (
+        <div className="py-2 px-5 text-sm text-blue-800 free-text" dangerouslySetInnerHTML={{ __html: description }} />
+      )}
       {children && <div className="py-4 px-5">{children}</div>}
       {source && (
         <div className="py-2 px-5 text-right text-blue-800 text-xs free-text">
