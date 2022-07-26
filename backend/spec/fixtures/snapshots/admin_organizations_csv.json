@@ -14,7 +14,7 @@
     "source": "TOTA members",
     "business_type_1": "Accommodation",
     "business_type_2": null,
-    "tags": "Tag1, Tag2, Tag3"
+    "business_tags": "Tag1, Tag2, Tag3"
   },
   {
     "name_of_businessorganization": "Double E Sportsman Camp",
@@ -31,6 +31,6 @@
     "source": "TOTA members",
     "business_type_1": "Accommodation",
     "business_type_2": "Motel",
-    "tags": "Tag1, Tag2, Tag3"
+    "business_tags": "Tag1, Tag2, Tag3"
   }
 ]

@@ -74,6 +74,8 @@ class ImportTasks
   end
 
   def run_importer(importer, file)
+    return unless file
+
     service = importer.new(file)
     return if service.call
 
@@ -83,6 +85,9 @@ class ImportTasks
 
   def csv_file(file_name)
     File.open(Rails.root.join('db', 'csvs', file_name), 'r')
+  rescue Errno::ENOENT
+    puts "Error: File #{file_name} does not exists"
+    nil
   end
 end
 

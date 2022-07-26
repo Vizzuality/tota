@@ -15,7 +15,7 @@ module CSVImport
         organization.region = find_or_create_region(row)
         organization.business_type_1 = find_or_create_business_type(row[:business_type_1])
         organization.business_type_2 = find_or_create_business_type(row[:business_type_2])
-        organization.tags = row[:tags]
+        organization.tags = row[:business_tags]
         organization.latitude = row[:latitude]
         organization.longitude = row[:longitude]
         organization.biosphere_program_member = row[:biosphere_program_member]
@@ -54,7 +54,7 @@ module CSVImport
         :website,
         :business_type_1,
         :business_type_2,
-        :tags,
+        :business_tags,
         :indigenous_tourism,
         :biosphere_program_member,
         :accessibility,
