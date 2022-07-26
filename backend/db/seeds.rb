@@ -13,4 +13,7 @@ if Rails.env.development?
   Rake::Task['import:all'].invoke
   puts 'Adding themes and widgets'
   Rake::Task['themes:reimport'].invoke
+
+  puts 'Making all widgets public'
+  Widget.update_all(public: true)
 end
