@@ -16,18 +16,18 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
   if (!organization) return <div>No data</div>;
 
   const properties = {
-    name: organization.name,
-    business_type: organization.business_type,
-    business_subtype: organization.business_subtype,
-    longitude: organization.longitude,
-    latitude: organization.latitude,
-    region: organization.region,
-    subregion: organization.subregion,
-    indigenous_ownership: organization.indigenous_ownership,
-    biosphere_program_member: organization.biosphere_program_member,
-    accessibility: organization.accessibility,
-    website: organization.website_url,
-    source: organization.source,
+    Name: organization.name,
+    'Business Type': organization.business_type,
+    'Business Subtype': organization.business_subtype,
+    Longitude: organization.longitude,
+    Latitude: organization.latitude,
+    'Tourism region': organization.region,
+    'Tourism subregion': organization.subregion,
+    'Indigenous Ownership': organization.indigenous_ownership,
+    'Biosphere Program Member': organization.biosphere_program_member,
+    Accessibility: organization.accessibility,
+    Website: organization.website_url,
+    Source: 'Regional DMOs and other relevant third-party sources',
   };
 
   return <BasicTooltip title={organization.name} properties={properties} />;

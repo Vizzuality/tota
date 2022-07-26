@@ -45,8 +45,6 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
     propertiesToPick ? pick(propertiesCamelCased, propertiesToPick) : propertiesCamelCased,
   );
 
-  console.log('properties', properties);
-
   const DisplayTooltip = useMemo(() => {
     switch (feature.source) {
       case 'airports':
