@@ -245,7 +245,10 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
   const params = new URLSearchParams();
 
   if (selectedRegion) params.append('filter[regions.slug]', selectedRegion);
-  params.append('fields', 'id,latitude,longitude');
+  params.append(
+    'fields',
+    'id,latitude,longitude,indigenous_ownership,biosphere_program_member,accessibility,features_number',
+  );
   const searchParams = Array.from(params).length > 0 ? `?${params.toString()}` : '';
   const organizationsGeoJSONUrl = `${process.env.NEXT_PUBLIC_TOTA_API_PATH}/organizations.geojson${searchParams}`;
 
@@ -259,7 +262,7 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
       data: organizationsGeoJSONUrl,
     },
     images: [
-      { id: 'organizations_accessiblity', src: ACCESSIBLE_BUSINESSES_SVG },
+      { id: 'organizations_accessibility', src: ACCESSIBLE_BUSINESSES_SVG },
       { id: 'organizations_indigenous', src: INDIGENOUS_BUSINESSES_SVG },
       { id: 'organizations_biosphere', src: BIOSPHERE_PROGRAM_SVG },
       { id: 'organizations_2', src: ORGANIZATIONS_2_SVG },
@@ -283,17 +286,17 @@ export const useTOTAMembersLayer = (selectedRegion: string): Layer => {
           layout: {
             'icon-image': [
               'case',
-              ['==', ['get', 'feature_number'], 2],
+              ['==', ['get', 'features_number'], 2],
               'organizations_2',
-              ['==', ['get', 'feature_number'], 3],
+              ['==', ['get', 'features_number'], 3],
               'organizations_3',
               [
                 'case',
-                ['==', ['get', 'indigenous_tourism'], true],
+                ['==', ['get', 'indigenous_ownership'], true],
                 'organizations_indigenous',
                 ['==', ['get', 'biosphere_program_member'], true],
                 'organizations_biosphere',
-                ['==', ['get', 'accessiblity'], true],
+                ['==', ['get', 'accessibility'], true],
                 'organizations_accessibility',
                 'organizations_default',
               ],
