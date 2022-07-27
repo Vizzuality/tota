@@ -6,7 +6,7 @@ module API
           .visible
           .where(filters.except('regions.slug'))
           .with_regions
-          .includes(:business_type)
+          .includes(:business_type_1, :business_type_2)
         organizations = filter_by_region(organizations) if filters['regions.slug']
 
         if params[:format] == 'geojson'

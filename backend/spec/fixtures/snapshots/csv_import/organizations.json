@@ -12,8 +12,10 @@
     "source": "TOTA members",
     "region_name": "Thompson Okanagan",
     "subregion_name": "North Okanagan",
-    "business_type_name": "Activity / Attraction",
-    "business_subtype_name": null
+    "business_type_1": {
+      "name": "Activity / Attraction"
+    },
+    "tags": "Tag1, Tag2"
   },
   {
     "name": "La Maison Osoyoos Larose B&B",
@@ -28,8 +30,13 @@
     "source": "TOTA members",
     "region_name": "Thompson Okanagan",
     "subregion_name": "South Okanagan",
-    "business_type_name": "Accommodation",
-    "business_subtype_name": "Bed & Breakfast"
+    "business_type_1": {
+      "name": "Accommodation"
+    },
+    "business_type_2": {
+      "name": "Bed & Breakfast"
+    },
+    "tags": "Tag1"
   },
   {
     "name": "Another Organization",
@@ -44,7 +51,12 @@
     "source": "TOTA members",
     "region_name": "Thompson Okanagan",
     "subregion_name": "South Okanagan",
-    "business_type_name": "Accommodation",
-    "business_subtype_name": "Bed & Breakfast"
+    "business_type_1": {
+      "name": "Accommodation"
+    },
+    "business_type_2": {
+      "name": "Bed & Breakfast"
+    },
+    "tags": null
   }
 ]

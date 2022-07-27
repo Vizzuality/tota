@@ -13,7 +13,9 @@ module CSVImport
         organization.external_company_id = row[:company_id]
         organization.website_url = row[:website]
         organization.region = find_or_create_region(row)
-        organization.business_type = find_or_create_business_type(row)
+        organization.business_type_1 = find_or_create_business_type(row[:business_type_1])
+        organization.business_type_2 = find_or_create_business_type(row[:business_type_2])
+        organization.tags = row[:business_tags]
         organization.latitude = row[:latitude]
         organization.longitude = row[:longitude]
         organization.biosphere_program_member = row[:biosphere_program_member]
@@ -50,8 +52,9 @@ module CSVImport
         :name_of_businessorganization,
         :company_id,
         :website,
-        :business_type,
-        :business_subtype,
+        :business_type_1,
+        :business_type_2,
+        :business_tags,
         :indigenous_tourism,
         :biosphere_program_member,
         :accessibility,
@@ -69,19 +72,10 @@ module CSVImport
       @business_types = BusinessType.all.map { |bt| [bt.name.downcase, bt] }.to_h
     end
 
-    def find_or_create_business_type(row)
-      type_name = row[:business_type]
-      sub_type_name = row[:business_subtype]
+    def find_or_create_business_type(business_type)
+      return unless business_type.present?
 
-      return unless type_name.present?
-
-      type = @business_types[type_name.downcase] ||= BusinessType.create!(name: type_name)
-
-      if sub_type_name.present?
-        sub_type = @business_types[sub_type_name.downcase] ||= BusinessType.create!(name: sub_type_name, parent: type)
-      end
-
-      sub_type || type
+      @business_types[business_type.downcase] ||= BusinessType.create!(name: business_type)
     end
 
     def find_or_create_region(row)

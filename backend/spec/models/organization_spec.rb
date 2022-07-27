@@ -5,7 +5,7 @@
 #  id                       :bigint           not null, primary key
 #  name                     :string           not null
 #  region_id                :bigint           not null
-#  business_type_id         :bigint
+#  business_type_1_id       :bigint
 #  external_company_id      :bigint
 #  indigenous_ownership     :boolean
 #  biosphere_program_member :boolean
@@ -17,6 +17,8 @@
 #  accessibility            :boolean
 #  show_on_platform         :boolean          default(TRUE), not null
 #  source                   :string
+#  business_type_2_id       :bigint
+#  tags                     :text
 #
 require 'rails_helper'
 

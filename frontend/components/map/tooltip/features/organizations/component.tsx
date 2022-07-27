@@ -17,8 +17,9 @@ export const Tooltip: FC<TooltipProps> = ({ feature }: TooltipProps) => {
 
   const properties = {
     Name: organization.name,
-    'Business Type': organization.business_type,
-    'Business Subtype': organization.business_subtype,
+    'Business Type 1': organization.business_type_1,
+    'Business Type 2': organization.business_type_2,
+    'Business Tags': organization.tags,
     Longitude: organization.longitude,
     Latitude: organization.latitude,
     'Tourism region': organization.region,

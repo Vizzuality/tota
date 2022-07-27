@@ -3,8 +3,6 @@
     "name_of_businessorganization": "Summit River Lodge And Campsites",
     "company_id": "33344",
     "website": "www.example.com",
-    "business_type": "Accommodation",
-    "business_subtype": null,
     "indigenous_tourism": "false",
     "biosphere_program_member": "false",
     "accessibility": "false",
@@ -13,14 +11,15 @@
     "latitude": "50.2323",
     "longitude": "34.2333",
     "show_on_platform": "true",
-    "source": "TOTA members"
+    "source": "TOTA members",
+    "business_type_1": "Accommodation",
+    "business_type_2": null,
+    "business_tags": "Tag1, Tag2, Tag3"
   },
   {
     "name_of_businessorganization": "Double E Sportsman Camp",
     "company_id": "33344",
     "website": "www.example.com",
-    "business_type": "Accommodation",
-    "business_subtype": "Motel",
     "indigenous_tourism": "false",
     "biosphere_program_member": "false",
     "accessibility": "false",
@@ -29,6 +28,9 @@
     "latitude": "50.2323",
     "longitude": "34.2333",
     "show_on_platform": "true",
-    "source": "TOTA members"
+    "source": "TOTA members",
+    "business_type_1": "Accommodation",
+    "business_type_2": "Motel",
+    "business_tags": "Tag1, Tag2, Tag3"
   }
 ]

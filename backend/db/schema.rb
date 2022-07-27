@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_26_092423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,10 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
 
   create_table "business_types", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["parent_id"], name: "index_business_types_on_parent_id"
   end
 
   create_table "data_uploads", force: :cascade do |t|
@@ -108,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
   create_table "organizations", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "region_id", null: false
-    t.bigint "business_type_id"
+    t.bigint "business_type_1_id"
     t.bigint "external_company_id"
     t.boolean "indigenous_ownership"
     t.boolean "biosphere_program_member"
@@ -120,7 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
     t.boolean "accessibility"
     t.boolean "show_on_platform", default: true, null: false
     t.string "source"
-    t.index ["business_type_id"], name: "index_organizations_on_business_type_id"
+    t.bigint "business_type_2_id"
+    t.text "tags"
+    t.index ["business_type_1_id"], name: "index_organizations_on_business_type_1_id"
+    t.index ["business_type_2_id"], name: "index_organizations_on_business_type_2_id"
     t.index ["region_id"], name: "index_organizations_on_region_id"
   end
 
@@ -184,12 +185,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_19_123732) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "business_types", "business_types", column: "parent_id"
   add_foreign_key "data_uploads", "users", column: "uploaded_by_id", on_delete: :nullify
   add_foreign_key "development_funds", "regions", on_delete: :cascade
   add_foreign_key "indicator_values", "indicators", on_delete: :cascade
   add_foreign_key "indicator_values", "regions", on_delete: :cascade
-  add_foreign_key "organizations", "business_types"
+  add_foreign_key "organizations", "business_types", column: "business_type_1_id"
+  add_foreign_key "organizations", "business_types", column: "business_type_2_id"
   add_foreign_key "organizations", "regions", on_delete: :cascade
   add_foreign_key "regions", "regions", column: "parent_id", on_delete: :cascade
   add_foreign_key "widgets", "themes", on_delete: :cascade

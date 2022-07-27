@@ -72,12 +72,11 @@ module Indicators
           NOW() as updated_at
         from
           (select
-            coalesce(btp.name, bt.name) as business_type,
+            bt.name as business_type,
             sr.id as region_id
           from
             organizations o
-            inner join business_types bt on bt.id = o.business_type_id
-            left join business_types btp on btp.id = bt.parent_id
+            inner join business_types bt on bt.id = o.business_type_1_id or bt.id = o.business_type_2_id
             inner join regions r on r.id = o.region_id
             left join regions rp on rp.id = r.parent_id
             left join regions rp2 on rp2.id = rp.parent_id
