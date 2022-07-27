@@ -39,7 +39,9 @@ module BootstrapHelper
   end
 
   def bootstrap_close_button_tag(dismiss: 'modal')
-    button_tag(type: 'button', class: 'btn-close', aria: {label: 'Close'}, data: {'bs-dismiss': dismiss})
+    button_tag(type: 'button', class: 'btn-close', aria: {label: 'Close'}, data: {'bs-dismiss': dismiss}) do
+      # keep the empty tag
+    end
   end
 
   def dropdown(text, options = {}, &block)
