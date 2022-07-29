@@ -9,7 +9,6 @@ import {
   getOptions,
   getPercentageTotalByLabel,
   getStackedBarsData,
-  getTop10AndOthers,
   getTop10AndOthersByYear,
   getTopN,
   getWithMinMaxAreas,
@@ -43,7 +42,7 @@ const theme: ThemeFrontendDefinition = {
             link: getMapUrl(state.selectedRegion.slug, ['tourism_regions', 'organizations']),
           },
           type: 'charts/pie',
-          data: getTop10AndOthers(rawData, 'category_1'),
+          data: rawData,
           pies: [
             {
               nameKey: 'category_1',
@@ -70,7 +69,7 @@ const theme: ThemeFrontendDefinition = {
             link: getMapUrl(state.selectedRegion.slug, ['tourism_regions', 'organizations']),
           },
           type: 'charts/pie',
-          data: getTop10AndOthers(rawData, 'category_1'),
+          data: rawData,
           controls: [
             {
               type: 'tabs',
