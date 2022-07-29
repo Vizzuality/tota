@@ -7,7 +7,7 @@ const Terms: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Terms and conditions</title>
+        <title>Terms & Conditions</title>
       </Head>
 
       <Hero className="bg-blue-800 text-white">
@@ -101,8 +101,8 @@ const Terms: React.FC<void> = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="text-white py-24 text-center bg-blue-800">
-        <div className="container mx-auto lg:px-16" style={{ maxWidth: 1200 }}>
+      <div className="text-white text-center bg-blue-800">
+        <div className="container py-24 mx-auto lg:px-16 border-b border-white" style={{ maxWidth: 1200 }}>
           <h3 className="text-4xl font-bold">Discovery of a Vulnerability</h3>
 
           <p className="mt-10 leading-7">

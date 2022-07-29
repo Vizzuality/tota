@@ -18,7 +18,7 @@ const Footer: FC<FooterProps> = () => {
       href: '/about',
       children: [
         {
-          title: 'Terms and conditions',
+          title: 'Terms & Conditions',
           href: '/terms',
         },
       ],
