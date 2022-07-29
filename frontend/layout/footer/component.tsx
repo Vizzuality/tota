@@ -16,6 +16,12 @@ const Footer: FC<FooterProps> = () => {
     {
       title: 'About',
       href: '/about',
+      children: [
+        {
+          title: 'Terms and conditions',
+          href: '/terms',
+        },
+      ],
     },
     {
       title: 'Themes + Indicators',

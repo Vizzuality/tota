@@ -17,9 +17,8 @@ const Hero: FC<HeroProps> = ({
 }: HeroProps) => (
   <div className={cx(className, 'w-full flex justify-center items-center')} style={{ height }}>
     <div id="hero" className="absolute h-full w-full overflow-hidden z-0" style={{ height }}>
-      {images ? (
-        <ImageCarousel images={images} />
-      ) : (
+      {images && <ImageCarousel images={images} />}
+      {!images && image && (
         <Image
           alt="Hero image"
           src={image}
