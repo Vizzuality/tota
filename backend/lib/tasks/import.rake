@@ -68,6 +68,10 @@ class ImportTasks
           TimedLogger.log('Import Indicator Values for Block 6 Headers and General Insights') do
             run_importer CSVImport::IndicatorValues, csv_file('Block6_Headers_and_General_insights - EXPORT_CSV.csv')
           end
+
+          TimedLogger.log('Import Indicator Values for Spending data') do
+            run_importer CSVImport::IndicatorValues, csv_file('spending_data_EXPORT_CSV.csv')
+          end
         end
       end
     end
