@@ -181,6 +181,9 @@ const theme: ThemeFrontendDefinition = {
         return {
           type: 'charts/bar',
           data: chartData,
+          chartProps: {
+            stackOffset: 'expand',
+          },
           controls: [
             { type: 'tabs', side: 'left', name: 'origin', options: getOptions(origins, false) },
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(filteredByOrigin) },
@@ -191,10 +194,11 @@ const theme: ThemeFrontendDefinition = {
             tickFormatter: state.year !== 'all_years' && shortMonthName,
           },
           yAxis: {
-            tickFormatter: compactMoneyTickFormatter,
+            tickFormatter: (val) => `${val * 100}%`,
           },
           tooltip: {
             cursor: false,
+            showPercentageOfTotal: true,
             valueFormatter: compactMoneyTickFormatter,
           },
         };
