@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboards#index'
 
+    resources :additional_resources
+    resources :additional_resource_groups
     resources :dashboards, only: [:index]
     resources :data_uploads, only: [:index, :new, :create, :show]
     resources :users
