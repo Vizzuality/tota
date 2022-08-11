@@ -6,7 +6,7 @@
     <%= card 'Details' do %>
       <%= f.input :title %>
       <%= f.association :group %>
-      <%= f.association :region, collection: Region.province.or(Region.tourism_region) %>
+      <%= f.association :region, collection: Region.province_or_tourism_regions %>
       <%= f.input :public, as: :select, label: 'Visibility', collection: [['Public', true], ['Private', false]], include_blank: false %>
       <%= f.input :link %>
       <%= f.input :file, as: :file %>

@@ -5,7 +5,7 @@
 <h1 class="h3 mb-3 me-2 d-inline-block">Additional Resources</h1>
 
 <%= render "index_search_form", q: @q, search_by: :title_or_link_cont do |f| %>
-  <%= f.input :region_id_eq, as: :select, label: 'Region', collection: Region.province.or(Region.tourism_region) %>
+  <%= f.input :region_id_eq, as: :select, label: 'Region', collection: Region.province_or_tourism_regions %>
   <%= f.input :group_id_eq, as: :select, label: 'Group', collection: AdditionalResourceGroup.all.order(:name) %>
 <% end %>
 

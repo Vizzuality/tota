@@ -22,6 +22,9 @@ class AdditionalResource < ApplicationRecord
   validate :link_or_file_attached
   validate :both_link_and_file_not_attached
 
+  scope :only_public, -> { where(public: true) }
+  scope :only_private, -> { where(public: false) }
+
   def private?
     !public?
   end

@@ -1,7 +1,7 @@
 <h1 class="h3 mb-3 me-2 d-inline-block">Indicators</h1>
 
 <%= render "index_search_form", q: @q, search_by: :indicator_slug_or_category_1_or_category_2_cont do |f| %>
-  <%= f.input :region_id_eq, as: :select, label: 'Region', collection: Region.province.or(Region.tourism_region) %>
+  <%= f.input :region_id_eq, as: :select, label: 'Region', collection: Region.province_or_tourism_regions %>
   <%= f.input :indicator_slug_eq, as: :select, label: 'Indicator', collection: Indicator.pluck(:slug).sort %>
 <% end %>
 
