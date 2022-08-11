@@ -21,15 +21,19 @@
       <th>
         <%= sort_link @q, :region_name, 'Region' %>
       </th>
+      <th>
+        <%= sort_link @q, :public, 'Visibility' %>
+      </th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @resources.each do |resource| %>
       <tr data-link="<%= edit_admin_additional_resource_path(resource) %>">
-        <td><%= resource.title %></td>
+        <td><%= link_to resource.title, resource.url %></td>
         <td><%= resource.group&.name || 'Not assigned' %></td>
         <td><%= resource.region.name %></td>
+        <td><%= status_tag resource.public? ? 'Public' : 'Private' %></td>
         <td class="text-end">
           <%= dropdown "Actions" do %>
             <li>

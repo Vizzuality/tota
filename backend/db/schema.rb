@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_123545) do
   create_table "additional_resources", force: :cascade do |t|
     t.bigint "group_id"
     t.bigint "region_id", null: false
+    t.boolean "public", default: false, null: false
     t.string "title", null: false
     t.text "link"
     t.datetime "created_at", null: false

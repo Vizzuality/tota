@@ -14,6 +14,7 @@ class Admin::AdditionalResourcesController < Admin::AdminController
   def permitted_params
     [
       :title,
+      :public,
       :group_id,
       :region_id,
       :link,

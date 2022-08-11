@@ -7,6 +7,7 @@
       <%= f.input :title %>
       <%= f.association :group %>
       <%= f.association :region, collection: Region.province.or(Region.tourism_region) %>
+      <%= f.input :public, as: :select, label: 'Visibility', collection: [['Public', true], ['Private', false]], include_blank: false %>
       <%= f.input :link %>
       <%= f.input :file, as: :file %>
     <% end %>
