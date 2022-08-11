@@ -72,10 +72,10 @@ module BootstrapHelper
                    elsif text == false
                      [:no, 'No']
                    else
-                     [text.to_sym, text.to_s.humanize]
+                     [text.parameterize, text.to_s.humanize]
                    end
 
-    content_tag :span, display, class: "badge badge-#{key.downcase}"
+    content_tag :span, display, class: "badge badge-#{key}"
   end
 
   def card(header_text, options = {}, &block)

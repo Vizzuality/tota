@@ -110,7 +110,7 @@ Layout/SpaceAroundMethodCallOperator:
 
 Lint/AmbiguousBlockAssociation:
   Enabled: true
-  IgnoredMethods: [change]
+  AllowedMethods: [change]
 
 Lint/RaiseException:
   Enabled: true
