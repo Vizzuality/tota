@@ -4,6 +4,6 @@ class AdditionalResourceBlueprint < Blueprinter::Base
   fields :title, :url
 
   field :group do |val|
-    val.group&.name
+    val.group&.name || 'Others'
   end
 end

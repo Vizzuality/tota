@@ -8,6 +8,7 @@ import ThemeHeader from 'components/themes/header';
 import ThemeMobileFooter from 'components/themes/mobile-footer';
 import ThemeWidgets from 'components/themes/widgets';
 import ThemesNavbar from 'components/themes/navbar';
+import AdditionalResources from 'components/themes/additional-resources';
 
 import { useRouterSelectedTheme } from 'hooks/themes';
 import { useRegions, useRouterSelectedRegion } from 'hooks/regions';
@@ -31,7 +32,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
         {dataReady && (
           <>
             <ThemeHeader />
-            <ThemeWidgets />
+            {theme.slug === 'additional_resources' ? <AdditionalResources /> : <ThemeWidgets />}
             <ThemeMobileFooter />
           </>
         )}

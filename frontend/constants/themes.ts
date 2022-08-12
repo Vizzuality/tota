@@ -5,6 +5,7 @@ import airportInformation from './themes/airport-information';
 import accommodationInformation from './themes/accommodation-information';
 import tourismDevelopmentFounds from './themes/tourism-development-founds';
 import tourismEmployment from './themes/tourism-employment';
+import additionalResources from './themes/additional-resources';
 
 const themes: ThemeFrontendDefinition[] = [
   generalInsights,
@@ -13,6 +14,7 @@ const themes: ThemeFrontendDefinition[] = [
   airportInformation,
   accommodationInformation,
   tourismDevelopmentFounds,
+  additionalResources,
 ];
 
 export default themes;
