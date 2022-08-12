@@ -13,6 +13,7 @@ const AdditionalResources: FC<AdditionalResourcesProps> = () => {
 
   return (
     <div className="flex flex-col gap-10 mb-10">
+      {Object.keys(grouped).length === 0 && <div className="p-5 bg-white">There are no resources for this region.</div>}
       {Object.keys(grouped).map((group, index) => (
         <div key={group} className="p-5 bg-white">
           <div className="relative mb-5">
@@ -27,7 +28,7 @@ const AdditionalResources: FC<AdditionalResourcesProps> = () => {
             </div>
           </div>
           {grouped[group].map((resource) => (
-            <div key={resource.id} className="font-bold text-lg py-5">
+            <div key={resource.id} className="font-bold text-lg py-5 text-blue-800">
               <a href={resource.url} target="_blank" rel="noopener noreferrer">
                 {resource.title}
               </a>
