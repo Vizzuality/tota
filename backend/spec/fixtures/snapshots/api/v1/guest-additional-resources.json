@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 2,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 3,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    },
+    {
+      "id": 4,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    },
+    {
+      "id": 5,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 6,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    }
+  ]
+}

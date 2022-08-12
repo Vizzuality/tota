@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 29,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 30,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 31,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    },
+    {
+      "id": 32,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    }
+  ]
+}
