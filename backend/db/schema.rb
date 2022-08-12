@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_123545) do
 
   create_table "additional_resource_groups", force: :cascade do |t|
     t.string "name"
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

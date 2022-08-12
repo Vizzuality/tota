@@ -10,6 +10,9 @@
   <thead>
     <tr>
       <th>
+        <%= sort_link @q, :position %>
+      </th>
+      <th>
         <%= sort_link @q, :name %>
       </th>
       <th></th>
@@ -18,6 +21,7 @@
   <tbody>
     <% @resources.each do |group| %>
       <tr data-link="<%= edit_admin_additional_resource_group_path(group) %>">
+        <td><%= group.position %></td>
         <td><%= group.name %></td>
         <td class="text-end">
           <%= dropdown "Actions" do %>

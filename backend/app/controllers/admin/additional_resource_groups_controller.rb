@@ -3,6 +3,10 @@ class Admin::AdditionalResourceGroupsController < Admin::AdminController
 
   private
 
+  def default_sort
+    'position'
+  end
+
   def resource_class
     AdditionalResourceGroup
   end
@@ -13,7 +17,8 @@ class Admin::AdditionalResourceGroupsController < Admin::AdminController
 
   def permitted_params
     [
-      :name
+      :name,
+      :position
     ]
   end
 end

@@ -5,6 +5,7 @@
   <div class="form-inputs">
     <%= card 'Details' do %>
       <%= f.input :name %>
+      <%= f.input :position if f.object.persisted? %>
     <% end %>
   </div>
 
