@@ -37,7 +37,7 @@ class User < ApplicationRecord
   end
 
   def visible_regions
-    return Region.province.or(Region.tourism_region).active if admin?
+    return Region.province_or_tourism_regions.active if admin?
 
     regions
   end
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   def non_visible_regions
     return [] if admin?
 
-    Region.where.not(id: visible_regions.ids)
+    Region.province_or_tourism_regions.active.where.not(id: visible_regions.ids)
   end
 
   def to_s

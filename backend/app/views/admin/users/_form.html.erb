@@ -30,7 +30,7 @@
                 label: 'Read access to regions',
                 as: :check_boxes,
                 wrapper_html: {data: {controller: 'select-all'}},
-               collection: Region.province.or(Region.tourism_region)
+               collection: Region.province_or_tourism_regions
             %>
           <% end %>
         <% end %>

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboards#index'
 
+    resources :additional_resources
+    resources :additional_resource_groups
     resources :dashboards, only: [:index]
     resources :data_uploads, only: [:index, :new, :create, :show]
     resources :users
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v1 do
+      resources :additional_resources, only: [:index]
       resources :development_funds, only: [:index], format: /(json|geojson)/
       resources :organizations, only: [:index], format: /(json|geojson)/
       resources :indicators, only: [:index]

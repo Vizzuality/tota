@@ -17,6 +17,7 @@ class Region < ApplicationRecord
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+  scope :province_or_tourism_regions, -> { province.or(Region.tourism_region) }
 
   before_validation :slugify
 

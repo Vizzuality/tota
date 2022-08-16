@@ -17,6 +17,7 @@ module Admin::Resources
     authorize resource_class
 
     @q = resource_class.ransack(params[:q])
+    @q.sorts = default_sort if default_sort.present? && @q.sorts.empty?
     collection = policy_scope(scoped_collection(@q.result))
 
     respond_to do |format|
@@ -126,6 +127,10 @@ module Admin::Resources
 
   def resource_class
     raise 'Method not implemented'
+  end
+
+  def default_sort
+    nil
   end
 
   # end of to reimplement in controllers

@@ -1,0 +1,2 @@
+class AdditionalResourceGroupPolicy < ApplicationPolicy
+end

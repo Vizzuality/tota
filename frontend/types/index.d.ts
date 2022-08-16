@@ -1,5 +1,12 @@
 import { ReactNode } from 'react';
 
+export interface AdditionalResource {
+  id: number;
+  title: string;
+  group: string;
+  url: string;
+}
+
 export interface User {
   email: string;
   name?: string;

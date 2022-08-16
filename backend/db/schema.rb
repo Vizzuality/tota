@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_26_092423) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_10_123545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_092423) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "additional_resource_groups", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "additional_resources", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "region_id", null: false
+    t.boolean "public", default: false, null: false
+    t.string "title", null: false
+    t.text "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_additional_resources_on_group_id"
+    t.index ["region_id"], name: "index_additional_resources_on_region_id"
   end
 
   create_table "business_types", force: :cascade do |t|
@@ -185,6 +204,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_092423) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "additional_resources", "additional_resource_groups", column: "group_id", on_delete: :nullify
+  add_foreign_key "additional_resources", "regions", on_delete: :cascade
   add_foreign_key "data_uploads", "users", column: "uploaded_by_id", on_delete: :nullify
   add_foreign_key "development_funds", "regions", on_delete: :cascade
   add_foreign_key "indicator_values", "indicators", on_delete: :cascade

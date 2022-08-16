@@ -22,7 +22,7 @@ class ThemesLoader
           .find_or_create_by!(slug: theme_slug)
         theme_slugs << theme_slug
 
-        theme_conf['widgets'].each do |widget_conf|
+        (theme_conf['widgets'] || []).each do |widget_conf|
           widget_slug = widget_conf['slug']
           Widget
             .create_with(widget_conf.except(:indicators, :regions_whitelist).merge(theme: theme))

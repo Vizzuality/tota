@@ -398,3 +398,6 @@ shared:
             - revpar_month
             - revpar_change_month
             - revpar_week
+
+    - slug: additional_resources
+      title: Additional Resources

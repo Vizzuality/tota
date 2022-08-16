@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": 43,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 44,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 45,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    },
+    {
+      "id": 46,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_2"
+    },
+    {
+      "id": 47,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 48,
+      "title": "Additional resource title",
+      "url": "https://example.com",
+      "group": "Group_1"
+    },
+    {
+      "id": 49,
+      "title": "Private Thompson res",
+      "url": "https://example.com",
+      "group": "Group_1"
+    }
+  ]
+}

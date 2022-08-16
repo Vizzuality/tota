@@ -1,0 +1,19 @@
+<%= simple_form_for [:admin, resource] do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= card 'Details' do %>
+      <%= f.input :title %>
+      <%= f.association :group %>
+      <%= f.association :region, collection: Region.province_or_tourism_regions %>
+      <%= f.input :public, as: :select, label: 'Visibility', collection: [['Public', true], ['Private', false]], include_blank: false %>
+      <%= f.input :link %>
+      <%= f.input :file, as: :file %>
+    <% end %>
+  </div>
+
+  <div class="form-actions mt-3">
+    <%= f.button :submit, class: 'btn btn-primary' %> or <%= link_to 'Back', :back %>
+  </div>
+<% end %>
