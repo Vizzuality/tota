@@ -399,5 +399,37 @@ shared:
             - revpar_change_month
             - revpar_week
 
+    - slug: visitor_spending
+      title: Visitor Spending
+      widgets:
+        - slug: spend_by_region
+          title: Total spend by destination region
+          description: |
+            TODO: description
+          indicators:
+            - spend_by_region
+
+        - slug: spend_by_origin
+          title: Domestic and international spending
+          description: |
+            TODO: description
+          indicators:
+            - spend_by_origin
+
+        - slug: spend_by_market
+          title: Monthly spend from domestic and international markets
+          description: |
+            TODO: description
+          indicators:
+            - spend_by_market_monthly
+            - spend_by_market_quarterly
+
+        - slug: spend_by_item
+          title: Spend by category
+          description: |
+            TODO: description
+          indicators:
+            - spend_by_item
+
     - slug: additional_resources
       title: Additional Resources

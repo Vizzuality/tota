@@ -12,5 +12,15 @@ export const moneyTickFormatter = (value) =>
     maximumFractionDigits: 0,
   }).format(value);
 
+export const compactMoneyTickFormatter = (value) =>
+  new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    notation: 'compact',
+    compactDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 1,
+  }).format(value);
+
 export const previousYear = (new Date().getFullYear() - 1).toString();
 export const thisYear = new Date().getFullYear().toString();
