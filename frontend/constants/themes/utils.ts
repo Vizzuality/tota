@@ -1,8 +1,8 @@
 import { getYear, getMonth } from 'utils/charts';
 
-export const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
+const monthNameFormatter = new Intl.DateTimeFormat('en', { month: 'short', timeZone: 'UTC' });
 export const shortMonthName = (date: string) =>
-  monthNameFormatter.format(new Date(Date.UTC(parseInt(getYear(date), 10), getMonth(date))));
+  monthNameFormatter.format(Date.UTC(parseInt(getYear(date), 10), getMonth(date) - 1));
 export const formatPercentage = (value: number) =>
   value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
 export const compactNumberTickFormatter = (value) =>
@@ -25,5 +25,5 @@ export const compactMoneyTickFormatter = (value) =>
     maximumFractionDigits: 1,
   }).format(value);
 
-export const previousYear = (new Date().getUTCFullYear() - 1).toString();
-export const thisYear = new Date().getUTCFullYear().toString();
+export const previousYear = (new Date().getFullYear() - 1).toString();
+export const thisYear = new Date().getFullYear().toString();
