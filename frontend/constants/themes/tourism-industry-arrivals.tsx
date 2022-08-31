@@ -440,8 +440,12 @@ const theme: ThemeFrontendDefinition = {
             scale: 'time',
             domain: ['auto', 'auto'],
           },
+          yAxis: {
+            tickFormatter: (val) => `${val}%`,
+          },
           tooltip: {
             ...defaultTooltip,
+            valueFormatter: (value) => `${value.toFixed(1)}%`,
             labelFormatter: (value) => {
               const parsedDate = new Date(parseInt(value, 10));
               return format(parsedDate, 'MMM d');
