@@ -408,7 +408,7 @@ const theme: ThemeFrontendDefinition = {
           .map((cat1: string) => ({ label: cat1.replace('compared_to_', ''), value: cat1 }));
         let data = rawData.filter((x: any) => x.category_1 === state.year);
         const allDates = data.map((x) => parseISO(x.date).getTime());
-        const selectedYear = Math.max(...uniq(allDates.map((x) => new Date(x).getFullYear())));
+        const selectedYear = Math.max(...uniq(allDates.map((x) => new Date(x).getUTCFullYear())));
         const months = allMonths.map((x) => new Date(`${selectedYear} ${x}`).getTime());
         const minDate = Math.min(...allDates);
         data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));

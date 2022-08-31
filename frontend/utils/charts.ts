@@ -127,7 +127,7 @@ export const range = (start: number, end: number) => Array.from({ length: end - 
 export function getYear(str: string): string {
   if (!str) return str;
 
-  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getFullYear().toString();
+  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getUTCFullYear().toString();
 }
 
 export function getYears(data: any[]): string[] {
@@ -137,7 +137,7 @@ export function getYears(data: any[]): string[] {
 }
 
 export function getMonth(date: string) {
-  return new Date(date).getMonth() + 1;
+  return new Date(date).getUTCMonth() + 1;
 }
 
 export function getStackedBarsData(data: any[], groupedBy: string) {

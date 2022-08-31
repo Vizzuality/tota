@@ -94,7 +94,7 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
     let data = filterBySelectedYear(rawData, state.year);
     data = data.map((x) => ({ ...x, date: parseISO(x.date).getTime().toString() }));
     const allDates = data.map((x) => parseInt(x.date, 10));
-    const allYears = uniq(allDates.map((x) => new Date(x).getFullYear()));
+    const allYears = uniq(allDates.map((x) => new Date(x).getUTCFullYear()));
     const minDate = Math.min(...allDates);
     const months = allYears.flatMap((year) => allMonths.map((month) => new Date(`${year} ${month}`).getTime()));
     const chartData = mergeForChart({ data, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
