@@ -431,5 +431,36 @@ shared:
           indicators:
             - spend_by_item
 
+    - slug: local_satisfaction
+      title: Local Satisfaction
+      widgets:
+        - slug: satisfaction_with_life
+          title: Overall, how satisfied are you with your life nowadays?
+          description: |
+            Total replies: 1366 answers
+          indicators:
+            - satisfaction_with_life
+
+        - slug: satisfaction_with_elements
+          title: Satisfaction with different elements that contribute to quality of life
+          description: |
+            TODO: description
+          indicators:
+            - satisfaction_with_elements
+
+        - slug: satisfaction_with_tourism
+          title: How satisfied are you with the state of tourism in your location?
+          description: |
+            Total replies: 991 answers
+          indicators:
+            - satisfaction_with_tourism
+
+        - slug: satisfaction_with_tourism_2
+          title: How satisfied are you with the state of tourism in your location?
+          description: |
+            TODO: description
+          indicators:
+            - satisfaction_with_tourism_2
+
     - slug: additional_resources
       title: Additional Resources
