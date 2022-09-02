@@ -1,35 +1,19 @@
 import uniq from 'lodash/uniq';
-import orderBy from 'lodash/orderBy';
 import {
-  allMonths,
   expandToFullYear,
   filterBySelectedYear,
   getAvailableYearsOptions,
   getColorsByRegionName,
   getOptions,
-  getPercentageTotalByLabel,
   getStackedBarsData,
-  getTop10AndOthersByYear,
-  getTopN,
   getWithMinMaxAreas,
-  getYear,
-  getUnitLabel,
   mergeForChart,
 } from 'utils/charts';
-import {
-  shortMonthName,
-  compactNumberTickFormatter,
-  compactMoneyTickFormatter,
-  thisYear,
-  previousYear,
-  formatPercentage,
-} from './utils';
+import { shortMonthName, compactMoneyTickFormatter, previousYear } from './utils';
 import { bottomLegend, defaultTooltip } from 'constants/charts';
 import { IndicatorValue, ThemeFrontendDefinition } from 'types';
-import { format, parseISO } from 'date-fns';
 
 import BoxImage from 'images/home/box-tourism-industry.png';
-import { getMapUrl } from 'hooks/map';
 
 const theme: ThemeFrontendDefinition = {
   slug: 'visitor_spending',

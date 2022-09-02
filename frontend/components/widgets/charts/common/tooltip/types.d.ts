@@ -8,4 +8,6 @@ export interface TooltipProps {
   payloadFilter?: (payloadDatum?: any) => any;
   showTotalRow?: boolean;
   showPercentageOfTotal?: boolean;
+  sortBy?: string[];
+  sortOrder?: Many<boolean | 'desc' | 'asc'>;
 }
