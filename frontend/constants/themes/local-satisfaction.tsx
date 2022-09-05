@@ -1,17 +1,6 @@
-import uniq from 'lodash/uniq';
 import orderBy from 'lodash/orderBy';
-import {
-  expandToFullYear,
-  filterBySelectedYear,
-  getAvailableYearsOptions,
-  getColorsByRegionName,
-  getOptions,
-  getStackedBarsData,
-  getWithMinMaxAreas,
-  mergeForChart,
-} from 'utils/charts';
-import { shortMonthName, compactMoneyTickFormatter, thisYear, previousYear } from './utils';
-import { bottomLegend, defaultTooltip } from 'constants/charts';
+import { filterBySelectedYear, getAvailableYearsOptions, getStackedBarsData, mergeForChart } from 'utils/charts';
+import { thisYear } from './utils';
 import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 
 import BoxImage from 'images/home/box-tourism-industry.png';
@@ -137,6 +126,46 @@ const theme: ThemeFrontendDefinition = {
             title: 'Regional Average',
             value: Number(regionalAverage?.value).toFixed(0),
           },
+        };
+      },
+    },
+    {
+      slug: 'satisfaction_with_tourism_2',
+      initialState: {
+        question: 'q1',
+      },
+      fetchParams: (state: any) => ({
+        slug: 'satisfaction_with_tourism_2',
+        region: state.selectedRegion.slug,
+      }),
+      fetchWidgetProps(rawData: IndicatorValue[], state): any {
+        // category_1 question: q1, q2, q3
+        // category_2 answer
+
+        const data = (rawData || []).filter((x) => x.category_1 === state.question);
+        const questionsMap = {
+          q1: 'Overall, the number of tourists to my site should',
+          q2: 'I would welcome visitors from',
+          q3: 'Where would you be ok with advertising for your region',
+        };
+
+        return {
+          type: 'charts/pie',
+          data,
+          controls: [
+            {
+              type: 'select',
+              side: 'right',
+              name: 'question',
+              options: Object.keys(questionsMap).map((key) => ({ label: questionsMap[key], value: key })),
+            },
+          ],
+          pies: [
+            {
+              nameKey: 'category_2',
+              dataKey: 'value',
+            },
+          ],
         };
       },
     },
