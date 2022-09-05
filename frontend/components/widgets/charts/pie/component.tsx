@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { ResponsiveContainer, Legend, PieChart, Pie, Tooltip, Cell } from 'recharts';
+import { ResponsiveContainer, Legend, Label, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
-import type { PieChartProps } from './types';
+import type { PieChartProps, CustomLabelProps } from './types';
 import CustomTooltip from 'components/widgets/charts/common/tooltip';
 import { useChartWidth } from 'hooks/charts';
 
@@ -30,7 +30,28 @@ function getLegend(pieChartWidth?: number) {
   };
 }
 
-const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { cursor: false } }: PieChartProps) => {
+const CustomLabel: FC<CustomLabelProps> = ({ viewBox, title, value }: CustomLabelProps) => {
+  const { cx, cy } = viewBox;
+  return (
+    <>
+      <text x={cx} y={cy - 5} textAnchor="middle" fontSize="20">
+        <tspan>{title}</tspan>
+      </text>
+      <text x={cx} y={cy + 25} textAnchor="middle" fontSize="24" fontWeight="bold">
+        <tspan>{value}</tspan>
+      </text>
+    </>
+  );
+};
+
+const Chart: FC<PieChartProps> = ({
+  data,
+  chartProps,
+  pies,
+  centerLabel,
+  legend,
+  tooltip = { cursor: false },
+}: PieChartProps) => {
   const { chartWidth, containerRef } = useChartWidth();
   const legendProps = legend || getLegend(chartWidth);
   const colors = getColorPalette(data.length);
@@ -42,6 +63,7 @@ const Chart: FC<PieChartProps> = ({ data, chartProps, pies, legend, tooltip = { 
         {pies &&
           Object.keys(pies).map((pie) => (
             <Pie key={pie} innerRadius="50%" outerRadius="70%" label {...pies[pie]} data={data}>
+              {centerLabel && <Label position="center" content={<CustomLabel {...centerLabel} />} />}
               {data.map((d, i) => (
                 <Cell key={`cell-${d}`} fill={d.color || colors[i % colors.length]} />
               ))}

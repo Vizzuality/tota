@@ -114,6 +114,32 @@ const theme: ThemeFrontendDefinition = {
         };
       },
     },
+    {
+      slug: 'satisfaction_with_tourism',
+      fetchParams: (state: any) => ({
+        slug: 'satisfaction_with_tourism',
+        region: state.selectedRegion.slug,
+      }),
+      fetchWidgetProps(rawData: IndicatorValue[], _state): any {
+        const data = (rawData || []).filter((x) => x.category_1 !== 'avg');
+        const regionalAverage = (rawData || []).find((x) => x.category_1 === 'avg');
+
+        return {
+          type: 'charts/pie',
+          data,
+          pies: [
+            {
+              nameKey: 'category_1',
+              dataKey: 'value',
+            },
+          ],
+          centerLabel: {
+            title: 'Regional Average',
+            value: Number(regionalAverage?.value).toFixed(0),
+          },
+        };
+      },
+    },
   ],
 };
 

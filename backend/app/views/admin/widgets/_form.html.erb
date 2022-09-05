@@ -4,6 +4,7 @@
 
   <div class="form-inputs">
     <%= card 'Details' do %>
+      <%= f.input :slug, disabled: true %>
       <%= f.input :title %>
       <%= f.input :sub_title %>
       <%= f.input :description, as: :trix_editor %>
