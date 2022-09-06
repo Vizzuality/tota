@@ -16,7 +16,7 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchParams: (state: any) => ({
         slug: ['satisfaction_with_life'],
-        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const data = filterBySelectedYear(rawData, state.year);
@@ -46,7 +46,7 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchParams: (state: any) => ({
         slug: ['satisfaction_with_elements'],
-        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
+        region: state.selectedRegion.slug,
       }),
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const allData = filterBySelectedYear(rawData, state.year);
