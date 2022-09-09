@@ -22,11 +22,14 @@ const Tooltip: FC<TooltipProps> = ({
   payloadFilter = () => true,
   showTotalRow = false,
   showPercentageOfTotal = false,
+  sortBy = ['value'],
+  sortOrder = ['desc'],
 }: TooltipProps) => {
   if (!active) return null;
 
   const filteredPayload = (payload || []).filter(payloadFilter);
-  const sortedPayload = orderBy(filteredPayload, ['value'], ['desc']);
+  const sortedPayload = orderBy(filteredPayload, sortBy, sortOrder);
+
   let totalValue: number;
 
   if (showTotalRow || showPercentageOfTotal) {
