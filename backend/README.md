@@ -3,7 +3,7 @@
 ## Dependencies:
 
 - Ruby v3
-- Rails v6.1
+- Rails v7
 - PostgreSQL v11
 
 ## Local installation
@@ -30,6 +30,10 @@ Copy CSV files with indicators and other entities data into `app/db/csvs` and ru
 
 If you want to debug rails app, running it through foreman could be not the best idea. In that case you can run css and js bundling
 using foreman `bin/watch` and the server in the standard way in a separate terminal tab.
+
+### Deploy
+
+Project deploys automatically when merging changes to main by using github workflow and capistrano.
 
 ### Run the tests
 
