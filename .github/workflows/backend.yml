@@ -68,25 +68,25 @@ jobs:
         with:
           name: screenshots
           path: backend/tmp/screenshots
-  deploy:
-    name: Deploy
-    needs: tests
-    runs-on: ubuntu-20.04
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          working-directory: backend
-          bundler-cache: true
-      - name: Deploy
-        uses: miloserdow/capistrano-deploy@master
-        with:
-          working-directory: backend
-          target: production
-          deploy_key: ${{ secrets.PRODUCTION_DEPLOY_ENC_KEY }}
-          enc_rsa_key_pth: ./config/deploy/encrypted_keys/production_deploy_enc
+  # deploy:
+  #   name: Deploy
+  #   needs: tests
+  #   runs-on: ubuntu-20.04
+  #   if: github.ref == 'refs/heads/main'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '16'
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         working-directory: backend
+  #         bundler-cache: true
+  #     - name: Deploy
+  #       uses: miloserdow/capistrano-deploy@master
+  #       with:
+  #         working-directory: backend
+  #         target: production
+  #         deploy_key: ${{ secrets.PRODUCTION_DEPLOY_ENC_KEY }}
+  #         enc_rsa_key_pth: ./config/deploy/encrypted_keys/production_deploy_enc
