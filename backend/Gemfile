@@ -9,6 +9,9 @@ gem 'puma', '~> 5.0'
 
 gem 'activerecord-import'
 
+# Storage
+gem 'aws-sdk-s3', require: false
+
 # API
 gem 'blueprinter'
 
