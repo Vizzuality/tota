@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  match '(*any)',
+    to: redirect(subdomain: ''),
+    via: :all,
+    constraints: { subdomain: 'www' }
+
   devise_for :users, path: 'auth', controllers: { sessions: 'auth/sessions' }
 
   root to: 'home#index'
