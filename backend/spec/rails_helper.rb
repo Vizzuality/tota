@@ -36,6 +36,10 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+
+  config.before(:each, type: :request) do
+    host! 'example.com' # removing default www.example.com otherwise we would get 301 redirects, check routes.rb
+  end
 end
 
 class FactoryBot::SyntaxRunner
