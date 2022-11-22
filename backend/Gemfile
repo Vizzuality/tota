@@ -50,14 +50,6 @@ group :development do
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'web-console', '>= 4.1.0'
-  gem 'capistrano', '~> 3.15', require: false
-  gem 'capistrano-maintenance', '~> 1.2', require: false
-  gem 'capistrano-rails', '~> 1.6', require: false
-  gem 'capistrano-rbenv', '~> 2.2'
-  gem 'capistrano-bundler'
-  gem 'capistrano3-puma'
-  gem 'capistrano-yarn'
-  gem 'capistrano-nvm'
 
   # required for emacs robe mode
   gem 'pry-doc', require: false

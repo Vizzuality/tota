@@ -33,7 +33,7 @@ using foreman `bin/watch` and the server in the standard way in a separate termi
 
 ### Deploy
 
-Project deploys automatically when merging changes to main by using github workflow and capistrano.
+Project deploys automatically when merging changes to main by digitalocean auto-deploy.
 
 ### Run the tests
 
