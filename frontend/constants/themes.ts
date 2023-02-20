@@ -1,4 +1,4 @@
-import { ThemeFrontendDefinition } from 'types';
+import { ThemeFrontendDefinition, ThemeCategoryFrontendDefinition } from 'types';
 import generalInsights from './themes/general-insights';
 import tourismIndustryArrivals from './themes/tourism-industry-arrivals';
 import airportInformation from './themes/airport-information';
@@ -9,7 +9,35 @@ import visitorSpending from './themes/visitor-spending';
 import localSatisfaction from './themes/local-satisfaction';
 import additionalResources from './themes/additional-resources';
 
-const themes: ThemeFrontendDefinition[] = [
+export const THEMES_CATEGORIES: ThemeCategoryFrontendDefinition[] = [
+  {
+    slug: 'general_insights',
+    label: 'General insights',
+  },
+  {
+    slug: 'business_investment_attraction',
+    label: 'Business Investment Attraction',
+    children: [
+      tourismIndustryArrivals,
+      tourismEmployment,
+      airportInformation,
+      accommodationInformation,
+      tourismDevelopmentFounds,
+      visitorSpending,
+    ],
+  },
+  {
+    slug: 'sustainability',
+    label: 'Sustainability',
+    children: [localSatisfaction],
+  },
+  {
+    slug: 'additional_resources',
+    label: 'Additional resources',
+  },
+];
+
+export const THEMES: ThemeFrontendDefinition[] = [
   generalInsights,
   tourismIndustryArrivals,
   tourismEmployment,
@@ -20,5 +48,3 @@ const themes: ThemeFrontendDefinition[] = [
   localSatisfaction,
   additionalResources,
 ];
-
-export default themes;

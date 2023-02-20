@@ -54,6 +54,12 @@ interface Source {
   note?: string;
 }
 
+export interface ThemeCategoryFrontendDefinition {
+  slug: string;
+  label: string;
+  children?: ThemeFrontendDefinition[];
+}
+
 export interface ThemeFrontendDefinition {
   slug: string;
   image?: string | StaticImageData;
@@ -81,6 +87,12 @@ export interface ThemeAPI {
   slug: string;
   title: string;
   description?: string;
+}
+
+export interface ThemeCategoriesAPI {
+  slug: string;
+  label: string;
+  children: ThemeAPI[];
 }
 
 export type Widget = WidgetAPI & WidgetFrontendDefinition;
