@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import orderBy from 'lodash/orderBy';
 
-import themes from 'constants/themes';
+import { THEMES } from 'constants/themes';
 import { Region, Widget, WidgetAPI } from 'types';
 
 import TotaAPI from 'services/api';
@@ -10,7 +10,7 @@ import TotaAPI from 'services/api';
 function mergeWithFrontendDefinitions(themeSlug: string, data: WidgetAPI[]): Widget[] {
   if (!data?.length) return [];
 
-  const theme = themes.find((t) => t.slug === themeSlug);
+  const theme = THEMES.find((t) => t.slug === themeSlug);
 
   return theme.widgets
     .map((w) => {

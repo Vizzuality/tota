@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import snakeCase from 'lodash/snakeCase';
 
-import THEMES from 'constants/themes';
+import { THEMES_CATEGORIES, THEMES } from 'constants/themes';
 
 import TotaAPI from 'services/api';
-import { Theme, ThemeAPI } from 'types';
+import { Theme, ThemeAPI, ThemeCategoriesAPI } from 'types';
 
 function mergeWithFrontendDefinitions(data: ThemeAPI[]): Theme[] {
   if (!data?.length) return [];
-
   return THEMES.map((t) => {
     const apiTheme = data.find((d) => d.slug === t.slug);
     if (!apiTheme) return null;
@@ -20,6 +19,28 @@ function mergeWithFrontendDefinitions(data: ThemeAPI[]): Theme[] {
       ...apiTheme,
     };
   }).filter((x) => x);
+}
+
+function mergeWithFrontendDefinitionsByCategories(data: ThemeAPI[]): ThemeCategoriesAPI[] {
+  if (!data?.length) return [];
+
+  return THEMES_CATEGORIES.map((category) => ({
+    ...category,
+
+    ...(category.children && {
+      children: category.children
+        .map((t) => {
+          const apiTheme = data.find((d) => d.slug === t.slug);
+          if (!apiTheme) return null;
+
+          return {
+            ...t,
+            ...apiTheme,
+          };
+        })
+        .filter((x) => x),
+    }),
+  }));
 }
 
 export function useRouterSelectedTheme(): Theme {
@@ -40,6 +61,21 @@ export function useThemes() {
     placeholderData: [],
     select: useCallback(mergeWithFrontendDefinitions, []),
   });
+
+  return {
+    ...result,
+    data: result.data || [],
+  };
+}
+
+export function useThemesCategories() {
+  const result = useQuery<ThemeAPI[], Error, ThemeCategoriesAPI[]>('themes', () => TotaAPI.get('themes'), {
+    keepPreviousData: true,
+    staleTime: Infinity,
+    placeholderData: [],
+    select: useCallback(mergeWithFrontendDefinitionsByCategories, []),
+  });
+
   return {
     ...result,
     data: result.data || [],
