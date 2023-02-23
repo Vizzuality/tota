@@ -52,6 +52,6 @@ export interface SelectMenuProps extends SelectStatusProps, SelectThemeProps {
 export interface SelectToggleProps extends SelectStatusProps, SelectDataProps, SelectThemeProps {
   opened: boolean;
   selectedItems: SelectOptionProps[];
-  getToggleButtonProps: (e?: unknown) => void;
+  getToggleButtonProps?: (e?: unknown) => void | Record<string, never>;
   getDropdownProps?: (e?: unknown) => void;
 }
