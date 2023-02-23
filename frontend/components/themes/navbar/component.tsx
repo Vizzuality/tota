@@ -94,12 +94,19 @@ const ThemeNavbar: React.FC<ThemeNavbarProps> = () => {
                     </Link>
                   ))}
                 >
-                  <button className="px-4 py-2 h-16 hover:bg-blue-900 flex items-center" type="button">
+                  <button
+                    type="button"
+                    className={cx('px-4 py-2 h-16 hover:bg-blue-900 flex items-center', {
+                      'hover:text-opacity-50 cursor-pointer': !children.find(
+                        (child) => kebabCase(child.slug) === themeSlug,
+                      ),
+                      'font-bold bg-blue-900': children.find((child) => kebabCase(child.slug) === themeSlug),
+                    })}
+                  >
                     {label}
                     <Icon
                       className={cx({
                         'ml-2 w-4 h-4 text-white': true,
-
                         'transform rotate-180': dropdownVisibility[slug],
                       })}
                       icon={ARROW_DOWN_SVG}
