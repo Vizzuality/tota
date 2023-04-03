@@ -58,10 +58,12 @@ const theme: ThemeFrontendDefinition = {
           ...d,
           color: REGION_COLORS[d.region_slug],
         }));
+        const total = data.reduce((prev, { value }) => prev + value, 0);
+        const dataPercent = data.map((d) => ({ ...d, value: (100 * d.value) / total }));
 
         return {
           type: 'charts/pie',
-          data,
+          data: dataPercent,
           controls: [
             { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, false) },
           ],
@@ -70,10 +72,16 @@ const theme: ThemeFrontendDefinition = {
               nameKey: 'region',
               dataKey: 'value',
               label: function ({ value }) {
-                return Number(value).toLocaleString();
+                return `${Number(value).toFixed(1)}%`;
               },
             },
           ],
+          tooltip: {
+            ...defaultTooltip,
+            valueFormatter: (value) => {
+              return `${Number(value).toFixed(1)}% `;
+            },
+          },
         };
       },
     },
