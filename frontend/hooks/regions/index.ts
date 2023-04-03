@@ -29,9 +29,10 @@ export function useRegions() {
       select: useCallback(applyParentsAndChildren, []),
     },
   );
+
   return {
     ...result,
-    data: orderBy(result.data || [], ['region_type', 'name'], ['asc', 'asc']),
+    data: orderBy(result.data, ['region_type', 'name'], ['asc', 'asc']) as Region[],
   };
 }
 

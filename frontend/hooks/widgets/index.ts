@@ -40,7 +40,7 @@ export function useWidgets(themeSlug: string, selectedRegion?: Region) {
               w.regions_whitelist ? w.regions_whitelist.includes(selectedRegion?.slug) : true,
             ),
             'position',
-          );
+          ) as Widget[];
         },
         [themeSlug, selectedRegion],
       ),
