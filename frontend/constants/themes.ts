@@ -1,7 +1,7 @@
 import { ThemeFrontendDefinition, ThemeCategoryFrontendDefinition } from 'types';
 import generalInsights from './themes/general-insights';
 import tourismIndustryArrivals from './themes/tourism-industry-arrivals';
-import airportInformation from './themes/airport-information';
+// import airportInformation from './themes/airport-information';
 import accommodationInformation from './themes/accommodation-information';
 import tourismDevelopmentFounds from './themes/tourism-development-founds';
 import tourismEmployment from './themes/tourism-employment';
@@ -20,7 +20,7 @@ export const THEMES_CATEGORIES: ThemeCategoryFrontendDefinition[] = [
     children: [
       tourismIndustryArrivals,
       tourismEmployment,
-      airportInformation,
+      // airportInformation,
       accommodationInformation,
       tourismDevelopmentFounds,
       visitorSpending,
@@ -41,7 +41,7 @@ export const THEMES: ThemeFrontendDefinition[] = [
   generalInsights,
   tourismIndustryArrivals,
   tourismEmployment,
-  airportInformation,
+  // airportInformation,
   accommodationInformation,
   tourismDevelopmentFounds,
   visitorSpending,
