@@ -28,7 +28,11 @@ function mergeWithFrontendDefinitions(themeSlug: string, data: WidgetAPI[]): Wid
 export function useWidgets(themeSlug: string, selectedRegion?: Region) {
   const result = useQuery<WidgetAPI[], Error, Widget[]>(
     ['widgets', { themeSlug }],
-    () => TotaAPI.get(`widgets?filter[theme_slug]=${themeSlug}`),
+    () => {
+      const slug =
+        themeSlug === 'tourism_industry_arrivals' ? 'tourism_industry_arrivals,airport_information' : themeSlug;
+      return TotaAPI.get(`widgets?filter[theme_slug]=${slug}`);
+    },
     {
       keepPreviousData: true,
       staleTime: Infinity,

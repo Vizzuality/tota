@@ -101,6 +101,46 @@ const theme: ThemeFrontendDefinition = {
       },
     },
     {
+      slug: 'passenger_volume',
+      initialState: {
+        year: previousYear,
+        airport: undefined,
+      },
+      fetchParams: (state: any) => ({
+        slug: ['airport_domestic_pax_monthly', 'airport_international_pax_monthly'],
+        region: [state.selectedRegion.slug, ...state.selectedRegion.children?.map((x) => x.slug)].filter((x) => x),
+      }),
+      fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
+        const airports = uniq(rawData.map((x) => x.category_2));
+        let data = filterBySelectedYear(rawData, state.year);
+        data = data.filter((x) => x.category_2 === (state.airport || airports[0]));
+        const indicatorsMap = {
+          airport_domestic_pax_monthly: 'Domestic Flights',
+          airport_international_pax_monthly: 'International Flights',
+        };
+        const changed = data.map((x) => ({ ...x, indicator: indicatorsMap[x.indicator] }));
+        let chartData = mergeForChart({ data: changed, mergeBy: 'date', labelKey: 'indicator', valueKey: 'value' });
+        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
+
+        return {
+          type: 'charts/bar',
+          data: chartData,
+          controls: [
+            { type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData) },
+            { type: 'select', side: 'right', name: 'airport', options: getOptions(airports, false) },
+          ],
+          bars: Object.values(indicatorsMap).map((x) => ({ dataKey: x })),
+          xAxis: {
+            dataKey: 'date',
+            tickFormatter: state.year !== 'all_years' && shortMonthName,
+          },
+          yAxis: {
+            tickFormatter: compactNumberTickFormatter,
+          },
+        };
+      },
+    },
+    {
       slug: 'domestic_arrivals',
       initialState: {
         group: 'visits',
@@ -201,7 +241,7 @@ const theme: ThemeFrontendDefinition = {
           ratioText = (
             <div>
               peak/lowest month ({shortMonthName(ratio.category_1)}/{shortMonthName(ratio.category_2)}):{' '}
-              <span className="text-green-400 text-5xl font-bold">{ratioNumber}</span> x visitors
+              <span className="text-5xl font-bold text-green-400">{ratioNumber}</span> x visitors
             </div>
           );
         }
