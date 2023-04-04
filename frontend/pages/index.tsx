@@ -28,7 +28,7 @@ const Home: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Welcome to TOTA</title>
+        <title>Welcome to BCRTS</title>
       </Head>
 
       <Hero
@@ -56,7 +56,7 @@ const Home: React.FC<void> = (): JSX.Element => {
       />
 
       <div className="container mx-auto lg:px-16">
-        <div className="text-blue-800 text-center py-24 mx-auto" style={{ maxWidth: 800 }}>
+        <div className="py-24 mx-auto text-center text-blue-800" style={{ maxWidth: 800 }}>
           <h4 className="text-2xl leading-10">
             British Columbia is one of the most attractive destinations worldwide. With this initiative, the
             participating regions within the province seek to strengthen their commitment towards sustainable
@@ -72,17 +72,17 @@ const Home: React.FC<void> = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="bg-white text-blue-800 text-center py-24 mx-auto">
+      <div className="py-24 mx-auto text-center text-blue-800 bg-white">
         <div className="container mx-auto">
-          <h3 className="font-bold text-4xl leading-normal">Explore the data</h3>
-          <p className="mt-10 mx-auto leading-7" style={{ maxWidth: 800 }}>
+          <h3 className="text-4xl font-bold leading-normal">Explore the data</h3>
+          <p className="mx-auto mt-10 leading-7" style={{ maxWidth: 800 }}>
             This platform includes a variety of tourism-relevant information gathered from different sources across BC.
             It is an ever-evolving platform where data is regularly added to continuously extend the available economic,
             environmental and social insights and improve their spatial and temporal quality.
           </p>
 
           {themesFetchedWithSuccess && (
-            <div className="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-10 mt-10 md:grid-cols-2 lg:grid-cols-3">
               {themes.map((theme) => (
                 <IndicatorLink
                   key={theme.slug}
@@ -93,11 +93,11 @@ const Home: React.FC<void> = (): JSX.Element => {
                 />
               ))}
               <div
-                className="relative w-full text-white text-2xl font-bold bg-cover"
+                className="relative w-full text-2xl font-bold text-white bg-cover"
                 style={{ backgroundImage: `url(${boxComingSoonImage})`, paddingBottom: '100%' }}
               >
                 <Image src={boxComingSoonImage} layout="fill" objectFit="cover" quality={100} />
-                <span className="absolute left-0 bottom-0 p-5 text-left">More coming soon...</span>
+                <span className="absolute bottom-0 left-0 p-5 text-left">More coming soon...</span>
               </div>
             </div>
           )}
