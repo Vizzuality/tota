@@ -126,8 +126,9 @@ export const range = (start: number, end: number) => Array.from({ length: end - 
 
 export function getYear(str: string): string {
   if (!str) return str;
-
-  return new Date(str.replace(/Q\d/, '').replace(/W\d\d/, '')).getUTCFullYear().toString();
+  const quarterRegex = new RegExp(/-Q\d/);
+  const monthRegex = new RegExp(/-W\d\d/);
+  return new Date(str.replace(quarterRegex, '').replace(monthRegex, '')).getUTCFullYear().toString();
 }
 
 export function getYears(data: any[]): string[] {
