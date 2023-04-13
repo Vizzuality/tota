@@ -2,7 +2,7 @@ import uniq from 'lodash/uniq';
 import startCase from 'lodash/startCase';
 import groupBy from 'lodash/groupBy';
 import meanBy from 'lodash/meanBy';
-import { IndicatorValue, Region, ThemeFrontendDefinition } from 'types';
+import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 
 import BoxImage from 'images/home/box-employment.png';
 
@@ -21,16 +21,6 @@ import { compactNumberTickFormatter, shortMonthName, thisYear, previousYear } fr
 import { defaultTooltip, bottomLegend } from 'constants/charts';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
-
-const ECONOMIC_REGION_COLORS = {
-  Cariboo: '#BB9075',
-  Kootenay: '#405E62',
-  'Thompson-Okanagan': '#76ACA9',
-  'Vancouver Island and Coast': '#4F91CD',
-  'British Columbia': '#314057',
-  Northeast: '#A9B937',
-  'North Coast and Nechako': '#00A572',
-};
 
 const theme: ThemeFrontendDefinition = {
   slug: 'tourism_employment',
@@ -75,19 +65,18 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+
         let areas = [];
         if (state.year !== 'all_years') {
           chartData = expandToFullYear(chartData);
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region', {}, 'region_slug');
         }
-
         return {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
+          lines: areas.map((x) => ({ dataKey: x.key, color: x.fill })),
           chartProps: {
             margin: {
               top: 35,
@@ -132,19 +121,19 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
+        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+
         let areas = [];
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
         if (state.year !== 'all_years' && state.selectedRegion.parent) {
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
+          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region');
         }
 
         return {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
+          lines: areas.map((x) => ({ dataKey: x.key, color: x.fill })),
           areas,
           xAxis: {
             dataKey: 'date',

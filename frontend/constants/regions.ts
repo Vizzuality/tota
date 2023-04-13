@@ -9,11 +9,11 @@ export const REGION_BBOX = {
 };
 
 export const REGION_COLORS = {
-  british_columbia: '#314057',
-  cariboo_chilcotin_coast: '#BB9075',
-  kootenay_rockies: '#405E62',
+  british_columbia: '#000000',
+  cariboo_chilcotin_coast: '#BA9077',
+  kootenay_rockies: '#1CB5A1',
   northern_british_columbia: '#A9B937',
-  thompson_okanagan: '#76ACA9',
-  vancouver_coast_and_mountains: '#063898',
-  vancouver_island: '#4F91CD',
+  thompson_okanagan: '#933633',
+  vancouver_coast_and_mountains: '#0C3B96',
+  vancouver_island: '#5292CB',
 };

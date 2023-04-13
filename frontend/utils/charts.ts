@@ -4,6 +4,7 @@ import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 
 import { IndicatorValue, OptionType } from 'types';
 import { REGION_COLORS } from 'constants/regions';
@@ -218,19 +219,32 @@ export function getMonthlyMinMax(data: IndicatorValue[], groupByKey: string) {
   });
 }
 
-export function getWithMinMaxAreas(chartData: any, rawData: IndicatorValue[], groupByKey: string, colors: any = {}) {
+export function getWithMinMaxAreas(
+  chartData: any,
+  rawData: IndicatorValue[],
+  groupByKey: string,
+  colors: any = {},
+  color = 'region_slug',
+) {
   const monthlyMinMax = getMonthlyMinMax(rawData, groupByKey);
-  const uniqKeys = uniq(rawData.map((x) => x[groupByKey]));
+  const uniqKeys = uniqBy(
+    rawData.map((x) => ({ colorKey: x[color], key: x[groupByKey] })),
+    'key',
+  );
   const newChartData = chartData.map((d) => ({
     ...d,
-    ...uniqKeys.reduce((acc, key) => ({ ...acc, [`${key} min-max`]: monthlyMinMax[key][getMonth(d.date)] }), {}),
+    ...uniqKeys.reduce((acc, { key }) => ({ ...acc, [`${key} min-max`]: monthlyMinMax[key][getMonth(d.date)] }), {}),
   }));
-  const areas = uniqKeys.map((key: string) => ({
-    dataKey: `${key} min-max`,
-    fillOpacity: 0.07,
-    fill: colors[key],
-    stroke: 'none',
-  }));
+
+  const areas = uniqKeys.map(({ key, colorKey }) => {
+    return {
+      key,
+      dataKey: `${key} min-max`,
+      fillOpacity: 0.07,
+      fill: REGION_COLORS[colorKey] || colors?.[key],
+      stroke: 'none',
+    };
+  });
   return [newChartData, areas];
 }
 
