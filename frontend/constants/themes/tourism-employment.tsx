@@ -66,7 +66,8 @@ const theme: ThemeFrontendDefinition = {
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
-
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
         let areas = [];
         if (state.year !== 'all_years') {
           chartData = expandToFullYear(chartData);
@@ -76,7 +77,7 @@ const theme: ThemeFrontendDefinition = {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: areas.map((x) => ({ dataKey: x.key, color: x.fill })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           chartProps: {
             margin: {
               top: 35,
@@ -122,6 +123,8 @@ const theme: ThemeFrontendDefinition = {
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
         let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
 
         let areas = [];
         if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
@@ -133,7 +136,7 @@ const theme: ThemeFrontendDefinition = {
           type: 'charts/composed',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: areas.map((x) => ({ dataKey: x.key, color: x.fill })),
+          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
           areas,
           xAxis: {
             dataKey: 'date',
