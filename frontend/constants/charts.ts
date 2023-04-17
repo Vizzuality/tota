@@ -18,22 +18,22 @@ export const defaultGrid = {
 export const defaultTooltip = { cursor: { stroke: '#314057', strokeWidth: 1 } };
 
 export const COLORS = [
-  '#00B6A1',
-  '#00A572',
-  '#008C60',
-  '#01796F',
-  '#115E59',
-  '#134E4A',
-  '#57A0D3',
-  '#4286BA',
-  '#3974A1',
-  '#0F52BA',
-  '#063898',
-  '#00376A',
-  '#9CA3AF',
-  '#6B7280',
-  '#4B5563',
-  '#353E4A',
+  '#CCEFEA',
+  '#6FD0C3',
+  '#1CB5A1',
+  '#1B887C',
+  '#185F5A',
+  '#B4D0E9',
+  '#84B1DA',
+  '#5292CB',
+  '#3169B1',
+  '#0D3C96',
+  '#CEAF9D',
+  '#BA9077',
+  '#AA6B5B',
+  '#933633',
+  '#000000',
+  '#9CA3AE',
 ];
 
 export const getColorPalette = (dataLength: number) => {
