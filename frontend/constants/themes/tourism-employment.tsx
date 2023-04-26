@@ -2,7 +2,7 @@ import uniq from 'lodash/uniq';
 import startCase from 'lodash/startCase';
 import groupBy from 'lodash/groupBy';
 import meanBy from 'lodash/meanBy';
-import { IndicatorValue, Region, ThemeFrontendDefinition } from 'types';
+import { IndicatorValue, ThemeFrontendDefinition } from 'types';
 
 import BoxImage from 'images/home/box-employment.png';
 
@@ -21,16 +21,6 @@ import { compactNumberTickFormatter, shortMonthName, thisYear, previousYear } fr
 import { defaultTooltip, bottomLegend } from 'constants/charts';
 import { getMapUrl } from 'hooks/map';
 import { getEconomicRegionsLayer } from 'hooks/layers';
-
-const ECONOMIC_REGION_COLORS = {
-  Cariboo: '#BB9075',
-  Kootenay: '#405E62',
-  'Thompson-Okanagan': '#76ACA9',
-  'Vancouver Island and Coast': '#4F91CD',
-  'British Columbia': '#314057',
-  Northeast: '#A9B937',
-  'North Coast and Nechako': '#00A572',
-};
 
 const theme: ThemeFrontendDefinition = {
   slug: 'tourism_employment',
@@ -75,29 +65,28 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
-        let areas = [];
-        if (state.year !== 'all_years') {
-          chartData = expandToFullYear(chartData);
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
-        }
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
+        const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
 
+        const isLineChart = state.year === 'all_years' && state.selectedRegion.slug === 'british_columbia';
+        const formatter = (date: string) => (state.year !== 'all_years' ? shortMonthName(date) : date);
+        const regionData = regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] }));
         return {
-          type: 'charts/composed',
+          type: isLineChart ? 'charts/line' : 'charts/bar',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
+          bars: regionData,
+          lines: regionData,
           chartProps: {
             margin: {
               top: 35,
               left: 10,
             },
           },
-          areas,
           xAxis: {
             dataKey: 'date',
-            tickFormatter: state.year !== 'all_years' && shortMonthName,
+            tickFormatter: formatter,
           },
           yAxis: {
             tickFormatter: compactNumberTickFormatter,
@@ -109,7 +98,8 @@ const theme: ThemeFrontendDefinition = {
           },
           tooltip: {
             ...defaultTooltip,
-            payloadFilter: (y) => !y.name.includes('min-max'),
+            cursor: false,
+            labelFormatter: formatter,
           },
         };
       },
@@ -132,35 +122,35 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'category_2', valueKey: 'value' });
-        const regions = uniq(rawData.map((x) => x.category_2));
-        let areas = [];
-        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
-        if (state.year !== 'all_years' && state.selectedRegion.parent) {
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'category_2', ECONOMIC_REGION_COLORS);
-        }
+        const regions = uniq(rawData.map((x) => x.region));
+        const colorsByRegionName = getColorsByRegionName(rawData);
 
+        const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+
+        const isLineChart = state.year === 'all_years' && state.selectedRegion.slug === 'british_columbia';
+        const formatter = (date: string) => (state.year !== 'all_years' ? shortMonthName(date) : date);
+        const regionData = regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] }));
         return {
-          type: 'charts/composed',
+          type: isLineChart ? 'charts/line' : 'charts/bar',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: ECONOMIC_REGION_COLORS[x] })),
-          areas,
+          bars: regionData,
+          lines: regionData,
           xAxis: {
             dataKey: 'date',
-            tickFormatter: state.year !== 'all_years' && shortMonthName,
+            tickFormatter: formatter,
           },
           yAxis: {
             tickFormatter: (val) => `${val}%`,
           },
           legend: {
             ...bottomLegend,
-            payloadFilter: (y) => !y.value.includes('min-max'),
           },
           tooltip: {
             ...defaultTooltip,
-            valueFormatter: (value) => `${value.toFixed(2)}%`,
-            payloadFilter: (y) => !y.name.includes('min-max'),
+            cursor: false,
+            valueFormatter: (value: number) => `${value.toFixed(2)}%`,
+            labelFormatter: formatter,
           },
         };
       },
@@ -183,35 +173,34 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
         const filtered = filterBySelectedYear(rawData, state.year);
-        let chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
+        const chartData = mergeForChart({ data: filtered, mergeBy: 'date', labelKey: 'region', valueKey: 'value' });
         const regions = uniq(rawData.map((x) => x.region));
         const colorsByRegionName = getColorsByRegionName(rawData);
-        let areas = [];
-        if (state.year !== 'all_years') chartData = expandToFullYear(chartData);
-        if (state.year !== 'all_years' && state.selectedRegion.parent) {
-          [chartData, areas] = getWithMinMaxAreas(chartData, rawData, 'region', colorsByRegionName);
-        }
 
+        const isLineChart = state.year === 'all_years' && state.selectedRegion.slug === 'british_columbia';
+
+        const formatter = (date: string) => (state.year !== 'all_years' ? shortMonthName(date) : date);
+        const regionData = regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] }));
         return {
-          type: 'charts/composed',
+          type: isLineChart ? 'charts/line' : 'charts/bar',
           data: chartData,
           controls: [{ type: 'select', side: 'right', name: 'year', options: getAvailableYearsOptions(rawData, true) }],
-          lines: regions.map((x) => ({ dataKey: x, color: colorsByRegionName[x] })),
-          areas,
+          bars: regionData,
+          lines: regionData,
           xAxis: {
             dataKey: 'date',
-            tickFormatter: state.year !== 'all_years' && shortMonthName,
+            tickFormatter: formatter,
           },
           yAxis: {
             tickFormatter: compactNumberTickFormatter,
           },
           legend: {
             ...bottomLegend,
-            payloadFilter: (y) => !y.value.includes('min-max'),
           },
           tooltip: {
             ...defaultTooltip,
-            payloadFilter: (y) => !y.name.includes('min-max'),
+            cursor: false,
+            labelFormatter: formatter,
           },
         };
       },
