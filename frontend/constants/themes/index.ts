@@ -1,13 +1,13 @@
 import { ThemeFrontendDefinition, ThemeCategoryFrontendDefinition } from 'types';
-import generalInsights from './themes/general-insights';
-import tourismIndustryArrivals from './themes/tourism-industry-arrivals';
-// import airportInformation from './themes/airport-information';
-import accommodationInformation from './themes/accommodation-information';
-import tourismDevelopmentFounds from './themes/tourism-development-founds';
-import tourismEmployment from './themes/tourism-employment';
-import visitorSpending from './themes/visitor-spending';
-import localSatisfaction from './themes/local-satisfaction';
-import additionalResources from './themes/additional-resources';
+import generalInsights from './general-insights';
+import tourismIndustryArrivals from './tourism-industry-arrivals';
+// import airportInformation from './airport-information';
+import accommodationInformation from './accommodation-information';
+import tourismDevelopmentFounds from './tourism-development-founds';
+import tourismEmployment from './tourism-employment';
+import visitorSpending from './visitor-spending';
+import localSatisfaction from './local-satisfaction';
+import additionalResources from './additional-resources';
 
 export const THEMES_CATEGORIES: ThemeCategoryFrontendDefinition[] = [
   {

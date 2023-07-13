@@ -1,7 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import cx from 'classnames';
 
-import Head from 'next/head';
 import Navbar from './navbar';
 import Footer from './footer';
 import type { NavbarPosition, NavbarTheme } from './navbar/types';
@@ -25,11 +24,6 @@ const Layout: FC<LayoutProps> = ({
 }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Head>
-        <title>British Columbia Regional Tourism Secretariat (BCRTS)</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Navbar theme={navbarTheme} position={navbarPosition} header={navbarHeader} />
 
       <main className={cx(className, 'mx-auto flex-1 bg-gray-50')}>{children}</main>
