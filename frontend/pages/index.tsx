@@ -28,7 +28,11 @@ const Home: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Welcome to BCRTS</title>
+        <title>Welcome | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <meta
+          name="description"
+          content="British Columbia is one of the most attractive destinations worldwide. With this initiative, the participating regions within the province seek to strengthen their commitment towards sustainable development."
+        />
       </Head>
 
       <Hero

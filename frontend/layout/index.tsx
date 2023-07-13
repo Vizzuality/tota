@@ -26,7 +26,7 @@ const Layout: FC<LayoutProps> = ({
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Head>
-        <title>Tota</title>
+        <title>British Columbia Regional Tourism Secretariat (BCRTS)</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

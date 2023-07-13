@@ -15,7 +15,7 @@ const Map: React.FC<void> = (): JSX.Element => {
       hideFooter
     >
       <Head>
-        <title>Map</title>
+        <title>Map | British Columbia Regional Tourism Secretariat (BCRTS)</title>
       </Head>
       <MapProvider>
         <div className="w-full flex h-screen-minus-header">

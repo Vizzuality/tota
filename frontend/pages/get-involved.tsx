@@ -18,7 +18,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Get involved</title>
+        <title>Get involved | British Columbia Regional Tourism Secretariat (BCRTS)</title>
       </Head>
 
       <Hero

@@ -11,7 +11,7 @@ const About: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>About page</title>
+        <title>About | British Columbia Regional Tourism Secretariat (BCRTS)</title>
       </Head>
 
       <Hero image={heroBackgroundImage}>
