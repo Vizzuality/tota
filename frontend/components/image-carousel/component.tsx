@@ -12,12 +12,11 @@ const ImageCarousel: FC<ImageCarouselProps> = ({ images }: ImageCarouselProps) =
   };
 
   useInterval(setNextImage, 4000);
-
   return (
     <>
       {images.map((img, i) => (
         <Image
-          key={`image-carousel-image-${img}`}
+          key={`image-carousel-image-${img.src}`}
           alt="Hero image"
           src={img}
           layout="fill"
