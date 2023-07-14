@@ -18,7 +18,11 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Get involved | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>Get involved | Tourism Impact Portal</title>
+        <meta
+          name="description"
+          content="With the BC Tourism Impact Portal, the participating regions want to strengthen an open data culture, where information sharing and joint data efforts form the basis for better decision making and thus tourism planning overall. To ensure sustainable tourism development in the future, this is our collective responsibility."
+        />
       </Head>
 
       <Hero
@@ -29,7 +33,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
 
       <div className="container mx-auto lg:px-16">
         <div className="grid md:grid-cols-2 gap-10 xl:gap-20 mt-20 text-center">
-          <div className="p-10 xl:p-16 text-white relative">
+          <div className="p-10 xl:p-16 text-white relative" id="suggest-story">
             <Image src={background1Image} layout="fill" objectFit="cover" objectPosition="center" quality={100} />
             <div className="relative">
               <h2 className="text-2xl">Suggest a story</h2>
@@ -42,7 +46,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
               </Button>
             </div>
           </div>
-          <div className="p-10 xl:p-16 text-white relative">
+          <div className="p-10 xl:p-16 text-white relative" id="contribute-data">
             <Image src={background2Image} layout="fill" objectFit="cover" objectPosition="center" quality={100} />
             <div className="relative">
               <h2 className="text-2xl">Contribute data</h2>
@@ -65,7 +69,7 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="text-blue-800 mt-10 xl:mt-20 py-24 px-10 text-center bg-white">
+        <div className="text-blue-800 mt-10 xl:mt-20 py-24 px-10 text-center bg-white" id="feedback">
           <h2 className="text-4xl">Feedback & Questions</h2>
 
           <p className="mt-10 leading-7">

@@ -41,15 +41,15 @@ const Footer: FC<FooterProps> = () => {
       children: [
         {
           title: 'Suggest a Story',
-          href: '/get-involved',
+          href: '/get-involved#suggest-story',
         },
         {
           title: 'Contribute Data',
-          href: '/get-involved',
+          href: '/get-involved#contribute-data',
         },
         {
           title: 'Feedback & Questions',
-          href: '/get-involved',
+          href: '/get-involved#feedback',
         },
       ],
     },

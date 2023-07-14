@@ -15,7 +15,11 @@ const Map: React.FC<void> = (): JSX.Element => {
       hideFooter
     >
       <Head>
-        <title>Map | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>Map | Tourism Impact Portal</title>
+        <meta
+          name="description"
+          content="A central place providing key insights about tourism development in the province to support well-informed decisions for a sustainable future."
+        />
       </Head>
       <MapProvider>
         <div className="w-full flex h-screen-minus-header">

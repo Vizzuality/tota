@@ -7,7 +7,7 @@ const Custom500: React.FC = () => {
   return (
     <Layout className="w-full" navbarTheme="gray">
       <Head>
-        <title>500 - Unexpected Error</title>
+        <title>500 - Unexpected Error | Tourism Impact Portal</title>
       </Head>
 
       <div className="flex flex-col md:flex-grow min-h-[500px] mt-24">
