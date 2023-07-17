@@ -15,6 +15,7 @@ export const Input: FC<InputProps> = ({
   meta = {},
   icon,
   className,
+  innerRef,
   ...props
 }: InputProps) => {
   const st = useStatus({ meta, disabled });
@@ -34,6 +35,7 @@ export const Input: FC<InputProps> = ({
       <input
         {...input}
         {...props}
+        ref={innerRef}
         type={type}
         disabled={disabled}
         className={cx({

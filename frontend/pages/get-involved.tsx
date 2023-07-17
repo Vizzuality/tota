@@ -1,7 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
-
+import { useMemo, useState, useCallback } from 'react';
 import Layout from 'layout';
+import cx from 'classnames';
+
+import Loading from 'components/loading';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useSaveContact } from 'hooks/contact';
 
 import Hero from 'components/hero';
 import Button from 'components/button';
@@ -14,7 +21,52 @@ import ParticipatingRegions from 'components/static-pages/participating-regions'
 
 import { SUGGEST_STORY_FORM_URL, CONTRIBUTE_DATA_FORM_URL } from 'constants/links';
 
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  message: yup.string().required(),
+});
+
 const GetInvolved: React.FC<void> = (): JSX.Element => {
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: {
+      email: '',
+      message: '',
+    },
+    resolver: yupResolver(schema),
+  });
+  const { errors } = formState;
+  const saveContactMutation = useSaveContact({});
+
+  const onSubmit = useCallback(
+    (data) => {
+      setSubmitting(true);
+      saveContactMutation.mutate(
+        { data },
+        {
+          onSuccess: () => {
+            setSubmitting(false);
+            setSuccess(true);
+          },
+          onError: () => {
+            setSubmitting(false);
+          },
+        },
+      );
+    },
+    [saveContactMutation],
+  );
+
+  const refToInnerRef = (propsWithRef) => {
+    const propsWithInnerRef = { ...propsWithRef, innerRef: propsWithRef.ref };
+    delete propsWithInnerRef.ref;
+    return propsWithInnerRef;
+  };
+
+  const emailInputProps = useMemo(() => refToInnerRef(register('email')), [register, refToInnerRef]);
+  const messageInputProps = useMemo(() => refToInnerRef(register('message')), [register, refToInnerRef]);
+
   return (
     <Layout className="w-full">
       <Head>
@@ -75,18 +127,52 @@ const GetInvolved: React.FC<void> = (): JSX.Element => {
           <p className="mt-10 leading-7">
             Would you like to share some feedback or do you have any questions for us? Write us:
           </p>
-
-          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-            <div className="w-full" style={{ maxWidth: 500 }}>
-              <Input mode="underlined" placeholder="Enter your email" />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {submitting && (
+              <div className="absolute top-0 left-0 z-20 flex items-center justify-center w-full h-full bg-orange-500/50">
+                <Loading />
+              </div>
+            )}
+            {success && (
+              <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-full h-full py-20 space-y-5 bg-orange-500 xl:px-20">
+                <h2 className="text-4xl font-black uppercase md:text-6xl font-display">Thank you</h2>
+                <p className="text-xl font-light">We will be in touch soon.</p>
+              </div>
+            )}
+            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+              <div className="w-full" style={{ maxWidth: 500 }}>
+                <Input
+                  id="email"
+                  mode="underlined"
+                  placeholder="Enter your email"
+                  {...emailInputProps}
+                  className={cx({
+                    'border-red-100': errors.email,
+                  })}
+                />
+              </div>
+              <div className="w-full" style={{ maxWidth: 500 }}>
+                <Input
+                  id="message"
+                  mode="underlined"
+                  placeholder="Enter your message"
+                  {...messageInputProps}
+                  className={cx({
+                    'border-red-100': errors.message,
+                  })}
+                />
+              </div>
+              <Button type="submit" theme="secondary" className="w-48">
+                Submit
+              </Button>
             </div>
-            <div className="w-full" style={{ maxWidth: 500 }}>
-              <Input mode="underlined" placeholder="Enter your message" />
-            </div>
-            <Button theme="secondary" className="w-48">
-              Submit
-            </Button>
-          </div>
+            {(errors?.email || errors?.message) && (
+              <div className="text-red-100 pt-2">
+                <p>{errors?.email?.message}</p>
+                <p>{errors?.message?.message}</p>
+              </div>
+            )}
+          </form>
         </div>
 
         <ParticipatingRegions />
