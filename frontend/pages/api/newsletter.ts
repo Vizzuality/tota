@@ -8,7 +8,7 @@ const Newsletter = (req: NextApiRequest, res: NextApiResponse): void => {
     const { email } = req.body;
 
     const data = {
-      list_ids: ['1b704de4-643f-4531-b6cb-63fea0e6ad2a'],
+      list_ids: ['586b1c6d-14f1-498a-a99f-72ec2e303af9'],
       contacts: [
         {
           email,

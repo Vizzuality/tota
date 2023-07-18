@@ -2,15 +2,15 @@ import sendgridMail from '@sendgrid/mail';
 import sendgridClient from '@sendgrid/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-sendgridMail.setApiKey(process.env.SENDGRID_API_KEY_CONTACT);
+sendgridMail.setApiKey(process.env.SENDGRID_API_KEY_SUBSCRIPTION);
 sendgridClient.setApiKey(process.env.SENDGRID_API_KEY_SUBSCRIPTION);
 
 const Contact = (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === 'POST') {
-    const { email, message, topic } = req.body;
+    const { email, message } = req.body;
 
     // Saving contacts and emails in Sendgrid
-    const list_ids = ['0ee4b8ab-2088-44c1-b7cc-5eab97a49fda'];
+    const list_ids = ['15b393bc-f907-4b18-8801-1c7f7ed98aae'];
 
     const data = {
       list_ids,
@@ -38,11 +38,11 @@ const Contact = (req: NextApiRequest, res: NextApiResponse): void => {
       },
     );
 
-    // Sending email to the user
+    // Sending email
     const msg = {
-      to: 'hello@tota.com',
-      from: 'no-reply@tota.com',
-      subject: `Contact: ${topic}`,
+      to: 'impactportal@totabc.com',
+      from: 'impactportal@totabc.com',
+      subject: `Contact from the website - ${email}`,
       text: `A new message has been received from the website.\n\n
       Message: ${message}`,
       html: `<p>A new message has been received from the website.</p>
