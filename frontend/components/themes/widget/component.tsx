@@ -10,6 +10,8 @@ import type { WidgetProps } from 'components/widgets/types';
 import { useRouterSelectedRegion } from 'hooks/regions';
 import { useIndicatorValues } from 'hooks/indicators';
 import LinkButton from 'components/button/component';
+import { getParsedJSONData } from 'utils/widgets';
+
 import { useRouterSelectedTheme } from 'hooks/themes';
 
 export interface ThemeWidgetProps {
@@ -30,6 +32,9 @@ const ErrorWidget = () => (
 
 const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) => {
   const selectedRegion = useRouterSelectedRegion();
+  const { slug: selectedThemeSlug } = useRouterSelectedTheme();
+
+  const selectedTheme = selectedThemeSlug.charAt(0).toUpperCase() + selectedThemeSlug.slice(1).replace(/_/g, ' ');
 
   const [state, setState] = useState(widget.initialState || {});
   const handleControlChange = (name: string, selectedValue: string) => setState({ ...state, [name]: selectedValue });
@@ -49,6 +54,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     isError,
     isSuccess,
   } = useIndicatorValues(widget.fetchParams(wholeState));
+
   const {
     data,
     widgetWrapper: WidgetWrapper,
@@ -62,10 +68,44 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
   );
 
   const theme = useRouterSelectedTheme();
+  const jsonToCsv = (jsonData) => {
+    let csv = '';
+
+    const parsedJsonData = getParsedJSONData(jsonData, widget.slug, state);
+
+    const headers = Object.keys(parsedJsonData[0]);
+    csv += headers.join(',') + '\n';
+    parsedJsonData.forEach(function (row) {
+      const data = headers.map((header) => JSON.stringify(row[header])).join(',');
+      csv += data + '\n';
+    });
+
+    return csv;
+  };
+
+  const downloadCSV = () => {
+    const csvData = jsonToCsv(data);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+
+    a.download = `THEME ${selectedTheme} - REGION ${selectedRegion?.name} - WIDGET ${widget.title}${
+      state.airport ? ` - AIRPORT ${state.airport}` : ''
+    }${state.group ? ` - GROUP ${state.group}` : ''}${state.type ? ` - TYPE ${state.type}` : ''}${
+      state.sector ? ` - SECTOR ${state.sector}` : ''
+    }${state.frequency ? ` - FREQUENCY ${state.frequency}` : ''} ${state.year ? ` - YEAR ${state.year}` : ''}.csv`;
+
+    document.body.appendChild(a);
+
+    a.click();
+  };
 
   const WidgetComponent = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
+
   const isDataFetched = isFetched && isSuccess;
   const noData = isDataFetched && data.length === 0;
 
@@ -75,6 +115,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     'tourism_employment',
     'visitor_spending',
   ];
+  const NO_DOWNLOAD_CSV_WIDGETS = ['economic_vs_tourism_region', 'funded_project_details'];
 
   return (
     <div
@@ -146,9 +187,22 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
       </div>
 
       <div className="mt-4 lg:mt-0 lg:w-4/6 lg:pl-5 flex flex-col relative">
+        {!NO_DOWNLOAD_CSV_WIDGETS.includes(widget.slug) && (
+          <button
+            type="button"
+            className="text-white bg-blue-800 hover:bg-green-600 text-lg font-bold px-4 py-4 w-48 self-end"
+            onClick={downloadCSV}
+          >
+            Download Data
+          </button>
+        )}
+
         {isFetched && (
           <Controls
-            className={cx('mb-3', { 'w-full': widgetType !== 'map', 'absolute z-10 right-0': widgetType === 'map' })}
+            className={cx('mb-3', {
+              'w-full': widgetType !== 'map',
+              'absolute z-10 right-0': widgetType === 'map',
+            })}
             controls={controls}
             state={state}
             onControlChange={handleControlChange}
