@@ -25,15 +25,20 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
       <Head>
         <title>{title} | Tourism Impact Portal</title>
       </Head>
-
-      <ThemeMainHeader />
-      <ThemesNavbar />
-      <div className="sm:container sm:mx-auto">
+      <div className="print:hidden">
+        <ThemeMainHeader />
+        <ThemesNavbar />
+      </div>
+      <div className="sm:container sm:mx-auto print:!-ml-8">
         {dataReady && (
           <>
-            <ThemeHeader />
+            <div>
+              <ThemeHeader />
+            </div>
             {theme.slug === 'additional_resources' ? <AdditionalResources /> : <ThemeWidgets />}
-            <ThemeMobileFooter />
+            <div className="print:hidden">
+              <ThemeMobileFooter />
+            </div>
           </>
         )}
       </div>

@@ -10,6 +10,7 @@ import type { WidgetProps } from 'components/widgets/types';
 import { useRouterSelectedRegion } from 'hooks/regions';
 import { useIndicatorValues } from 'hooks/indicators';
 import LinkButton from 'components/button/component';
+import { useRouterSelectedTheme } from 'hooks/themes';
 
 export interface ThemeWidgetProps {
   widget: Widget;
@@ -60,14 +61,36 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     [widget.fetchWidgetProps, indicatorValues, wholeState],
   );
 
+  const theme = useRouterSelectedTheme();
+
   const WidgetComponent = dynamic<WidgetProps>(() => import(`components/widgets/${widgetType}`), {
     loading: LoadingWidget,
   });
   const isDataFetched = isFetched && isSuccess;
   const noData = isDataFetched && data.length === 0;
 
+  const breakBeforePageSlugs = [
+    'accommodation_information',
+    'tourism_development_funds',
+    'tourism_employment',
+    'visitor_spending',
+  ];
+
   return (
-    <div className="p-5 bg-white flex flex-col lg:flex-row">
+    <div
+      className={cx({
+        'p-5 print:w-screen bg-white flex flex-col lg:flex-row': true,
+        'print:break-before-page print:first:break-before-auto': breakBeforePageSlugs.includes(theme.slug),
+
+        'print:[&:nth-child(1)]:break-after-page print:[&:nth-child(3)]:break-after-page print:[&:nth-child(4)]:break-after-page':
+          theme.slug === 'general_insights',
+
+        'print:[&:nth-child(1)]:break-after-page print:[&:nth-child(2)]:break-after-page print:[&:nth-child(3)]:break-after-page print:[&:nth-child(4)]:break-after-page print:[&:nth-child(6)]:break-after-page print:[&:nth-child(7)]:break-after-page print:[&:nth-child(8)]:break-after-page print:[&:nth-child(9)]:break-after-page':
+          theme.slug === 'tourism_industry_arrivals',
+
+        'print:h-[45vh]': widget.slug === 'economic_vs_tourism_region',
+      })}
+    >
       <div className="lg:w-2/6 lg:pr-5 lg:border-r-2 flex flex-col">
         <div className="relative">
           <div
@@ -92,7 +115,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
 
           {viewOnMap && (
             <div className="mt-4 lg:mt-6">
-              <LinkButton theme="primary" className="px-10" href={viewOnMap.link}>
+              <LinkButton theme="primary" className="px-10 print:hidden" href={viewOnMap.link}>
                 {viewOnMap.title}
               </LinkButton>
             </div>
@@ -101,7 +124,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
           {widget.sources && (
             <>
               <div className="flex-1"></div>
-              <p className="free-text leading-6 text-sm mt-2 lg:mt-6">
+              <p className="free-text leading-6 text-sm mt-2 lg:mt-6 print:mb-6">
                 <strong>Source: </strong>
                 {widget.sources.map((source, index) => (
                   <React.Fragment key={index}>
