@@ -31,7 +31,6 @@ function getWeekOptions(weeks: string[]) {
 function getFetchParamsFunction(prefix: string) {
   const ADNA_PREFIXES = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
   return (state: any) => {
-    console.log('prefix', prefix);
     const indicators = {
       weekly: [`${prefix}_weekday`, `${prefix}_weekend`, `${prefix}_change_weekday`, `${prefix}_change_weekend`],
       monthly: [`${prefix}_month`, `${prefix}_change_month`],

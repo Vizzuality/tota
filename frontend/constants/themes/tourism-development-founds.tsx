@@ -96,6 +96,7 @@ const theme: ThemeFrontendDefinition = {
         const sources = uniq(rawData.map((x) => x.category_1))
           .filter((x) => x)
           .sort();
+
         const colors = getColorPalette(sources.length);
 
         return {

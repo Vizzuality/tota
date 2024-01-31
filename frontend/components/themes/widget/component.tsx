@@ -71,7 +71,7 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
   const jsonToCsv = (jsonData) => {
     let csv = '';
 
-    const parsedJsonData = getParsedJSONData(jsonData, widget.slug, state);
+    const parsedJsonData = getParsedJSONData(jsonData, widget.slug, state, indicatorValues);
 
     const headers = Object.keys(parsedJsonData[0]);
     csv += headers.join(',') + '\n';
@@ -95,7 +95,9 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
       state.airport ? ` - AIRPORT ${state.airport}` : ''
     }${state.group ? ` - GROUP ${state.group}` : ''}${state.type ? ` - TYPE ${state.type}` : ''}${
       state.sector ? ` - SECTOR ${state.sector}` : ''
-    }${state.frequency ? ` - FREQUENCY ${state.frequency}` : ''} ${state.year ? ` - YEAR ${state.year}` : ''}.csv`;
+    }${state.origin ? ` - ORIGIN ${state.origin}` : ''}${state.frequency ? ` - FREQUENCY ${state.frequency}` : ''} ${
+      state.year ? ` - YEAR ${state.year}` : ''
+    }.csv`;
 
     document.body.appendChild(a);
 
@@ -115,7 +117,15 @@ const ThemeWidget: FC<ThemeWidgetProps> = ({ widget, index }: ThemeWidgetProps) 
     'tourism_employment',
     'visitor_spending',
   ];
-  const NO_DOWNLOAD_CSV_WIDGETS = ['economic_vs_tourism_region', 'funded_project_details'];
+
+  const NO_DOWNLOAD_CSV_WIDGETS = [
+    'economic_vs_tourism_region',
+    'funded_project_details',
+    'satisfaction_with_life',
+    'satisfaction_with_elements',
+    'satisfaction_with_tourism',
+    'satisfaction_with_tourism_2',
+  ];
 
   return (
     <div
