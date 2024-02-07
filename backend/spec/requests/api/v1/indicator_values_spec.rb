@@ -49,6 +49,7 @@ RSpec.describe 'API V1 Indicator Values', type: :request do
       :indicator,
       slug: 'visits_by_origin',
       indicator_values: [
+        build(:indicator_value, date: '2020-01', category_1: 'Poland', value: Float::INFINITY, region: @r1),
         build(:indicator_value, date: '2020-01', category_1: 'Canada', value: '33434', region: @r1),
         build(:indicator_value, date: '2020-01', category_1: 'Germany', value: '33333', region: @r1),
         build(:indicator_value, date: '2020-02', category_1: 'Canada', value: '2222', region: @r1),
