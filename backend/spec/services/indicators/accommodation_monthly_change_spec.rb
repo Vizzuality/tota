@@ -65,5 +65,38 @@ RSpec.describe Indicators::AccommodationMonthlyChange do
         expect(values.count).to eq(0)
       end
     end
+
+    describe 'adna_adr_month' do
+      it 'creates change indicator' do
+        indicator = Indicator.find_by(slug: 'adna_adr_change_month')
+        values = indicator.indicator_values.map { |v| v.slice(:region_id, :date, :value).symbolize_keys }
+
+        expect(indicator.present?).to be(true)
+        expect(indicator.dynamic).to be(true)
+        expect(values.count).to eq(0)
+      end
+    end
+
+    describe 'adna_occupancy_month' do
+      it 'creates change indicator' do
+        indicator = Indicator.find_by(slug: 'adna_occupancy_change_month')
+        values = indicator.indicator_values.map { |v| v.slice(:region_id, :date, :value).symbolize_keys }
+
+        expect(indicator.present?).to be(true)
+        expect(indicator.dynamic).to be(true)
+        expect(values.count).to eq(0)
+      end
+    end
+
+    describe 'adna_revpar_month' do
+      it 'creates change indicator' do
+        indicator = Indicator.find_by(slug: 'adna_revpar_change_month')
+        values = indicator.indicator_values.map { |v| v.slice(:region_id, :date, :value).symbolize_keys }
+
+        expect(indicator.present?).to be(true)
+        expect(indicator.dynamic).to be(true)
+        expect(values.count).to eq(0)
+      end
+    end
   end
 end
