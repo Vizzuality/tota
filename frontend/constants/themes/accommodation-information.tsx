@@ -169,6 +169,16 @@ const theme: ThemeFrontendDefinition = {
       fetchParams: getFetchParamsFunction('revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
     },
+    {
+      slug: 'occupancy_rates_airbnb',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'monthly',
+      },
+      fetchParams: getFetchParamsFunction('adna_occupancy'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_occupancy', '%'),
+    },
   ],
 };
 
