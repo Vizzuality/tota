@@ -17,8 +17,6 @@ import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
 
-const TABS = ['Historical', 'Weekly', 'Monthly'];
-
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
     const date = parseISO(weekString);
@@ -49,6 +47,10 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
     const regions = uniq(rawData.map((x) => x.region));
     const colorsByRegionName = getColorsByRegionName(rawData);
+
+    const ADNAIndicatorPrefixes = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
+
+    const TABS = ADNAIndicatorPrefixes.includes(indicatorPrefix) ? ['Monthly'] : ['Historical', 'Weekly', 'Monthly'];
 
     if (['weekly', 'monthly'].includes(state.type)) {
       const periods = uniq(rawData.map((x) => x.date))
@@ -174,7 +176,7 @@ const theme: ThemeFrontendDefinition = {
       initialState: {
         year: thisYear,
         period: undefined,
-        type: 'monthly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('adna_occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adna_occupancy', '%'),
@@ -184,7 +186,7 @@ const theme: ThemeFrontendDefinition = {
       initialState: {
         year: thisYear,
         period: undefined,
-        type: 'monthly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('adna_adr'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adna_adr', '$'),
@@ -194,7 +196,7 @@ const theme: ThemeFrontendDefinition = {
       initialState: {
         year: thisYear,
         period: undefined,
-        type: 'monthly',
+        type: 'historical',
       },
       fetchParams: getFetchParamsFunction('adna_revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adna_revpar', '$'),
