@@ -23,10 +23,12 @@ services:
     command: bundle exec rails s -p 4000 -b '0.0.0.0'
     volumes:
       - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
     ports:
       - "4000:4000"
     depends_on:
       - db
 
 volumes:
+  node_modules:
   pgdata:
