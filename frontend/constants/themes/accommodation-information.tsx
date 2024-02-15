@@ -170,7 +170,7 @@ const theme: ThemeFrontendDefinition = {
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
     },
     {
-      slug: 'occupancy_rates_airbnb',
+      slug: 'adna_occupancy_rates',
       initialState: {
         year: thisYear,
         period: undefined,
@@ -178,6 +178,26 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchParams: getFetchParamsFunction('adna_occupancy'),
       fetchWidgetProps: getFetchWidgetPropsFunction('adna_occupancy', '%'),
+    },
+    {
+      slug: 'adna_average_daily_hotel_rate',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'monthly',
+      },
+      fetchParams: getFetchParamsFunction('adna_adr'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_adr', '$'),
+    },
+    {
+      slug: 'adna_revenue_per_available_room',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'monthly',
+      },
+      fetchParams: getFetchParamsFunction('adna_revpar'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_revpar', '$'),
     },
   ],
 };

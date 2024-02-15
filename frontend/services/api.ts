@@ -10,6 +10,7 @@ class API {
   baseURL = isServer
     ? process.env.NEXT_PUBLIC_TOTA_BACKEND_HOST + process.env.NEXT_PUBLIC_TOTA_API_PATH
     : process.env.NEXT_PUBLIC_TOTA_API_PATH;
+
   baseConfig = {
     headers: {
       Accept: 'application/json',

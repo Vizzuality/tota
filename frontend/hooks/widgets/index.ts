@@ -10,7 +10,11 @@ import TotaAPI from 'services/api';
 function mergeWithFrontendDefinitions(themeSlug: string, data: WidgetAPI[]): Widget[] {
   if (!data?.length) return [];
 
+  console.log({ data, themeSlug });
+
   const theme = THEMES.find((t) => t.slug === themeSlug);
+
+  console.log({ theme });
 
   return theme.widgets
     .map((w) => {
