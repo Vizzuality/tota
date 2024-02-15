@@ -29,11 +29,13 @@ function getWeekOptions(weeks: string[]) {
 }
 
 function getFetchParamsFunction(prefix: string) {
+  const ADNA_PREFIXES = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
   return (state: any) => {
+    console.log('prefix', prefix);
     const indicators = {
       weekly: [`${prefix}_weekday`, `${prefix}_weekend`, `${prefix}_change_weekday`, `${prefix}_change_weekend`],
       monthly: [`${prefix}_month`, `${prefix}_change_month`],
-      historical: `${prefix}_week`,
+      historical: ADNA_PREFIXES.includes(prefix) ? `${prefix}_month` : `${prefix}_week`,
     };
 
     return {
@@ -50,7 +52,9 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
 
     const ADNAIndicatorPrefixes = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
 
-    const TABS = ADNAIndicatorPrefixes.includes(indicatorPrefix) ? ['Monthly'] : ['Historical', 'Weekly', 'Monthly'];
+    const TABS = ADNAIndicatorPrefixes.includes(indicatorPrefix)
+      ? ['Historical', 'Monthly']
+      : ['Historical', 'Weekly', 'Monthly'];
 
     if (['weekly', 'monthly'].includes(state.type)) {
       const periods = uniq(rawData.map((x) => x.date))
