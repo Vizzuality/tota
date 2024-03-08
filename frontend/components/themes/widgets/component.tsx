@@ -13,7 +13,7 @@ const Widgets: FC<WidgetsProps> = () => {
   const theme = useRouterSelectedTheme();
   const selectedRegion = useRouterSelectedRegion();
   const { data: widgets, isFetched, isSuccess } = useWidgets(theme.slug, selectedRegion);
-
+  console.log({ widgets });
   return (
     <div className="flex flex-col gap-10 mb-10">
       {isFetched &&

@@ -17,8 +17,6 @@ import { defaultTooltip } from 'constants/charts';
 
 import BoxImage from 'images/home/box-accommodation-information.png';
 
-const TABS = ['Historical', 'Weekly', 'Monthly'];
-
 function getWeekOptions(weeks: string[]) {
   return weeks.map((weekString) => {
     const date = parseISO(weekString);
@@ -31,11 +29,13 @@ function getWeekOptions(weeks: string[]) {
 }
 
 function getFetchParamsFunction(prefix: string) {
+  const ADNA_PREFIXES = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
   return (state: any) => {
+    console.log('prefix', prefix);
     const indicators = {
       weekly: [`${prefix}_weekday`, `${prefix}_weekend`, `${prefix}_change_weekday`, `${prefix}_change_weekend`],
       monthly: [`${prefix}_month`, `${prefix}_change_month`],
-      historical: `${prefix}_week`,
+      historical: ADNA_PREFIXES.includes(prefix) ? `${prefix}_month` : `${prefix}_week`,
     };
 
     return {
@@ -49,6 +49,12 @@ function getFetchWidgetPropsFunction(indicatorPrefix: string, unit: string) {
   return function fetchWidgetProps(rawData: IndicatorValue[] = [], state: any): any {
     const regions = uniq(rawData.map((x) => x.region));
     const colorsByRegionName = getColorsByRegionName(rawData);
+
+    const ADNAIndicatorPrefixes = ['adna_occupancy', 'adna_adr', 'adna_revpar'];
+
+    const TABS = ADNAIndicatorPrefixes.includes(indicatorPrefix)
+      ? ['Historical', 'Monthly']
+      : ['Historical', 'Weekly', 'Monthly'];
 
     if (['weekly', 'monthly'].includes(state.type)) {
       const periods = uniq(rawData.map((x) => x.date))
@@ -168,6 +174,36 @@ const theme: ThemeFrontendDefinition = {
       },
       fetchParams: getFetchParamsFunction('revpar'),
       fetchWidgetProps: getFetchWidgetPropsFunction('revpar', '$'),
+    },
+    {
+      slug: 'adna_occupancy_rates',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'historical',
+      },
+      fetchParams: getFetchParamsFunction('adna_occupancy'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_occupancy', '%'),
+    },
+    {
+      slug: 'adna_average_daily_hotel_rate',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'historical',
+      },
+      fetchParams: getFetchParamsFunction('adna_adr'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_adr', '$'),
+    },
+    {
+      slug: 'adna_revenue_per_available_room',
+      initialState: {
+        year: thisYear,
+        period: undefined,
+        type: 'historical',
+      },
+      fetchParams: getFetchParamsFunction('adna_revpar'),
+      fetchWidgetProps: getFetchWidgetPropsFunction('adna_revpar', '$'),
     },
   ],
 };
