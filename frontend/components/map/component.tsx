@@ -193,7 +193,7 @@ export const Map: FC<MapProps> = ({
     <div
       ref={mapContainerRef}
       className={cx({
-        'relative w-full h-full z-0': true,
+        'relative w-full h-full z-0 print:h-[30vh]': true,
         [className]: !!className,
       })}
     >

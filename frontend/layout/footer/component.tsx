@@ -56,7 +56,7 @@ const Footer: FC<FooterProps> = () => {
   ];
 
   return (
-    <div className="bg-blue-800">
+    <div className="bg-blue-800 print:hidden">
       <div className="container px-10 pt-14 pb-8 mx-auto text-white flex flex-row flex-wrap justify-between">
         <div className="w-full lg:w-auto pb-10">
           <Link href="/">

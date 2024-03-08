@@ -60,7 +60,7 @@ const Navbar: FC<NavbarProps> = ({ header, theme: initialTheme = 'transparent', 
 
   return (
     <div
-      className={cx('w-full h-24 z-30 top-0 transition-colors duration-200 ease-in-out', position, {
+      className={cx('print:hidden w-full h-24 z-30 top-0 transition-colors duration-200 ease-in-out', position, {
         [THEMES[theme].container]: theme,
       })}
     >
