@@ -4,12 +4,18 @@ module Indicators
       adr_month
       occupancy_month
       revpar_month
+      adna_adr_month
+      adna_occupancy_month
+      adna_revpar_month
     ].freeze
 
     def regenerate
       Indicator.find_by(slug: 'adr_change_month')&.delete
       Indicator.find_by(slug: 'occupancy_change_month')&.delete
       Indicator.find_by(slug: 'revpar_change_month')&.delete
+      Indicator.find_by(slug: 'adna_adr_change_month')&.delete
+      Indicator.find_by(slug: 'adna_occupancy_change_month')&.delete
+      Indicator.find_by(slug: 'adna_revpar_change_month')&.delete
       generate
     end
 
@@ -17,6 +23,9 @@ module Indicators
       create_change_indicator('adr_month', 'adr_change_month')
       create_change_indicator('occupancy_month', 'occupancy_change_month')
       create_change_indicator('revpar_month', 'revpar_change_month')
+      create_change_indicator('adna_adr_month', 'adna_adr_change_month')
+      create_change_indicator('adna_occupancy_month', 'adna_occupancy_change_month')
+      create_change_indicator('adna_revpar_month', 'adna_revpar_change_month')
     end
 
     private

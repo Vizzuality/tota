@@ -7,7 +7,7 @@ const Custom404: React.FC = () => {
   return (
     <Layout className="w-full" navbarTheme="gray">
       <Head>
-        <title>404 - Page Not Found</title>
+        <title>404 - Page Not Found | Tourism Impact Portal</title>
       </Head>
 
       <div className="flex flex-col md:flex-grow min-h-[500px] mt-24">

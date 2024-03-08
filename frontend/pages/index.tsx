@@ -28,10 +28,10 @@ const Home: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Welcome | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>Welcome | Tourism Impact Portal</title>
         <meta
           name="description"
-          content="British Columbia is one of the most attractive destinations worldwide. With this initiative, the participating regions within the province seek to strengthen their commitment towards sustainable development."
+          content="A central place providing key insights about tourism development in the province to support well-informed decisions for a sustainable future."
         />
       </Head>
 
@@ -53,7 +53,7 @@ const Home: React.FC<void> = (): JSX.Element => {
         subtitle="A central place providing key insights about tourism development in the province to support well-informed decisions for a sustainable future."
         maxTextWidth={500}
         cta={
-          <Button theme="primary-alt" className="w-48" href="/">
+          <Button theme="primary-alt" className="w-48" href="/about">
             Learn More
           </Button>
         }

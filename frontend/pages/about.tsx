@@ -11,7 +11,12 @@ const About: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>About | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>About | Tourism Impact Portal</title>
+        <meta
+          name="description"
+          content="The Tourism Impact Portal is a result of the ongoing efforts by the participating regions to ensure and
+            foster sustainable tourism development in the province."
+        />
       </Head>
 
       <Hero image={heroBackgroundImage}>

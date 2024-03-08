@@ -399,6 +399,42 @@ shared:
             - revpar_change_month
             - revpar_week
 
+        - slug: adna_occupancy_rates
+          title: AirDNA Occupancy rates
+          description: |
+            TODO
+          note: |
+            TODO
+          sources:
+            - text: TODO
+          indicators:
+            - adna_occupancy_month
+            - adna_occupancy_change_month
+
+        - slug: adna_average_daily_hotel_rate
+          title: AirDNA Average daily hotel rate (ADR)
+          description: |
+            TODO
+          note: |
+            TODO
+          sources:
+            - text: TODO
+          indicators:
+            - adna_adr_month
+            - adna_adr_change_month
+
+        - slug: adna_revenue_per_available_room
+          title: AirDNA Revenue per available room (RevPAR)
+          description: |
+            TODO
+          note: |
+            TODO
+          sources:
+            - text: TODO
+          indicators:
+            - adna_revpar_month
+            - adna_revpar_change_month
+
     - slug: visitor_spending
       title: Visitor Spending
       widgets:

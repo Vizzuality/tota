@@ -2,6 +2,11 @@
   "data": [
     {
       "date": "2020-01",
+      "value": null,
+      "indicator": "visits_by_origin"
+    },
+    {
+      "date": "2020-01",
       "value": 33434.0,
       "indicator": "visits_by_origin"
     },

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useLayoutEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';

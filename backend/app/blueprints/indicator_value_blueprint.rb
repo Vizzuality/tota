@@ -1,6 +1,12 @@
 class IndicatorValueBlueprint < Blueprinter::Base
   fields :date, :category_1, :category_2, :value
 
+  field :value do |val|
+    next if val.value == Float::INFINITY
+
+    val.value
+  end
+
   # TOOD: fix this to be imported in better format, ensure that in importer
   field :date do |val|
     next if val.date.nil?

@@ -7,7 +7,8 @@ const Terms: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>Terms & Conditions | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>Terms & Conditions | Tourism Impact Portal</title>
+        <meta name="description" content="Terms & Conditions to the website www.tourismimpactportal.com" />
       </Head>
 
       <Hero className="bg-blue-800 text-white">

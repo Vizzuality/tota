@@ -23,7 +23,7 @@ const ThemePage: React.FC<void> = (): JSX.Element => {
   return (
     <Layout className="w-full">
       <Head>
-        <title>{title} | British Columbia Regional Tourism Secretariat (BCRTS)</title>
+        <title>{title} | Tourism Impact Portal</title>
       </Head>
 
       <ThemeMainHeader />

@@ -19,7 +19,7 @@ const GetInvolved: FC<GetInvolvedProps> = ({ className }: GetInvolvedProps) => (
       <LinkButton theme="blue" className="w-60" href={CONTRIBUTE_DATA_FORM_URL}>
         Contribute Data
       </LinkButton>
-      <LinkButton theme="blue" className="w-60" href="/feedback-questions">
+      <LinkButton theme="blue" className="w-60" href="/get-involved#feedback">
         Feedback & Questions
       </LinkButton>
     </div>
